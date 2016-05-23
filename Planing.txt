@@ -1,0 +1,44 @@
+- Récupérer une table de la bdd et l'afficher
+- Modifier des données ds une table de la bdd
+- Construire une page par SHA (seems easy)
+- Liste de sélection en fonction des données dans la bdd et/ou auto complétion
+========================
+Une table par SHA ? Possible ? Trop gros ?
+
+========================
+SHA REROUTE
+0. Create a SHA
+  // With this precision (microsecond) ID will looks like '2di2adajgq6h'
+  $id = base_convert(microtime(false), 10, 36);
+  // With less precision (second) ID will looks like 'niu7pj'
+  $id = base_convert(time(), 10, 36);
+1. Utiliser une table existante de SHA
+2. Si SHA n'existe pas d'après l'url, alors "reroute to index"
+3. Sinon afficher la table adéquat.
+
+========================
+LE SITE
+========================
+- Lors de la connexion au site avec une url vierge
+-- Proposition de créer un nouveau Décompte
+- Avec une URL ?php=SHA
+-- if SHA existe dans la BDD alors on déroule le tapis rouge
+-- Otherwise, on retourne à l'index
+
+Quand on a bien un décompte qque part
+- Extraire la table de la bdd
+- Afficher les résultats
+- Calcul d'une solution et affichage
+- Possibilité d'ajout d'une personne
+-- Ajout dans la bdd
+-- Reactualise la page OU Ajax
+- Possibilité d'ajout d'un paiement
+-- Questions :
+--- Qui a payé ?
+--- Combien ?
+--- A quelqu'un ou dans le pot commun ?
+--- Pour quoi ?
+-- Réactualise la page OU Ajax
+
+Optionnel :
+- N'afficher que la somme totale payée par chaque individu aux différentes personnes (groupe ou individu). Un bouton disponible pour détailler les paiements
