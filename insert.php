@@ -18,23 +18,29 @@ catch (Exception $e)
 
 if(isset($_POST['submit_sha']))
 {
-	try{
-	$isok = $db->exec('INSERT INTO test_sha(id, sha) VALUES(NULL, '.(int)htmlspecialchars($_POST['sha_to_sql']).')');
-	}
-	catch (Exception $e)
+	$input_int = filter_input(INPUT_POST, 'sha_to_sql', FILTER_VALIDATE_INT);
+	if(!$input_int)
 	{
-			die('Erreur : ' . $e->getMessage());
+	 echo '<p> SHA not valide</p>';		 
 	}
-	$sha_to_sql = htmlspecialchars($_POST['sha_to_sql']);
-	if($isok)
+	else
 	{
-  	 echo '<p> Ajouté dans la BDD : '.$sha_to_sql.'</p>';
+		try{
+		$isok = $db->exec('INSERT INTO test_sha(id, sha) VALUES(NULL, '.$input_int.')');
+		}
+		catch (Exception $e)
+		{
+				die('Erreur : ' . $e->getMessage());
+		}
+		if($isok)
+		{
+		 echo '<p> Ajouté dans la BDD : '.$input_int.'</p>';
+		}
+		 else
+		 {
+		 echo '<p>'.$input_int.' is already in the db</p>';		 
+		 }
 	}
-	 else
-	 {
-  	 echo '<p>'.$sha_to_sql.' is already in the db</p>';		 
-	 }
-		 
 }
 ?>
 

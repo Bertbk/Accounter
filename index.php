@@ -12,8 +12,8 @@ function validate() {
     };
 
 	if (isNaN(parseInt(x)) || !isFinite(x)) {
-        alert("Enter a Valid SHA number");
-        return false;
+//        alert("Enter a Valid SHA number");
+//        return false;
     };
 }
 </script>
