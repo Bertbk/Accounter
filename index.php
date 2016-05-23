@@ -1,7 +1,23 @@
 <!DOCTYPE html>
 
 <html>
+<head>
+<script>
+function validate() {
+    var x;
+    x = document.getElementById("sha_to_sql_value").value;
+    if (x == "") {
+        alert("Enter a Valid SHA number");
+        return false;
+    };
 
+	if (isNaN(parseInt(x)) || !isFinite(x)) {
+        alert("Enter a Valid SHA number");
+        return false;
+    };
+}
+</script>
+</head>
 <body>
 
 <?php
@@ -45,9 +61,14 @@ if($data = $reponse->fetch())
 $reponse->closeCursor();
 
 echo '<h1>Table</h1>';
+
 $reponse = $db->query('SELECT * FROM test_sha');
 // on fait une boucle qui va faire un tour pour chaque enregistrement 
 echo '<table style="width:100%" border="1" >';
+echo ' <tr>';
+echo '<td> ID </td>';
+echo '<td> SHA </td> ';
+echo '  </tr>';
 while($data = $reponse->fetch()) 
     { 
 	echo ' <tr>';
@@ -58,6 +79,14 @@ while($data = $reponse->fetch())
 echo'</table>';
 
 ?> 
+
+<h1> Add To DB</h1>
+
+<form method="post" action="insert.php" onsubmit="return validate()">
+    <input type="text" name="sha_to_sql" id="sha_to_sql_value" required />
+    <input type="submit" name="submit_sha" value="submit" />
+</form>
+
 
 </body>
 </html>
