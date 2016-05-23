@@ -21,6 +21,9 @@ catch (Exception $e)
         die('Erreur : ' . $e->getMessage());
 }
 
+echo '<h1>SHA = GOOD ? </h1>';
+
+
 try
 {
 	$reponse = $db->query('SELECT * FROM test_sha WHERE sha='.$sha_url);
@@ -30,13 +33,30 @@ catch (Exception $e)
     echo 'Échec lors de la connexion : ' . $e->getMessage();
 }
 // on fait une boucle qui va faire un tour pour chaque enregistrement 
-while($data = $reponse->fetch()) 
+if($data = $reponse->fetch()) 
     { 
     // on affiche les informations de l'enregistrement en cours 
-    echo '<p>'.$data['sha'].'</p>';
+    echo '<p>Welcome brother</p>';
     } 
-
+	else
+	{
+    echo '<p>Go back home dude</p>';
+	}	
 $reponse->closeCursor();
+
+echo '<h1>Table</h1>';
+$reponse = $db->query('SELECT * FROM test_sha');
+// on fait une boucle qui va faire un tour pour chaque enregistrement 
+echo '<table style="width:100%" border="1" >';
+while($data = $reponse->fetch()) 
+    { 
+	echo ' <tr>';
+    echo '<td>'.$data['id'].'</td>';
+    echo '<td>'.$data['sha'].'</td> ';
+	echo '  </tr>';
+	}
+echo'</table>';
+
 ?> 
 
 </body>
