@@ -57,6 +57,13 @@ if(isset($_POST['submit']))
 }
 
 $my_contributors = get_contributors($account_id);
+$n_contributors = 0;
+$n_parts = 0;
+foreach($my_contributors  as $contrib)
+{
+	$n_contributors += 1 ;
+	$n_parts += (int)$contrib['number_of_parts'] ;
+}
 
 include_once('/templates/account.php');
 ?>

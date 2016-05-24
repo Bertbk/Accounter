@@ -12,7 +12,7 @@
 <?php if (is_array($my_contributors) && sizeof($my_contributors) > 0 )
 {
 ?>
-<h1>Contributors</h1>
+<h1>Contributors (<?php echo $n_contributors ?>) / Parts (<?php echo $n_parts ?>)</h1>
 <ul>
 <?php
 	foreach($my_contributors as $contrib)
