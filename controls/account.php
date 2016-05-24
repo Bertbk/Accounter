@@ -42,7 +42,7 @@ else
 // No result, go back home
 if(empty($my_account))
 {
-//	header ("location:/DivideTheBill/index.php");
+	header ("location:/DivideTheBill/index.php");
 }
 
 //Now everything is fine. Let us extract some information.
