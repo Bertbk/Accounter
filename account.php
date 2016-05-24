@@ -2,21 +2,6 @@
 
 <html>
 <head>
-<script>
-function validate() {
-    var x;
-    x = document.getElementById("sha_to_sql_value").value;
-    if (x == "") {
-        alert("Enter a Valid SHA number");
-        return false;
-    };
-
-	if (isNaN(parseInt(x)) || !isFinite(x)) {
-//        alert("Enter a Valid SHA number");
-//        return false;
-    };
-}
-</script>
 </head>
 <body>
 
