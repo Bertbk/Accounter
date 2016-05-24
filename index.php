@@ -22,8 +22,9 @@ function validate() {
 
 <?php
 $sha_url = 0;
-empty($_GET['sha']) ? $sha_url = 0 : $sha_url = (int)$_GET['sha'];
-echo '<p>SHA FROM URL= '.$sha_url.'</p>'
+empty($_GET['sha']) ? $sha_url = 0 : $sha_url = htmlspecialchars($_GET['sha']);
+$sha_url_b36 = base_convert($sha_url, 10, 36);
+echo '<p>SHA FROM URL= '.$sha_url.' and '.$sha_url_b36.'</p>'
 ?>
 
 <?php 
@@ -42,7 +43,7 @@ echo '<h1>SHA = GOOD ? </h1>';
 
 try
 {
-	$reponse = $db->query('SELECT * FROM test_sha WHERE sha='.$sha_url);
+	$reponse = $db->query('SELECT * FROM accounts WHERE hashid='.$sha_url_b36);
 }
 catch (Exception $e)
 {
@@ -59,33 +60,9 @@ if($data = $reponse->fetch())
     echo '<p>Go back home dude</p>';
 	}	
 $reponse->closeCursor();
-
-echo '<h1>Table</h1>';
-
-$reponse = $db->query('SELECT * FROM test_sha');
-// on fait une boucle qui va faire un tour pour chaque enregistrement 
-echo '<table style="width:100%" border="1" >';
-echo ' <tr>';
-echo '<td> ID </td>';
-echo '<td> SHA </td> ';
-echo '  </tr>';
-while($data = $reponse->fetch()) 
-    { 
-	echo ' <tr>';
-    echo '<td>'.$data['id'].'</td>';
-    echo '<td>'.$data['sha'].'</td> ';
-	echo '  </tr>';
-	}
-echo'</table>';
-
-?> 
-
-<h1> Add To DB</h1>
-
-<form method="post" action="insert.php" onsubmit="return validate()">
-    <input type="text" name="sha_to_sql" id="sha_to_sql_value" required />
-    <input type="submit" name="submit_sha" value="submit" />
-</form>
+?>
+<h1>Next...</h1>
+<p><a href='create.php'>Create a new account</a></p>
 
 
 </body>
