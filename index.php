@@ -9,51 +9,34 @@
 <h1>Table of the accounts</h1>
 
 <?php 
-// on se connecte à MySQL 
-try
-{
-$db = new PDO('mysql:host=localhost;dbname=dividethebill;charset=utf8', 'root', '');
-}
-catch (Exception $e)
-{
-        die('Erreur : ' . $e->getMessage());
-}
-
-try
-{
-	$myquery = 'SELECT * FROM accounts';
-	$prepare_query = $db->prepare($myquery);
-	$prepare_query->execute();
-	$reponse = $prepare_query->fetchAll();
-	$n_res = count($reponse);
-}
-catch (Exception $e)
-{
-    echo 'Échec lors de la connexion : ' . $e->getMessage();
-}
-// on fait une boucle qui va faire un tour pour chaque enregistrement 
-echo '<table style="width:100%" border="1" >';
-echo ' <tr>';
-echo '<td> ID </td>';
-echo '<td> hashid </td> ';
-echo '<td> hashid_admin </td>';
-echo '<td> Title </td> ';
-echo '<td> Email </td> ';
-echo '  </tr>';
-foreach ($reponse as $account)
-{
-	echo ' <tr>';
-    echo '<td>'.$account['id'].'</td>';
-    echo '<td> <a href=\'account/'.$account['hashid'].'\'>'.$account['hashid'].'</a></td> ';
-    echo '<td> <a href=\'account/'.$account['hashid_admin'].'/admin\'>'.$account['hashid_admin'].'</a></td> ';
-    echo '<td>'.$account['title'].'</td> ';
-    echo '<td>'.$account['email'].'</td> ';
-	echo '  </tr>';
-}	
-echo'</table>';
-
-$prepare_query->closeCursor();
+include_once('/lib/get_accounts.php');
+$accounts = get_accounts();
 ?>
+
+<table style="width:100%" border="1">
+ <tr>
+<td> ID </td>
+<td> hashid </td> 
+<td> hashid_admin </td>
+<td> Title </td> 
+<td> Email </td>
+  </tr>
+<?php 
+foreach ($accounts as $account)
+{
+?>
+	<tr>
+    <td><?php echo $account['id']?></td>
+    <td> <a href="account/<?php echo $account['hashid']?>"><?php echo $account['hashid']?></</a></td>
+    <td> <a href="account/<?php echo $account['hashid_admin']?>/admin"><?php echo $account['hashid_admin']?></</a></td>
+    <td><?php echo $account['title']?></</td>
+    <td><?php echo $account['email']?></td>
+	  </tr>
+<?php
+}
+?>
+</table>
+
 <h1>Create an account</h1>
 <ul>
 <li><a href='/DivideTheBill/create.php'>Create a new account</a></li>
