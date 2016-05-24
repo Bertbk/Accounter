@@ -27,6 +27,25 @@
 }
 ?>
 
+<?php if (is_array($my_payments) && sizeof($my_payments) > 0 )
+{
+?>
+<h1>Payments</h1>
+<ul>
+<?php
+	foreach($my_payments as $payment)
+	{
+?>
+		<li><?php echo $payment['payer_id']?> paid <?php echo $payment['cost']?> to <?php echo $payment['receiver_id']?></li>
+<?php
+	}
+?>
+</ul>
+<?php
+}
+?>
+
+
 <?php
 //If admin mode
 if($admin_mode)
@@ -37,11 +56,44 @@ if($admin_mode)
 	<form method="post">
 	  <fieldset>
 		<legend>Add a contributor:</legend>
-		Name: <input type="text" name="name_of_contributor" id="name_of_contributor" required /><br>
-		Nb. of parts: <input type="number" name="number_of_parts" id="number_of_parts" value="1" required /><br>
-		 <button type="submit" name="submit" value="Submit">Submit</button> 
+		Name: <input type="text" name="name_of_contributor" required /><br>
+		Nb. of parts: <input type="number" name="number_of_parts" value="1" required /><br>
+		 <button type="submit" name="submit_contrib" value="Submit">Submit</button> 
 	  </fieldset>
 	</form>
+
+	<form method="post">
+	  <fieldset>
+		<legend>Add a payment:</legend>
+		<select name="p_payer_id"> 
+<?php
+		foreach($my_contributors as $contrib)
+		{
+?>
+			<option value="<?php echo $contrib['id']?>" selected><?php echo $contrib['name']?></option>
+<?php
+		}
+?>
+		</select>
+		<input type="number" step="0.01" min="0" name="p_cost" required />	
+		<select name="p_receiver_id"> 
+		<option value="-1" selected>Group</option>
+<?php
+		foreach($my_contributors as $contrib)
+		{
+?>
+			<option value="<?php echo $contrib['id']?>" selected><?php echo $contrib['name']?></option>
+<?php
+		}
+?>
+		</select>
+		<input type="text" name="p_description"  />
+		<input type="date" name="p_date" />
+		<br><button type="submit" name="submit_payment" value="Submit">Submit</button> 
+	  </fieldset>
+	</form>
+
+	
 <?php
 }
 ?>
