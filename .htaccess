@@ -2,3 +2,4 @@ RewriteEngine On
 RewriteRule  ^index.html$  index.php [L] 
 RewriteRule  ^index.html/account/([0-9]+)$  account.php/?sha=$1 [L] 
 RewriteRule  ^account/([a-z0-9]+)$  account.php/?sha=$1 [L]
+RewriteRule  ^account/([a-z0-9]+)/admin$  account.php/?sha=$1&admin=true [L]

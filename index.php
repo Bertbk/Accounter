@@ -37,16 +37,16 @@ echo ' <tr>';
 echo '<td> ID </td>';
 echo '<td> hashid </td> ';
 echo '<td> hashid_admin </td>';
-echo '<td> name </td> ';
-echo '<td> email </td> ';
+echo '<td> Title </td> ';
+echo '<td> Email </td> ';
 echo '  </tr>';
 foreach ($reponse as $account)
 {
 	echo ' <tr>';
     echo '<td>'.$account['id'].'</td>';
     echo '<td> <a href=\'account/'.$account['hashid'].'\'>'.$account['hashid'].'</a></td> ';
-    echo '<td> <a href=\'account/'.$account['hashid_admin'].'\'>'.$account['hashid_admin'].'</a></td> ';
-    echo '<td>'.$account['name'].'</td> ';
+    echo '<td> <a href=\'account/'.$account['hashid_admin'].'/admin\'>'.$account['hashid_admin'].'</a></td> ';
+    echo '<td>'.$account['title'].'</td> ';
     echo '<td>'.$account['email'].'</td> ';
 	echo '  </tr>';
 }	
@@ -55,8 +55,9 @@ echo'</table>';
 $prepare_query->closeCursor();
 ?>
 <h1>Create an account</h1>
-<p><a href='create.php'>Create a new account</a></p>
-
+<ul>
+<li><a href='/DivideTheBill/create.php'>Create a new account</a></li>
+</ul>
 
 </body>
 </html>

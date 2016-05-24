@@ -12,7 +12,7 @@
 <form method="post">
   <fieldset>
     <legend>Create a new account:</legend>
-    Name: <input type="text" name="name_of_account" id="name_of_account" required /><br>
+    Title: <input type="text" name="title_of_account" id="title_of_account" required /><br>
     Email: <input type="email" name="contact_email" id="contact_email" required/><br>
 	 <button type="submit" name="submit" value="Submit">Submit</button> 
   </fieldset>
@@ -22,7 +22,7 @@
 <?php
 if(isset($_POST['submit']))
 {
-	$name_of_account = filter_input(INPUT_POST, 'name_of_account', FILTER_SANITIZE_STRING);
+	$title_of_account = filter_input(INPUT_POST, 'title_of_account', FILTER_SANITIZE_STRING);
 	$contact_email = filter_input(INPUT_POST, 'contact_email', FILTER_SANITIZE_EMAIL, FILTER_VALIDATE_EMAIL);
 	do {
 		$hashid = bin2hex(openssl_random_pseudo_bytes(8));
@@ -46,11 +46,11 @@ if(isset($_POST['submit']))
 
 	
 	try{
-		$myquery = 'INSERT INTO accounts(id, hashid, hashid_admin, name, email) VALUES(NULL, :hashid, :hashid_admin, :name, :email)';
+		$myquery = 'INSERT INTO accounts(id, hashid, hashid_admin, title, email) VALUES(NULL, :hashid, :hashid_admin, :title, :email)';
 		$prepare_query = $db->prepare($myquery);
 		$prepare_query->bindValue(':hashid', $hashid, PDO::PARAM_STR);
 		$prepare_query->bindValue(':hashid_admin', $hashid_admin, PDO::PARAM_STR);
-		$prepare_query->bindValue(':name', $name_of_account, PDO::PARAM_STR);
+		$prepare_query->bindValue(':title', $title_of_account, PDO::PARAM_STR);
 		$prepare_query->bindValue(':email', $contact_email, PDO::PARAM_STR);
 		$prepare_query->execute();
 		if($prepare_query)
@@ -72,6 +72,10 @@ if(isset($_POST['submit']))
 }
 ?>
 
+<h1>Menu</h1>
+<ul>
+<li><a href='/DivideTheBill'>Main Menu</a></li>
+</ul>
 
 </body>
 </html>

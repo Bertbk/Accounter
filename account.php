@@ -40,17 +40,19 @@ if($n_res > 0)//$reponse->fetch())
 	// on affiche les informations de l'enregistrement en cours 
 	echo '<h1>Account found</h1>';
 	echo '<ul>';
-	echo '<li>Name of account : '.$reponse[0]['name'].'</li>';
+	echo '<li>Title of account : '.$reponse[0]['title'].'</li>';
 	echo '<li>Email address   : '.$reponse[0]['email'].'</li>';
 	echo '</ul>';
 }else{
-	echo '<h1>WRONG</h1>';
+	echo '<h1>WRONG ACCOUNT</h1>';
 }	
 $prepare_query->closeCursor();
 ?>
-<h1>Next...</h1>
-<p><a href='../create.php'>Create a new account</a></p>
-
+<h1>Menu</h1>
+<ul>
+<li><a href='/DivideTheBill'>Main Menu</a></li>
+<li><a href='/DivideTheBill/create.php'>Create a new account</a></li>
+</ul>
 
 </body>
 </html>
