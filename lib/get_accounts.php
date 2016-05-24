@@ -14,7 +14,7 @@ function get_accounts()
 	}
 	catch (Exception $e)
 	{
-		echo 'Échec lors de la connexion : ' . $e->getMessage();
+		echo 'Fail to connect : ' . $e->getMessage();
 	}
 	$prepare_query->closeCursor();
 	return $reponse;

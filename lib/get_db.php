@@ -8,7 +8,7 @@ function get_db()
 	}
 	catch (Exception $e)
 	{
-			die('Erreur : ' . $e->getMessage());
+			die('Fail to connect : ' . $e->getMessage());
 	}
 	return $db;
 }
