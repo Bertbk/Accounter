@@ -8,7 +8,6 @@
 <?php
 $sha_url = "";
 empty($_GET['sha']) ? $sha_url = "" : $sha_url = htmlspecialchars($_GET['sha']);
-echo '<p>SHA FROM URL= '.$sha_url.'</p>'
 ?>
 
 <?php 
@@ -21,9 +20,6 @@ catch (Exception $e)
 {
         die('Erreur : ' . $e->getMessage());
 }
-
-echo '<h1>SHA = GOOD ? </h1>';
-
 
 try
 {
@@ -42,9 +38,13 @@ catch (Exception $e)
 if($n_res > 0)//$reponse->fetch()) 
 {
 	// on affiche les informations de l'enregistrement en cours 
-	echo '<p>Welcome brother</p>';
+	echo '<h1>Account found</h1>';
+	echo '<ul>';
+	echo '<li>Name of account : '.$reponse[0]['name'].'</li>';
+	echo '<li>Email address   : '.$reponse[0]['email'].'</li>';
+	echo '</ul>';
 }else{
-    echo '<p>Go back home dude</p>';
+	echo '<h1>WRONG</h1>';
 }	
 $prepare_query->closeCursor();
 ?>

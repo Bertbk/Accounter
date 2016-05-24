@@ -6,12 +6,7 @@
 </head>
 <body>
 
-<?php
-$sha_url = 0;
-empty($_GET['sha']) ? $sha_url = 0 : $sha_url = htmlspecialchars($_GET['sha']);
-$sha_url_b36 = base_convert($sha_url, 10, 36);
-echo '<p>SHA FROM URL= '.$sha_url.' and '.$sha_url_b36.'</p>'
-?>
+<h1>Table of the accounts</h1>
 
 <?php 
 // on se connecte à MySQL 
@@ -24,30 +19,42 @@ catch (Exception $e)
         die('Erreur : ' . $e->getMessage());
 }
 
-echo '<h1>SHA = GOOD ? </h1>';
-
-
 try
 {
-	$reponse = $db->query('SELECT * FROM accounts WHERE hashid='.$sha_url_b36);
+	$myquery = 'SELECT * FROM accounts';
+	$prepare_query = $db->prepare($myquery);
+	$prepare_query->execute();
+	$reponse = $prepare_query->fetchAll();
+	$n_res = count($reponse);
 }
 catch (Exception $e)
 {
     echo 'Échec lors de la connexion : ' . $e->getMessage();
 }
 // on fait une boucle qui va faire un tour pour chaque enregistrement 
-if($data = $reponse->fetch()) 
-    { 
-    // on affiche les informations de l'enregistrement en cours 
-    echo '<p>Welcome brother</p>';
-    } 
-	else
-	{
-    echo '<p>Go back home dude</p>';
-	}	
-$reponse->closeCursor();
+echo '<table style="width:100%" border="1" >';
+echo ' <tr>';
+echo '<td> ID </td>';
+echo '<td> hashid </td> ';
+echo '<td> hashid_admin </td>';
+echo '<td> name </td> ';
+echo '<td> email </td> ';
+echo '  </tr>';
+foreach ($reponse as $account)
+{
+	echo ' <tr>';
+    echo '<td>'.$account['id'].'</td>';
+    echo '<td> <a href=\'account/'.$account['hashid'].'\'>'.$account['hashid'].'</a></td> ';
+    echo '<td> <a href=\'account/'.$account['hashid_admin'].'\'>'.$account['hashid_admin'].'</a></td> ';
+    echo '<td>'.$account['name'].'</td> ';
+    echo '<td>'.$account['email'].'</td> ';
+	echo '  </tr>';
+}	
+echo'</table>';
+
+$prepare_query->closeCursor();
 ?>
-<h1>Next...</h1>
+<h1>Create an account</h1>
 <p><a href='create.php'>Create a new account</a></p>
 
 
