@@ -4,7 +4,7 @@ include_once('/lib/get_db.php');
 function set_payment($account_id_arg, $payer_id_arg, $cost_arg, $receiver_id_arg, $description_arg="", $date_creation_arg="")
 {
 	$db = get_db();
-//	$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 	$account_id = (int)$account_id_arg;
 	$payer_id = (int)$payer_id_arg;
@@ -15,12 +15,15 @@ function set_payment($account_id_arg, $payer_id_arg, $cost_arg, $receiver_id_arg
 	
 	$description = empty($description) ? null:$description;
 	$date_creation = empty($date_creation) ? null:$date_creation;
+	//Change style of date to match sql
+	$date_creation = str_replace('/', '-',$date_creation);
 	
 	if($payer_id === $receiver_id)
 	{
 		return false;
 	}
 
+	
 	try
 	{
 		$myquery = 'INSERT INTO payments (id, account_id, payer_id, cost, receiver_id, description, date_creation) VALUES(NULL, :account_id, :payer_id, :cost, :receiver_id, :description, :date_creation)';

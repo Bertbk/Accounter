@@ -36,7 +36,7 @@
 	foreach($my_payments as $payment)
 	{
 ?>
-		<li><?php echo $payment['payer_id']?> paid <?php echo $payment['cost']?> to <?php echo $payment['receiver_id']?></li>
+		<li><?php echo $payment['payer_id']?> paid <?php echo $payment['cost']?> to <?php echo $payment['receiver_id']?>, the <?php echo $payment['date_creation']?> for <?php echo $payment['description']?></li>
 <?php
 	}
 ?>
