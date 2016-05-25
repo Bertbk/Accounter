@@ -2,6 +2,26 @@
 
 <html>
 <head>
+<script type="text/javascript">
+function configureDropDownLists(payer, receiver) {
+    var choice1 = payer.value;
+	receiver.length= 0;
+	createOption(receiver, 'Group', -1);
+	for (i = 0; i < payer.options.length; i++) {
+		if(payer.value != payer.options[i].value && payer.options[i].value != 'null')
+		{
+			createOption(receiver, payer.options[i].text, payer.options[i].value);
+		}
+	}
+}
+
+    function createOption(ddl, text, value) {
+        var opt = document.createElement('option');
+        opt.value = value;
+        opt.text = text;
+        ddl.options.add(opt);
+    }
+</script>
 </head>
 <body>
 
@@ -83,7 +103,9 @@ foreach($my_contributors as $payer)
 if($admin_mode)
 {
 ?>
+<!-- Admin mode-->
 	<h1>Administration section</h1>
+<!-- Add contributor-->
 
 	<form method="post">
 	  <fieldset>
@@ -93,30 +115,32 @@ if($admin_mode)
 		 <button type="submit" name="submit_contrib" value="Submit">Submit</button> 
 	  </fieldset>
 	</form>
-
-	<form method="post">
+	
+<!-- Add payment -->
+	<form method="post" id="form_payment_send">
 	  <fieldset>
 		<legend>Add a payment:</legend>
-		<select name="p_payer_id"> 
+		<select name="p_payer_id" onchange="configureDropDownLists(this, document.getElementById('form_payment_recv'))"> 
+<option disabled selected value="null"> -- select a payer -- </option>
 <?php
 		foreach($my_contributors as $contrib)
 		{
 ?>
-			<option value="<?php echo $contrib['id']?>" selected><?php echo $contrib['name']?></option>
+			<option value="<?php echo $contrib['id']?>"><?php echo $contrib['name']?></option>
 <?php
 		}
 ?>
 		</select>
-		<input type="number" step="0.01" min="0" name="p_cost" required />	
-		<select name="p_receiver_id"> 
-		<option value="-1" selected>Group</option>
+		<input type="number" step="0.01" min="0" name="p_cost" required />
+		<select name="p_receiver_id" id="form_payment_recv"> 
+		<option value="-1" selected="selected">Group</option>
 <?php
-		foreach($my_contributors as $contrib)
-		{
+	//	foreach($my_contributors as $contrib)
+	//	{
 ?>
-			<option value="<?php echo $contrib['id']?>" selected><?php echo $contrib['name']?></option>
+	<!--		<option value="<?php echo $contrib['id']?>"><?php echo $contrib['name']?></option>-->
 <?php
-		}
+//		}
 ?>
 		</select>
 		<input type="text" name="p_description"  />
@@ -130,6 +154,7 @@ if($admin_mode)
 }
 ?>
 
+<!--Menu -->
 
 <h1>Menu</h1>
 <ul>
