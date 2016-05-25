@@ -4,6 +4,7 @@ include_once('/lib/get_db.php');
 function set_payment($account_id_arg, $payer_id_arg, $cost_arg, $receiver_id_arg, $description_arg="", $date_creation_arg="")
 {
 	$db = get_db();
+//	$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 	$account_id = (int)$account_id_arg;
 	$payer_id = (int)$payer_id_arg;
@@ -17,7 +18,7 @@ function set_payment($account_id_arg, $payer_id_arg, $cost_arg, $receiver_id_arg
 	
 	if($payer_id === $receiver_id)
 	{
-		return true;
+		return false;
 	}
 
 	try
