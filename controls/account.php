@@ -2,6 +2,7 @@
 include_once('/lib/get_account.php');
 include_once('/lib/get_account_admin.php');
 include_once('/lib/get_contributors.php');
+include_once('/lib/get_contributor_by_name.php');
 include_once('/lib/set_contributor.php');
 include_once('/lib/set_payment.php');
 include_once('/lib/get_payments.php');

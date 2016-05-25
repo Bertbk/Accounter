@@ -6,7 +6,7 @@
 <body>
 
 <?php 
-if($isdone)
+if($create_success)
 {
 ?>
 	<h1> Accoung created</h1>

@@ -9,6 +9,18 @@ function set_contributor($account_id_arg, $name_of_contrib_arg, $nb_of_parts_arg
 	$name_of_contrib = htmlspecialchars($name_of_contrib_arg);
 	$nb_of_parts = (int)$nb_of_parts_arg;
 
+	$does_this_guy_exists = get_contributor_by_name($account_id, $name_of_contrib);
+	if(!empty($does_this_guy_exists))
+	{
+//		echo '<p>Contributor with the same name already reccorded!</p>';
+		?>
+<script type="text/javascript">
+  alert('Contributor with the same name already reccorded!');
+</script>
+<?php
+		return false;
+	}
+	
 	try
 	{
 		$myquery = 'INSERT INTO contributors(id, account_id, name, number_of_parts) VALUES(NULL, :account_id, :name_of_contrib, :nb_of_parts)';
