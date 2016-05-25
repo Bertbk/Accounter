@@ -6,7 +6,7 @@ MAJOR
 2. Séparer les Payments globaux et locaux
 3. Créer un installeur
 4. Design
-5. SMARTER pour les HASHID : Hashid admin = Hashid + New Hashid !
+5. Bug dans le refund, ex : A pay 200, B pay 50, C pay 20, C pay 30 to A.
 
 MINOR
 =====

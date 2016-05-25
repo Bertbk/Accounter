@@ -20,9 +20,35 @@
 	foreach($my_contributors as $contrib)
 	{
 ?>
+<?php
+if($admin_mode && $edit_contrib && $contrib['id'] === $contrib_id_to_edit)
+{
+?>
+		<li>
+			<form method="post">
+	  <fieldset>
+		<input type="text" name="name_of_contributor" value="<?php echo $contrib_to_edit['name']?>" required />
+		(<input type="number" name="number_of_parts" value="<?php echo $contrib_to_edit['number_of_parts']?>" required />)
+		<button type="submit" name="submit_edit_contrib" value="Submit">Edit</button> 
+	</form>
+
+		</li>
+<?php
+}//if
+else{
+if($admin_mode && !$edit_contrib)
+{
+?>
+		<li><?php echo $contrib['name']?> (<?php echo $contrib['number_of_parts']?>)<a href="/DivideTheBill/account/ff8c0e4e85741168330af5ac6c29aca4/admin/edit_contrib/<?php echo $contrib['hashid']?>">edit me</a></li>
+<?php
+}
+else{
+?>
 		<li><?php echo $contrib['name']?> (<?php echo $contrib['number_of_parts']?>)</li>
 <?php
-	}
+}//inner else
+} //outer else
+} //foreach
 ?>
 </ul>	
 <?php
@@ -81,7 +107,7 @@ foreach($my_contributors as $payer)
 ?>
 
 <?php
-//If admin mode
+//Admin only
 if($admin_mode)
 {
 ?>

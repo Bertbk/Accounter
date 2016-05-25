@@ -13,7 +13,7 @@ function set_payment($account_id_arg, $payer_id_arg, $cost_arg, $receiver_id_arg
 	$description = htmlspecialchars($description_arg);
 	$date_creation = htmlspecialchars($date_creation_arg);
 	
-	$receiver_id = empty($$receiver_id) ? null:$receiver_id;
+	$receiver_id = empty($receiver_id) ? null:$receiver_id;
 	$description = empty($description) ? null:$description;
 	$date_creation = empty($date_creation) ? null:$date_creation;
 	//Change style of date to match sql

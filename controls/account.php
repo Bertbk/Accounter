@@ -3,13 +3,18 @@ include_once('/lib/get_account.php');
 include_once('/lib/get_account_admin.php');
 include_once('/lib/get_contributors.php');
 include_once('/lib/get_contributor_by_name.php');
+include_once('/lib/get_contributor_by_hashid.php');
+include_once('/lib/get_payments.php');
+include_once('/lib/get_payment_by_hashid.php');
+
 include_once('/lib/set_contributor.php');
 include_once('/lib/set_payment.php');
-include_once('/lib/get_payments.php');
+
 include_once('/lib/compute_solution.php');
 
-$my_account = array();
 
+$my_account = array();
+/* Get arguments */
 //Get if admin mode is asked to be activated 
 $admin_mode_url = false;
 if(!empty($_GET['admin']))
@@ -28,6 +33,17 @@ if($hashid_url == "" || (strlen($hashid_url) != 16 && !$admin_mode_url)
 	header ("location:/DivideTheBill/index.php");
 }
 
+//Edit a contributor ?
+$contrib_hashid = "";
+empty($_GET['edit_contrib']) ? $contrib_hashid = "" : $contrib_hashid = htmlspecialchars($_GET['edit_contrib']);
+(empty($contrib_hashid)) ? $edit_contrib = false : $edit_contrib=true;
+
+//Edit a payment ?
+$payment_hashid = "";
+empty($_GET['edit_payment']) ? $payment_hashid = "" : $payment_hashid = htmlspecialchars($_GET['edit_payment']);
+(empty($payment_hashid)) ? $edit_payment = false : $edit_payment=true;
+
+/* Treat arguments */
 //Check if admin mode is really activated
 $admin_mode = false;
 if(!$admin_mode_url)
@@ -46,7 +62,17 @@ else
 	}
 }
 
-// No result, go back home
+//If not admin, then do not edit anything
+if(!$admin_mode)
+{
+	$payment_hashid = "";
+	$edit_payment = false;
+
+	$contrib_hashid = "";
+	$edit_contrib = false;
+}
+
+// There is no account here ... Go back home
 if(empty($my_account))
 {
 	header ("location:/DivideTheBill/index.php");
@@ -55,7 +81,7 @@ if(empty($my_account))
 //Now everything is fine. Let us extract some information.
 $account_id = $my_account['id'];
 
-//New contributor ?
+//New contributor
 if($admin_mode && isset($_POST['submit_contrib']))
 {
 	$name_of_contrib = filter_input(INPUT_POST, 'name_of_contributor', FILTER_SANITIZE_STRING);
@@ -63,7 +89,7 @@ if($admin_mode && isset($_POST['submit_contrib']))
 	$contrib_recorded = set_contributor($account_id, $name_of_contrib, $nb_of_parts);
 }
 
-//New Payment?
+//New Payment
 if($admin_mode && isset($_POST['submit_payment']))
 {
 	$p_payer_id = filter_input(INPUT_POST, 'p_payer_id', FILTER_SANITIZE_NUMBER_INT);
@@ -82,6 +108,25 @@ if($admin_mode && isset($_POST['submit_payment']))
 	}
 }
 
+//Edit contributor
+$contrib_id_to_edit = null;
+if($admin_mode && $edit_contrib)
+{
+	$contrib_to_edit = get_contributor_by_hashid($account_id, $contrib_hashid);
+	if(!empty($contrib_to_edit))
+	{
+		$contrib_id_to_edit = $contrib_to_edit['id'];
+	}
+}
+//Edit payment
+$payment_id_to_edit = null;
+if($admin_mode && $edit_payment)
+{
+	$payment_to_edit = get_payment_by_hashid($account_id, $payment_hashid);	
+	$payment_id_to_edit = $payment_to_edit['id'];
+}
+
+//Computations and values used in display
 $my_contributors = get_contributors($account_id);
 $n_contributors = 0;
 $n_parts = 0;
