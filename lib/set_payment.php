@@ -1,7 +1,7 @@
 <?php
 include_once('/lib/get_db.php');
 
-function set_payment($account_id_arg, $payer_id_arg, $cost_arg, $receiver_id_arg, $description_arg="", $date_creation_arg="")
+function set_payment($account_id_arg, $payer_id_arg, $cost_arg, $receiver_id_arg="", $description_arg="", $date_creation_arg="")
 {
 	$db = get_db();
 	$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -9,10 +9,11 @@ function set_payment($account_id_arg, $payer_id_arg, $cost_arg, $receiver_id_arg
 	$account_id = (int)$account_id_arg;
 	$payer_id = (int)$payer_id_arg;
 	$cost = (float)$cost_arg;
-	$receiver_id = (int)$receiver_id_arg;
+	$receiver_id = is_null($receiver_id_arg)?null:(int)$receiver_id_arg;
 	$description = htmlspecialchars($description_arg);
 	$date_creation = htmlspecialchars($date_creation_arg);
 	
+	$receiver_id = empty($$receiver_id) ? null:$receiver_id;
 	$description = empty($description) ? null:$description;
 	$date_creation = empty($date_creation) ? null:$date_creation;
 	//Change style of date to match sql
@@ -33,7 +34,14 @@ function set_payment($account_id_arg, $payer_id_arg, $cost_arg, $receiver_id_arg
 		$prepare_query->bindValue(':account_id', $account_id, PDO::PARAM_INT);
 		$prepare_query->bindValue(':payer_id', $payer_id, PDO::PARAM_INT);
 		$prepare_query->bindValue(':cost', $cost, PDO::PARAM_STR);
-		$prepare_query->bindValue(':receiver_id', $receiver_id, PDO::PARAM_INT);
+		if(is_null($receiver_id))
+		{
+			$prepare_query->bindValue(':receiver_id', $receiver_id, PDO::PARAM_INT);
+		}
+		else
+		{
+			$prepare_query->bindValue(':receiver_id', $receiver_id, PDO::PARAM_NULL);
+		}
 		if(is_null($description))
 		{
 			$prepare_query->bindValue(':description', $description, PDO::PARAM_NULL);

@@ -67,7 +67,7 @@ if(isset($_POST['submit_payment']))
 	$p_receiver_id = filter_input(INPUT_POST, 'p_receiver_id', FILTER_SANITIZE_NUMBER_INT);
 	$p_description = filter_input(INPUT_POST, 'p_description', FILTER_SANITIZE_STRING);
 	$p_date_creation  = filter_input(INPUT_POST, 'p_date_creation', FILTER_SANITIZE_STRING);
-	
+	$p_receiver_id = ($p_receiver_id === -1) ? null:$p_receiver_id;
 	$p_payment_added = set_payment($account_id, $p_payer_id, $p_cost, $p_receiver_id, $p_description, $p_date_creation);
 	if(!$p_payment_added)
 	{

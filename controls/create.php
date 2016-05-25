@@ -1,7 +1,7 @@
 <?php
 include_once('/lib/create_new_account.php');
 
-$isdone = false;
+$create_success = false;
 
 if(isset($_POST['submit']))
 {
@@ -18,8 +18,8 @@ if(isset($_POST['submit']))
 	}
 	while(!$hashid_admin);
 
-	$isdone = create_new_account($hashid, $hashid_admin, $title_of_account, $contact_email);
-	if(!$isdone)
+	$create_success = create_new_account($hashid, $hashid_admin, $title_of_account, $contact_email);
+	if(!$create_success)
 	{
 		echo '<p> Problem while creating account. Please try again</p>';
 	}

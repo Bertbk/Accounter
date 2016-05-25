@@ -23,7 +23,9 @@ Comptage des sousous
 
 2. Calcul des paiements
 3. Mise à jour de la table sql et de l'affichage
+=> DONE
 4. Hide/Detail un tableau ... (css je suppose)
+5. Check les noms pour éviter les doublons dans un Account
 
 ========================
 LE SITE
@@ -34,19 +36,19 @@ LE SITE
 
 - account.php
 -- Check url
--- Extraire la table de la bdd
--- Afficher les résultats
--- Calcul d'une solution et affichage
--- Possibilité d'ajout d'une personne
---- Ajout dans la bdd
--- Reactualise la page OU Ajax
--- Possibilité d'ajout d'un paiement
+-- Extraire la table de la bdd X 
+-- Afficher les résultats X 
+-- Calcul d'une solution et affichage X 
+-- Possibilité d'ajout d'une personne X
+--- Ajout dans la bdd X
+-- Reactualise la page OU Ajax X
+-- Possibilité d'ajout d'un paiement X
 --- Questions :
----- Qui a payé ?
----- Combien ?
----- A quelqu'un ou dans le pot commun ?
----- Pour quoi ?
---- Réactualise la page OU Ajax
+---- Qui a payé ? X
+---- Combien ? X
+---- A quelqu'un ou dans le pot commun ? X
+---- Pour quoi ? X 
+--- Réactualise la page OU AjaxX 
 
 Optionnel :
 - N'afficher que la somme totale payée par chaque individu aux différentes personnes (groupe ou individu). Un bouton disponible pour détailler les paiements
