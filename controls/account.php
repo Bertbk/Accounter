@@ -5,6 +5,7 @@ include_once('/lib/get_contributors.php');
 include_once('/lib/set_contributor.php');
 include_once('/lib/set_payment.php');
 include_once('/lib/get_payments.php');
+include_once('/lib/compute_solution.php');
 
 
 //Get Hashid
@@ -85,7 +86,9 @@ foreach($my_contributors  as $contrib)
 }
 //Payments
 $my_payments = get_payments($account_id);
-
+//solution
+$solution = array();
+$solution = compute_solution($account_id);
 
 include_once('/templates/account.php');
 ?>

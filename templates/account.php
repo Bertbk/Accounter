@@ -48,6 +48,35 @@
 }
 ?>
 
+<?php if (is_array($solution) && sizeof($solution) > 0 )
+{
+?>
+<h1>A solution</h1>
+<p>Total money: <?php echo $solution['-1']['total']?></p>
+<p>Nb. parts  : <?php echo $solution['-1']['nparts']?></p>
+<p>Single part: <?php echo $solution['-1']['single']?></p>
+<ul>
+<?php
+foreach($my_contributors as $payer)
+	{
+		$uid = $payer['id'];
+		foreach($my_contributors as $receiver)
+		{
+			$vid = $receiver['id'];
+			$refund = $solution[$uid][$vid];
+			if($refund > 0)
+			{
+?>
+<li><?php echo $payer['name']?> must refund <?php echo $refund?> &euro; to <?php echo $receiver['name']?></li>
+<?php
+			}
+		}
+	}
+?>
+</ul>	
+<?php
+}
+?>
 
 <?php
 //If admin mode
