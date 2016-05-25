@@ -52,7 +52,7 @@ if(empty($my_account))
 $account_id = $my_account['id'];
 
 //New contributor ?
-if(isset($_POST['submit_contrib']))
+if($admin_mode && isset($_POST['submit_contrib']))
 {
 	$name_of_contrib = filter_input(INPUT_POST, 'name_of_contributor', FILTER_SANITIZE_STRING);
 	$nb_of_parts = filter_input(INPUT_POST, 'number_of_parts', FILTER_SANITIZE_NUMBER_INT);
@@ -60,7 +60,7 @@ if(isset($_POST['submit_contrib']))
 }
 
 //New Payment?
-if(isset($_POST['submit_payment']))
+if($admin_mode && isset($_POST['submit_payment']))
 {
 	$p_payer_id = filter_input(INPUT_POST, 'p_payer_id', FILTER_SANITIZE_NUMBER_INT);
 	$p_cost = filter_input(INPUT_POST, 'p_cost', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);

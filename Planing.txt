@@ -1,54 +1,20 @@
-- Liste de sélection en fonction des données dans la bdd et/ou auto complétion
-========================
-Une table par SHA ? Possible ? Trop gros ?
-=> NON. Il vaut mieux une énorme table que plusieurs petites tables.
-=> Tous les comptes dans la même table.
+A FAIRE
 
-========================
-Hash ID REROUTE
-0. Create a Hash ID
-1. Utiliser une table existante de Hash ID
-2. Si Hash ID n'existe pas d'après l'url, alors "reroute to index"
-3. Sinon afficher la table adéquat.
+MAJOR
+======
+1. Pouvoir modifier/supprimer un Account, un Contributor, un Payment (joliement avec validation (alert)!)
+2. Calcul d'une solution et l'afficher -> Javascript ou finalement php c'est good... Ce ne sont pas des calculs violents donc php me parait ok.
+3. Séparer les Payments globaux et locaux
+4. Créer un installeur
 
-=> DONE
+MINOR
+=====
+1. Form dynamic pour payment (chose receiver from payer)
+2. Check les noms pour éviter les doublons dans un Account
+3. Hide/Show details de Payments : ne montrer que la somme finale, clic pour details (JAVASCRIPT)
+4. Payment local multiple (A a payé 10euros à (B,C) donc B et C doivent 5euros à A)
+5. Légende dans les Form pour aider les users
 
-========================
-Comptage des sousous
-
-0. Table des participants :
-  id, account_id, name, number of parts
-1. Table des paiements
-  id, account_id, payeur_id, cost, receiver_id, description, date
-
-2. Calcul des paiements
-3. Mise à jour de la table sql et de l'affichage
-=> DONE
-4. Hide/Detail un tableau ... (css je suppose)
-5. Check les noms pour éviter les doublons dans un Account
-
-========================
-LE SITE
-========================
-- Lors de la connexion au site avec une url vierge
--- Proposition de créer un nouveau Account
--- Ou de se renvoyer les accounts sur son email (lost account)
-
-- account.php
--- Check url
--- Extraire la table de la bdd X 
--- Afficher les résultats X 
--- Calcul d'une solution et affichage X 
--- Possibilité d'ajout d'une personne X
---- Ajout dans la bdd X
--- Reactualise la page OU Ajax X
--- Possibilité d'ajout d'un paiement X
---- Questions :
----- Qui a payé ? X
----- Combien ? X
----- A quelqu'un ou dans le pot commun ? X
----- Pour quoi ? X 
---- Réactualise la page OU AjaxX 
-
-Optionnel :
-- N'afficher que la somme totale payée par chaque individu aux différentes personnes (groupe ou individu). Un bouton disponible pour détailler les paiements
+----
+NOTES d'INSTALL
+A. Foreign Keys et Contraintes de suppression !
