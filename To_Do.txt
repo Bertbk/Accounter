@@ -17,3 +17,4 @@ MINOR
 ----
 NOTES d'INSTALL
 A. Foreign Keys et Contraintes de suppression !
+B. Case insensitive SQL ? A priori j'ai checké, je ne cherche que rarement sur le nom (et alors j'ai mis UPPER)
