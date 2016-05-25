@@ -26,12 +26,20 @@ function set_payment($account_id_arg, $payer_id_arg, $cost_arg, $receiver_id_arg
 		return false;
 	}
 
+	//Hashid
+	do {
+		$hashid = bin2hex(openssl_random_pseudo_bytes(8));
+	}
+	while(!$hashid);
+
 	
 	try
 	{
-		$myquery = 'INSERT INTO payments (id, account_id, payer_id, cost, receiver_id, description, date_creation) VALUES(NULL, :account_id, :payer_id, :cost, :receiver_id, :description, :date_creation)';
+		$myquery = 'INSERT INTO payments (id, account_id, hashid, payer_id, cost, receiver_id, description, date_creation) 
+		VALUES(NULL, :account_id, :hashid, :payer_id, :cost, :receiver_id, :description, :date_creation)';
 		$prepare_query = $db->prepare($myquery);
 		$prepare_query->bindValue(':account_id', $account_id, PDO::PARAM_INT);
+		$prepare_query->bindValue(':hashid', $hashid, PDO::PARAM_STR);
 		$prepare_query->bindValue(':payer_id', $payer_id, PDO::PARAM_INT);
 		$prepare_query->bindValue(':cost', $cost, PDO::PARAM_STR);
 		if(is_null($receiver_id))

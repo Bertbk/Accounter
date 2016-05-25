@@ -12,7 +12,6 @@ function set_contributor($account_id_arg, $name_of_contrib_arg, $nb_of_parts_arg
 	$does_this_guy_exists = get_contributor_by_name($account_id, $name_of_contrib);
 	if(!empty($does_this_guy_exists))
 	{
-//		echo '<p>Contributor with the same name already reccorded!</p>';
 		?>
 <script type="text/javascript">
   alert('Contributor with the same name already reccorded!');
@@ -21,11 +20,19 @@ function set_contributor($account_id_arg, $name_of_contrib_arg, $nb_of_parts_arg
 		return false;
 	}
 	
+	//Hashid
+	do {
+		$hashid = bin2hex(openssl_random_pseudo_bytes(8));
+	}
+	while(!$hashid);
+	
 	try
 	{
-		$myquery = 'INSERT INTO contributors(id, account_id, name, number_of_parts) VALUES(NULL, :account_id, :name_of_contrib, :nb_of_parts)';
+		$myquery = 'INSERT INTO contributors(id, account_id, hashid, name, number_of_parts) 
+		VALUES(NULL, :account_id, :hashid, :name_of_contrib, :nb_of_parts)';
 		$prepare_query = $db->prepare($myquery);
 		$prepare_query->bindValue(':account_id', $account_id, PDO::PARAM_INT);
+		$prepare_query->bindValue(':hashid', $hashid, PDO::PARAM_STR);
 		$prepare_query->bindValue(':name_of_contrib', $name_of_contrib, PDO::PARAM_STR);
 		$prepare_query->bindValue(':nb_of_parts', $nb_of_parts, PDO::PARAM_INT);
 		$isgood = $prepare_query->execute();
