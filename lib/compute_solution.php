@@ -18,6 +18,11 @@ function compute_solution($account_id_arg)
 	$my_contribs = get_contributors($account_id );
 	$my_payments = get_payments($account_id );
 	
+	if(empty($my_contribs) || empty($my_payments))
+	{
+		return array();
+	}
+	
 	$Refunds = array(array()); //who must give money to who ?
 	$Debts = array(); // Debt everyone has (to the group)
 	
