@@ -16,8 +16,10 @@ function set_payment($account_id_arg, $payer_id_arg, $cost_arg, $receiver_id_arg
 	$description = empty($description) ? null:$description;
 	$date_creation = empty($date_creation) ? null:$date_creation;
 	//Change style of date to match sql
-	$date_creation = str_replace('/', '-',$date_creation);
-	
+	if(!is_null($date_creation))
+	{
+		$date_creation = str_replace('/', '-',$date_creation);
+	}
 	if($payer_id === $receiver_id)
 	{
 		return false;

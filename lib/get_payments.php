@@ -9,10 +9,16 @@ function get_payments($account_id_arg)
 
 	try
 	{
-		$myquery = 'SELECT * FROM payments WHERE account_id=:account_id';
+		$myquery = 'SELECT payments.*, contribs1.name AS payer_name, 
+		contribs2.name AS receiver_name FROM payments 
+		INNER JOIN contributors contribs1 ON contribs1.id=payments.payer_id 
+		INNER JOIN contributors contribs2 ON contribs2.id=payments.receiver_id
+		WHERE payments.account_id=:account_id ';
 		$prepare_query = $db->prepare($myquery);
 		$prepare_query->bindValue(':account_id', $account_id, PDO::PARAM_INT);
-		$prepare_query->execute();
+		$isgood = $prepare_query->execute();
+		if(!$isgood)
+		{echo '<p>PROBLEM '.$account_id.'</p>';}
 	}
 	catch (Exception $e)
 	{
