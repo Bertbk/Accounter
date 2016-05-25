@@ -12,7 +12,7 @@ function create_new_account($hashid_arg, $hashid_admin_arg, $title_of_account_ar
 	}
 	
 	$hashid_admin = htmlspecialchars($hashid_admin_arg);
-	if(!is_string($hashid_admin) || strlen($hashid_admin) != 16)
+	if(!is_string($hashid_admin) || strlen($hashid_admin) != 32)
 	{
 		return false;
 	}

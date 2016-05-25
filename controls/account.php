@@ -8,16 +8,7 @@ include_once('/lib/set_payment.php');
 include_once('/lib/get_payments.php');
 include_once('/lib/compute_solution.php');
 
-
-//Get Hashid
-$hashid_url = "";
-empty($_GET['hash']) ? $hashid_url = "" : $hashid_url = htmlspecialchars($_GET['hash']);
-
-//If empty, go back home.
-if($hashid_url == "" || strlen($hashid_url) != 16 )
-{
-	header ("location:/DivideTheBill/index.php");
-}
+$my_account = array();
 
 //Get if admin mode is asked to be activated 
 $admin_mode_url = false;
@@ -26,7 +17,18 @@ if(!empty($_GET['admin']))
 	$admin_mode_url  = (boolean)$_GET['admin'];
 }
 
-$my_account = array();
+//Get Hashid
+$hashid_url = "";
+empty($_GET['hash']) ? $hashid_url = "" : $hashid_url = htmlspecialchars($_GET['hash']);
+
+//If empty, go back home.
+if($hashid_url == "" || (strlen($hashid_url) != 16 && !$admin_mode_url) 
+	||(strlen($hashid_url) != 32 && $admin_mode_url))
+{
+	header ("location:/DivideTheBill/index.php");
+}
+
+//Check if admin mode is really activated
 $admin_mode = false;
 if(!$admin_mode_url)
 {

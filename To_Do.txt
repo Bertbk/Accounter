@@ -6,6 +6,7 @@ MAJOR
 2. Séparer les Payments globaux et locaux
 3. Créer un installeur
 4. Design
+5. SMARTER pour les HASHID : Hashid admin = Hashid + New Hashid !
 
 MINOR
 =====
@@ -18,3 +19,4 @@ MINOR
 NOTES d'INSTALL
 A. Foreign Keys et Contraintes de suppression !
 B. Case insensitive SQL ? A priori j'ai checké, je ne cherche que rarement sur le nom (et alors j'ai mis UPPER)
+

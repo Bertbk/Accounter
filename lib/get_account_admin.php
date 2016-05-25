@@ -4,7 +4,7 @@ include_once('/lib/get_db.php');
 function get_account_admin($hash_id_admin_arg)
 {
 	$hash_id_admin = htmlspecialchars($hash_id_admin_arg);
-	if(!is_string($hash_id_admin) || strlen($hash_id_admin) != 16)
+	if(!is_string($hash_id_admin) || strlen($hash_id_admin) != 32)
 	{
 		return array();
 	}

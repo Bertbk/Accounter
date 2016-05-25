@@ -17,6 +17,7 @@ if(isset($_POST['submit']))
 		$hashid_admin = bin2hex(openssl_random_pseudo_bytes(8));
 	}
 	while(!$hashid_admin);
+	$hashid_admin = $hashid.$hashid_admin;
 
 	$create_success = create_new_account($hashid, $hashid_admin, $title_of_account, $contact_email);
 	if(!$create_success)
