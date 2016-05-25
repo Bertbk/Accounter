@@ -88,7 +88,7 @@ if($admin_mode)
 ?>
 		</select>
 		<input type="text" name="p_description"  />
-		<input type="date" name="p_date" />
+		<input type="date" name="p_date_creation" />
 		<br><button type="submit" name="submit_payment" value="Submit">Submit</button> 
 	  </fieldset>
 	</form>

@@ -66,10 +66,8 @@ if(isset($_POST['submit_payment']))
 	$p_cost = filter_input(INPUT_POST, 'p_cost', FILTER_SANITIZE_NUMBER_FLOAT);
 	$p_receiver_id = filter_input(INPUT_POST, 'p_receiver_id', FILTER_SANITIZE_NUMBER_INT);
 	$p_description = filter_input(INPUT_POST, 'p_description', FILTER_SANITIZE_STRING);
-	$p_date  = filter_input(INPUT_POST, 'p_date', FILTER_SANITIZE_NUMBER_INT);
-	if(empty($p_description)){$p_description ="";}
-	if(empty($p_date)){$p_date =0;}
-	$p_payment_added = set_payment($account_id, $p_payer_id, $p_cost, $p_receiver_id, $p_description, $p_date);
+	$p_date_creation  = filter_input(INPUT_POST, 'p_date', FILTER_SANITIZE_NUMBER_INT);
+	$p_payment_added = set_payment($account_id, $p_payer_id, $p_cost, $p_receiver_id, $p_description, $p_date_creation);
 	if($p_payment_added)
 	{
 		echo '<p>YES</p>';
