@@ -35,3 +35,4 @@ function get_payments($account_id_arg)
 		return array();
 	}
 }
+?>

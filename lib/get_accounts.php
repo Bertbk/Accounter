@@ -19,3 +19,4 @@ function get_accounts()
 	$prepare_query->closeCursor();
 	return $reponse;
 }
+?>

@@ -10,6 +10,7 @@ function get_db()
 	{
 			die('Fail to connect : ' . $e->getMessage());
 	}
+	$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	return $db;
 }
 ?>

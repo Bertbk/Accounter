@@ -29,3 +29,4 @@ function get_contributors($account_id_arg)
 		return array();
 	}
 }
+?>

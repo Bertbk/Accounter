@@ -34,3 +34,4 @@ function get_account_admin($hash_id_admin_arg)
 		return array();
 	}
 }
+?>

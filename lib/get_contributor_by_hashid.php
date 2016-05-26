@@ -4,7 +4,6 @@ include_once('/lib/get_db.php');
 function get_contributor_by_hashid($account_id_arg, $contrib_hashid_arg)
 {
 	$db = get_db();
-	$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 	$account_id = (int)$account_id_arg;
 	$contrib_hashid = htmlspecialchars($contrib_hashid_arg);
@@ -32,3 +31,4 @@ function get_contributor_by_hashid($account_id_arg, $contrib_hashid_arg)
 		return array();
 	}
 }
+?>

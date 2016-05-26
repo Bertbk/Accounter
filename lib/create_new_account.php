@@ -37,4 +37,4 @@ function create_new_account($hashid_arg, $hashid_admin_arg, $title_of_account_ar
 	}
 	return $isgood;
 }
-
+?>

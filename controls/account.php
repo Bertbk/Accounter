@@ -10,6 +10,9 @@ include_once('/lib/get_payment_by_hashid.php');
 include_once('/lib/set_contributor.php');
 include_once('/lib/set_payment.php');
 
+include_once('/lib/update_contributor.php');
+include_once('/lib/update_payment.php');
+
 include_once('/lib/compute_solution.php');
 
 
@@ -46,6 +49,7 @@ empty($_GET['edit_payment']) ? $payment_hashid = "" : $payment_hashid = htmlspec
 /* Treat arguments */
 //Check if admin mode is really activated
 $admin_mode = false;
+$edit_mode = false;
 if(!$admin_mode_url)
 {
 	//Simple search
@@ -70,6 +74,8 @@ if(!$admin_mode)
 
 	$contrib_hashid = "";
 	$edit_contrib = false;
+	
+	$edit_mode = false;
 }
 
 // There is no account here ... Go back home
@@ -99,7 +105,7 @@ if($admin_mode && isset($_POST['submit_payment']))
 		$p_receiver_id = filter_input(INPUT_POST, 'p_receiver_id', FILTER_SANITIZE_NUMBER_INT);
 		$p_description = filter_input(INPUT_POST, 'p_description', FILTER_SANITIZE_STRING);
 		$p_date_creation  = filter_input(INPUT_POST, 'p_date_creation', FILTER_SANITIZE_STRING);
-		$p_receiver_id = ($p_receiver_id === -1) ? null:$p_receiver_id;
+		$p_receiver_id = ($p_receiver_id == -1) ? null:$p_receiver_id;
 		$p_payment_added = set_payment($account_id, $p_payer_id, $p_cost, $p_receiver_id, $p_description, $p_date_creation);
 		if(!$p_payment_added)
 		{
@@ -118,6 +124,19 @@ if($admin_mode && $edit_contrib)
 		$contrib_id_to_edit = $contrib_to_edit['id'];
 	}
 }
+if($admin_mode && isset($_POST['submit_edit_contrib']))
+{
+	$name_of_contrib = filter_input(INPUT_POST, 'name_of_contributor', FILTER_SANITIZE_STRING);
+	$nb_of_parts = filter_input(INPUT_POST, 'number_of_parts', FILTER_SANITIZE_NUMBER_INT);
+	$contrib_edited = update_contributor($account_id, $contrib_id_to_edit, $name_of_contrib, $nb_of_parts);
+	if($contrib_edited)
+	{
+		$redirect_url = 'location:/DivideTheBill/account/'.$hashid_url.'/admin';
+		header($redirect_url);
+	}
+}
+
+
 //Edit payment
 $payment_id_to_edit = null;
 if($admin_mode && $edit_payment)
@@ -125,6 +144,25 @@ if($admin_mode && $edit_payment)
 	$payment_to_edit = get_payment_by_hashid($account_id, $payment_hashid);	
 	$payment_id_to_edit = $payment_to_edit['id'];
 }
+if($admin_mode && isset($_POST['submit_edit_payment']))
+{
+	$p_payer_id = filter_input(INPUT_POST, 'p_payer_id', FILTER_SANITIZE_NUMBER_INT);
+	if(!is_null($p_payer_id))
+	{
+		$p_cost = filter_input(INPUT_POST, 'p_cost', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+		$p_receiver_id = filter_input(INPUT_POST, 'p_receiver_id', FILTER_SANITIZE_NUMBER_INT);
+		$p_description = filter_input(INPUT_POST, 'p_description', FILTER_SANITIZE_STRING);
+		$p_date_creation  = filter_input(INPUT_POST, 'p_date_creation', FILTER_SANITIZE_STRING);
+		$p_receiver_id = ($p_receiver_id == -1) ? null:$p_receiver_id;
+		$payment_edited = update_payment($account_id, $payment_id_to_edit, $p_payer_id, $p_cost, $p_receiver_id, $p_description, $p_date_creation);
+		if($payment_edited)
+		{
+			$redirect_url = 'location:/DivideTheBill/account/'.$hashid_url.'/admin';
+			header($redirect_url);
+		}
+	}
+}
+
 
 //Computations and values used in display
 $my_contributors = get_contributors($account_id);
@@ -140,6 +178,8 @@ $my_payments = get_payments($account_id);
 //solution
 $solution = array();
 $solution = compute_solution($account_id);
+
+$edit_mode = ($edit_contrib || $edit_payment);
 
 include_once('/templates/account.php');
 ?>

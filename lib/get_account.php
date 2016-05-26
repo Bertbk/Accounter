@@ -36,3 +36,4 @@ function get_account($hash_id_arg)
 		return array();
 	}
 }
+?>

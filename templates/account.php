@@ -26,7 +26,6 @@ if($admin_mode && $edit_contrib && $contrib['id'] === $contrib_id_to_edit)
 ?>
 		<li>
 			<form method="post">
-	  <fieldset>
 		<input type="text" name="name_of_contributor" value="<?php echo $contrib_to_edit['name']?>" required />
 		(<input type="number" name="number_of_parts" value="<?php echo $contrib_to_edit['number_of_parts']?>" required />)
 		<button type="submit" name="submit_edit_contrib" value="Submit">Edit</button> 
@@ -35,16 +34,21 @@ if($admin_mode && $edit_contrib && $contrib['id'] === $contrib_id_to_edit)
 		</li>
 <?php
 }//if
-else{
-if($admin_mode && !$edit_contrib)
+else{ // READ Only
 {
 ?>
-		<li><?php echo $contrib['name']?> (<?php echo $contrib['number_of_parts']?>)<a href="/DivideTheBill/account/ff8c0e4e85741168330af5ac6c29aca4/admin/edit_contrib/<?php echo $contrib['hashid']?>">edit me</a></li>
+		<li>
+		<?php echo $contrib['name']?> (<?php echo $contrib['number_of_parts']?>)
+<?php //Edit link
+if($admin_mode && !$edit_mode)
+{
+	$link = '/DivideTheBill/account/'.$hashid_url.'/admin/edit_contrib/'.$contrib['hashid'];
+?>
+	<a href="<?php echo $link?>">edit me</a>
 <?php
 }
-else{
-?>
-		<li><?php echo $contrib['name']?> (<?php echo $contrib['number_of_parts']?>)</li>
+?>		
+		</li>
 <?php
 }//inner else
 } //outer else
@@ -55,6 +59,7 @@ else{
 }
 ?>
 
+<!-- PAYMENTS -->
 <?php if (is_array($my_payments) && sizeof($my_payments) > 0 )
 {
 ?>
@@ -63,17 +68,68 @@ else{
 <?php
 	foreach($my_payments as $payment)
 	{
+		if($admin_mode && $edit_payment && $payment['id'] === $payment_id_to_edit)
+		{
+			//Edit mode
 ?>
+<li>
+	<form method="post" id="form_edit_payment_send">
+		<select name="p_payer_id" onchange="configureDropDownLists(this, document.getElementById('form_edit_payment_recv'))" > 
+<?php
+			foreach($my_contributors as $contrib)
+			{
+?>
+				<option value="<?php echo $contrib['id']?>"
+				<?php if($contrib['id']==$payment_to_edit['payer_id']){echo ' selected';}?>
+				>
+				<?php echo $contrib['name']?></option>
+<?php
+			}
+?>
+		</select>
+		<input type="number" step="0.01" min="0" name="p_cost" value="<?php echo $payment_to_edit['cost']?>" required />
+		<select name="p_receiver_id" id="form_edit_payment_recv" selected="<?php echo $payment_to_edit['receiver_id']?>"> 
+		<option value="-1" >Group</option>
+<?php
+		foreach($my_contributors as $contrib)
+			{
+				if($contrib['id'] == $payment_to_edit['payer_id']){continue;}
+?>
+				<option value="<?php echo $contrib['id']?>"
+				<?php if($contrib['id']==$payment_to_edit['receiver_id']){echo ' selected';}?>
+				>
+				<?php echo $contrib['name']?></option>
+<?php
+			}
+?>
+		</select>
+		<input type="text" name="p_description" value="<?php echo $payment_to_edit['description']?>" />
+		<input type="date" name="p_date_creation" value="<?php echo $payment_to_edit['date_creation']?>"/>
+		<br><button type="submit" name="submit_edit_payment" value="Submit">Submit</button> 
+	</form>
+	</li>
+<?php
+		}
+		else{//Read only
+	?>
 		<li><?php echo $payment['payer_name']?> paid <?php echo $payment['cost']?>&euro; to 
 		<?php echo (is_null($payment['receiver_name']))?'all':$payment['receiver_name']?>
 		<?php if(!empty($payment['date_creation'])){echo ', the '.str_replace('-', '/',$payment['date_creation']);}?>
-		<?php if(!empty($payment['description'])){echo 'for '.$payment['description'];}?></li>
+		<?php if(!empty($payment['description'])){echo 'for '.$payment['description'];}?>
+<?php //EDIT BUTTON
+		if($admin_mode && !$edit_mode)
+			{
+	$link = '/DivideTheBill/account/'.$hashid_url.'/admin/edit_payment/'.$payment['hashid'];
+?>
+	<a href="<?php echo $link?>">edit me</a>
 <?php
-	}
+	}//inner if/else
+	}//outer else
+}//foreach
 ?>
 </ul>
 <?php
-}
+}//if payment exist
 ?>
 
 <?php if (is_array($solution) && sizeof($solution) > 0 )
@@ -142,14 +198,6 @@ if($admin_mode)
 		<input type="number" step="0.01" min="0" name="p_cost" required />
 		<select name="p_receiver_id" id="form_payment_recv"> 
 		<option value="-1" selected="selected">Group</option>
-<?php
-	//	foreach($my_contributors as $contrib)
-	//	{
-?>
-	<!--		<option value="<?php echo $contrib['id']?>"><?php echo $contrib['name']?></option>-->
-<?php
-//		}
-?>
 		</select>
 		<input type="text" name="p_description"  />
 		<input type="date" name="p_date_creation" />

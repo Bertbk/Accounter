@@ -24,10 +24,11 @@ function get_payment_by_hashid($account_id_arg, $payment_hashid_arg)
 	$prepare_query->closeCursor();
 	if(!empty($reply))
 	{
-		return $reply;
+		return $reply[0];
 	}
 	else
 	{
 		return array();
 	}
 }
+?>

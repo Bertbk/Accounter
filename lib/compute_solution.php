@@ -87,3 +87,4 @@ function compute_solution($account_id_arg)
 	
 	return $Refunds;
 }
+?>
