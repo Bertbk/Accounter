@@ -163,6 +163,13 @@ if($admin_mode && isset($_POST['submit_edit_payment']))
 	}
 }
 
+//Cancel edit
+if($admin_mode && isset($_POST['submit_cancel']))
+{
+	$redirect_url = 'location:/DivideTheBill/account/'.$hashid_url.'/admin';
+	header($redirect_url);
+}
+
 
 //Computations and values used in display
 $my_contributors = get_contributors($account_id);

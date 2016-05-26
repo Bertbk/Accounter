@@ -28,7 +28,8 @@ if($admin_mode && $edit_contrib && $contrib['id'] === $contrib_id_to_edit)
 			<form method="post">
 		<input type="text" name="name_of_contributor" value="<?php echo $contrib_to_edit['name']?>" required />
 		(<input type="number" name="number_of_parts" value="<?php echo $contrib_to_edit['number_of_parts']?>" required />)
-		<button type="submit" name="submit_edit_contrib" value="Submit">Edit</button> 
+		<button type="submit" name="submit_edit_contrib" value="Submit">Edit</button>
+		<button type="submit" name="submit_cancel" value="Submit">Cancel</button> 
 	</form>
 
 		</li>
@@ -106,6 +107,7 @@ if($admin_mode && !$edit_mode)
 		<input type="text" name="p_description" value="<?php echo $payment_to_edit['description']?>" />
 		<input type="date" name="p_date_creation" value="<?php echo $payment_to_edit['date_creation']?>"/>
 		<br><button type="submit" name="submit_edit_payment" value="Submit">Submit</button> 
+		<button type="submit" name="submit_cancel" value="Submit">Cancel</button> 
 	</form>
 	</li>
 <?php
@@ -136,9 +138,9 @@ if($admin_mode && !$edit_mode)
 {
 ?>
 <h1>A solution</h1>
-<p>Total money: <?php echo $solution['-1']['total']?></p>
-<p>Nb. parts  : <?php echo $solution['-1']['nparts']?></p>
-<p>Single part: <?php echo $solution['-1']['single']?></p>
+<p>Total money: <?php echo $solution['-1']['total']?><br>
+Nb. parts  : <?php echo $solution['-1']['nparts']?><br>
+Single part: <?php echo $solution['-1']['single']?></p>
 <ul>
 <?php
 foreach($my_contributors as $payer)
@@ -174,8 +176,10 @@ if($admin_mode)
 	<form method="post">
 	  <fieldset>
 		<legend>Add a contributor:</legend>
-		Name: <input type="text" name="name_of_contributor" required /><br>
-		Nb. of parts: <input type="number" name="number_of_parts" value="1" required /><br>
+		<label for="form_set_contrib_name">Name: </label>
+		<input type="text" name="name_of_contributor" id="form_set_contrib_name" required /><br>
+		<label for="form_set_contrib_nbparts">Nb. of people: </label>
+		 <input type="number" name="number_of_parts" value="1" id="form_set_contrib_nbparts" required /><br>
 		 <button type="submit" name="submit_contrib" value="Submit">Submit</button> 
 	  </fieldset>
 	</form>
@@ -184,7 +188,8 @@ if($admin_mode)
 	<form method="post" id="form_payment_send">
 	  <fieldset>
 		<legend>Add a payment:</legend>
-		<select name="p_payer_id" onchange="configureDropDownLists(this, document.getElementById('form_payment_recv'))"> 
+		<label for="form_set_payment_payer">Payer</label>
+		<select name="p_payer_id" id=="form_set_payment_payer" onchange="configureDropDownLists(this, document.getElementById('form_set_payment_recv'))"> 
 <option disabled selected value="null"> -- select a payer -- </option>
 <?php
 		foreach($my_contributors as $contrib)
@@ -195,12 +200,16 @@ if($admin_mode)
 		}
 ?>
 		</select>
-		<input type="number" step="0.01" min="0" name="p_cost" required />
-		<select name="p_receiver_id" id="form_payment_recv"> 
+		<label for="form_set_payment_cost">Cost</label>
+		<input type="number" step="0.01" min="0" name="p_cost" id="form_set_payment_cost" required />
+		<label for="form_set_payment_recv">Receiver</label>
+		<select name="p_receiver_id" id="form_set_payment_recv"> 
 		<option value="-1" selected="selected">Group</option>
 		</select>
-		<input type="text" name="p_description"  />
-		<input type="date" name="p_date_creation" />
+		<label for="form_set_payment_desc">Description</label>
+		<input type="text" name="p_description" id="form_set_payment_desc" />
+		<label for="form_set_payment_date">Date of payment</label>
+		<input type="date" name="p_date_creation" id="form_set_payment_date"/>
 		<br><button type="submit" name="submit_payment" value="Submit">Submit</button> 
 	  </fieldset>
 	</form>

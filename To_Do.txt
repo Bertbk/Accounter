@@ -2,19 +2,19 @@ A FAIRE
 
 MAJOR
 ======
-1. Pouvoir modifier/supprimer un Account, un Contributor, un Payment (joliement avec validation (alert)!)
-2. Séparer les Payments globaux et locaux
-3. Créer un installeur
-4. Design
-5. Bug dans le refund, ex : A pay 200, B pay 50, C pay 20, C pay 30 to A.
+1. Séparer les Payments globaux et locaux
+2. Créer un installeur
+3. Bug dans le refund, ex : A pay 200, B pay 50, C pay 20, C pay 30 to A.
 
 MINOR
 =====
-1. Form dynamic pour payment (chose receiver from payer)
-2. Hide/Show details de Payments : ne montrer que la somme finale, clic pour details (JAVASCRIPT)
-3. Payment local multiple (A a payé 10euros à (B,C) donc B et C doivent 5euros à A)
-4. Légende dans les Form pour aider les users
+1. Hide/Show details de Payments : ne montrer que la somme finale, clic pour details (JAVASCRIPT)
+2. Payment local multiple (A a payé 10euros à (B,C) donc B et C doivent 5euros à A)
 
+DESIGN
+======
+
+1. Label sous l'input
 ----
 NOTES d'INSTALL
 A. Foreign Keys et Contraintes de suppression !
