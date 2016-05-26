@@ -80,6 +80,32 @@ function compute_solution($account_id_arg)
 		}
 	}
 	
+	//Last loop to avoid 'two direction' refund (A must pay B and B must pay A)
+	foreach($my_contribs as $contrib)
+	{
+		$uid = $contrib['id'];
+		foreach($my_contribs as $other)
+		{
+			$vid = $other['id'];
+			if($uid == $vid){continue;}
+			$u_to_v = $Refunds[$uid][$vid];
+			$v_to_u = $Refunds[$vid][$uid];
+			if($u_to_v > 0 && $v_to_u > 0)
+			{
+				if($u_to_v > $v_to_u)
+				{
+					$Refunds[$uid][$vid] = $u_to_v - $v_to_u;
+					$Refunds[$vid][$uid] = 0;
+				}
+				else
+				{
+					$Refunds[$vid][$uid] = $v_to_u - $u_to_v;
+					$Refunds[$uid][$vid] = 0;
+				}
+			}
+		}
+	}
+	
 	//Usefull values
 	$Refunds[-1]['total'] = $total_payment;
 	$Refunds[-1]['single'] = $debt_of_all ;

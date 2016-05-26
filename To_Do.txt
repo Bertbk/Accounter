@@ -4,7 +4,6 @@ MAJOR
 ======
 1. Séparer les Payments globaux et locaux
 2. Créer un installeur
-3. Bug dans le refund, ex : A pay 200, B pay 50, C pay 20, C pay 30 to A.
 
 MINOR
 =====
