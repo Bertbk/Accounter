@@ -4,6 +4,8 @@ MAJOR
 ======
 1. Séparer les Payments globaux et locaux
 2. Créer un installeur
+3. Comments
+4. Multi bill with different parts : n people != n parts (!)
 
 MINOR
 =====
