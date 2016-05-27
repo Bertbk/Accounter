@@ -1,10 +1,13 @@
 <?php 
 function get_db()
 {
+	$configs = include('../config.php');
 	// Connexion to the database
 	try
 	{
-	$db = new PDO('mysql:host=localhost; dbname=accounter; charset=utf8', 'root', '');
+	
+	$query_db = 'mysql:host='.$configs['host'].'; dbname='.$configs['dbname'].'; charset=utf8';
+	$db = new PDO($query_db, $configs['username'], $configs['password']);
 	}
 	catch (Exception $e)
 	{
