@@ -1,7 +1,9 @@
-<?php 
+<?php
+require_once __DIR__.'/../config-app.php';
+
 function get_db()
 {
-	$configs = include('../config.php');
+	$configs = include(ABSPATH.'/config.php');
 	// Connexion to the database
 	try
 	{
