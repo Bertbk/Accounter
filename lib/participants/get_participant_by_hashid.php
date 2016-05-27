@@ -1,7 +1,7 @@
 <?php
-include_once('/lib/get_db.php');
+include_once(__DIR__.'/../get_db.php');
 
-function get_contributor_by_hashid($account_id_arg, $contrib_hashid_arg)
+function get_participant_by_hashid($account_id_arg, $contrib_hashid_arg)
 {
 	$db = get_db();
 
