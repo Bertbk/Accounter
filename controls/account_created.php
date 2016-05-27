@@ -34,8 +34,8 @@ if(empty($my_account) ||empty($my_account_admin))
 
 if($isdone)
 {
-	$link_contrib = BASEURL.'account/'.$hashid;
-	$link_admin = BASEURL.'account/'.$hashid_admin.'/admin';	
+	$link_contrib = BASEURL.'/account/'.$hashid;
+	$link_admin = BASEURL.'/account/'.$hashid_admin.'/admin';	
 }	
 include_once(ABSPATH.'/templates/account_created.php');
 ?>

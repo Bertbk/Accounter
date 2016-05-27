@@ -1,22 +1,20 @@
 <?php 
-include_once('/lib/get_account.php');
-include_once('/lib/get_account_admin.php');
-include_once('/lib/get_contributors.php');
-include_once('/lib/get_contributor_by_name.php');
-include_once('/lib/get_contributor_by_hashid.php');
-include_once('/lib/get_payments.php');
-include_once('/lib/get_payment_by_hashid.php');
+include_once(LIBPATH.'/accounts/get_account.php');
+include_once(LIBPATH.'/accounts/get_account_admin.php');
 
-include_once('/lib/set_contributor.php');
-include_once('/lib/set_payment.php');
+include_once(LIBPATH.'/participants/get_participants.php');
+include_once(LIBPATH.'/participants/get_participant_by_name.php');
+include_once(LIBPATH.'/participants/get_participant_by_hashid.php');
+include_once(LIBPATH.'/participants/set_participant.php');
+include_once(LIBPATH.'/participants/update_participant.php');
 
-include_once('/lib/update_contributor.php');
-include_once('/lib/update_payment.php');
+include_once(LIBPATH.'/payments/get_payments.php');
+include_once(LIBPATH.'/payments/get_payment_by_hashid.php');
+include_once(LIBPATH.'/payments/set_payment.php');
+include_once(LIBPATH.'/payments/update_payment.php');
 
-include_once('/lib/compute_solution.php');
+include_once(LIBPATH.'/compute_solution.php');
 
-
-$my_account = array();
 /* Get arguments */
 //Get if admin mode is asked to be activated 
 $admin_mode_url = false;
@@ -26,78 +24,76 @@ if(!empty($_GET['admin']))
 }
 
 //Get Hashid
-$hashid_url = "";
-empty($_GET['hash']) ? $hashid_url = "" : $hashid_url = htmlspecialchars($_GET['hash']);
-
-//If empty, go back home.
-if($hashid_url == "" || (strlen($hashid_url) != 16 && !$admin_mode_url) 
-	||(strlen($hashid_url) != 32 && $admin_mode_url))
+$hashid = "";
+empty($_GET['hash']) ? $hashid = "" : $hashid = htmlspecialchars($_GET['hash']);
+//If no hashid then go back home
+if($hashid == "" || (strlen($hashid) != 16 && !$admin_mode_url) 
+	||(strlen($hashid) != 32 && $admin_mode_url))
 {
-	header ("location:/DivideTheBill/index.php");
+	header ('location: '.BASEURL);
 }
-
-//Edit a contributor ?
-$contrib_hashid = "";
-empty($_GET['edit_contrib']) ? $contrib_hashid = "" : $contrib_hashid = htmlspecialchars($_GET['edit_contrib']);
-(empty($contrib_hashid)) ? $edit_contrib = false : $edit_contrib=true;
-
+//Edit a participant ?
+$participant_hashid = "";
+empty($_GET['edit_participant']) ? $participant_hashid = "" : $participant_hashid = htmlspecialchars($_GET['edit_participant']);
+$participant_hashid = (strlen($participant_hashid)==16)? $participant_hashid : "";
+$edit_participant = !(empty($participant_hashid));
 //Edit a payment ?
 $payment_hashid = "";
 empty($_GET['edit_payment']) ? $payment_hashid = "" : $payment_hashid = htmlspecialchars($_GET['edit_payment']);
-(empty($payment_hashid)) ? $edit_payment = false : $edit_payment=true;
+$payment_hashid = (strlen($payment_hashid)==16)? $payment_hashid : "";
+$edit_payment = (!empty($payment_hashid));
 
 /* Treat arguments */
-//Check if admin mode is really activated
+$my_account = array();
 $admin_mode = false;
 $edit_mode = false;
 if(!$admin_mode_url)
 {
 	//Simple search
-	$my_account = get_account($hashid_url);
+	$my_account = get_account($hashid);
 }
 else
 {
 	//Admin search
-	$my_account = get_account_admin($hashid_url);
+	$my_account = get_account_admin($hashid);
 	//If result, then admin mode activated
 	if(!empty($my_account))
 	{
 		$admin_mode = true;
 	}
+	//else: lier
 }
 
-//If not admin, then do not edit anything
+if(empty($my_account))
+{
+	header ('location: '.BASEURL);
+}
+
+//If not admin, then no edit priviledges
 if(!$admin_mode)
 {
 	$payment_hashid = "";
 	$edit_payment = false;
-
-	$contrib_hashid = "";
-	$edit_contrib = false;
-	
-	$edit_mode = false;
+	$participant_hashid = "";
+	$edit_participant = false;
 }
+$edit_mode = $edit_participant || $edit_payment;
 
-// There is no account here ... Go back home
-if(empty($my_account))
-{
-	header ("location:/DivideTheBill/index.php");
-}
-
-//Now everything is fine. Let us extract some information.
+/* Here, we have an account and we know if we are admin or not.*/
 $account_id = $my_account['id'];
 
-//New contributor
-if($admin_mode && isset($_POST['submit_contrib']))
+//New participant
+if($admin_mode && isset($_POST['submit_participant']))
 {
-	$name_of_contrib = filter_input(INPUT_POST, 'name_of_contributor', FILTER_SANITIZE_STRING);
-	$nb_of_parts = filter_input(INPUT_POST, 'number_of_parts', FILTER_SANITIZE_NUMBER_INT);
-	$contrib_recorded = set_contributor($account_id, $name_of_contrib, $nb_of_parts);
+	$p_name_of_participant = filter_input(INPUT_POST, 'name_of_participant', FILTER_SANITIZE_STRING);
+	$p_nb_of_people = filter_input(INPUT_POST, 'nb_of_people', FILTER_SANITIZE_NUMBER_INT);
+	$p_participant_recorded = set_participant($p_account_id, $p_name_of_participant, $p_nb_of_people);
 }
 
 //New Payment
 if($admin_mode && isset($_POST['submit_payment']))
 {
+	$p_bill_id = filter_input(INPUT_POST, 'p_bill_id', FILTER_SANITIZE_NUMBER_INT);
 	$p_payer_id = filter_input(INPUT_POST, 'p_payer_id', FILTER_SANITIZE_NUMBER_INT);
 	if(!is_null($p_payer_id))
 	{
@@ -106,7 +102,8 @@ if($admin_mode && isset($_POST['submit_payment']))
 		$p_description = filter_input(INPUT_POST, 'p_description', FILTER_SANITIZE_STRING);
 		$p_date_creation  = filter_input(INPUT_POST, 'p_date_creation', FILTER_SANITIZE_STRING);
 		$p_receiver_id = ($p_receiver_id == -1) ? null:$p_receiver_id;
-		$p_payment_added = set_payment($account_id, $p_payer_id, $p_cost, $p_receiver_id, $p_description, $p_date_creation);
+		$p_payment_added = set_payment($account_id, $p_bill_id, 
+		$p_payer_id, $p_cost, $p_receiver_id, $p_description, $p_date_creation);
 		if(!$p_payment_added)
 		{
 			echo '<p>payment couldn\'t be added.</p>';
@@ -114,24 +111,24 @@ if($admin_mode && isset($_POST['submit_payment']))
 	}
 }
 
-//Edit contributor
-$contrib_id_to_edit = null;
-if($admin_mode && $edit_contrib)
+//Edit participant
+$participant_id_to_edit = null;
+if($admin_mode && $edit_participant)
 {
-	$contrib_to_edit = get_contributor_by_hashid($account_id, $contrib_hashid);
-	if(!empty($contrib_to_edit))
+	$participant_to_edit = get_participant_by_hashid($account_id, $participant_hashid);
+	if(!empty($participant_to_edit))
 	{
-		$contrib_id_to_edit = $contrib_to_edit['id'];
+		$participant_id_to_edit = $participant_to_edit['id'];
 	}
 }
-if($admin_mode && isset($_POST['submit_edit_contrib']))
+if($admin_mode && isset($_POST['submit_edit_participant']))
 {
-	$name_of_contrib = filter_input(INPUT_POST, 'name_of_contributor', FILTER_SANITIZE_STRING);
-	$nb_of_parts = filter_input(INPUT_POST, 'number_of_parts', FILTER_SANITIZE_NUMBER_INT);
-	$contrib_edited = update_contributor($account_id, $contrib_id_to_edit, $name_of_contrib, $nb_of_parts);
-	if($contrib_edited)
+	$name_of_participant = filter_input(INPUT_POST, 'name_of_participant', FILTER_SANITIZE_STRING);
+	$nb_of_people = filter_input(INPUT_POST, 'nb_of_people', FILTER_SANITIZE_NUMBER_INT);
+	$participant_edited = update_participant($account_id, $participant_id_to_edit, $name_of_participant, $nb_of_people);
+	if($participant_edited)
 	{
-		$redirect_url = 'location:/DivideTheBill/account/'.$hashid_url.'/admin';
+		$redirect_url = 'location:'.BASEURL.'/account/'.$hashid.'/admin';
 		header($redirect_url);
 	}
 }
@@ -146,6 +143,7 @@ if($admin_mode && $edit_payment)
 }
 if($admin_mode && isset($_POST['submit_edit_payment']))
 {
+	$p_bill_id = filter_input(INPUT_POST, 'p_bill_id', FILTER_SANITIZE_NUMBER_INT);
 	$p_payer_id = filter_input(INPUT_POST, 'p_payer_id', FILTER_SANITIZE_NUMBER_INT);
 	if(!is_null($p_payer_id))
 	{
@@ -154,10 +152,11 @@ if($admin_mode && isset($_POST['submit_edit_payment']))
 		$p_description = filter_input(INPUT_POST, 'p_description', FILTER_SANITIZE_STRING);
 		$p_date_creation  = filter_input(INPUT_POST, 'p_date_creation', FILTER_SANITIZE_STRING);
 		$p_receiver_id = ($p_receiver_id == -1) ? null:$p_receiver_id;
-		$payment_edited = update_payment($account_id, $payment_id_to_edit, $p_payer_id, $p_cost, $p_receiver_id, $p_description, $p_date_creation);
+		$payment_edited = update_payment($account_id, $p_bill_id, $payment_id_to_edit, 
+		$p_payer_id, $p_cost, $p_receiver_id, $p_description, $p_date_creation);
 		if($payment_edited)
 		{
-			$redirect_url = 'location:/DivideTheBill/account/'.$hashid_url.'/admin';
+			$redirect_url = 'location:'.BASEURL.'/account/'.$hashid.'/admin';
 			header($redirect_url);
 		}
 	}
@@ -166,27 +165,24 @@ if($admin_mode && isset($_POST['submit_edit_payment']))
 //Cancel edit
 if($admin_mode && isset($_POST['submit_cancel']))
 {
-	$redirect_url = 'location:/DivideTheBill/account/'.$hashid_url.'/admin';
+	$redirect_url = 'location:'.BASEURL.'/account/'.$hashid.'/admin';
 	header($redirect_url);
 }
 
-
 //Computations and values used in display
-$my_contributors = get_contributors($account_id);
-$n_contributors = 0;
-$n_parts = 0;
-foreach($my_contributors  as $contrib)
+$my_participants = get_participants($account_id);
+$n_participants = 0;
+$n_people = 0;
+foreach($my_participants  as $participant)
 {
-	$n_contributors += 1 ;
-	$n_parts += (int)$contrib['number_of_parts'] ;
+	$n_participants += 1 ;
+	$n_people += (int)$participant['nb_of_people'] ;
 }
 //Payments
 $my_payments = get_payments($account_id);
 //solution
 $solution = array();
 $solution = compute_solution($account_id);
-
-$edit_mode = ($edit_contrib || $edit_payment);
 
 include_once('/templates/account.php');
 ?>
