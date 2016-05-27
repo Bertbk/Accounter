@@ -31,4 +31,3 @@ function get_participant_by_hashid($account_id_arg, $contrib_hashid_arg)
 		return array();
 	}
 }
-?>

@@ -1,5 +1,5 @@
 <?php
-include_once('/lib/get_db.php');
+include_once(__DIR__.'/../get_db.php');
 
 function get_payments($account_id_arg)
 {
@@ -11,8 +11,8 @@ function get_payments($account_id_arg)
 	{
 		$myquery = 'SELECT payments.*, contribs1.name AS payer_name, 
 		contribs2.name AS receiver_name FROM payments 
-		LEFT  JOIN contributors contribs1 ON contribs1.id=payments.payer_id 
-		LEFT  JOIN contributors contribs2 ON contribs2.id=payments.receiver_id
+		LEFT  JOIN participants contribs1 ON contribs1.id=payments.payer_id 
+		LEFT  JOIN participants contribs2 ON contribs2.id=payments.receiver_id
 		WHERE payments.account_id=:account_id ';
 		$prepare_query = $db->prepare($myquery);
 		$prepare_query->bindValue(':account_id', $account_id, PDO::PARAM_INT);
@@ -35,4 +35,3 @@ function get_payments($account_id_arg)
 		return array();
 	}
 }
-?>

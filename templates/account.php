@@ -11,13 +11,13 @@
 <h1>Welcome to the account: <?php echo $my_account['title']?></h1>
 <p>Associated email adress : <?php echo $my_account['email']?></p>
 	
-<?php if (is_array($my_contributors) && sizeof($my_contributors) > 0 )
+<?php if (is_array($my_participants) && sizeof($my_participants) > 0 )
 {
 ?>
-<h1>Contributors (<?php echo $n_contributors ?>) / Parts (<?php echo $n_parts ?>)</h1>
+<h1>participants (<?php echo $n_participants ?>) / Parts (<?php echo $n_parts ?>)</h1>
 <ul>
 <?php
-	foreach($my_contributors as $contrib)
+	foreach($my_participants as $contrib)
 	{
 ?>
 <?php
@@ -26,7 +26,7 @@ if($admin_mode && $edit_contrib && $contrib['id'] === $contrib_id_to_edit)
 ?>
 		<li>
 			<form method="post">
-		<input type="text" name="name_of_contributor" value="<?php echo $contrib_to_edit['name']?>" required />
+		<input type="text" name="name_of_participant" value="<?php echo $contrib_to_edit['name']?>" required />
 		(<input type="number" name="number_of_parts" value="<?php echo $contrib_to_edit['number_of_parts']?>" required />)
 		<button type="submit" name="submit_edit_contrib" value="Submit">Edit</button>
 		<button type="submit" name="submit_cancel" value="Submit">Cancel</button> 
@@ -43,7 +43,7 @@ else{ // READ Only
 <?php //Edit link
 if($admin_mode && !$edit_mode)
 {
-	$link = '/DivideTheBill/account/'.$hashid_url.'/admin/edit_contrib/'.$contrib['hashid'];
+	$link = BASEURL.'/account/'.$hashid_url.'/admin/edit_contrib/'.$contrib['hashid'];
 ?>
 	<a href="<?php echo $link?>">edit me</a>
 <?php
@@ -77,7 +77,7 @@ if($admin_mode && !$edit_mode)
 	<form method="post" id="form_edit_payment_send">
 		<select name="p_payer_id" onchange="configureDropDownLists(this, document.getElementById('form_edit_payment_recv'))" > 
 <?php
-			foreach($my_contributors as $contrib)
+			foreach($my_participants as $contrib)
 			{
 ?>
 				<option value="<?php echo $contrib['id']?>"
@@ -92,7 +92,7 @@ if($admin_mode && !$edit_mode)
 		<select name="p_receiver_id" id="form_edit_payment_recv" selected="<?php echo $payment_to_edit['receiver_id']?>"> 
 		<option value="-1" >Group</option>
 <?php
-		foreach($my_contributors as $contrib)
+		foreach($my_participants as $contrib)
 			{
 				if($contrib['id'] == $payment_to_edit['payer_id']){continue;}
 ?>
@@ -121,7 +121,7 @@ if($admin_mode && !$edit_mode)
 <?php //EDIT BUTTON
 		if($admin_mode && !$edit_mode)
 			{
-	$link = '/DivideTheBill/account/'.$hashid_url.'/admin/edit_payment/'.$payment['hashid'];
+	$link = BASEURL.'/account/'.$hashid_url.'/admin/edit_payment/'.$payment['hashid'];
 ?>
 	<a href="<?php echo $link?>">edit me</a>
 <?php
@@ -143,10 +143,10 @@ Nb. parts  : <?php echo $solution['-1']['nparts']?><br>
 Single part: <?php echo $solution['-1']['single']?></p>
 <ul>
 <?php
-foreach($my_contributors as $payer)
+foreach($my_participants as $payer)
 	{
 		$uid = $payer['id'];
-		foreach($my_contributors as $receiver)
+		foreach($my_participants as $receiver)
 		{
 			$vid = $receiver['id'];
 			$refund = $solution[$uid][$vid];
@@ -171,13 +171,13 @@ if($admin_mode)
 ?>
 <!-- Admin mode-->
 	<h1>Administration section</h1>
-<!-- Add contributor-->
+<!-- Add participant-->
 
 	<form method="post">
 	  <fieldset>
-		<legend>Add a contributor:</legend>
+		<legend>Add a participant:</legend>
 		<label for="form_set_contrib_name">Name: </label>
-		<input type="text" name="name_of_contributor" id="form_set_contrib_name" required /><br>
+		<input type="text" name="name_of_participant" id="form_set_contrib_name" required /><br>
 		<label for="form_set_contrib_nbparts">Nb. of people: </label>
 		 <input type="number" name="number_of_parts" value="1" id="form_set_contrib_nbparts" required /><br>
 		 <button type="submit" name="submit_contrib" value="Submit">Submit</button> 
@@ -192,7 +192,7 @@ if($admin_mode)
 		<select name="p_payer_id" id=="form_set_payment_payer" onchange="configureDropDownLists(this, document.getElementById('form_set_payment_recv'))"> 
 <option disabled selected value="null"> -- select a payer -- </option>
 <?php
-		foreach($my_contributors as $contrib)
+		foreach($my_participants as $contrib)
 		{
 ?>
 			<option value="<?php echo $contrib['id']?>"><?php echo $contrib['name']?></option>
@@ -223,8 +223,8 @@ if($admin_mode)
 
 <h1>Menu</h1>
 <ul>
-<li><a href='/DivideTheBill'>Main Menu</a></li>
-<li><a href='/DivideTheBill/create.php'>Create a new account</a></li>
+<li><a href='<?php echo BASEURL.''?>'>Main Menu</a></li>
+<li><a href='<?php echo BASEURL.'/create.php'?>'>Create a new account</a></li>
 </ul>
 
 </body>

@@ -1,7 +1,7 @@
 <?php
-include_once('/lib/get_db.php');
+include_once(__DIR__.'/../get_db.php');
 
-function set_contributor($account_id_arg, $name_of_contrib_arg, $nb_of_people_arg)
+function set_participant($account_id_arg, $name_of_contrib_arg, $nb_of_people_arg)
 {
 	$db = get_db();
 
@@ -9,12 +9,12 @@ function set_contributor($account_id_arg, $name_of_contrib_arg, $nb_of_people_ar
 	$name_of_contrib = htmlspecialchars($name_of_contrib_arg);
 	$nb_of_people = (int)$nb_of_people_arg;
 
-	$does_this_guy_exists = get_contributor_by_name($account_id, $name_of_contrib);
+	$does_this_guy_exists = get_participant_by_name($account_id, $name_of_contrib);
 	if(!empty($does_this_guy_exists))
 	{
 		?>
 <script type="text/javascript">
-  alert('Contributor with the same name already reccorded!');
+  alert('participant with the same name already reccorded!');
 </script>
 <?php
 		return false;

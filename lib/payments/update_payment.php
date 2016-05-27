@@ -1,6 +1,6 @@
 <?php
-include_once('/lib/get_db.php');
-include_once('/lib/get_payment_by_id.php');
+include_once(__DIR__.'/../get_db.php');
+include_once(LIBPATH.'/payments/get_payment_by_id.php');
 
 
 function update_payment($account_id_arg, $payment_id_arg, $payer_id_arg, $cost_arg, $receiver_id_arg="", $description_arg="", $date_creation_arg="")
@@ -77,4 +77,3 @@ function update_payment($account_id_arg, $payment_id_arg, $payer_id_arg, $cost_a
 	}
 	return $isgood;
 }
-?>

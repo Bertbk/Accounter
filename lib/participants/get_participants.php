@@ -29,4 +29,3 @@ function get_participants($account_id_arg)
 		return array();
 	}
 }
-?>

@@ -1,13 +1,13 @@
 <?php
-include_once('/lib/get_db.php');
-include_once('/lib/get_payments.php');
-include_once('/lib/get_contributors.php');
+include_once(__DIR__.'/get_db.php');
+include_once(LIBPATH.'/payments/get_payments.php');
+include_once(LIBPATH.'/participants/get_participants.php');
 
 function compute_solution($account_id_arg)
 {
 	/*
-	$Refunds is the returned value providing a refund solution between the contributors:
-	Refunds['uid'][$vid] is the amount Contributors of id 'uid' must give back to Contributors of id 'vid' (id of table Contributors).
+	$Refunds is the returned value providing a refund solution between the participants:
+	Refunds['uid'][$vid] is the amount participants of id 'uid' must give back to participants of id 'vid' (id of table participants).
 	Refunds[-1][...] stores some usefull values. -1 cannot be an index, so there shouldn't be overlap.
 	*/
 	$db = get_db();
@@ -15,7 +15,7 @@ function compute_solution($account_id_arg)
 	
 	$account_id = (int)$account_id_arg;
 	
-	$my_contribs = get_contributors($account_id );
+	$my_contribs = get_participants($account_id );
 	$my_payments = get_payments($account_id );
 	
 	if(empty($my_contribs) || empty($my_payments))

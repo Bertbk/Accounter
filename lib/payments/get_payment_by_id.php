@@ -1,5 +1,5 @@
 <?php
-include_once('/lib/get_db.php');
+include_once(__DIR__.'/../get_db.php');
 
 function get_payment_by_id($account_id_arg, $payment_id_arg)
 {
@@ -31,4 +31,3 @@ function get_payment_by_id($account_id_arg, $payment_id_arg)
 		return array();
 	}
 }
-?>

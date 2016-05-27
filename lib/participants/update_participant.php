@@ -1,18 +1,18 @@
 <?php
-include_once('/lib/get_db.php');
-include_once('/lib/get_contributor_by_id.php');
+include_once(__DIR__.'/../get_db.php');
+include_once(LIBPATH.'/participants/get_participant_by_id.php');
 
 
-function update_contributor($account_id_arg, $contributor_id_arg, $name_of_contrib_arg, $nb_of_people_arg)
+function update_participant($account_id_arg, $participant_id_arg, $name_of_contrib_arg, $nb_of_people_arg)
 {
 	$db = get_db();
 
 	$account_id = (int)$account_id_arg;
-	$contributor_id = (int)$contributor_id_arg;
+	$participant_id = (int)$participant_id_arg;
 	$new_name_of_contrib = htmlspecialchars($name_of_contrib_arg);
 	$new_nb_of_people = (int)$nb_of_people_arg;
 
-	$contrib = get_contributor_by_id($account_id, $contributor_id);
+	$contrib = get_participant_by_id($account_id, $participant_id);
 	if(empty($contrib))
 	{
 		return false;
@@ -28,12 +28,12 @@ function update_contributor($account_id_arg, $contributor_id_arg, $name_of_contr
 	//If the name changes, we have to check if it's free
 	if($new_name_of_contrib != $contrib['name'])
 	{
-		$isthenamefree = get_contributor_by_name($account_id, $new_name_of_contrib);
+		$isthenamefree = get_participant_by_name($account_id, $new_name_of_contrib);
 		if(!empty($isthenamefree))
 		{
 ?>
 <script type="text/javascript">
-  alert('Contributor with the same name already reccorded!');
+  alert('participant with the same name already reccorded!');
 </script>
 <?php
 			return false;
@@ -44,11 +44,11 @@ function update_contributor($account_id_arg, $contributor_id_arg, $name_of_contr
 	{
 		$myquery = 'UPDATE participants 
 		SET name=:new_name_of_contrib, nb_of_people=:new_nb_of_people
-		WHERE id=:contributor_id';
+		WHERE id=:participant_id';
 		$prepare_query = $db->prepare($myquery);
 		$prepare_query->bindValue(':new_name_of_contrib', $new_name_of_contrib, PDO::PARAM_STR);
 		$prepare_query->bindValue(':new_nb_of_people', $new_nb_of_people, PDO::PARAM_INT);
-		$prepare_query->bindValue(':contributor_id', $contributor_id, PDO::PARAM_INT);
+		$prepare_query->bindValue(':participant_id', $participant_id, PDO::PARAM_INT);
 		$isgood = $prepare_query->execute();
 		$prepare_query->closeCursor();
 	}
@@ -58,4 +58,3 @@ function update_contributor($account_id_arg, $contributor_id_arg, $name_of_contr
 	}
 	return $isgood;
 }
-?>

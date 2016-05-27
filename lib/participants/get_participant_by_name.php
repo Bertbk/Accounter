@@ -31,4 +31,3 @@ function get_participant_by_name($account_id_arg, $contrib_name_arg)
 		return array();
 	}
 }
-?>
