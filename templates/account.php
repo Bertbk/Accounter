@@ -14,21 +14,22 @@
 <?php if (is_array($my_participants) && sizeof($my_participants) > 0 )
 {
 ?>
-<h1>participants (<?php echo $n_participants ?>) / Parts (<?php echo $n_parts ?>)</h1>
+<h1>Participants (<?php echo $n_participants ?>) / People (<?php echo $n_people ?>)</h1>
 <ul>
 <?php
-	foreach($my_participants as $contrib)
+	foreach($my_participants as $participant)
 	{
 ?>
 <?php
-if($admin_mode && $edit_contrib && $contrib['id'] === $contrib_id_to_edit)
+if($admin_mode && $edit_participant && $participant['id'] === $participant_id_to_edit)
 {
 ?>
 		<li>
 			<form method="post">
-		<input type="text" name="name_of_participant" value="<?php echo $contrib_to_edit['name']?>" required />
-		(<input type="number" name="number_of_parts" value="<?php echo $contrib_to_edit['number_of_parts']?>" required />)
-		<button type="submit" name="submit_edit_contrib" value="Submit">Edit</button>
+		<input type="text" name="name_of_participant" value="<?php echo $participant_to_edit['name']?>" required />
+		(<input type="number" name="nb_of_people" value="<?php echo $participant_to_edit['nb_of_people']?>" required />)
+		<input type="email" name="email" value="<?php echo $participant_to_edit['email']?>"/>
+		<button type="submit" name="submit_edit_participant" value="Submit">Edit</button>
 		<button type="submit" name="submit_cancel" value="Submit">Cancel</button> 
 	</form>
 
@@ -39,11 +40,13 @@ else{ // READ Only
 {
 ?>
 		<li>
-		<?php echo $contrib['name']?> (<?php echo $contrib['number_of_parts']?>)
+		<?php echo $participant['name']?> 
+		(<?php echo $participant['nb_of_people'];if(!empty($participant['email'])){echo ', '.$participant['email'];}?>)
+
 <?php //Edit link
 if($admin_mode && !$edit_mode)
 {
-	$link = BASEURL.'/account/'.$hashid_url.'/admin/edit_contrib/'.$contrib['hashid'];
+	$link = BASEURL.'/account/'.$hashid.'/admin/edit_participant/'.$participant['hashid'];
 ?>
 	<a href="<?php echo $link?>">edit me</a>
 <?php
@@ -77,13 +80,13 @@ if($admin_mode && !$edit_mode)
 	<form method="post" id="form_edit_payment_send">
 		<select name="p_payer_id" onchange="configureDropDownLists(this, document.getElementById('form_edit_payment_recv'))" > 
 <?php
-			foreach($my_participants as $contrib)
+			foreach($my_participants as $participant)
 			{
 ?>
-				<option value="<?php echo $contrib['id']?>"
-				<?php if($contrib['id']==$payment_to_edit['payer_id']){echo ' selected';}?>
+				<option value="<?php echo $participant['id']?>"
+				<?php if($participant['id']==$payment_to_edit['payer_id']){echo ' selected';}?>
 				>
-				<?php echo $contrib['name']?></option>
+				<?php echo $participant['name']?></option>
 <?php
 			}
 ?>
@@ -92,14 +95,14 @@ if($admin_mode && !$edit_mode)
 		<select name="p_receiver_id" id="form_edit_payment_recv" selected="<?php echo $payment_to_edit['receiver_id']?>"> 
 		<option value="-1" >Group</option>
 <?php
-		foreach($my_participants as $contrib)
+		foreach($my_participants as $participant)
 			{
-				if($contrib['id'] == $payment_to_edit['payer_id']){continue;}
+				if($participant['id'] == $payment_to_edit['payer_id']){continue;}
 ?>
-				<option value="<?php echo $contrib['id']?>"
-				<?php if($contrib['id']==$payment_to_edit['receiver_id']){echo ' selected';}?>
+				<option value="<?php echo $participant['id']?>"
+				<?php if($participant['id']==$payment_to_edit['receiver_id']){echo ' selected';}?>
 				>
-				<?php echo $contrib['name']?></option>
+				<?php echo $participant['name']?></option>
 <?php
 			}
 ?>
@@ -176,11 +179,13 @@ if($admin_mode)
 	<form method="post">
 	  <fieldset>
 		<legend>Add a participant:</legend>
-		<label for="form_set_contrib_name">Name: </label>
-		<input type="text" name="name_of_participant" id="form_set_contrib_name" required /><br>
-		<label for="form_set_contrib_nbparts">Nb. of people: </label>
-		 <input type="number" name="number_of_parts" value="1" id="form_set_contrib_nbparts" required /><br>
-		 <button type="submit" name="submit_contrib" value="Submit">Submit</button> 
+		<label for="form_set_participant_name">Name: </label>
+		<input type="text" name="p_name_of_participant" id="form_set_participant_name" required /><br>
+		<label for="form_set_participant_nbpeople">Nb. of people: </label>
+		 <input type="number" name="p_nb_of_people" value="1" id="form_set_participant_nbpeople" required /><br>
+		<label for="form_set_participant_email">Email adress: </label>
+		 <input type="email" name="p_email" id="form_set_participant_email"  /><br>
+		 <button type="submit" name="submit_participant" value="Submit">Submit</button> 
 	  </fieldset>
 	</form>
 	
@@ -192,10 +197,10 @@ if($admin_mode)
 		<select name="p_payer_id" id=="form_set_payment_payer" onchange="configureDropDownLists(this, document.getElementById('form_set_payment_recv'))"> 
 <option disabled selected value="null"> -- select a payer -- </option>
 <?php
-		foreach($my_participants as $contrib)
+		foreach($my_participants as $participant)
 		{
 ?>
-			<option value="<?php echo $contrib['id']?>"><?php echo $contrib['name']?></option>
+			<option value="<?php echo $participant['id']?>"><?php echo $participant['name']?></option>
 <?php
 		}
 ?>

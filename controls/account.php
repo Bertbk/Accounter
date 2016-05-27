@@ -85,9 +85,14 @@ $account_id = $my_account['id'];
 //New participant
 if($admin_mode && isset($_POST['submit_participant']))
 {
-	$p_name_of_participant = filter_input(INPUT_POST, 'name_of_participant', FILTER_SANITIZE_STRING);
-	$p_nb_of_people = filter_input(INPUT_POST, 'nb_of_people', FILTER_SANITIZE_NUMBER_INT);
-	$p_participant_recorded = set_participant($p_account_id, $p_name_of_participant, $p_nb_of_people);
+	$p_name_of_participant = filter_input(INPUT_POST, 'p_name_of_participant', FILTER_SANITIZE_STRING);
+	$p_nb_of_people = filter_input(INPUT_POST, 'p_nb_of_people', FILTER_SANITIZE_NUMBER_INT);
+	$p_email = filter_input(INPUT_POST, 'p_email', FILTER_SANITIZE_EMAIL, FILTER_VALIDATE_EMAIL);
+	$p_participant_recorded = set_participant($account_id, $p_name_of_participant, $p_nb_of_people, $p_email);
+	if(!$p_participant_recorded)
+	{
+		echo '<p>participant couldn\'t be added.</p>';
+	}
 }
 
 //New Payment

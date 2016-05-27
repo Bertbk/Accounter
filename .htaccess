@@ -2,5 +2,5 @@ RewriteEngine On
 RewriteRule  ^index.html$  index.php [L] 
 RewriteRule  ^account/([a-z0-9]+)$  account.php/?hash=$1 [L]
 RewriteRule  ^account/([a-z0-9]+)/admin/?$  account.php/?hash=$1&admin=true [L]
-RewriteRule  ^account/([a-z0-9]+)/admin/edit_contrib/([a-z0-9]+)$  account.php/?hash=$1&admin=true&edit_contrib=$2 [L]
+RewriteRule  ^account/([a-z0-9]+)/admin/edit_participant/([a-z0-9]+)$  account.php/?hash=$1&admin=true&edit_participant=$2 [L]
 RewriteRule  ^account/([a-z0-9]+)/admin/edit_payment/([a-z0-9]+)$  account.php/?hash=$1&admin=true&edit_payment=$2 [L]
