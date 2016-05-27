@@ -1,5 +1,5 @@
 <?php
-include_once('/lib/get_db.php');
+include_once(__DIR__.'/../get_db.php');
 
 function create_new_account($hashid_arg, $hashid_admin_arg, $title_of_account_arg, $contact_email_arg, $description_arg ="")
 {
@@ -41,4 +41,3 @@ function create_new_account($hashid_arg, $hashid_admin_arg, $title_of_account_ar
 	
 	return $isgood;
 }
-?>

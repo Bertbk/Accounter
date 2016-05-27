@@ -1,5 +1,5 @@
 <?php
-include_once('/lib/get_db.php');
+include_once(__DIR__.'/../get_db.php');
 
 function get_accounts()
 {
@@ -19,4 +19,3 @@ function get_accounts()
 	$prepare_query->closeCursor();
 	return $reponse;
 }
-?>

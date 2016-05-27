@@ -1,4 +1,4 @@
 <?php 
-include_once('/lib/get_db.php');
-include_once('/controls/create.php')
+include_once(__DIR__.'/config-app.php');
+include_once(__DIR__.'/controls/create.php')
 ?>

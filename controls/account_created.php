@@ -1,6 +1,7 @@
 <?php
-include_once('/lib/get_account.php');
-include_once('/lib/get_account_admin.php');
+require_once __DIR__.'/../config-app.php';
+include_once(LIBPATH.'/accounts/get_account.php');
+include_once(LIBPATH.'/accounts/get_account_admin.php');
 
 $isdone = true;
 
@@ -15,10 +16,10 @@ $hashid = $hashid_url;
 $hashid_admin = $hashid_admin_url;
 
 //If empty, go back home.
-if($hashid_url == "" || strlen($hashid_url) != 16 || $hashid_admin_url == "" || strlen($hashid_admin_url) != 16 )
+if($hashid_url == "" || strlen($hashid_url) != 16 || $hashid_admin_url == "" || strlen($hashid_admin_url) != 32 )
 {
 	$isdone = false;
-	header ("location:/DivideTheBill/index.php");
+	header ('location:'.BASEURL);
 }
 
 $my_account = array();
@@ -28,13 +29,13 @@ $my_account_admin = get_account_admin($hashid_admin);
 if(empty($my_account) ||empty($my_account_admin))
 {
 	$isdone = false;
-	header ("location:/DivideTheBill/index.php");
+	header ('location:'.BASEURL);
 }
 
 if($isdone)
 {
-	$link_contrib = '/DivideTheBill/account/'.$hashid;
-	$link_admin = '/DivideTheBill/account/'.$hashid_admin.'/admin';	
+	$link_contrib = BASEURL.'account/'.$hashid;
+	$link_admin = BASEURL.'account/'.$hashid_admin.'/admin';	
 }	
-include_once('/templates/account_created.php');
+include_once(ABSPATH.'/templates/account_created.php');
 ?>

@@ -24,15 +24,19 @@ else
 <form method="post">
   <fieldset>
     <legend>Create a new account:</legend>
-    Title: <input type="text" name="title_of_account" id="title_of_account" required /><br>
-    Email: <input type="email" name="contact_email" id="contact_email" required/><br>
+	<legend for="form_title_account">Title</legend>
+    <input type="text" name="p_title_of_account" id="form_title_account" required /><br>
+	<legend for="form_email">Email</legend>
+	<input type="email" name="p_contact_email" id="form_email" required/><br>
+    <legend for="form_description">Detailed description</legend>
+	<input type="text" name="p_description" id="form_description"/><br>
 	 <button type="submit" name="submit" value="Submit">Submit</button> 
   </fieldset>
 </form>
 
 <h1>Menu</h1>
 <ul>
-<li><a href='/DivideTheBill'>Main Menu</a></li>
+<li><a href=<?php echo BASEURL?>>Main Menu</a></li>
 </ul>
 
 <?php

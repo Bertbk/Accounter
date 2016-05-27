@@ -2,16 +2,10 @@
 
 <html>
 <head>
-
 </head>
 <body>
 
 <h1>Table of the accounts</h1>
-
-<?php 
-include_once('/lib/get_accounts.php');
-$accounts = get_accounts();
-?>
 
 <table style="width:100%" border="1">
  <tr>
@@ -39,7 +33,7 @@ foreach ($accounts as $account)
 
 <h1>Create an account</h1>
 <ul>
-<li><a href='/DivideTheBill/create.php'>Create a new account</a></li>
+<li><a href=<?php echo BASEURL.'/create.php'?>>Create a new account</a></li>
 </ul>
 
 </body>

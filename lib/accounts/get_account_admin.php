@@ -1,5 +1,5 @@
 <?php
-include_once('/lib/get_db.php');
+include_once(__DIR__.'/../get_db.php');
 
 function get_account_admin($hash_id_admin_arg)
 {
@@ -34,4 +34,3 @@ function get_account_admin($hash_id_admin_arg)
 		return array();
 	}
 }
-?>

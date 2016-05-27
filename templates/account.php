@@ -2,7 +2,7 @@
 
 <html>
 <head>
-<script type="text/javascript" src="/DivideTheBill/js/account.js">
+<script type="text/javascript" src="/js/account.js">
 </script>
 </head>
 <body>

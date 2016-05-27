@@ -1,4 +1,3 @@
 <?php 
-include_once('/lib/get_db.php');
-include_once('/controls/account.php')
+include_once(__DIR__.'/controls/account.php')
 ?>
