@@ -4,7 +4,7 @@ function get_db()
 	// Connexion to the database
 	try
 	{
-	$db = new PDO('mysql:host=localhost; dbname=dividethebill; charset=utf8', 'root', '');
+	$db = new PDO('mysql:host=localhost; dbname=accounter; charset=utf8', 'root', '');
 	}
 	catch (Exception $e)
 	{

@@ -3,14 +3,14 @@ include_once('/lib/get_db.php');
 include_once('/lib/get_contributor_by_id.php');
 
 
-function update_contributor($account_id_arg, $contributor_id_arg, $name_of_contrib_arg, $nb_of_parts_arg)
+function update_contributor($account_id_arg, $contributor_id_arg, $name_of_contrib_arg, $nb_of_people_arg)
 {
 	$db = get_db();
 
 	$account_id = (int)$account_id_arg;
 	$contributor_id = (int)$contributor_id_arg;
 	$new_name_of_contrib = htmlspecialchars($name_of_contrib_arg);
-	$new_nb_of_parts = (int)$nb_of_parts_arg;
+	$new_nb_of_people = (int)$nb_of_people_arg;
 
 	$contrib = get_contributor_by_id($account_id, $contributor_id);
 	if(empty($contrib))
@@ -19,7 +19,7 @@ function update_contributor($account_id_arg, $contributor_id_arg, $name_of_contr
 	}
 	
 	//Nothing to change?
-	if($new_name_of_contrib === $contrib['name'] && $new_nb_of_parts = $contrib['number_of_parts'])
+	if($new_name_of_contrib === $contrib['name'] && $new_nb_of_people = $contrib['number_of_parts'])
 	{
 		return true;
 	}
@@ -42,12 +42,12 @@ function update_contributor($account_id_arg, $contributor_id_arg, $name_of_contr
 	
 	try
 	{
-		$myquery = 'UPDATE contributors 
-		SET name=:new_name_of_contrib, number_of_parts=:new_nb_of_parts
+		$myquery = 'UPDATE participants 
+		SET name=:new_name_of_contrib, nb_of_people=:new_nb_of_people
 		WHERE id=:contributor_id';
 		$prepare_query = $db->prepare($myquery);
 		$prepare_query->bindValue(':new_name_of_contrib', $new_name_of_contrib, PDO::PARAM_STR);
-		$prepare_query->bindValue(':new_nb_of_parts', $new_nb_of_parts, PDO::PARAM_INT);
+		$prepare_query->bindValue(':new_nb_of_people', $new_nb_of_people, PDO::PARAM_INT);
 		$prepare_query->bindValue(':contributor_id', $contributor_id, PDO::PARAM_INT);
 		$isgood = $prepare_query->execute();
 		$prepare_query->closeCursor();

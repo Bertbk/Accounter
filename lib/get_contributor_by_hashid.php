@@ -10,7 +10,7 @@ function get_contributor_by_hashid($account_id_arg, $contrib_hashid_arg)
 	
 	try
 	{
-		$myquery = 'SELECT * FROM contributors WHERE account_id=:account_id AND hashid=:contrib_hashid';
+		$myquery = 'SELECT * FROM participants WHERE account_id=:account_id AND hashid=:contrib_hashid';
 		$prepare_query = $db->prepare($myquery);
 		$prepare_query->bindValue(':account_id', $account_id, PDO::PARAM_INT);
 		$prepare_query->bindValue(':contrib_hashid', $contrib_hashid, PDO::PARAM_STR);

@@ -9,7 +9,7 @@ function get_contributors($account_id_arg)
 
 	try
 	{
-		$myquery = 'SELECT * FROM contributors WHERE account_id=:account_id';
+		$myquery = 'SELECT * FROM participants WHERE account_id=:account_id';
 		$prepare_query = $db->prepare($myquery);
 		$prepare_query->bindValue(':account_id', $account_id, PDO::PARAM_INT);
 		$prepare_query->execute();
