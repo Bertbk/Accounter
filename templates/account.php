@@ -193,6 +193,18 @@ if($admin_mode)
 	<form method="post" id="form_payment_send">
 	  <fieldset>
 		<legend>Add a payment:</legend>
+		<label for="form_set_payment_bill">Bill</label>
+		<select name="p_bill_id" id=="form_set_payment_bill"> 
+<option disabled selected value="null"> -- select a bill -- </option>
+<?php
+		foreach($my_bills as $bill)
+		{
+?>
+			<option value="<?php echo $bill['id']?>"><?php echo $bill['name']?></option>
+<?php
+		}
+?>
+		</select><br>
 		<label for="form_set_payment_payer">Payer</label>
 		<select name="p_payer_id" id=="form_set_payment_payer" onchange="configureDropDownLists(this, document.getElementById('form_set_payment_recv'))"> 
 <option disabled selected value="null"> -- select a payer -- </option>
@@ -204,17 +216,17 @@ if($admin_mode)
 <?php
 		}
 ?>
-		</select>
+		</select><br>
 		<label for="form_set_payment_cost">Cost</label>
-		<input type="number" step="0.01" min="0" name="p_cost" id="form_set_payment_cost" required />
+		<input type="number" step="0.01" min="0" name="p_cost" id="form_set_payment_cost" required /><br>
 		<label for="form_set_payment_recv">Receiver</label>
 		<select name="p_receiver_id" id="form_set_payment_recv"> 
 		<option value="-1" selected="selected">Group</option>
-		</select>
+		</select><br>
 		<label for="form_set_payment_desc">Description</label>
-		<input type="text" name="p_description" id="form_set_payment_desc" />
+		<input type="text" name="p_description" id="form_set_payment_desc" /><br>
 		<label for="form_set_payment_date">Date of payment</label>
-		<input type="date" name="p_date_creation" id="form_set_payment_date"/>
+		<input type="date" name="p_date_creation" id="form_set_payment_date"/><br>
 		<br><button type="submit" name="submit_payment" value="Submit">Submit</button> 
 	  </fieldset>
 	</form>

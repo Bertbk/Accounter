@@ -14,7 +14,6 @@ include_once(LIBPATH.'/payments/set_payment.php');
 include_once(LIBPATH.'/payments/update_payment.php');
 
 include_once(LIBPATH.'/compute_solution.php');
-
 /* Get arguments */
 //Get if admin mode is asked to be activated 
 $admin_mode_url = false;
@@ -81,6 +80,7 @@ $edit_mode = $edit_participant || $edit_payment;
 
 /* Here, we have an account and we know if we are admin or not.*/
 $account_id = $my_account['id'];
+$my_bills = array();
 
 //New participant
 if($admin_mode && isset($_POST['submit_participant']))
