@@ -15,6 +15,7 @@ include_once(LIBPATH.'/payments/update_payment.php');
 
 include_once(LIBPATH.'/bills/get_bills.php');
 include_once(LIBPATH.'/bills/get_bill_by_id.php');
+include_once(LIBPATH.'/bills/get_bill_by_hashid.php');
 include_once(LIBPATH.'/bills/set_bill.php');
 include_once(LIBPATH.'/bills/update_bill.php');
 
@@ -43,11 +44,13 @@ if($hashid == "" || (strlen($hashid) != 16 && !$admin_mode_url)
 }
 //Edit...
 $what_to_edit = array (
+    "bill"  => false,
     "participant"  => false,
     "payment" => false,
     "bill_participant" => false
 );
 $hashid_edit = array(
+    "bill"  => false,
     "participant"  => "",
     "payment" => "",
     "bill_participant" => ""
@@ -70,6 +73,12 @@ empty($_GET['edit_bill_part']) ? $bill_part_hashid = "" : $bill_part_hashid = ht
 $hashid_edit['bill_participant'] = (strlen($bill_part_hashid)==16)? $bill_part_hashid : "";
 $what_to_edit['bill_participant'] = (!empty($bill_part_hashid));
 $bill_part_hashid = "";
+//Edit a bill ?
+$bill_hashid = "";
+empty($_GET['edit_bill']) ? $bill_hashid = "" : $bill_hashid = htmlspecialchars($_GET['edit_bill']);
+$hashid_edit['bill'] = (strlen($bill_hashid)==16)? $bill_hashid : "";
+$what_to_edit['bill'] = (!empty($bill_hashid));
+$bill_hashid = "";
 
 /* Treat arguments */
 $my_account = array();
@@ -169,7 +178,27 @@ if($admin_mode && isset($_POST['submit_bill']))
 		echo '<p>bill couldn\'t be added.</p>';
 	}
 }
-//FIXME : edit bill
+//Edit bill
+$bill_id_to_edit = null;
+if($admin_mode && $what_to_edit['bill'])
+{
+	$bill_to_edit = get_bill_by_hashid($account_id, $hashid_edit['bill']);
+	if(!empty($bill_to_edit))
+	{
+		$bill_id_to_edit = $bill_to_edit['id'];
+	}
+}
+if($admin_mode && isset($_POST['submit_edit_bill']))
+{
+	$p_title = filter_input(INPUT_POST, 'p_title', FILTER_SANITIZE_STRING);
+	$p_description = filter_input(INPUT_POST, 'p_description', FILTER_SANITIZE_STRING);
+	$bill_edited = update_bill($account_id, $bill_id_to_edit, $p_title, $p_description);
+	if($bill_edited)
+	{
+		$redirect_url = 'location:'.BASEURL.'/account/'.$hashid.'/admin';
+		header($redirect_url);
+	}
+}
 
 /* PAYMENT */
 //New Payment

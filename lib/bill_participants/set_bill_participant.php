@@ -30,6 +30,11 @@ function set_bill_participant($account_id_arg, $bill_id_arg, $participant_id_arg
 	{
 			if($bill_part['participant_id'] == $participant_id)
 			{
+?>
+<script type="text/javascript">
+  alert('Thi person is already a participant!');
+</script>
+<?php
 				return false;
 			}
 	}

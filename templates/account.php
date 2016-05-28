@@ -77,7 +77,44 @@ if($admin_mode && !$edit_mode)
 foreach($my_bills as $bill)
 {
 ?>
-	<h2><?php echo $bill['title']?></h2>
+	<?php if($admin_mode && $what_to_edit['bill'] 
+	&& $bill_id_to_edit == $bill['id'])
+	{
+	?>
+	<form method="post">
+	<h2>
+	<label for="form_edit_bill_name">Title: </label>
+	<input type="text" name="p_title" id="form_edit_bill_name"  
+	value="<?php echo $bill['title']?>" required/>
+	</h2>
+	<label for="form_edit_bill_description">Description: </label>
+	 <input type="text" name="p_description" id="form_edit_bill_description" 
+	 value="<?php echo $bill['description']?>"/><br>
+	<button type="submit" name="submit_edit_bill" value="Submit">Submit</button> 
+	<button type="submit" name="submit_cancel" value="Submit">Cancel</button> 
+	</form>
+	<?php	
+	}
+	else{
+?>
+	<h2><?php echo $bill['title'] ?>
+	<?php
+	if($admin_mode && !$edit_mode){
+	$link = BASEURL.'/account/'.$hashid.'/admin/edit_bill/'.$bill['hashid'];
+	?>
+	<a href='<?php echo $link?>'>edit me</a>
+	<?php
+	}
+	?>
+	</h2>
+	<?php if(!empty($bill['description']) && !is_null($bill['description']))
+	{
+?>
+	<p><?php echo $bill['description']?></p>
+<?php		
+	}//if/else empty/null
+	}//if/else admin
+?>
 <?php // Display the current participant of this bill
 if(!empty($my_bill_participants[$bill['id']]))
 {

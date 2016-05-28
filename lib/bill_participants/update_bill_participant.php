@@ -29,14 +29,16 @@ function update_bill_participant($account_id_arg, $bill_participant_id_arg, $par
 		return false;
 	}
 
-		echo '<p>UPDATE bill_participants SET participant_id='.$new_participant_id.
-	', percent_of_usage='.$new_percent_of_usage.' WHERE id='.$bill_participant_id.'</p>';
-	
 	foreach ($bill_participants as $bill_part)
 	{
 			if($bill_part['participant_id'] == $new_participant_id
 				&& $bill_part['id'] != $bill_participant_id)
 			{
+?>
+<script type="text/javascript">
+  alert('This person is already a participant for this bill!');
+</script>
+<?php
 				return false;
 			}
 	}
