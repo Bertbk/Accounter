@@ -25,7 +25,7 @@ function set_bill_participant($account_id_arg, $bill_id_arg, $participant_id_arg
 	{return false;}
 
 	//check that the entry is not already existant
-	$bill_participants = get_bill_participants_by_bill_id($bill_id);
+	$bill_participants = get_bill_participants_by_bill_id($account_id, $bill_id);
 	foreach ($bill_participants as $bill_part)
 	{
 			if($bill_part['participant_id'] == $participant_id)

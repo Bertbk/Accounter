@@ -2,7 +2,7 @@
 include_once(__DIR__.'/../get_db.php');
 
 include_once(LIBPATH.'/bills/get_bills.php');
-include_once(LIBPATH.'/bill_participants/get_bill_participants_from_bill.php');
+include_once(LIBPATH.'/bill_participants/get_bill_participants_by_bill_id.php');
 
 /*
 Return every bill_participants of every bill. The reply is an array such that
@@ -20,7 +20,7 @@ function get_bill_participants($account_id_arg)
 
 	foreach($my_bills as $bill)
 	{
-		$reply[$bill['id']] = get_bill_participants_from_bill($bill['id']);
+		$reply[$bill['id']] = get_bill_participants_by_bill_id($account_id, $bill['id']);
 	}
 	return $reply;
 }

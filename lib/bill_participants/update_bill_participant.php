@@ -25,7 +25,7 @@ function update_bill_participant($account_id_arg, $bill_participant_id_arg, $par
 	
 	//Check if the new participant is not already choosen
 	$bill_participants = get_bill_participants_by_bill_id($bill_participant_id['bill_id']);
-	if((empty($bill_participants)){return true;}
+	if(empty($bill_participants)){return true;}
 	foreach ($bill_participants as $bill_part)
 	{
 			if($bill_part['participant_id'] == $new_participant_id
