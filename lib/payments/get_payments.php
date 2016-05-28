@@ -1,31 +1,32 @@
 <?php
 include_once(__DIR__.'/../get_db.php');
 
+include_once(LIBPATH.'/bills/get_bills.php');
+include_once(LIBPATH.'/payments/get_payments_by_bill_id.php');
+
+/*
+Return an array of every payments of the account, sorted by bills :
+$reply is an array of size = number of bills.
+$reply['bill_id'] = array of payments associated to the bill.
+$reply[i] also contains name of payer and receiver.
+*/
 function get_payments($account_id_arg)
 {
 	$db = get_db();
 
 	$account_id = (int)$account_id_arg;
+	
+	//Get the bills of the account
+	$my_bills = get_bills($account_id);
+	
+	//returned value
+	$reply = array();
+	
+	foreach ($mybills as $bill)
+	{
+		$reply[$bill['id']] = get_payments_by_bill_id($account_id_arg, $bill_id_arg);		
+	}
 
-	try
-	{
-		$myquery = 'SELECT payments.*, contribs1.name AS payer_name, 
-		contribs2.name AS receiver_name FROM payments 
-		LEFT  JOIN participants contribs1 ON contribs1.id=payments.payer_id 
-		LEFT  JOIN participants contribs2 ON contribs2.id=payments.receiver_id
-		WHERE payments.account_id=:account_id ';
-		$prepare_query = $db->prepare($myquery);
-		$prepare_query->bindValue(':account_id', $account_id, PDO::PARAM_INT);
-		$isgood = $prepare_query->execute();
-		if(!$isgood)
-		{echo '<p>PROBLEM '.$account_id.'</p>';}
-	}
-	catch (Exception $e)
-	{
-		echo 'Fail to connect: ' . $e->getMessage();
-	}
-	$reply = $prepare_query->fetchAll();
-	$prepare_query->closeCursor();
 	if(!empty($reply))
 	{
 		return $reply;
