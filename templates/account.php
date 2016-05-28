@@ -73,8 +73,29 @@ foreach($my_bills as $bill)
 {
 ?>
 	<h2><?php echo $bill['title']?></h2>
+<?php // Display the current participant of this bill
+if(!empty($my_bill_participants[$bill['id']]))
+{
+?>
+<p>Participants: 
+<?php
+$current_bill_participants = $my_bill_participants[$bill['id']];
+$cpt = 1;
+$len = count($current_bill_participants);
+foreach($current_bill_participants as $bill_participant)
+{
+	echo $bill_participant['name'].'('.$bill_participant['percent_of_usage'].'%)';
+	if($admin_mode && !$edit_mode){
+		?><a href="<?php echo BASEURL.'/account/'.$hashid.'/admin/edit_bill_part/'.$bill_participant['hashid']?>">edit_me</a>
+<?php	}
+	if($cpt < $len)	{echo ', ';}
+	$cpt++;
+}//foreach
+?>
+</p>
+<?php }//if ?>
 <ul>
-<?php 
+<?php // List of the payments
 $current_payment = $my_payments[$bill['id']];
 if (is_array($current_payment) && sizeof($current_payment) > 0 )
 {
@@ -160,7 +181,45 @@ if (is_array($current_payment) && sizeof($current_payment) > 0 )
 ?>
 <p>No payments recorded.</p>		
 <?php
-	}
+	}//else
+if($admin_mode && !$edit_mode)
+{//Assign a participant
+?>
+<form method="post">
+	  <fieldset>
+		<legend>Assign a participant:</legend>
+		<label for="form_assign_participant_id">Participant available</label>
+		<select name="p_participant_id" id="form_assign_participant_id"> 
+<option disabled selected value="null"> -- select a participant -- </option>
+<?php
+		foreach($my_participants as $participant)
+		{
+			$isfree = true;
+			foreach($current_bill_participants as $curbill)
+			{
+				if($participant['id'] == $curbill['participant_id'])
+				{
+					$isfree = false;
+					break;
+				}
+			}
+			if(!$isfree){continue;}
+?>
+			<option value="<?php echo $participant['id']?>"><?php echo $participant['name']?></option>
+<?php
+		}
+?>
+		</select><br>		
+		<label for="form_asssign_participant_percent">Percentage of use: </label>
+		 <input type="number" step="0.01" min="0" max="100" name="p_percent_of_use" 
+		 value="100.00" id="form_asssign_participant_percent" required /><br>
+		<input type="hidden" name="p_bill_id" value="<?php echo $bill['id']?>">
+		 <button type="submit" name="submit_assign_participant" value="Submit">Submit</button> 
+	  </fieldset>
+</form>
+<?php
+}//if admin		
+	
 }//foreach bill
 }//if bills exist
 ?>
@@ -198,7 +257,7 @@ foreach($my_participants as $payer)
 
 <?php
 //Admin only
-if($admin_mode)
+if($admin_mode && !$edit_mode)
 {
 ?>
 <!-- Admin mode-->

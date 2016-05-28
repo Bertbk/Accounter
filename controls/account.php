@@ -18,6 +18,9 @@ include_once(LIBPATH.'/bills/get_bill_by_id.php');
 include_once(LIBPATH.'/bills/set_bill.php');
 include_once(LIBPATH.'/bills/update_bill.php');
 
+include_once(LIBPATH.'/bill_participants/set_bill_participant.php');
+include_once(LIBPATH.'/bill_participants/get_bill_participants.php');
+
 include_once(LIBPATH.'/compute_solution.php');
 /* Get arguments */
 //Get if admin mode is asked to be activated 
@@ -92,7 +95,9 @@ if($admin_mode && isset($_POST['submit_participant']))
 	$p_name_of_participant = filter_input(INPUT_POST, 'p_name_of_participant', FILTER_SANITIZE_STRING);
 	$p_nb_of_people = filter_input(INPUT_POST, 'p_nb_of_people', FILTER_SANITIZE_NUMBER_INT);
 	$p_email = filter_input(INPUT_POST, 'p_email', FILTER_SANITIZE_EMAIL, FILTER_VALIDATE_EMAIL);
-	$p_participant_recorded = set_participant($account_id, $p_name_of_participant, $p_nb_of_people, $p_email);
+	if(!empty($p_name_of_participant)){
+		$p_participant_recorded = set_participant($account_id, $p_name_of_participant, $p_nb_of_people, $p_email);
+	}
 	if(!$p_participant_recorded)
 	{
 		echo '<p>participant couldn\'t be added.</p>';
@@ -128,6 +133,19 @@ if($admin_mode && isset($_POST['submit_payment']))
 		{
 			echo '<p>payment couldn\'t be added.</p>';
 		}
+	}
+}
+
+//Assign a participant to a bill
+if($admin_mode && isset($_POST['submit_assign_participant']))
+{
+	$p_bill_id = filter_input(INPUT_POST, 'p_bill_id', FILTER_SANITIZE_NUMBER_INT);
+	$p_participant_id = filter_input(INPUT_POST, 'p_participant_id', FILTER_SANITIZE_NUMBER_INT);
+	$p_percent_of_use = filter_input(INPUT_POST, 'p_percent_of_use', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);	
+	$association_ok = set_bill_participant($p_bill_id, $p_participant_id, $p_percent_of_use);
+	if(!$association_ok)
+	{
+		echo '<p>Association couldn\'t be made.</p>';
 	}
 }
 
@@ -192,6 +210,8 @@ if($admin_mode && isset($_POST['submit_cancel']))
 /* Computations and values used in display */
 $my_bills = get_bills($account_id);
 $my_participants = get_participants($account_id);
+$my_bill_participants = get_bill_participants($account_id);
+
 $n_participants = 0;
 $n_people = 0;
 foreach($my_participants  as $participant)
