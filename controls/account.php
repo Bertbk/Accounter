@@ -24,7 +24,8 @@ include_once(LIBPATH.'/bill_participants/get_bill_participants.php');
 include_once(LIBPATH.'/bill_participants/get_bill_participant_by_hashid.php');
 include_once(LIBPATH.'/bill_participants/update_bill_participant.php');
 
-include_once(LIBPATH.'/compute_solution.php');
+include_once(LIBPATH.'/solutions/compute_bill_solutions.php');
+include_once(LIBPATH.'/solutions/compute_solution.php');
 /* Get arguments */
 //Get if admin mode is asked to be activated 
 $admin_mode_url = false;
@@ -313,8 +314,7 @@ foreach($my_participants  as $participant)
 //Payments
 $my_payments = get_payments($account_id);
 //solution
-$solution = array();
-//$solution = compute_solution($account_id);
-
+$bill_solutions = compute_bill_solutions($account_id);
+$solution = compute_solution($account_id);
 include_once('/templates/account.php');
 ?>

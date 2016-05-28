@@ -15,7 +15,8 @@ function get_bill_participants_by_bill_id($account_id_arg, $bill_id_arg)
 
 	try
 	{
-		$myquery = 'SELECT bill_participants.*, participants.name AS name
+		$myquery = 'SELECT bill_participants.*, participants.name AS name, 
+		participants.nb_of_people AS nb_of_people
 		FROM bill_participants 
 		LEFT JOIN participants ON participants.id=bill_participants.participant_id 
 		WHERE bill_participants.account_id=:account_id AND bill_participants.bill_id=:bill_id' ;
