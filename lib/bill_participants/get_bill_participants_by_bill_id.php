@@ -4,10 +4,11 @@ include_once(__DIR__.'/../get_db.php');
 /*
 Return an array of the bill_participants of a bill + the name of the participant
 */
-function get_bill_participants_by_bill_id($bill_id_arg)
+function get_bill_participants_by_bill_id($account_id_arg, $bill_id_arg)
 {
 	$db = get_db();
 
+	$account_id = (int)$account_id_arg;
 	$bill_id = (int)$bill_id_arg;
 	
 	$reply = array();
@@ -16,9 +17,10 @@ function get_bill_participants_by_bill_id($bill_id_arg)
 	{
 		$myquery = 'SELECT bill_participants.*, participants.name AS name
 		FROM bill_participants 
-		LEFT  JOIN participants ON participants.id=bill_participants.participant_id 
-		WHERE bill_id=:bill_id';
+		LEFT JOIN participants ON participants.id=bill_participants.participant_id 
+		WHERE bill_participants.account_id=:account_id AND bill_participants.bill_id=:bill_id' ;
 		$prepare_query = $db->prepare($myquery);
+		$prepare_query->bindValue(':account_id', $account_id, PDO::PARAM_INT);
 		$prepare_query->bindValue(':bill_id', $bill_id, PDO::PARAM_INT);
 		$prepare_query->execute();
 	}
@@ -29,12 +31,5 @@ function get_bill_participants_by_bill_id($bill_id_arg)
 	$reply = $prepare_query->fetchAll();
 	$prepare_query->closeCursor();
 	
-	if(!empty($reply))
-	{
-		return $reply;
-	}
-	else
-	{
-		return array();
-	}
+	return $reply;
 }

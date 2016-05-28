@@ -25,8 +25,6 @@ function get_payments_by_bill_id($account_id_arg, $bill_id_arg)
 		$prepare_query->bindValue(':account_id', $account_id, PDO::PARAM_INT);
 		$prepare_query->bindValue(':bill_id', $bill_id, PDO::PARAM_INT);
 		$isgood = $prepare_query->execute();
-		if(!$isgood)
-		{echo '<p>PROBLEM '.$account_id.'</p>';}
 	}
 	catch (Exception $e)
 	{

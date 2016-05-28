@@ -198,8 +198,11 @@ $payment_id_to_edit = null;
 if($admin_mode && $what_to_edit['payment'])
 {
 	$payment_to_edit = get_payment_by_hashid($account_id, $hashid_edit['payment']);
-	$payment_id_to_edit = $payment_to_edit['id'];
-	$bill_id_to_edit = $payment_to_edit['bill_id'];
+	if(!empty(payment_to_edit))
+	{
+		$payment_id_to_edit = $payment_to_edit['id'];
+		$bill_id_to_edit = $payment_to_edit['bill_id'];
+	}
 }
 if($admin_mode && isset($_POST['submit_edit_payment']))
 {
@@ -248,11 +251,15 @@ if($admin_mode && $what_to_edit['bill_participant'])
 }
 if($admin_mode && isset($_POST['submit_edit_bill_participant']))
 {
+
 	$p_participant_id = filter_input(INPUT_POST, 'p_participant_id', FILTER_SANITIZE_NUMBER_INT);
 	$p_percent_of_use = filter_input(INPUT_POST, 'p_percent_of_use', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);	
-	$participant_edited = update_bill_participant($account_id, $bill_participant_to_edit, $p_participant_id, $p_percent_of_use);
-	$redirect_url = 'location:'.BASEURL.'/account/'.$hashid.'/admin';
-	header($redirect_url);
+	$bill_participant_edited = update_bill_participant($account_id, $bill_participant_id_to_edit, $p_participant_id, $p_percent_of_use);
+	if($bill_participant_edited)
+	{
+		$redirect_url = 'location:'.BASEURL.'/account/'.$hashid.'/admin';
+		header($redirect_url);
+	}
 }
 
 /* CANCEL EDIT */
