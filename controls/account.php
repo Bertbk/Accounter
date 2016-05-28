@@ -20,6 +20,8 @@ include_once(LIBPATH.'/bills/update_bill.php');
 
 include_once(LIBPATH.'/bill_participants/set_bill_participant.php');
 include_once(LIBPATH.'/bill_participants/get_bill_participants.php');
+include_once(LIBPATH.'/bill_participants/get_bill_participant_by_hashid.php');
+include_once(LIBPATH.'/bill_participants/update_bill_participant.php');
 
 include_once(LIBPATH.'/compute_solution.php');
 /* Get arguments */
@@ -39,16 +41,35 @@ if($hashid == "" || (strlen($hashid) != 16 && !$admin_mode_url)
 {
 	header ('location: '.BASEURL);
 }
+//Edit...
+$what_to_edit = array (
+    "participant"  => false,
+    "payment" => false,
+    "bill_participant" => false
+);
+$hashid_edit = array(
+    "participant"  => "",
+    "payment" => "",
+    "bill_participant" => ""
+);
 //Edit a participant ?
 $participant_hashid = "";
 empty($_GET['edit_participant']) ? $participant_hashid = "" : $participant_hashid = htmlspecialchars($_GET['edit_participant']);
-$participant_hashid = (strlen($participant_hashid)==16)? $participant_hashid : "";
-$edit_participant = !(empty($participant_hashid));
+$hashid_edit['participant'] = (strlen($participant_hashid)==16)? $participant_hashid : "";
+$what_to_edit['participant'] = !(empty($participant_hashid));
+$participant_hashid = "";
 //Edit a payment ?
 $payment_hashid = "";
 empty($_GET['edit_payment']) ? $payment_hashid = "" : $payment_hashid = htmlspecialchars($_GET['edit_payment']);
-$payment_hashid = (strlen($payment_hashid)==16)? $payment_hashid : "";
-$edit_payment = (!empty($payment_hashid));
+$hashid_edit['payment'] = (strlen($payment_hashid)==16)? $payment_hashid : "";
+$what_to_edit['payment'] = (!empty($payment_hashid));
+$payment_hashid = "";
+//Edit a bill_participant ?
+$bill_part_hashid = "";
+empty($_GET['edit_bill_part']) ? $bill_part_hashid = "" : $bill_part_hashid = htmlspecialchars($_GET['edit_bill_part']);
+$hashid_edit['bill_participant'] = (strlen($bill_part_hashid)==16)? $bill_part_hashid : "";
+$what_to_edit['bill_participant'] = (!empty($bill_part_hashid));
+$bill_part_hashid = "";
 
 /* Treat arguments */
 $my_account = array();
@@ -68,7 +89,7 @@ else
 	{
 		$admin_mode = true;
 	}
-	//else: lier
+	//else: try but fail
 }
 
 if(empty($my_account))
@@ -80,15 +101,26 @@ if(empty($my_account))
 if(!$admin_mode)
 {
 	$payment_hashid = "";
-	$edit_payment = false;
 	$participant_hashid = "";
-	$edit_participant = false;
+	foreach($what_to_edit as $possiblemode)
+	{
+		$what_to_edit[$possiblemode] = false;
+	}
+	foreach($hashid_edit as $possiblemode)
+	{
+		$hashid_edit[$possiblemode] = "";
+	}
 }
-$edit_mode = $edit_participant || $edit_payment;
+
+$edit_mode = false;
+foreach($what_to_edit as $possiblemode=>$key)
+{if($what_to_edit[$possiblemode]==true){$edit_mode = true;} }
 
 /* Here, we have an account and we know if we are admin or not.*/
 $account_id = $my_account['id'];
+$bill_id_to_edit = "";
 
+/* PARTICIPANT*/
 //New participant
 if($admin_mode && isset($_POST['submit_participant']))
 {
@@ -103,6 +135,29 @@ if($admin_mode && isset($_POST['submit_participant']))
 		echo '<p>participant couldn\'t be added.</p>';
 	}
 }
+//Edit participant
+$participant_id_to_edit = null;
+if($admin_mode && $what_to_edit['participant'])
+{
+	$participant_to_edit = get_participant_by_hashid($account_id, $hashid_edit['participant']);
+	if(!empty($participant_to_edit))
+	{
+		$participant_id_to_edit = $participant_to_edit['id'];
+	}
+}
+if($admin_mode && isset($_POST['submit_edit_participant']))
+{
+	$name_of_participant = filter_input(INPUT_POST, 'name_of_participant', FILTER_SANITIZE_STRING);
+	$nb_of_people = filter_input(INPUT_POST, 'nb_of_people', FILTER_SANITIZE_NUMBER_INT);
+	$participant_edited = update_participant($account_id, $participant_id_to_edit, $name_of_participant, $nb_of_people);
+	if($participant_edited)
+	{
+		$redirect_url = 'location:'.BASEURL.'/account/'.$hashid.'/admin';
+		header($redirect_url);
+	}
+}
+
+/*BILL*/
 //New bill
 if($admin_mode && isset($_POST['submit_bill']))
 {
@@ -114,6 +169,9 @@ if($admin_mode && isset($_POST['submit_bill']))
 		echo '<p>bill couldn\'t be added.</p>';
 	}
 }
+//FIXME : edit bill
+
+/* PAYMENT */
 //New Payment
 if($admin_mode && isset($_POST['submit_payment']))
 {
@@ -135,49 +193,13 @@ if($admin_mode && isset($_POST['submit_payment']))
 		}
 	}
 }
-
-//Assign a participant to a bill
-if($admin_mode && isset($_POST['submit_assign_participant']))
-{
-	$p_bill_id = filter_input(INPUT_POST, 'p_bill_id', FILTER_SANITIZE_NUMBER_INT);
-	$p_participant_id = filter_input(INPUT_POST, 'p_participant_id', FILTER_SANITIZE_NUMBER_INT);
-	$p_percent_of_use = filter_input(INPUT_POST, 'p_percent_of_use', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);	
-	$association_ok = set_bill_participant($p_bill_id, $p_participant_id, $p_percent_of_use);
-	if(!$association_ok)
-	{
-		echo '<p>Association couldn\'t be made.</p>';
-	}
-}
-
-//Edit participant
-$participant_id_to_edit = null;
-if($admin_mode && $edit_participant)
-{
-	$participant_to_edit = get_participant_by_hashid($account_id, $participant_hashid);
-	if(!empty($participant_to_edit))
-	{
-		$participant_id_to_edit = $participant_to_edit['id'];
-	}
-}
-if($admin_mode && isset($_POST['submit_edit_participant']))
-{
-	$name_of_participant = filter_input(INPUT_POST, 'name_of_participant', FILTER_SANITIZE_STRING);
-	$nb_of_people = filter_input(INPUT_POST, 'nb_of_people', FILTER_SANITIZE_NUMBER_INT);
-	$participant_edited = update_participant($account_id, $participant_id_to_edit, $name_of_participant, $nb_of_people);
-	if($participant_edited)
-	{
-		$redirect_url = 'location:'.BASEURL.'/account/'.$hashid.'/admin';
-		header($redirect_url);
-	}
-}
-
-
 //Edit payment
 $payment_id_to_edit = null;
-if($admin_mode && $edit_payment)
+if($admin_mode && $what_to_edit['payment'])
 {
-	$payment_to_edit = get_payment_by_hashid($account_id, $payment_hashid);	
+	$payment_to_edit = get_payment_by_hashid($account_id, $hashid_edit['payment']);
 	$payment_id_to_edit = $payment_to_edit['id'];
+	$bill_id_to_edit = $payment_to_edit['bill_id'];
 }
 if($admin_mode && isset($_POST['submit_edit_payment']))
 {
@@ -200,7 +222,40 @@ if($admin_mode && isset($_POST['submit_edit_payment']))
 	}
 }
 
-//Cancel edit
+/* BILL_PARTICIPANT */
+//New one = Assign a participant to a bill
+if($admin_mode && isset($_POST['submit_assign_participant']))
+{
+	$p_bill_id = filter_input(INPUT_POST, 'p_bill_id', FILTER_SANITIZE_NUMBER_INT);
+	$p_participant_id = filter_input(INPUT_POST, 'p_participant_id', FILTER_SANITIZE_NUMBER_INT);
+	$p_percent_of_use = filter_input(INPUT_POST, 'p_percent_of_use', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);	
+	$association_ok = set_bill_participant($account_id, $p_bill_id, $p_participant_id, $p_percent_of_use);
+	if(!$association_ok)
+	{
+		echo '<p>Association couldn\'t be made.</p>';
+	}
+}
+//Edit bill_participant
+$bill_participant_id_to_edit = null;
+if($admin_mode && $what_to_edit['bill_participant'])
+{
+	$bill_participant_to_edit = get_bill_participant_by_hashid($account_id, $hashid_edit['bill_participant']);
+	if(!empty($bill_participant_to_edit))
+	{
+		$bill_participant_id_to_edit = $bill_participant_to_edit['id'];
+		$bill_id_to_edit = $bill_participant_to_edit['bill_id'];
+	}
+}
+if($admin_mode && isset($_POST['submit_edit_bill_participant']))
+{
+	$p_participant_id = filter_input(INPUT_POST, 'p_participant_id', FILTER_SANITIZE_NUMBER_INT);
+	$p_percent_of_use = filter_input(INPUT_POST, 'p_percent_of_use', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);	
+	$participant_edited = update_bill_participant($account_id, $bill_participant_to_edit, $p_participant_id, $p_percent_of_use);
+	$redirect_url = 'location:'.BASEURL.'/account/'.$hashid.'/admin';
+	header($redirect_url);
+}
+
+/* CANCEL EDIT */
 if($admin_mode && isset($_POST['submit_cancel']))
 {
 	$redirect_url = 'location:'.BASEURL.'/account/'.$hashid.'/admin';

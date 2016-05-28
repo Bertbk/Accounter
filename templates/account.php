@@ -7,7 +7,11 @@
 </script>
 </head>
 <body>
-
+<?php if($admin_mode && $edit_mode)
+{
+?>
+<p>Edit mode activated <form method="post"><button type="submit" name="submit_cancel" value="Submit">Cancel</button></form></p>
+<?php } ?>
 
 <h1>Welcome to the account: <?php echo $my_account['title']?></h1>
 <p>Associated email adress : <?php echo $my_account['email']?></p>
@@ -22,7 +26,7 @@
 	{
 ?>
 <?php
-if($admin_mode && $edit_participant && $participant['id'] === $participant_id_to_edit)
+if($admin_mode && $what_to_edit['participant'] && $participant['id'] === $participant_id_to_edit)
 {
 ?>
 		<li>
@@ -83,15 +87,51 @@ if(!empty($my_bill_participants[$bill['id']]))
 $current_bill_participants = $my_bill_participants[$bill['id']];
 $cpt = 1;
 $len = count($current_bill_participants);
+$place_submit_button = false;
 foreach($current_bill_participants as $bill_participant)
 {
-	echo $bill_participant['name'].'('.$bill_participant['percent_of_usage'].'%)';
-	if($admin_mode && !$edit_mode){
-		?><a href="<?php echo BASEURL.'/account/'.$hashid.'/admin/edit_bill_part/'.$bill_participant['hashid']?>">edit_me</a>
-<?php	}
+	if(!$admin_mode || !$what_to_edit['bill_participant'] 
+	|| $bill_id_to_edit != $bill['id'] || $bill_participant_id_to_edit != $bill_participant['id'])
+	{
+		echo $bill_participant['name'].'('.$bill_participant['percent_of_usage'].'%)';
+		if($admin_mode && !$edit_mode){
+			?><a href="<?php echo BASEURL.'/account/'.$hashid.'/admin/edit_bill_part/'.$bill_participant['hashid']?>">edit_me</a>
+	<?php	}
+	}
+	else
+	{ //Edit activated of THIS bill_participant
+		$place_submit_button = true;
+?>
+		<form method="post">
+		<select name="p_participant_id" selected="<?php echo $bill_participant['participant_id']?>">
+<?php
+		foreach($my_participants as $participant)
+		{
+?>
+			<option value="<?php echo $participant['id']?>" 
+			<?php if($participant['id']==$bill_participant['participant_id']){echo ' selected';}?>
+			><?php echo $participant['name']?></option>
+<?php
+		}
+?>
+		</select>
+		 (<input type="number" step="0.01" min="0" max="100" name="p_percent_of_use" 
+		 value="<?php echo $bill_participant['percent_of_usage']?>" required />%)		 
+<?php
+	}
 	if($cpt < $len)	{echo ', ';}
 	$cpt++;
 }//foreach
+//Submit button for editing
+if($place_submit_button)
+{
+?>
+	<br><button type="submit" name="submit_edit_bill_participant" value="Submit">Submit</button> 
+	<button type="submit" name="submit_cancel" value="Submit">Cancel</button> 
+	</form>
+<?php
+	$place_submit_button = false;
+}
 ?>
 </p>
 <?php }//if
@@ -104,7 +144,7 @@ if (is_array($current_payment) && sizeof($current_payment) > 0 )
 <?php
 	foreach($current_payment as $payment)
 	{
-		if($admin_mode && $edit_payment && $payment['id'] === $payment_id_to_edit)
+		if($admin_mode && $what_to_edit['payment'] && $payment['id'] === $payment_id_to_edit)
 		{
 			//Edit mode
 ?>

@@ -4,7 +4,7 @@ include_once(__DIR__.'/../get_db.php');
 /*
 Return an array of the bill_participants of a bill + the name of the participant
 */
-function get_bill_participants_from_bill($bill_id_arg)
+function get_bill_participants_by_bill_id($bill_id_arg)
 {
 	$db = get_db();
 
