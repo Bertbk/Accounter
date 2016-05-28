@@ -13,6 +13,11 @@ include_once(LIBPATH.'/payments/get_payment_by_hashid.php');
 include_once(LIBPATH.'/payments/set_payment.php');
 include_once(LIBPATH.'/payments/update_payment.php');
 
+include_once(LIBPATH.'/bills/get_bills.php');
+include_once(LIBPATH.'/bills/get_bill_by_id.php');
+include_once(LIBPATH.'/bills/set_bill.php');
+include_once(LIBPATH.'/bills/update_bill.php');
+
 include_once(LIBPATH.'/compute_solution.php');
 /* Get arguments */
 //Get if admin mode is asked to be activated 
@@ -80,7 +85,6 @@ $edit_mode = $edit_participant || $edit_payment;
 
 /* Here, we have an account and we know if we are admin or not.*/
 $account_id = $my_account['id'];
-$my_bills = array();
 
 //New participant
 if($admin_mode && isset($_POST['submit_participant']))
@@ -94,7 +98,17 @@ if($admin_mode && isset($_POST['submit_participant']))
 		echo '<p>participant couldn\'t be added.</p>';
 	}
 }
-
+//New bill
+if($admin_mode && isset($_POST['submit_bill']))
+{
+	$p_name_of_bill = filter_input(INPUT_POST, 'p_name_of_bill', FILTER_SANITIZE_STRING);
+	$p_description = filter_input(INPUT_POST, 'p_description', FILTER_SANITIZE_STRING);
+	$p_bill_recorded = set_bill($account_id, $p_name_of_bill, $p_description);
+	if(!$p_bill_recorded)
+	{
+		echo '<p>bill couldn\'t be added.</p>';
+	}
+}
 //New Payment
 if($admin_mode && isset($_POST['submit_payment']))
 {
@@ -175,6 +189,7 @@ if($admin_mode && isset($_POST['submit_cancel']))
 }
 
 //Computations and values used in display
+$my_bills = get_bills($account_id);
 $my_participants = get_participants($account_id);
 $n_participants = 0;
 $n_people = 0;

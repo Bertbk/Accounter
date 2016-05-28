@@ -1,5 +1,7 @@
 <?php
 include_once(__DIR__.'/../get_db.php');
+include_once(LIBPATH.'/participants/get_participant_by_name.php');
+
 
 function set_participant($account_id_arg, $name_of_participant_arg, $nb_of_people_arg, $email_arg)
 {

@@ -189,6 +189,19 @@ if($admin_mode)
 	  </fieldset>
 	</form>
 	
+<!-- Add bill-->
+
+	<form method="post">
+	  <fieldset>
+		<legend>Add a bill:</legend>
+		<label for="form_set_bill_name">Name: </label>
+		<input type="text" name="p_name_of_bill" id="form_set_bill_name" required /><br>
+		<label for="form_set_bill_description">Description: </label>
+		 <input type="text" name="p_description" id="form_set_bill_description" /><br>
+		 <button type="submit" name="submit_bill" value="Submit">Submit</button> 
+	  </fieldset>
+	</form>
+	
 <!-- Add payment -->
 	<form method="post" id="form_payment_send">
 	  <fieldset>
@@ -200,7 +213,7 @@ if($admin_mode)
 		foreach($my_bills as $bill)
 		{
 ?>
-			<option value="<?php echo $bill['id']?>"><?php echo $bill['name']?></option>
+			<option value="<?php echo $bill['id']?>"><?php echo $bill['title']?></option>
 <?php
 		}
 ?>
