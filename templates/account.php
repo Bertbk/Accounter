@@ -25,7 +25,7 @@ if($admin_mode && $edit_participant && $participant['id'] === $participant_id_to
 {
 ?>
 		<li>
-			<form method="post">
+		<form method="post">
 		<input type="text" name="name_of_participant" value="<?php echo $participant_to_edit['name']?>" required />
 		(<input type="number" name="nb_of_people" value="<?php echo $participant_to_edit['nb_of_people']?>" required />)
 		<input type="email" name="email" value="<?php echo $participant_to_edit['email']?>"/>
@@ -63,14 +63,22 @@ if($admin_mode && !$edit_mode)
 }
 ?>
 
-<!-- PAYMENTS -->
-<?php if (is_array($my_payments) && sizeof($my_payments) > 0 )
+<!-- BILLS -->
+<?php if (is_array($my_bills) && sizeof($my_bills) > 0 )
 {
 ?>
-<h1>Payments</h1>
+<h1>Bills</h1>
+<?php 
+foreach($my_bills as $bill)
+{
+?>
+	<h2><?php echo $bill['title']?></h2>
 <ul>
-<?php
-	foreach($my_payments as $payment)
+<?php 
+$current_payment = $my_payments[$bill['id']];
+if (is_array($current_payment) && sizeof($current_payment) > 0 )
+{
+	foreach($current_payment as $payment)
 	{
 		if($admin_mode && $edit_payment && $payment['id'] === $payment_id_to_edit)
 		{
@@ -78,6 +86,18 @@ if($admin_mode && !$edit_mode)
 ?>
 <li>
 	<form method="post" id="form_edit_payment_send">
+		<select name="p_bill_id" id="form_set_payment_bill"> 
+<?php //list of bills
+		foreach($my_bills as $bill)
+		{
+?>
+			<option value="<?php echo $bill['id']?>"
+			<?php if($bill['id']==$payment_to_edit['bill_id']){echo ' selected';}?>
+			><?php echo $bill['title']?></option>
+<?php
+		}
+?>
+		</select>
 		<select name="p_payer_id" onchange="configureDropDownLists(this, document.getElementById('form_edit_payment_recv'))" > 
 <?php
 			foreach($my_participants as $participant)
@@ -108,7 +128,7 @@ if($admin_mode && !$edit_mode)
 ?>
 		</select>
 		<input type="text" name="p_description" value="<?php echo $payment_to_edit['description']?>" />
-		<input type="date" name="p_date_creation" value="<?php echo $payment_to_edit['date_creation']?>"/>
+		<input type="date" name="p_date_payment" value="<?php echo $payment_to_edit['date_of_payment']?>"/>
 		<br><button type="submit" name="submit_edit_payment" value="Submit">Submit</button> 
 		<button type="submit" name="submit_cancel" value="Submit">Cancel</button> 
 	</form>
@@ -124,19 +144,28 @@ if($admin_mode && !$edit_mode)
 <?php //EDIT BUTTON
 		if($admin_mode && !$edit_mode)
 			{
-	$link = BASEURL.'/account/'.$hashid_url.'/admin/edit_payment/'.$payment['hashid'];
+	$link = BASEURL.'/account/'.$hashid.'/admin/edit_payment/'.$payment['hashid'];
 ?>
 	<a href="<?php echo $link?>">edit me</a>
 <?php
-	}//inner if/else
-	}//outer else
-}//foreach
+			}//inner if/else
+		}//outer else	
+	}//foreach current payment
 ?>
 </ul>
 <?php
-}//if payment exist
+	}//if payment exist
+	else
+	{
+?>
+<p>No payments recorded.</p>		
+<?php
+	}
+}//foreach bill
+}//if bills exist
 ?>
 
+<!-- SOLUTION -->
 <?php if (is_array($solution) && sizeof($solution) > 0 )
 {
 ?>
@@ -207,7 +236,7 @@ if($admin_mode)
 	  <fieldset>
 		<legend>Add a payment:</legend>
 		<label for="form_set_payment_bill">Bill</label>
-		<select name="p_bill_id" id=="form_set_payment_bill"> 
+		<select name="p_bill_id" id="form_set_payment_bill"> 
 <option disabled selected value="null"> -- select a bill -- </option>
 <?php
 		foreach($my_bills as $bill)
@@ -219,7 +248,7 @@ if($admin_mode)
 ?>
 		</select><br>
 		<label for="form_set_payment_payer">Payer</label>
-		<select name="p_payer_id" id=="form_set_payment_payer" onchange="configureDropDownLists(this, document.getElementById('form_set_payment_recv'))"> 
+		<select name="p_payer_id" id="form_set_payment_payer" onchange="configureDropDownLists(this, document.getElementById('form_set_payment_recv'))"> 
 <option disabled selected value="null"> -- select a payer -- </option>
 <?php
 		foreach($my_participants as $participant)
@@ -239,7 +268,7 @@ if($admin_mode)
 		<label for="form_set_payment_desc">Description</label>
 		<input type="text" name="p_description" id="form_set_payment_desc" /><br>
 		<label for="form_set_payment_date">Date of payment</label>
-		<input type="date" name="p_date_creation" id="form_set_payment_date"/><br>
+		<input type="date" name="p_date_payment" id="form_set_payment_date"/><br>
 		<br><button type="submit" name="submit_payment" value="Submit">Submit</button> 
 	  </fieldset>
 	</form>

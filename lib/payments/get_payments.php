@@ -22,17 +22,10 @@ function get_payments($account_id_arg)
 	//returned value
 	$reply = array();
 	
-	foreach ($mybills as $bill)
+	foreach ($my_bills as $bill)
 	{
-		$reply[$bill['id']] = get_payments_by_bill_id($account_id_arg, $bill_id_arg);		
+		$reply[$bill['id']] = get_payments_by_bill_id($account_id_arg, $bill['id']);		
 	}
 
-	if(!empty($reply))
-	{
-		return $reply;
-	}
-	else
-	{
-		return array();
-	}
+	return $reply;
 }

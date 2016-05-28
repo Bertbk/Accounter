@@ -119,10 +119,11 @@ if($admin_mode && isset($_POST['submit_payment']))
 		$p_cost = filter_input(INPUT_POST, 'p_cost', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
 		$p_receiver_id = filter_input(INPUT_POST, 'p_receiver_id', FILTER_SANITIZE_NUMBER_INT);
 		$p_description = filter_input(INPUT_POST, 'p_description', FILTER_SANITIZE_STRING);
-		$p_date_creation  = filter_input(INPUT_POST, 'p_date_creation', FILTER_SANITIZE_STRING);
+		$p_date_payment  = filter_input(INPUT_POST, 'p_date_payment', FILTER_SANITIZE_STRING);
 		$p_receiver_id = ($p_receiver_id == -1) ? null:$p_receiver_id;
+		$p_date_payment = (empty($p_date_payment))?null:$p_date_payment;
 		$p_payment_added = set_payment($account_id, $p_bill_id, 
-		$p_payer_id, $p_cost, $p_receiver_id, $p_description, $p_date_creation);
+		$p_payer_id, $p_cost, $p_receiver_id, $p_description, $p_date_payment);
 		if(!$p_payment_added)
 		{
 			echo '<p>payment couldn\'t be added.</p>';
@@ -169,10 +170,10 @@ if($admin_mode && isset($_POST['submit_edit_payment']))
 		$p_cost = filter_input(INPUT_POST, 'p_cost', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
 		$p_receiver_id = filter_input(INPUT_POST, 'p_receiver_id', FILTER_SANITIZE_NUMBER_INT);
 		$p_description = filter_input(INPUT_POST, 'p_description', FILTER_SANITIZE_STRING);
-		$p_date_creation  = filter_input(INPUT_POST, 'p_date_creation', FILTER_SANITIZE_STRING);
+		$p_date_payment  = filter_input(INPUT_POST, 'p_date_payment', FILTER_SANITIZE_STRING);
 		$p_receiver_id = ($p_receiver_id == -1) ? null:$p_receiver_id;
 		$payment_edited = update_payment($account_id, $p_bill_id, $payment_id_to_edit, 
-		$p_payer_id, $p_cost, $p_receiver_id, $p_description, $p_date_creation);
+		$p_payer_id, $p_cost, $p_receiver_id, $p_description, $p_date_payment);
 		if($payment_edited)
 		{
 			$redirect_url = 'location:'.BASEURL.'/account/'.$hashid.'/admin';
@@ -188,7 +189,7 @@ if($admin_mode && isset($_POST['submit_cancel']))
 	header($redirect_url);
 }
 
-//Computations and values used in display
+/* Computations and values used in display */
 $my_bills = get_bills($account_id);
 $my_participants = get_participants($account_id);
 $n_participants = 0;
@@ -202,7 +203,7 @@ foreach($my_participants  as $participant)
 $my_payments = get_payments($account_id);
 //solution
 $solution = array();
-$solution = compute_solution($account_id);
+//$solution = compute_solution($account_id);
 
 include_once('/templates/account.php');
 ?>

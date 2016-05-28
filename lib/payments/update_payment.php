@@ -3,7 +3,7 @@ include_once(__DIR__.'/../get_db.php');
 include_once(LIBPATH.'/payments/get_payment_by_id.php');
 
 
-function update_payment($account_id_arg, $payment_id_arg, $payer_id_arg, $cost_arg, $receiver_id_arg="", $description_arg="", $date_creation_arg="")
+function update_payment($account_id_arg, $payment_id_arg, $payer_id_arg, $cost_arg, $receiver_id_arg="", $description_arg="", $date_of_payment_arg="")
 {
 	$db = get_db();
 
@@ -13,11 +13,11 @@ function update_payment($account_id_arg, $payment_id_arg, $payer_id_arg, $cost_a
 	$new_cost = (float)$cost_arg;
 	$new_receiver_id = (is_null($receiver_id_arg)||empty($receiver_id_arg))?null:(int)$receiver_id_arg;
 	$new_description = htmlspecialchars($description_arg);
-	$new_date_creation = htmlspecialchars($date_creation_arg);
+	$new_date_of_payment = htmlspecialchars($date_of_payment_arg);
 
 	$new_receiver_id = empty($new_receiver_id) ? null:$new_receiver_id;
 	$new_description = empty($new_description) ? null:$new_description;
-	$new_date_creation = empty($new_date_creation) ? null:$new_date_creation;
+	$new_date_of_payment = empty($new_date_of_payment) ? null:$new_date_of_payment;
 	
 	if($new_receiver_id == -1)
 	{
@@ -33,9 +33,9 @@ function update_payment($account_id_arg, $payment_id_arg, $payer_id_arg, $cost_a
 	}
 	
 	//Change style of date to match sql
-	if(!is_null($new_date_creation))
+	if(!is_null($new_date_of_payment))
 	{
-		$new_date_creation = str_replace('/', '-',$new_date_creation);
+		$new_date_of_payment = str_replace('/', '-',$new_date_of_payment);
 	}
 	
 	if($new_payer_id === $new_receiver_id)
@@ -48,7 +48,7 @@ function update_payment($account_id_arg, $payment_id_arg, $payer_id_arg, $cost_a
 	&& $new_cost === $payment_to_edit['cost']
 	&& $new_receiver_id === $payment_to_edit['receiver_id']
 	&& $new_description === $payment_to_edit['description']
-	&& $new_date_creation == $payment_to_edit['date_creation']
+	&& $new_date_of_payment == $payment_to_edit['date_of_payment']
 	)
 	{
 		return true;
@@ -59,14 +59,14 @@ function update_payment($account_id_arg, $payment_id_arg, $payer_id_arg, $cost_a
 	{
 		$myquery = 'UPDATE payments 
 		SET payer_id=:new_payer_id, cost=:new_cost, receiver_id=:new_receiver_id, 
-		description=:new_description, date_creation=:new_date_creation
+		description=:new_description, date_of_payment=:new_date_of_payment
 		WHERE id=:payment_id';
 		$prepare_query = $db->prepare($myquery);
 		$prepare_query->bindValue(':new_payer_id', $new_payer_id, PDO::PARAM_INT);
 		$prepare_query->bindValue(':new_cost', $new_cost, PDO::PARAM_STR);
 		$prepare_query->bindValue(':new_receiver_id', $new_receiver_id, ((is_null($new_receiver_id))?(PDO::PARAM_NULL):(PDO::PARAM_INT)));
 		$prepare_query->bindValue(':new_description', $new_description, ((is_null($new_description))?(PDO::PARAM_NULL):(PDO::PARAM_STR)));
-		$prepare_query->bindValue(':new_date_creation', $new_date_creation, ((is_null($new_date_creation))?(PDO::PARAM_NULL):(PDO::PARAM_STR)));
+		$prepare_query->bindValue(':new_date_of_payment', $new_date_of_payment, ((is_null($new_date_of_payment))?(PDO::PARAM_NULL):(PDO::PARAM_STR)));
 		$prepare_query->bindValue(':payment_id', $payment_id, PDO::PARAM_INT);
 		$isgood = $prepare_query->execute();
 		$prepare_query->closeCursor();

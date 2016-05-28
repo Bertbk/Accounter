@@ -13,7 +13,7 @@ function get_payments_by_bill_id($account_id_arg, $bill_id_arg)
 	$account_id = (int)$account_id_arg;
 	$bill_id = (int)$bill_id_arg;
 
-
+	$reply = array();
 	try
 	{
 		$myquery = 'SELECT payments.*, contribs1.name AS payer_name, 
@@ -34,12 +34,6 @@ function get_payments_by_bill_id($account_id_arg, $bill_id_arg)
 	}
 	$reply = $prepare_query->fetchAll();
 	$prepare_query->closeCursor();
-	if(!empty($reply))
-	{
-		return $reply[0];
-	}
-	else
-	{
-		return array();
-	}
+	return $reply;
+	
 }

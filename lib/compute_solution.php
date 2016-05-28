@@ -10,8 +10,7 @@ function compute_solution($account_id_arg)
 	Refunds['uid'][$vid] is the amount participants of id 'uid' must give back to participants of id 'vid' (id of table participants).
 	Refunds[-1][...] stores some usefull values. -1 cannot be an index, so there shouldn't be overlap.
 	*/
-	$db = get_db();
-	$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+/*	$db = get_db();
 	
 	$account_id = (int)$account_id_arg;
 	
@@ -27,11 +26,11 @@ function compute_solution($account_id_arg)
 	$Debts = array(); // Debt everyone has (to the group)
 	
 	$total_payment = 0; //Amount of money to share
-	$n_parts = 0; //number of parts
+	$nb_of_people = 0; //number of parts
 	
 	foreach($my_contribs as $contrib)
 	{
-		$n_parts += $contrib['number_of_parts'];
+		$nb_of_people += $contrib['number_of_parts'];
 		$Debts[$contrib['id']] = 0;
 		foreach($my_contribs as $contrib2)
 		{
@@ -53,7 +52,7 @@ function compute_solution($account_id_arg)
 	}
 	
 	//Now share the bill !
-	$debt_of_all = $total_payment / $n_parts;
+	$debt_of_all = $total_payment / $nb_of_people;
 	foreach($my_contribs as $contrib)
 	{
 		$uid = $contrib['id'];
@@ -109,8 +108,9 @@ function compute_solution($account_id_arg)
 	//Usefull values
 	$Refunds[-1]['total'] = $total_payment;
 	$Refunds[-1]['single'] = $debt_of_all ;
-	$Refunds[-1]['nparts'] = $n_parts ;
-	
+	$Refunds[-1]['nparts'] = $nb_of_people ;
+	*/
+	$Refunds = array();
 	return $Refunds;
 }
 ?>
