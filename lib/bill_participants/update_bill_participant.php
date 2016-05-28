@@ -23,7 +23,7 @@ function update_bill_participant($account_id_arg, $bill_participant_id_arg, $par
 	}
 	
 	//Check if the new participant is not already choosen
-	$bill_participants = get_bill_participants_by_bill_id($account_id, $bill_participant_id);
+	$bill_participants = get_bill_participants_by_bill_id($account_id, $bill_part_to_edit['bill_id']);
 	if(empty($bill_participants)){
 		echo '<p>caca</p>';
 		return false;
