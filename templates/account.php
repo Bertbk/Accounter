@@ -2,6 +2,7 @@
 
 <html>
 <head>
+<title>Account</title>
 <script type="text/javascript" src="/js/account.js">
 </script>
 </head>
@@ -93,12 +94,14 @@ foreach($current_bill_participants as $bill_participant)
 }//foreach
 ?>
 </p>
-<?php }//if ?>
-<ul>
-<?php // List of the payments
+<?php }//if
+// List of the payments
 $current_payment = $my_payments[$bill['id']];
 if (is_array($current_payment) && sizeof($current_payment) > 0 )
 {
+?>
+<ul>
+<?php
 	foreach($current_payment as $payment)
 	{
 		if($admin_mode && $edit_payment && $payment['id'] === $payment_id_to_edit)
@@ -187,9 +190,9 @@ if($admin_mode && !$edit_mode)
 ?>
 <form method="post">
 	  <fieldset>
-		<legend>Assign a participant:</legend>
-		<label for="form_assign_participant_id">Participant available</label>
-		<select name="p_participant_id" id="form_assign_participant_id"> 
+		<legend>Assign a participant to this bill:</legend>
+		<label for="<?php echo 'form_assign_participant_id'.$bill['id']?>">Participant available</label>
+		<select name="p_participant_id" id="<?php echo 'form_assign_participant_id'.$bill['id']?>"> 
 <option disabled selected value="null"> -- select a participant -- </option>
 <?php
 		foreach($my_participants as $participant)
@@ -210,9 +213,9 @@ if($admin_mode && !$edit_mode)
 		}
 ?>
 		</select><br>		
-		<label for="form_asssign_participant_percent">Percentage of use: </label>
+		<label for="<?php echo 'form_assign_participant_percent'.$bill['id']?>">Percentage of use: </label>
 		 <input type="number" step="0.01" min="0" max="100" name="p_percent_of_use" 
-		 value="100.00" id="form_asssign_participant_percent" required /><br>
+		 value="100.00" id="<?php echo 'form_assign_participant_percent'.$bill['id']?>" required /><br>
 		<input type="hidden" name="p_bill_id" value="<?php echo $bill['id']?>">
 		 <button type="submit" name="submit_assign_participant" value="Submit">Submit</button> 
 	  </fieldset>
