@@ -262,6 +262,39 @@ if (is_array($current_payment) && sizeof($current_payment) > 0 )
 <p>No payments recorded.</p>		
 <?php
 	}//else
+//Solution
+$local_solution = isset($bill_solutions)?$bill_solutions[$bill['id']]:array();
+if (is_array($local_solution) && sizeof($local_solution) > 0 )
+{
+?>
+<h2>A solution for this bill (see at the end of the page for global solution)</h2>
+<p>Total money: <?php echo $local_solution['-1']['total']?><br>
+Nb. parts  : <?php echo $local_solution['-1']['nb_of_parts']?><br>
+Single part: <?php echo $local_solution['-1']['single']?></p>
+Nb. people  : <?php echo $local_solution['-1']['nb_of_people']?><br>
+<ul>
+<?php
+foreach($my_participants as $payer)
+	{
+		$uid = $payer['id'];
+		if(!isset($local_solution[$uid])){continue;}
+		foreach($my_participants as $receiver)
+		{
+			$vid = $receiver['id'];
+			if(!isset($local_solution[$uid][$vid])){continue;}
+			$refund = $local_solution[$uid][$vid];
+			if($refund > 0)
+			{
+?>
+<li><?php echo $payer['name']?> must refund <?php echo $refund?> &euro; to <?php echo $receiver['name']?></li>
+<?php
+			}
+		}
+	}
+?>
+</ul>	
+<?php
+}
 if($admin_mode && !$edit_mode)
 {//Assign a participant
 ?>
@@ -299,27 +332,26 @@ if($admin_mode && !$edit_mode)
 </form>
 <?php
 }//if admin		
-	
 }//foreach bill
 }//if bills exist
 ?>
 
 <!-- SOLUTION -->
-<?php if (is_array($solution) && sizeof($solution) > 0 )
+<?php if (isset($solution) && is_array($solution) && sizeof($solution) > 0 )
 {
 ?>
 <h1>A solution</h1>
-<p>Total money: <?php echo $solution['-1']['total']?><br>
-Nb. parts  : <?php echo $solution['-1']['nparts']?><br>
-Single part: <?php echo $solution['-1']['single']?></p>
+<p>Total money: <?php echo $solution['-1']['total']?></p>
 <ul>
 <?php
 foreach($my_participants as $payer)
 	{
 		$uid = $payer['id'];
+		if(!isset($refund[$uid])){continue;}
 		foreach($my_participants as $receiver)
 		{
 			$vid = $receiver['id'];
+			if(!isset($refund[$vid])){continue;}
 			$refund = $solution[$uid][$vid];
 			if($refund > 0)
 			{
