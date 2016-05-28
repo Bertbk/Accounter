@@ -56,7 +56,11 @@ function compute_bill_solution($account_id_arg, $bill_id_arg)
 	//Init debt between users
 	foreach ($my_payments as $payment)
 	{
+<<<<<<< HEAD
 		$my_pay = number_format((float)$payment['cost'], 2, '.', '');
+=======
+		$my_pay = (float)$payment['cost'];
+>>>>>>> 9551d5fdff975d9232759d874791c56f8999417b
 		if(!is_null($payment['receiver_id']))
 		{//Local payment
 			$Refunds[$payment['receiver_id']][$payment['payer_id']] += $my_pay;
@@ -72,12 +76,20 @@ function compute_bill_solution($account_id_arg, $bill_id_arg)
 	$debt_of_all = 0;
 	if($nb_of_parts > 0 )
 	{
+<<<<<<< HEAD
 		$debt_of_all = number_format($total_payment / $nb_of_parts, 2, '.', '');
+=======
+		$debt_of_all = $total_payment / $nb_of_parts;
+>>>>>>> 9551d5fdff975d9232759d874791c56f8999417b
 		foreach($my_bill_participants as $contrib)
 		{
 			$uid = $contrib['participant_id'];
 			$my_part = (int)$contrib['nb_of_people'] * (float)$contrib['percent_of_usage'] ;
+<<<<<<< HEAD
 			$Debts[$uid] += number_format($debt_of_all * $my_part, 2, '.', '');
+=======
+			$Debts[$uid] += $debt_of_all * $my_part;
+>>>>>>> 9551d5fdff975d9232759d874791c56f8999417b
 			//Debts is not what everyone should pay (positive) or should receive (negative)
 			if($Debts[$uid] <= 0)
 			{
@@ -128,10 +140,17 @@ function compute_bill_solution($account_id_arg, $bill_id_arg)
 	}
 	
 	//Usefull values
+<<<<<<< HEAD
 	$Refunds[-1]['total'] = number_format((float)$total_payment, 2, '.', '');
 	$Refunds[-1]['single'] = number_format((float)$debt_of_all, 2, '.', '');
 	$Refunds[-1]['nb_of_people'] = (int)$nb_of_people ;
 	$Refunds[-1]['nb_of_parts'] = (int)$nb_of_parts ;
+=======
+	$Refunds[-1]['total'] = $total_payment;
+	$Refunds[-1]['single'] = $debt_of_all ;
+	$Refunds[-1]['nb_of_people'] = $nb_of_people ;
+	$Refunds[-1]['nb_of_parts'] = $nb_of_parts ;
+>>>>>>> 9551d5fdff975d9232759d874791c56f8999417b
 	
 	return $Refunds;
 }
