@@ -116,6 +116,7 @@ foreach($my_bills as $bill)
 	}//if/else admin
 ?>
 <?php // Display the current participant of this bill
+$current_bill_participants =array();
 if(!empty($my_bill_participants[$bill['id']]))
 {
 ?>
@@ -347,11 +348,11 @@ if($admin_mode && !$edit_mode)
 foreach($my_participants as $payer)
 	{
 		$uid = $payer['id'];
-		if(!isset($refund[$uid])){continue;}
+		if(!isset($solution[$uid])){continue;}
 		foreach($my_participants as $receiver)
 		{
 			$vid = $receiver['id'];
-			if(!isset($refund[$vid])){continue;}
+			if(!isset($solution[$uid][$vid])){continue;}
 			$refund = $solution[$uid][$vid];
 			if($refund > 0)
 			{

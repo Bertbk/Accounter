@@ -228,7 +228,7 @@ $payment_id_to_edit = null;
 if($admin_mode && $what_to_edit['payment'])
 {
 	$payment_to_edit = get_payment_by_hashid($account_id, $hashid_edit['payment']);
-	if(!empty(payment_to_edit))
+	if(!empty($payment_to_edit))
 	{
 		$payment_id_to_edit = $payment_to_edit['id'];
 		$bill_id_to_edit = $payment_to_edit['bill_id'];

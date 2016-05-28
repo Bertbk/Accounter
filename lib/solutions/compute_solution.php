@@ -47,6 +47,7 @@ function compute_solution($account_id_arg)
 			{
 				$vid = $other['id'];
 				if($uid == $vid){continue;}
+				if(!isset($bill_sol[$uid][$vid])){continue;}
 				$Refunds[$uid][$vid] += $bill_sol[$uid][$vid];
 			}
 		}

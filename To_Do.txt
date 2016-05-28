@@ -6,6 +6,7 @@ MAJOR
 2. Créer un installeur
 3. Comments
 4. Multi bill with different parts : n people != n parts (!)
+5. Add/Update payment : le choix doit se faire en fonction des participants à la bill uniquement
 
 MINOR
 =====
