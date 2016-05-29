@@ -294,7 +294,8 @@ foreach($my_bills as $bill)
 	<?php
 	}
 	if($admin_mode && !$edit_mode)
-	{//Assign a participant
+	{ //Display possibilities
+		//Assign a participant
 	?>
 		<form method="post">
 		  <fieldset>
@@ -327,11 +328,12 @@ foreach($my_bills as $bill)
 			<input type="hidden" name="p_bill_id" value="<?php echo $bill['id']?>">
 			 <button type="submit" name="submit_assign_participant" value="Submit">Submit</button> 
 		  </fieldset>
-	</form>
+		</form>
 
 	<!-- Add payment -->
 	<?php
-	if(!isempty($my_bill_participants[$bill['id']])){
+		if(!empty($my_bill_participants[$bill['id']]))
+		{	
 	?>
 		<form method="post" id="form_payment_send">
 		  <fieldset>
@@ -362,18 +364,13 @@ foreach($my_bills as $bill)
 			<label for="form_set_payment_date">Date of payment</label>
 			<input type="date" name="p_date_payment" id="form_set_payment_date"/><br>
 			<br><button type="submit" name="submit_payment" value="Submit">Submit</button> 
-		  </fieldset>
+			</fieldset>
 		</form>
-
-		
 	<?php
-	}
+	} //if for displaying possibilities
 ?>
 
-
-
 <?php
-}//if admin		
 }//foreach bill
 }//if bills exist
 ?>
@@ -382,11 +379,11 @@ foreach($my_bills as $bill)
 <?php if (isset($solution) && is_array($solution) && sizeof($solution) > 0 )
 {
 ?>
-<h1>A solution</h1>
-<p>Total money: <?php echo $solution['-1']['total']?></p>
-<ul>
+	<h1>A solution</h1>
+	<p>Total money: <?php echo $solution['-1']['total']?></p>
+	<ul>
 <?php
-foreach($my_participants as $payer)
+	foreach($my_participants as $payer)
 	{
 		$uid = $payer['id'];
 		if(!isset($solution[$uid])){continue;}
@@ -404,9 +401,9 @@ foreach($my_participants as $payer)
 		}
 	}
 ?>
-</ul>	
+</ul>
 <?php
-}
+} //if there is a solution
 ?>
 
 <?php
@@ -445,6 +442,8 @@ if($admin_mode && !$edit_mode)
 	  </fieldset>
 	</form>
 
+<?php } //admin mode
+?>
 <!--Menu -->
 
 <h1>Menu</h1>
