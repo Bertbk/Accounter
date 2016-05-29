@@ -6,6 +6,8 @@
 <link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/bill.css'?>">
 <link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/bill_participant.css'?>">
 <script type="text/javascript" src="<?php echo BASEURL.'/js/account.js'?>"></script>
+<script type="text/javascript" src="<?php echo BASEURL.'/js/jquery.js'?>"></script>
+<script type="text/javascript" src="<?php echo BASEURL.'/js/hide_show_add_participant.js'?>"></script>
 </head>
 <body>
 <?php if($admin_mode && $edit_mode)
@@ -72,9 +74,11 @@ if($admin_mode && !$edit_mode)
 //Admin only
 if($admin_mode && !$edit_mode)
 {
-?>
+	?>
+	<div id="div_add_participant">
+	</p><a href="javascript:void(0)" id="a_add_participant">(+) Add a participant</a></p>	
 <!-- Add participant-->
-	<form method="post">
+	<form method="post" id="form_add_participant" style="display:none;">
 	  <fieldset>
 		<legend>Add a participant:</legend>
 		<label for="form_set_participant_name">Name: </label>
@@ -86,7 +90,7 @@ if($admin_mode && !$edit_mode)
 		 <button type="submit" name="submit_participant" value="Submit">Submit</button> 
 	  </fieldset>
 	</form>
-
+</div>
 <?php } //admin mode
 ?>
 
