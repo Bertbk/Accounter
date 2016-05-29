@@ -232,6 +232,51 @@ foreach($my_bills as $bill)
 	?>
 <?php }//if my_bill_participants != empty ?>
 
+<?php
+	if($admin_mode && !$edit_mode)
+	{ //Display possibilities
+		//Assign a participant (if there are free guys)
+		if(!empty($my_free_bill_participants[$bill['id']]))
+		{
+	?>
+		<form method="post">
+		  <fieldset>
+			<legend>Assign a participant to this bill:</legend>
+			<label for="<?php echo 'form_assign_participant_id'.$bill['id']?>">Participant available</label>
+			<select name="p_participant_id" id="<?php echo 'form_assign_participant_id'.$bill['id']?>"> 
+	<option disabled selected value="null"> -- select a participant -- </option>
+	<?php
+			foreach($my_participants as $participant)
+			{
+				$isfree = true;
+				foreach($current_bill_participants as $curbill)
+				{
+					if($participant['id'] == $curbill['participant_id'])
+					{
+						$isfree = false;
+						break;
+					}
+				}
+				if(!$isfree){continue;}
+	?>
+				<option value="<?php echo $participant['id']?>"><?php echo $participant['name']?></option>
+	<?php
+			}
+	?>
+			</select><br>		
+			<label for="<?php echo 'form_assign_participant_percent'.$bill['id']?>">Percentage of use: </label>
+			 <input type="number" step="0.01" min="0" max="100" name="p_percent_of_use" 
+			 value="100.00" id="<?php echo 'form_assign_participant_percent'.$bill['id']?>" required /><br>
+			<input type="hidden" name="p_bill_id" value="<?php echo $bill['id']?>">
+			 <button type="submit" name="submit_assign_participant" value="Submit">Submit</button> 
+		  </fieldset>
+		</form>
+<?php 
+		} //if empty free_participants
+	}//if admin
+?>
+
+
 <h3>Payments</h3>
 <?php // List of the payments
 	if(isset($my_payments_per_bill[$bill['id']]) && is_array($my_payments_per_bill[$bill['id']])
@@ -326,81 +371,10 @@ foreach($my_bills as $bill)
 		<p>No payments recorded.</p>		
 <?php
 	}//end else payment exists
-	//Solution
-	if (isset($bill_solutions[$bill['id']]) && is_array($bill_solutions[$bill['id']])
-		&& !empty($bill_solutions[$bill['id']]))
-		{
-		$local_solution = $bill_solutions[$bill['id']];
-	?>
-	<h3>A solution for this bill (see at the end of the page for global solution)</h3>
-	<p>Total money: <?php echo $local_solution['-1']['total']?><br>
-	Nb. parts  : <?php echo $local_solution['-1']['nb_of_parts']?><br>
-	Single part: <?php echo $local_solution['-1']['single']?><br>
-	Nb. people  : <?php echo $local_solution['-1']['nb_of_people']?></p>
-	<ul>
-	<?php
-	foreach($my_participants as $payer)
-		{
-			$uid = $payer['id'];
-			if(!isset($local_solution[$uid])){continue;}
-			foreach($my_participants as $receiver)
-			{
-				$vid = $receiver['id'];
-				if(!isset($local_solution[$uid][$vid])){continue;}
-				$refund = $local_solution[$uid][$vid];
-				if($refund > 0)
-				{
-	?>
-	<li><?php echo $payer['name']?> must refund <?php echo $refund?> &euro; to <?php echo $receiver['name']?></li>
-	<?php
-				}
-			}
-		}
-	?>
-	</ul>	
-	<?php
-	}
+?>	
+		<?php
 	if($admin_mode && !$edit_mode)
-	{ //Display possibilities
-		//Assign a participant (if there are free guys)
-		if(!empty($my_free_bill_participants[$bill['id']]))
-		{
-	?>
-		<form method="post">
-		  <fieldset>
-			<legend>Assign a participant to this bill:</legend>
-			<label for="<?php echo 'form_assign_participant_id'.$bill['id']?>">Participant available</label>
-			<select name="p_participant_id" id="<?php echo 'form_assign_participant_id'.$bill['id']?>"> 
-	<option disabled selected value="null"> -- select a participant -- </option>
-	<?php
-			foreach($my_participants as $participant)
-			{
-				$isfree = true;
-				foreach($current_bill_participants as $curbill)
-				{
-					if($participant['id'] == $curbill['participant_id'])
-					{
-						$isfree = false;
-						break;
-					}
-				}
-				if(!$isfree){continue;}
-	?>
-				<option value="<?php echo $participant['id']?>"><?php echo $participant['name']?></option>
-	<?php
-			}
-	?>
-			</select><br>		
-			<label for="<?php echo 'form_assign_participant_percent'.$bill['id']?>">Percentage of use: </label>
-			 <input type="number" step="0.01" min="0" max="100" name="p_percent_of_use" 
-			 value="100.00" id="<?php echo 'form_assign_participant_percent'.$bill['id']?>" required /><br>
-			<input type="hidden" name="p_bill_id" value="<?php echo $bill['id']?>">
-			 <button type="submit" name="submit_assign_participant" value="Submit">Submit</button> 
-		  </fieldset>
-		</form>
-<?php 
-		} //if empty free_participants
-?>
+	{?>
 	<!-- Add payment -->
 	<?php
 		if(!empty($my_bill_participants[$bill['id']]))
@@ -443,6 +417,41 @@ foreach($my_bills as $bill)
 ?>
 	<?php
 	} //if for displaying possibilities
+?>
+<?php //Solution
+	if (isset($bill_solutions[$bill['id']]) && is_array($bill_solutions[$bill['id']])
+		&& !empty($bill_solutions[$bill['id']]))
+		{
+		$local_solution = $bill_solutions[$bill['id']];
+	?>
+	<h3>A solution for this bill (see at the end of the page for global solution)</h3>
+	<p>Total money: <?php echo $local_solution['-1']['total']?><br>
+	Nb. parts  : <?php echo $local_solution['-1']['nb_of_parts']?><br>
+	Single part: <?php echo $local_solution['-1']['single']?><br>
+	Nb. people  : <?php echo $local_solution['-1']['nb_of_people']?></p>
+	<ul>
+	<?php
+	foreach($my_participants as $payer)
+		{
+			$uid = $payer['id'];
+			if(!isset($local_solution[$uid])){continue;}
+			foreach($my_participants as $receiver)
+			{
+				$vid = $receiver['id'];
+				if(!isset($local_solution[$uid][$vid])){continue;}
+				$refund = $local_solution[$uid][$vid];
+				if($refund > 0)
+				{
+	?>
+	<li><?php echo $payer['name']?> must refund <?php echo $refund?> &euro; to <?php echo $receiver['name']?></li>
+	<?php
+				}
+			}
+		}
+	?>
+	</ul>	
+	<?php
+	}//if exists(solution)
 ?>
 </div> 
 <?php
