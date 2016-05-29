@@ -168,7 +168,7 @@ foreach($my_bills as $bill)
 	</p>
 <?php }//if my_bill_participants != empty ?>
 
-<?php// List of the payments
+<?php // List of the payments
 	if(isset($my_payments[$bill['id']]) && is_array($my_payments[$bill['id']])
 		&& count($my_payments[$bill['id']]) > 0)
 	{
