@@ -16,8 +16,8 @@
 <h1>Welcome to the account: <?php echo $my_account['title']?></h1>
 <p>Associated email adress : <?php echo $my_account['email']?></p>
 	
-<?php if (is_array($my_participants) && sizeof($my_participants) > 0 )
-{
+<?php if (is_array($my_participants) && sizeof($my_participants) > 0 ) 
+	{
 ?>
 <h1>Participants (<?php echo $n_participants ?>) / People (<?php echo $n_people ?>)</h1>
 <ul>
@@ -42,7 +42,6 @@ if($admin_mode && $what_to_edit['participant'] && $participant['id'] === $partic
 <?php
 }//if
 else{ // READ Only
-{
 ?>
 		<li>
 		<?php echo $participant['name']?> 
@@ -59,13 +58,11 @@ if($admin_mode && !$edit_mode)
 ?>		
 		</li>
 <?php
-}//inner else
-} //outer else
-} //foreach
+}//if/else admin
+} //foreach participants
 ?>
 </ul>	
-<?php
-}
+<?php }//if !empty(participants)
 ?>
 
 <!-- BILLS -->
@@ -85,7 +82,7 @@ foreach($my_bills as $bill)
 	<h2>
 	<label for="form_edit_bill_name">Title: </label>
 	<input type="text" name="p_title" id="form_edit_bill_name"  
-	value="<?php echo $bill['title']?>" required/>
+	value="<?php echo $bill['title']?>" required />
 	</h2>
 	<label for="form_edit_bill_description">Description: </label>
 	 <input type="text" name="p_description" id="form_edit_bill_description" 
@@ -99,238 +96,282 @@ foreach($my_bills as $bill)
 ?>
 	<h2><?php echo $bill['title'] ?>
 	<?php
-	if($admin_mode && !$edit_mode){
-	$link = BASEURL.'/account/'.$hashid.'/admin/edit_bill/'.$bill['hashid'];
-	?>
-	<a href='<?php echo $link?>'>edit me</a>
-	<?php
-	}
-	?>
+	if($admin_mode && !$edit_mode)
+	{
+		$link = BASEURL.'/account/'.$hashid.'/admin/edit_bill/'.$bill['hashid'];
+		?>
+		<a href='<?php echo $link?>'>edit me</a>
+<?php }	?>
 	</h2>
 	<?php if(!empty($bill['description']) && !is_null($bill['description']))
 	{
 ?>
 	<p><?php echo $bill['description']?></p>
-<?php		
-	}//if/else empty/null
-	}//if/else admin
+<?php }?>
+<?php }//if/else admin 
 ?>
+
 <?php // Display the current participant of this bill
-$current_bill_participants =array();
-if(!empty($my_bill_participants[$bill['id']]))
-{
-?>
-<p>Participants: 
-<?php
-$current_bill_participants = $my_bill_participants[$bill['id']];
-$cpt = 1;
-$len = count($current_bill_participants);
-$place_submit_button = false;
-foreach($current_bill_participants as $bill_participant)
-{
-	if(!$admin_mode || !$what_to_edit['bill_participant'] 
-	|| $bill_id_to_edit != $bill['id'] || $bill_participant_id_to_edit != $bill_participant['id'])
+	$current_bill_participants =array();
+	if(!empty($my_bill_participants[$bill['id']]))
 	{
-		echo $bill_participant['name'].'('.$bill_participant['percent_of_usage'].'%)';
-		if($admin_mode && !$edit_mode){
-			?><a href="<?php echo BASEURL.'/account/'.$hashid.'/admin/edit_bill_part/'.$bill_participant['hashid']?>">edit_me</a>
-	<?php	}
-	}
-	else
-	{ //Edit activated of THIS bill_participant
-		$place_submit_button = true;
 ?>
-		<form method="post">
-		<select name="p_participant_id" selected="<?php echo $bill_participant['participant_id']?>">
+		<p>Participants: 
 <?php
-		foreach($my_participants as $participant)
-		{
-?>
-			<option value="<?php echo $participant['id']?>" 
-			<?php if($participant['id']==$bill_participant['participant_id']){echo ' selected';}?>
-			><?php echo $participant['name']?></option>
-<?php
-		}
-?>
-		</select>
-		 (<input type="number" step="0.01" min="0" max="100" name="p_percent_of_use" 
-		 value="<?php echo $bill_participant['percent_of_usage']?>" required />%)		 
-<?php
-	}
-	if($cpt < $len)	{echo ', ';}
-	$cpt++;
-}//foreach
-//Submit button for editing
-if($place_submit_button)
-{
-?>
-	<br><button type="submit" name="submit_edit_bill_participant" value="Submit">Submit</button> 
-	<button type="submit" name="submit_cancel" value="Submit">Cancel</button> 
-	</form>
-<?php
-	$place_submit_button = false;
-}
-?>
-</p>
-<?php }//if
-// List of the payments
-$current_payment = $my_payments[$bill['id']];
-if (is_array($current_payment) && sizeof($current_payment) > 0 )
-{
-?>
-<ul>
-<?php
-	foreach($current_payment as $payment)
+	$current_bill_participants = $my_bill_participants[$bill['id']];
+	$place_submit_button = false; // if editing, place a button after the list
+	foreach($current_bill_participants as $bill_participant)
 	{
-		if($admin_mode && $what_to_edit['payment'] && $payment['id'] === $payment_id_to_edit)
+		if(!$admin_mode || !$what_to_edit['bill_participant'] 
+		|| $bill_id_to_edit != $bill['id'] || $bill_participant_id_to_edit != $bill_participant['id'])
 		{
-			//Edit mode
-?>
-<li>
-	<form method="post" id="form_edit_payment_send">
-		<select name="p_bill_id" id="form_set_payment_bill"> 
-<?php //list of bills
-		foreach($my_bills as $bill)
-		{
-?>
-			<option value="<?php echo $bill['id']?>"
-			<?php if($bill['id']==$payment_to_edit['bill_id']){echo ' selected';}?>
-			><?php echo $bill['title']?></option>
-<?php
-		}
-?>
-		</select>
-		<select name="p_payer_id" onchange="configureDropDownLists(this, document.getElementById('form_edit_payment_recv'))" > 
-<?php
+			?><span><?php
+			echo $bill_participant['name'].'('.$bill_participant['percent_of_usage'].'%)';
+			if($admin_mode && !$edit_mode){
+				?><a href="<?php echo BASEURL.'/account/'.$hashid.'/admin/edit_bill_part/'.$bill_participant['hashid']?>">edit_me</a>
+		<?php	} ?>
+			</span>
+	<?php }
+		else
+		{ //Edit activated of THIS bill_participant
+			$place_submit_button = true;
+	?>
+			<form method="post">
+			<select name="p_participant_id" selected="<?php echo $bill_participant['participant_id']?>">
+	<?php
 			foreach($my_participants as $participant)
 			{
-?>
-				<option value="<?php echo $participant['id']?>"
-				<?php if($participant['id']==$payment_to_edit['payer_id']){echo ' selected';}?>
-				>
-				<?php echo $participant['name']?></option>
-<?php
-			}
-?>
-		</select>
-		<input type="number" step="0.01" min="0" name="p_cost" value="<?php echo $payment_to_edit['cost']?>" required />
-		<select name="p_receiver_id" id="form_edit_payment_recv" selected="<?php echo $payment_to_edit['receiver_id']?>"> 
-		<option value="-1" >Group</option>
-<?php
-		foreach($my_participants as $participant)
-			{
-				if($participant['id'] == $payment_to_edit['payer_id']){continue;}
-?>
-				<option value="<?php echo $participant['id']?>"
-				<?php if($participant['id']==$payment_to_edit['receiver_id']){echo ' selected';}?>
-				>
-				<?php echo $participant['name']?></option>
-<?php
-			}
-?>
-		</select>
-		<input type="text" name="p_description" value="<?php echo $payment_to_edit['description']?>" />
-		<input type="date" name="p_date_payment" value="<?php echo $payment_to_edit['date_of_payment']?>"/>
-		<br><button type="submit" name="submit_edit_payment" value="Submit">Submit</button> 
-		<button type="submit" name="submit_cancel" value="Submit">Cancel</button> 
-	</form>
-	</li>
-<?php
-		}
-		else{//Read only
 	?>
-		<li><?php echo $payment['payer_name']?> paid <?php echo $payment['cost']?>&euro; to 
-		<?php echo (is_null($payment['receiver_name']))?'all':$payment['receiver_name']?>
-		<?php if(!empty($payment['date_creation'])){echo ', the '.str_replace('-', '/',$payment['date_creation']);}?>
-		<?php if(!empty($payment['description'])){echo 'for '.$payment['description'];}?>
-<?php //EDIT BUTTON
-		if($admin_mode && !$edit_mode)
-			{
-	$link = BASEURL.'/account/'.$hashid.'/admin/edit_payment/'.$payment['hashid'];
+				<option value="<?php echo $participant['id']?>" 
+				<?php if($participant['id']==$bill_participant['participant_id']){echo ' selected';}?>
+				><?php echo $participant['name']?></option>
+	<?php
+			}
+	?>
+			</select>
+			 (<input type="number" step="0.01" min="0" max="100" name="p_percent_of_use" 
+			 value="<?php echo $bill_participant['percent_of_usage']?>" required />%)		 
+	<?php
+		}//else admin mode
+	}//foreach participant in this bill
+	//Submit button for editing
+	if($place_submit_button)
+	{
+	?>
+		<br><button type="submit" name="submit_edit_bill_participant" value="Submit">Submit</button> 
+		<button type="submit" name="submit_cancel" value="Submit">Cancel</button> 
+		</form>
+	<?php
+		$place_submit_button = false;
+	} //if place button
+	?>
+	</p>
+<?php }//if my_bill_participants != empty ?>
+
+<?php// List of the payments
+	if(isset($my_payments[$bill['id']]) && is_array($my_payments[$bill['id']])
+		&& count($my_payments[$bill['id']]) > 0)
+	{
+		$current_payment = $my_payments[$bill['id']];
+	?>
+	<ul>
+	<?php
+		foreach($current_payment as $payment)
+		{
+	?><li><?php
+			if($admin_mode && $what_to_edit['payment'] 
+			&& $payment['id'] === $payment_id_to_edit)
+			{ //Edit mode 
 ?>
-	<a href="<?php echo $link?>">edit me</a>
-<?php
-			}//inner if/else
-		}//outer else	
-	}//foreach current payment
+		<form method="post" id="form_edit_payment_send">
+			<select name="p_bill_id" id="form_set_payment_bill"> 
+	<?php //list of bills
+			foreach($my_bills as $bill)
+				{
+	?>
+					<option value="<?php echo $bill['id']?>"
+					<?php if($bill['id']==$payment_to_edit['bill_id']){echo ' selected';}?>
+					><?php echo $bill['title']?></option>
+	<?php
+				}
+	?>
+			</select>
+			<select name="p_payer_id" onchange="configureDropDownLists(this, document.getElementById('form_edit_payment_recv'))" > 
+	<?php
+				foreach($my_participants as $participant)
+				{
+	?>
+					<option value="<?php echo $participant['id']?>"
+					<?php if($participant['id']==$payment_to_edit['payer_id']){echo ' selected';}?>
+					>
+					<?php echo $participant['name']?></option>
+	<?php
+				}
+	?>
+			</select>
+			<input type="number" step="0.01" min="0" name="p_cost" value="<?php echo $payment_to_edit['cost']?>" required />
+			<select name="p_receiver_id" id="form_edit_payment_recv" selected="<?php echo $payment_to_edit['receiver_id']?>"> 
+			<option value="-1" >Group</option>
+	<?php
+			foreach($my_participants as $participant)
+				{
+					if($participant['id'] == $payment_to_edit['payer_id']){continue;}
+	?>
+					<option value="<?php echo $participant['id']?>"
+					<?php if($participant['id']==$payment_to_edit['receiver_id']){echo ' selected';}?>
+					>
+					<?php echo $participant['name']?></option>
+	<?php
+				}
+	?>
+			</select>
+			<input type="text" name="p_description" value="<?php echo $payment_to_edit['description']?>" />
+			<input type="date" name="p_date_payment" value="<?php echo $payment_to_edit['date_of_payment']?>"/>
+			<br><button type="submit" name="submit_edit_payment" value="Submit">Submit</button> 
+			<button type="submit" name="submit_cancel" value="Submit">Cancel</button> 
+		</form>
+	<?php
+			}
+			else{//Read only
+		?>
+			<?php echo $payment['payer_name']?> paid <?php echo $payment['cost']?>&euro; to 
+			<?php echo (is_null($payment['receiver_name']))?'all':$payment['receiver_name']?>
+			<?php if(!empty($payment['date_creation'])){echo ', the '.str_replace('-', '/',$payment['date_creation']);}?>
+			<?php if(!empty($payment['description'])){echo 'for '.$payment['description'];}?>
+	<?php //EDIT BUTTON
+			if($admin_mode && !$edit_mode)
+				{
+		$link = BASEURL.'/account/'.$hashid.'/admin/edit_payment/'.$payment['hashid'];
+	?>
+		<a href="<?php echo $link?>">edit me</a>
+	<?php
+				}
+			}//end else admin mode 
+			?>
+		</li>
+<?php	}//foreach current payment 
 ?>
-</ul>
-<?php
+	</ul>
+	<?php
 	}//if payment exist
 	else
-	{
-?>
-<p>No payments recorded.</p>		
+	{ ?>
+		<p>No payments recorded.</p>		
 <?php
-	}//else
-//Solution
-$local_solution = isset($bill_solutions)?$bill_solutions[$bill['id']]:array();
-if (is_array($local_solution) && sizeof($local_solution) > 0 )
-{
-?>
-<h2>A solution for this bill (see at the end of the page for global solution)</h2>
-<p>Total money: <?php echo $local_solution['-1']['total']?><br>
-Nb. parts  : <?php echo $local_solution['-1']['nb_of_parts']?><br>
-Single part: <?php echo $local_solution['-1']['single']?></p>
-Nb. people  : <?php echo $local_solution['-1']['nb_of_people']?><br>
-<ul>
-<?php
-foreach($my_participants as $payer)
-	{
-		$uid = $payer['id'];
-		if(!isset($local_solution[$uid])){continue;}
-		foreach($my_participants as $receiver)
+	}//end else payment exists
+	//Solution
+	if (isset($bill_solutions[$bill['id']]) && is_array(isset($bill_solutions[$bill['id']]))
+		&& !empty($bill_solutions[$bill['id']]))
 		{
-			$vid = $receiver['id'];
-			if(!isset($local_solution[$uid][$vid])){continue;}
-			$refund = $local_solution[$uid][$vid];
-			if($refund > 0)
-			{
-?>
-<li><?php echo $payer['name']?> must refund <?php echo $refund?> &euro; to <?php echo $receiver['name']?></li>
-<?php
-			}
-		}
-	}
-?>
-</ul>	
-<?php
-}
-if($admin_mode && !$edit_mode)
-{//Assign a participant
-?>
-<form method="post">
-	  <fieldset>
-		<legend>Assign a participant to this bill:</legend>
-		<label for="<?php echo 'form_assign_participant_id'.$bill['id']?>">Participant available</label>
-		<select name="p_participant_id" id="<?php echo 'form_assign_participant_id'.$bill['id']?>"> 
-<option disabled selected value="null"> -- select a participant -- </option>
-<?php
-		foreach($my_participants as $participant)
+		$local_solution = [$bill['id']];
+	?>
+	<h2>A solution for this bill (see at the end of the page for global solution)</h2>
+	<p>Total money: <?php echo $local_solution['-1']['total']?><br>
+	Nb. parts  : <?php echo $local_solution['-1']['nb_of_parts']?><br>
+	Single part: <?php echo $local_solution['-1']['single']?></p>
+	Nb. people  : <?php echo $local_solution['-1']['nb_of_people']?><br>
+	<ul>
+	<?php
+	foreach($my_participants as $payer)
 		{
-			$isfree = true;
-			foreach($current_bill_participants as $curbill)
+			$uid = $payer['id'];
+			if(!isset($local_solution[$uid])){continue;}
+			foreach($my_participants as $receiver)
 			{
-				if($participant['id'] == $curbill['participant_id'])
+				$vid = $receiver['id'];
+				if(!isset($local_solution[$uid][$vid])){continue;}
+				$refund = $local_solution[$uid][$vid];
+				if($refund > 0)
 				{
-					$isfree = false;
-					break;
+	?>
+	<li><?php echo $payer['name']?> must refund <?php echo $refund?> &euro; to <?php echo $receiver['name']?></li>
+	<?php
 				}
 			}
-			if(!$isfree){continue;}
-?>
-			<option value="<?php echo $participant['id']?>"><?php echo $participant['name']?></option>
-<?php
 		}
+	?>
+	</ul>	
+	<?php
+	}
+	if($admin_mode && !$edit_mode)
+	{//Assign a participant
+	?>
+		<form method="post">
+		  <fieldset>
+			<legend>Assign a participant to this bill:</legend>
+			<label for="<?php echo 'form_assign_participant_id'.$bill['id']?>">Participant available</label>
+			<select name="p_participant_id" id="<?php echo 'form_assign_participant_id'.$bill['id']?>"> 
+	<option disabled selected value="null"> -- select a participant -- </option>
+	<?php
+			foreach($my_participants as $participant)
+			{
+				$isfree = true;
+				foreach($current_bill_participants as $curbill)
+				{
+					if($participant['id'] == $curbill['participant_id'])
+					{
+						$isfree = false;
+						break;
+					}
+				}
+				if(!$isfree){continue;}
+	?>
+				<option value="<?php echo $participant['id']?>"><?php echo $participant['name']?></option>
+	<?php
+			}
+	?>
+			</select><br>		
+			<label for="<?php echo 'form_assign_participant_percent'.$bill['id']?>">Percentage of use: </label>
+			 <input type="number" step="0.01" min="0" max="100" name="p_percent_of_use" 
+			 value="100.00" id="<?php echo 'form_assign_participant_percent'.$bill['id']?>" required /><br>
+			<input type="hidden" name="p_bill_id" value="<?php echo $bill['id']?>">
+			 <button type="submit" name="submit_assign_participant" value="Submit">Submit</button> 
+		  </fieldset>
+	</form>
+
+	<!-- Add payment -->
+	<?php
+	if(!isempty($my_bill_participants[$bill['id']])){
+	?>
+		<form method="post" id="form_payment_send">
+		  <fieldset>
+			<legend>Add a payment:</legend>
+			<input type="hidden" name="p_bill_id" value = <?php echo $bill['id']?>> 
+			<label for="form_set_payment_payer">Payer</label>
+			<select name="p_payer_id" id="form_set_payment_payer" onchange="configureDropDownLists(this, document.getElementById('form_set_payment_recv'))"> 
+	<option disabled selected value="null"> -- select a payer -- </option>
+	<?php
+
+			foreach($my_bill_participants as $participant)
+			{
+	?>
+				<option value="<?php echo $participant['id']?>"><?php echo $participant['name']?></option>
+	<?php
+			}
+		}//if empty
+	?>
+			</select><br>
+			<label for="form_set_payment_cost">Cost</label>
+			<input type="number" step="0.01" min="0" name="p_cost" id="form_set_payment_cost" required /><br>
+			<label for="form_set_payment_recv">Receiver</label>
+			<select name="p_receiver_id" id="form_set_payment_recv"> 
+			<option value="-1" selected="selected">Group</option>
+			</select><br>
+			<label for="form_set_payment_desc">Description</label>
+			<input type="text" name="p_description" id="form_set_payment_desc" /><br>
+			<label for="form_set_payment_date">Date of payment</label>
+			<input type="date" name="p_date_payment" id="form_set_payment_date"/><br>
+			<br><button type="submit" name="submit_payment" value="Submit">Submit</button> 
+		  </fieldset>
+		</form>
+
+		
+	<?php
+	}
 ?>
-		</select><br>		
-		<label for="<?php echo 'form_assign_participant_percent'.$bill['id']?>">Percentage of use: </label>
-		 <input type="number" step="0.01" min="0" max="100" name="p_percent_of_use" 
-		 value="100.00" id="<?php echo 'form_assign_participant_percent'.$bill['id']?>" required /><br>
-		<input type="hidden" name="p_bill_id" value="<?php echo $bill['id']?>">
-		 <button type="submit" name="submit_assign_participant" value="Submit">Submit</button> 
-	  </fieldset>
-</form>
+
+
+
 <?php
 }//if admin		
 }//foreach bill
@@ -375,20 +416,6 @@ if($admin_mode && !$edit_mode)
 ?>
 <!-- Admin mode-->
 	<h1>Administration section</h1>
-<!-- Add participant-->
-
-	<form method="post">
-	  <fieldset>
-		<legend>Add a participant:</legend>
-		<label for="form_set_participant_name">Name: </label>
-		<input type="text" name="p_name_of_participant" id="form_set_participant_name" required /><br>
-		<label for="form_set_participant_nbpeople">Nb. of people: </label>
-		 <input type="number" name="p_nb_of_people" value="1" id="form_set_participant_nbpeople" required /><br>
-		<label for="form_set_participant_email">Email adress: </label>
-		 <input type="email" name="p_email" id="form_set_participant_email"  /><br>
-		 <button type="submit" name="submit_participant" value="Submit">Submit</button> 
-	  </fieldset>
-	</form>
 	
 <!-- Add bill-->
 
@@ -403,52 +430,20 @@ if($admin_mode && !$edit_mode)
 	  </fieldset>
 	</form>
 	
-<!-- Add payment -->
-	<form method="post" id="form_payment_send">
+<!-- Add participant-->
+
+	<form method="post">
 	  <fieldset>
-		<legend>Add a payment:</legend>
-		<label for="form_set_payment_bill">Bill</label>
-		<select name="p_bill_id" id="form_set_payment_bill"> 
-<option disabled selected value="null"> -- select a bill -- </option>
-<?php
-		foreach($my_bills as $bill)
-		{
-?>
-			<option value="<?php echo $bill['id']?>"><?php echo $bill['title']?></option>
-<?php
-		}
-?>
-		</select><br>
-		<label for="form_set_payment_payer">Payer</label>
-		<select name="p_payer_id" id="form_set_payment_payer" onchange="configureDropDownLists(this, document.getElementById('form_set_payment_recv'))"> 
-<option disabled selected value="null"> -- select a payer -- </option>
-<?php
-		foreach($my_participants as $participant)
-		{
-?>
-			<option value="<?php echo $participant['id']?>"><?php echo $participant['name']?></option>
-<?php
-		}
-?>
-		</select><br>
-		<label for="form_set_payment_cost">Cost</label>
-		<input type="number" step="0.01" min="0" name="p_cost" id="form_set_payment_cost" required /><br>
-		<label for="form_set_payment_recv">Receiver</label>
-		<select name="p_receiver_id" id="form_set_payment_recv"> 
-		<option value="-1" selected="selected">Group</option>
-		</select><br>
-		<label for="form_set_payment_desc">Description</label>
-		<input type="text" name="p_description" id="form_set_payment_desc" /><br>
-		<label for="form_set_payment_date">Date of payment</label>
-		<input type="date" name="p_date_payment" id="form_set_payment_date"/><br>
-		<br><button type="submit" name="submit_payment" value="Submit">Submit</button> 
+		<legend>Add a participant:</legend>
+		<label for="form_set_participant_name">Name: </label>
+		<input type="text" name="p_name_of_participant" id="form_set_participant_name" required /><br>
+		<label for="form_set_participant_nbpeople">Nb. of people: </label>
+		 <input type="number" name="p_nb_of_people" value="1" id="form_set_participant_nbpeople" required /><br>
+		<label for="form_set_participant_email">Email adress: </label>
+		 <input type="email" name="p_email" id="form_set_participant_email"  /><br>
+		 <button type="submit" name="submit_participant" value="Submit">Submit</button> 
 	  </fieldset>
 	</form>
-
-	
-<?php
-}
-?>
 
 <!--Menu -->
 

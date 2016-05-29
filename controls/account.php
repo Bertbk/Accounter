@@ -12,6 +12,7 @@ include_once(LIBPATH.'/payments/get_payments.php');
 include_once(LIBPATH.'/payments/get_payment_by_hashid.php');
 include_once(LIBPATH.'/payments/set_payment.php');
 include_once(LIBPATH.'/payments/update_payment.php');
+include_once(LIBPATH.'/payments/get_payments_by_bills.php');
 
 include_once(LIBPATH.'/bills/get_bills.php');
 include_once(LIBPATH.'/bills/get_bill_by_id.php');
@@ -23,6 +24,7 @@ include_once(LIBPATH.'/bill_participants/set_bill_participant.php');
 include_once(LIBPATH.'/bill_participants/get_bill_participants.php');
 include_once(LIBPATH.'/bill_participants/get_bill_participant_by_hashid.php');
 include_once(LIBPATH.'/bill_participants/update_bill_participant.php');
+include_once(LIBPATH.'/bill_participants/get_free_bill_participants.php');
 
 include_once(LIBPATH.'/solutions/compute_bill_solutions.php');
 include_once(LIBPATH.'/solutions/compute_solution.php');
@@ -300,9 +302,16 @@ if($admin_mode && isset($_POST['submit_cancel']))
 }
 
 /* Computations and values used in display */
-$my_bills = get_bills($account_id);
-$my_participants = get_participants($account_id);
-$my_bill_participants = get_bill_participants($account_id);
+$my_bills = get_bills($account_id); // All bills
+$my_participants = get_participants($account_id); //All person
+$my_bill_participants = get_bill_participants($account_id); // Person that added to a bill
+$my_free_bill_participants = get_free_bill_participants($account_id); // Person that can be added to a bill
+//Payments
+$my_payments_per_bill = get_payments_by_bills($account_id); //All payments
+
+//solution
+$bill_solutions = compute_bill_solutions($account_id);
+$solution = compute_solution($account_id);
 
 $n_participants = 0;
 $n_people = 0;
@@ -311,10 +320,6 @@ foreach($my_participants  as $participant)
 	$n_participants += 1 ;
 	$n_people += (int)$participant['nb_of_people'] ;
 }
-//Payments
-$my_payments = get_payments($account_id);
-//solution
-$bill_solutions = compute_bill_solutions($account_id);
-$solution = compute_solution($account_id);
+
 include_once('/templates/account.php');
 ?>
