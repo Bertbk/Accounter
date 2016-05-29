@@ -61,7 +61,13 @@ if($admin_mode && !$edit_mode)
 	$link = BASEURL.'/account/'.$hashid.'/admin/edit_participant/'.$participant['hashid'];
 ?>
 	<a href="<?php echo $link?>">
-	<img src="<?php echo BASEURL.'/img/pencil.png'?>" alt='Edit me' width="20px" />
+	<img src="<?php echo BASEURL.'/img/pencil.png'?>" alt='Edit participant' width="20px" />
+	</a>
+<?php
+	$link = BASEURL.'/account/'.$hashid.'/admin/delete_participant/'.$participant['hashid'];
+?>
+	<a href="<?php echo $link?>">
+	<img src="<?php echo BASEURL.'/img/delete.png'?>" alt='Delete participant' width="20px" />
 	</a>
 <?php
 }
@@ -92,6 +98,8 @@ if($admin_mode && !$edit_mode)
 		 <input type="number" name="p_nb_of_people" value="1" id="form_set_participant_nbpeople" required /><br>
 		<label for="form_set_participant_email">Email adress: </label>
 		 <input type="email" name="p_email" id="form_set_participant_email"  /><br>
+		<label for="form_set_participant_color">Color: </label>
+		 <input type="email" name="p_color" id="form_set_participant_color"  /><br>
 		 <button type="submit" name="submit_participant" value="Submit">Submit</button> 
 	  </fieldset>
 	</form>
@@ -173,6 +181,13 @@ foreach($my_bills as $bill)
 		<a href='<?php echo $link?>'>
 		<img src="<?php echo BASEURL.'/img/pencil.png'?>" alt='Edit bill' width="20px" />
 		</a>
+<?php
+		$link = BASEURL.'/account/'.$hashid.'/admin/delete_bill/'.$bill['hashid'];
+		?>
+		<a href='<?php echo $link?>'>
+		<img src="<?php echo BASEURL.'/img/delete.png'?>" alt='Delete bill' width="20px" />
+		</a>
+		
 <?php }	?>
 	</h2>
 	<div class="hidden_at_first" id="<?php echo 'show_hide_bill'.$cpt_bill.'_target'?>">
@@ -206,8 +221,12 @@ foreach($my_bills as $bill)
 			echo $bill_participant['name'].'('.$bill_participant['percent_of_usage'].'%)';
 			if($admin_mode && !$edit_mode){
 				?><a href="<?php echo BASEURL.'/account/'.$hashid.'/admin/edit_bill_part/'.$bill_participant['hashid']?>">
-				<img src="<?php echo BASEURL.'/img/pencil.png'?>" alt='Edit participant' width="20px" />
+				<img src="<?php echo BASEURL.'/img/pencil.png'?>" alt='Edit this participation' width="20px" />
 				</a>
+				<a href="<?php echo BASEURL.'/account/'.$hashid.'/admin/delete_bill_part/'.$bill_participant['hashid']?>">
+				<img src="<?php echo BASEURL.'/img/delete.png'?>" alt='Remove this participation' width="20px" />
+				</a>
+
 		<?php	} ?>
 			</span>
 	<?php }
@@ -369,9 +388,16 @@ foreach($my_bills as $bill)
 		$link = BASEURL.'/account/'.$hashid.'/admin/edit_payment/'.$payment['hashid'];
 	?>
 		<a href="<?php echo $link?>">
-		<img src="<?php echo BASEURL.'/img/pencil.png'?>" alt='Edit me' width="20px" />
+		<img src="<?php echo BASEURL.'/img/pencil.png'?>" alt='Edit payment' width="20px" />
 		</a>
-	<?php
+<?php
+		$link = BASEURL.'/account/'.$hashid.'/admin/delete_payment/'.$payment['hashid'];
+	?>
+		<a href="<?php echo $link?>">
+		<img src="<?php echo BASEURL.'/img/delete.png'?>" alt='Delete payment' width="20px" />
+		</a>
+
+		<?php
 				}
 			}//end else admin mode 
 			?>

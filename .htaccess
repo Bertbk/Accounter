@@ -6,3 +6,10 @@ RewriteRule  ^account/([a-z0-9]+)/admin/edit_participant/([a-z0-9]+)$ account.ph
 RewriteRule  ^account/([a-z0-9]+)/admin/edit_payment/([a-z0-9]+)$ account.php/?hash=$1&admin=true&edit_payment=$2 [L]
 RewriteRule  ^account/([a-z0-9]+)/admin/edit_bill_part/([a-z0-9]+)$ account.php/?hash=$1&admin=true&edit_bill_part=$2 [L]
 RewriteRule  ^account/([a-z0-9]+)/admin/edit_bill/([a-z0-9]+)$ account.php/?hash=$1&admin=true&edit_bill=$2 [L]
+
+RewriteRule  ^account/([a-z0-9]+)/admin/delete_participant/([a-z0-9]+)$ account.php/?hash=$1&admin=true&delete_participant=$2 [L]
+RewriteRule  ^account/([a-z0-9]+)/admin/delete_payment/([a-z0-9]+)$ account.php/?hash=$1&admin=true&delete_payment=$2 [L]
+RewriteRule  ^account/([a-z0-9]+)/admin/delete_bill_part/([a-z0-9]+)$ account.php/?hash=$1&admin=true&delete_bill_part=$2 [L]
+RewriteRule  ^account/([a-z0-9]+)/admin/delete_bill/([a-z0-9]+)$ account.php/?hash=$1&admin=true&delete_bill=$2 [L]
+
+

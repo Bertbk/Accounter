@@ -83,6 +83,31 @@ $hashid_edit['bill'] = (strlen($bill_hashid)==16)? $bill_hashid : "";
 $what_to_edit['bill'] = (!empty($bill_hashid));
 $bill_hashid = "";
 
+//Delete a participant ?
+$participant_hashid = "";
+empty($_GET['delete_participant']) ? $participant_hashid = "" : $participant_hashid = htmlspecialchars($_GET['delete_participant']);
+$hashid_edit['participant'] = (strlen($participant_hashid)==16)? $participant_hashid : "";
+$what_to_edit['participant'] = !(empty($participant_hashid));
+$participant_hashid = "";
+//Delete a payment ?
+$payment_hashid = "";
+empty($_GET['delete_payment']) ? $payment_hashid = "" : $payment_hashid = htmlspecialchars($_GET['delete_payment']);
+$hashid_edit['payment'] = (strlen($payment_hashid)==16)? $payment_hashid : "";
+$what_to_edit['payment'] = (!empty($payment_hashid));
+$payment_hashid = "";
+//Delete a bill_participant ?
+$bill_part_hashid = "";
+empty($_GET['delete_bill_part']) ? $bill_part_hashid = "" : $bill_part_hashid = htmlspecialchars($_GET['delete_bill_part']);
+$hashid_edit['bill_participant'] = (strlen($bill_part_hashid)==16)? $bill_part_hashid : "";
+$what_to_edit['bill_participant'] = (!empty($bill_part_hashid));
+$bill_part_hashid = "";
+//Delete a bill ?
+$bill_hashid = "";
+empty($_GET['delete_bill']) ? $bill_hashid = "" : $bill_hashid = htmlspecialchars($_GET['delete_bill']);
+$hashid_edit['bill'] = (strlen($bill_hashid)==16)? $bill_hashid : "";
+$what_to_edit['bill'] = (!empty($bill_hashid));
+$bill_hashid = "";
+
 /* Treat arguments */
 $my_account = array();
 $admin_mode = false;
@@ -287,6 +312,16 @@ if($admin_mode && isset($_POST['submit_edit_bill_participant']))
 	$p_participant_id = filter_input(INPUT_POST, 'p_participant_id', FILTER_SANITIZE_NUMBER_INT);
 	$p_percent_of_use = filter_input(INPUT_POST, 'p_percent_of_use', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);	
 	$bill_participant_edited = update_bill_participant($account_id, $bill_participant_id_to_edit, $p_participant_id, $p_percent_of_use);
+	if($bill_participant_edited)
+	{
+		$redirect_url = 'location:'.BASEURL.'/account/'.$hashid.'/admin';
+		header($redirect_url);
+	}
+}
+//Delete bill_participant
+if($admin_mode && isset($_POST['submit_delete_bill_participant']))
+{
+	$bill_participant_deleted = delete_bill_participant($account_id, $bill_id_to_edit);
 	if($bill_participant_edited)
 	{
 		$redirect_url = 'location:'.BASEURL.'/account/'.$hashid.'/admin';
