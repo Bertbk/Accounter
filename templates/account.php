@@ -76,9 +76,9 @@ if($admin_mode && !$edit_mode)
 {
 	?>
 	<div id="div_add_participant">
-	</p><a href="javascript:void(0)" id="a_add_participant">(+) Add a participant</a></p>	
+	<p id="show_hide_add_participant"><a href="javascript:void(0)">(+) Add a participant</a></p>	
 <!-- Add participant-->
-	<form method="post" id="form_add_participant" style="display:none;">
+	<form method="post" id="show_hide_add_participant_target" style="display:none;">
 	  <fieldset>
 		<legend>Add a participant:</legend>
 		<label for="form_set_participant_name">Name: </label>
@@ -108,10 +108,11 @@ if($admin_mode && !$edit_mode)
 {
 ?>
 <!-- Add bill-->
-
-	<form method="post">
+<div id="div_add_bill">
+<p  id="show_hide_add_bill"><a href="javascript:void(0)" >(+) Add a bill</a></p>	
+	<form method="post" id="show_hide_add_bill_target" style="display:none;">
 	  <fieldset>
-		<legend>Add a bill:</legend>
+		<legend>Add a bill</legend>
 		<label for="form_set_bill_name">Name: </label>
 		<input type="text" name="p_name_of_bill" id="form_set_bill_name" required /><br>
 		<label for="form_set_bill_description">Description: </label>
@@ -119,12 +120,12 @@ if($admin_mode && !$edit_mode)
 		 <button type="submit" name="submit_bill" value="Submit">Submit</button> 
 	  </fieldset>
 	</form>
-
+</div>
 <?php } //admin mode
 ?>
 
 
-
+<!-- Loop on the bills -->
 <?php 
 $cpt_bill = -1;
 foreach($my_bills as $bill)
@@ -155,7 +156,10 @@ foreach($my_bills as $bill)
 	}
 	else{
 ?>
-	<h2><?php echo $bill['title'] ?>
+
+	<h2><a href="javascript:void(0)" id="<?php echo 'show_hide_bill'.$cpt_bill?>">
+	<?php echo $bill['title'] ?>
+	</a>
 	<?php
 	if($admin_mode && !$edit_mode)
 	{
@@ -166,6 +170,7 @@ foreach($my_bills as $bill)
 		</a>
 <?php }	?>
 	</h2>
+	<div style="display:none;" id="<?php echo 'show_hide_bill'.$cpt_bill.'_target'?>">
 	<?php if(!empty($bill['description']) && !is_null($bill['description']))
 	{
 ?>
@@ -243,7 +248,8 @@ foreach($my_bills as $bill)
 		if(!empty($my_free_bill_participants[$bill['id']]))
 		{
 	?>
-		<form method="post">
+	<p class="show_hide"><a href="javascript:void(0)">(+) Assign a participant to this bill</a></p>
+		<form method="post" style="display:none;">
 		  <fieldset>
 			<legend>Assign a participant to this bill:</legend>
 			<label for="<?php echo 'form_assign_participant_id'.$bill['id']?>">Participant available</label>
@@ -376,16 +382,22 @@ foreach($my_bills as $bill)
 <?php
 	}//end else payment exists
 ?>	
-		<?php
+
+
+		<?php // PAYMENTS
 	if($admin_mode && !$edit_mode)
 	{?>
 	<!-- Add payment -->
 	<?php
 		if(!empty($my_bill_participants[$bill['id']]))
 		{
+?>
+		<p class="show_hide"><a href="javascript:void(0)">
+		(+) Add a payment</a></p>
+<?php
 			$this_bill_participants = $my_bill_participants[$bill['id']];
 	?>
-		<form method="post" id="form_payment_send">
+		<form method="post" id="form_payment_send" style="display:none;">
 		  <fieldset>
 			<legend>Add a payment:</legend>
 			<input type="hidden" name="p_bill_id" value = <?php echo $bill['id']?>> 
@@ -457,6 +469,7 @@ foreach($my_bills as $bill)
 	<?php
 	}//if exists(solution)
 ?>
+</div> 
 </div> 
 <?php
 }//foreach bill
