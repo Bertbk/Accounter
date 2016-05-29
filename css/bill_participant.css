@@ -3,8 +3,9 @@ span.bill_participant{
 	display: inline-block;
 	color:white;
 	border-radius: 5px;
-	text-align:center
-	padding:5px;
+	text-align:center;
+	padding-top:5px;
+	padding-bottom:5px;
 	padding-left:10px;
 	padding-right:10px;
 }
@@ -12,11 +13,11 @@ span.bill_participant{
 .billpartColor0 {background-color: blue;}
 .billpartColor1 {background-color: red;}
 .billpartColor2 {background-color: green;}
-.billpartColor3 {background-color: #dbf2f8;}
-.billpartColor4 {background-color: #dbe9c6;}
-.billpartColor5 {background-color: #f4f3b0;}
-.billpartColor6 {background-color: #e9d0e5;}
-.billpartColor7 {background-color: #ffe4b7;}
-.billpartColor8 {background-color: #d1e2f4;}
-.billpartColor9 {background-color: #fee893;}
+.billpartColor3 {background-color: #FF00FF;}
+.billpartColor4 {background-color: #C0C0C0;}
+.billpartColor5 {background-color: #00FFFF;}
+.billpartColor6 {background-color: #FFFF00;}
+.billpartColor7 {background-color: #;}
+.billpartColor8 {background-color: #;}
+.billpartColor9 {background-color: #;}
 

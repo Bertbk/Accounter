@@ -9,12 +9,9 @@
 
 <script type="text/javascript" src="<?php echo BASEURL.'/js/account.js'?>"></script>
 <link rel="stylesheet" type="text/css" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/smoothness/jquery-ui.css" media="all">
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
-
-<script>
-<?php include BASEURL.'/js/hide_show_add_participant.jquery'?>
-</script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="<?php echo BASEURL.'/js/hide_show_add_participant.jquery'?>"></script>
 
 </head>
 <body>
@@ -174,7 +171,7 @@ foreach($my_bills as $bill)
 		$link = BASEURL.'/account/'.$hashid.'/admin/edit_bill/'.$bill['hashid'];
 		?>
 		<a href='<?php echo $link?>'>
-		<img src="<?php echo BASEURL.'/img/pencil.png'?>" alt='Edit me' width="20px" />
+		<img src="<?php echo BASEURL.'/img/pencil.png'?>" alt='Edit bill' width="20px" />
 		</a>
 <?php }	?>
 	</h2>
@@ -209,7 +206,7 @@ foreach($my_bills as $bill)
 			echo $bill_participant['name'].'('.$bill_participant['percent_of_usage'].'%)';
 			if($admin_mode && !$edit_mode){
 				?><a href="<?php echo BASEURL.'/account/'.$hashid.'/admin/edit_bill_part/'.$bill_participant['hashid']?>">
-				<img src="<?php echo BASEURL.'/img/pencil.png'?>" alt='Edit me' width="20px" />
+				<img src="<?php echo BASEURL.'/img/pencil.png'?>" alt='Edit participant' width="20px" />
 				</a>
 		<?php	} ?>
 			</span>
