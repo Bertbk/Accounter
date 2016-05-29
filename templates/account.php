@@ -3,8 +3,8 @@
 <html>
 <head>
 <title>Account</title>
-<script type="text/javascript" src="<?php echo BASEURL.'/js/account.js'?>">
-</script>
+<link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/bill.css'?>">
+<script type="text/javascript" src="<?php echo BASEURL.'/js/account.js'?>"></script>
 </head>
 <body>
 <?php if($admin_mode && $edit_mode)
@@ -76,7 +76,7 @@ foreach($my_bills as $bill)
 {
 	$cpt_bill ++;
 ?>
-<div class="<?php echo 'bill-'.$cpt_bill?>" style="border:1px;">
+<div class="bill <?php echo 'bill-'.$cpt_bill?>">
 	<?php if($admin_mode && $what_to_edit['bill'] 
 	&& $bill_id_to_edit == $bill['id'])
 	{
@@ -172,10 +172,10 @@ foreach($my_bills as $bill)
 <?php }//if my_bill_participants != empty ?>
 
 <?php // List of the payments
-	if(isset($my_payments[$bill['id']]) && is_array($my_payments[$bill['id']])
-		&& count($my_payments[$bill['id']]) > 0)
+	if(isset($my_payments_per_bill[$bill['id']]) && is_array($my_payments_per_bill[$bill['id']])
+		&& count($my_payments_per_bill[$bill['id']]) > 0)
 	{
-		$current_payment = $my_payments[$bill['id']];
+		$current_payment = $my_payments_per_bill[$bill['id']];
 	?>
 	<ul>
 	<?php
@@ -263,16 +263,16 @@ foreach($my_bills as $bill)
 <?php
 	}//end else payment exists
 	//Solution
-	if (isset($bill_solutions[$bill['id']]) && is_array(isset($bill_solutions[$bill['id']]))
+	if (isset($bill_solutions[$bill['id']]) && is_array($bill_solutions[$bill['id']])
 		&& !empty($bill_solutions[$bill['id']]))
 		{
-		$local_solution = [$bill['id']];
+		$local_solution = $bill_solutions[$bill['id']];
 	?>
 	<h2>A solution for this bill (see at the end of the page for global solution)</h2>
 	<p>Total money: <?php echo $local_solution['-1']['total']?><br>
 	Nb. parts  : <?php echo $local_solution['-1']['nb_of_parts']?><br>
-	Single part: <?php echo $local_solution['-1']['single']?></p>
-	Nb. people  : <?php echo $local_solution['-1']['nb_of_people']?><br>
+	Single part: <?php echo $local_solution['-1']['single']?><br>
+	Nb. people  : <?php echo $local_solution['-1']['nb_of_people']?></p>
 	<ul>
 	<?php
 	foreach($my_participants as $payer)
