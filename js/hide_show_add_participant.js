@@ -1,15 +1,3 @@
-$(document).ready(function() {
-	$('#a_add_participant').click(function() {
-			$('#form_add_participant').slideToggle("fast");
-	});
-});
-
-$(document).ready(function() {
-	$('#a_add_bill').click(function() {
-			$('#form_add_bill').slideToggle("fast");
-	});
-});
-
 $(function(){
   $("[id^=show_hide]").click(function(){
 	 var target_id = '#' + $(this).attr('id') + '_target';
@@ -19,3 +7,11 @@ $(function(){
   });
 });
 
+
+$('.date_picker').each(function(){
+    $(this).datepicker();
+});
+
+$(function() {
+    $( ".date_picker" ).datepicker({ dateFormat: "dd-mm-yy" })
+  });

@@ -6,7 +6,11 @@
 <link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/bill.css'?>">
 <link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/bill_participant.css'?>">
 <script type="text/javascript" src="<?php echo BASEURL.'/js/account.js'?>"></script>
-<script type="text/javascript" src="<?php echo BASEURL.'/js/jquery.js'?>"></script>
+
+<link rel="stylesheet" type="text/css" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/smoothness/jquery-ui.css" media="all">
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
+
 <script type="text/javascript" src="<?php echo BASEURL.'/js/hide_show_add_participant.js'?>"></script>
 </head>
 <body>
@@ -248,8 +252,8 @@ foreach($my_bills as $bill)
 		if(!empty($my_free_bill_participants[$bill['id']]))
 		{
 	?>
-	<p class="show_hide"><a href="javascript:void(0)">(+) Assign a participant to this bill</a></p>
-		<form method="post" style="display:none;">
+	<p id="<?php echo 'show_hide_bill_add_part_'.$cpt_bill?>"><a href="javascript:void(0)">(+) Assign a participant to this bill</a></p>
+		<form method="post" style="display:none;" id=<?php echo 'show_hide_bill_add_part_'.$cpt_bill.'_target'?>>
 		  <fieldset>
 			<legend>Assign a participant to this bill:</legend>
 			<label for="<?php echo 'form_assign_participant_id'.$bill['id']?>">Participant available</label>
@@ -346,7 +350,7 @@ foreach($my_bills as $bill)
 	?>
 			</select>
 			<input type="text" name="p_description" value="<?php echo $payment_to_edit['description']?>" />
-			<input type="date" name="p_date_payment" value="<?php echo $payment_to_edit['date_of_payment']?>"/>
+			<input type="date" class="date_picker" name="p_date_payment" value="<?php echo $payment_to_edit['date_of_payment']?>"/>
 			<br><button type="submit" name="submit_edit_payment" value="Submit">Submit</button> 
 			<button type="submit" name="submit_cancel" value="Submit">Cancel</button> 
 		</form>
@@ -392,12 +396,13 @@ foreach($my_bills as $bill)
 		if(!empty($my_bill_participants[$bill['id']]))
 		{
 ?>
-		<p class="show_hide"><a href="javascript:void(0)">
+		<p id="<?php echo 'show_hide_bill_add_paymt_'.$cpt_bill?>"><a href="javascript:void(0)">
 		(+) Add a payment</a></p>
 <?php
 			$this_bill_participants = $my_bill_participants[$bill['id']];
 	?>
-		<form method="post" id="form_payment_send" style="display:none;">
+		<form method="post" id="<?php echo 'show_hide_bill_add_paymt_'.$cpt_bill.'_target'?>" 
+		style="display:none;">
 		  <fieldset>
 			<legend>Add a payment:</legend>
 			<input type="hidden" name="p_bill_id" value = <?php echo $bill['id']?>> 
@@ -424,7 +429,7 @@ foreach($my_bills as $bill)
 			<label for="<?php echo 'form_set_payment_desc-'.$cpt_bill?>">Description</label>
 			<input type="text" name="p_description" id="<?php echo 'form_set_payment_desc-'.$cpt_bill?>" /><br>
 			<label for="<?php echo 'form_set_payment_date-'.$cpt_bill?>">Date of payment</label>
-			<input type="date" name="p_date_payment" id="<?php echo 'form_set_payment_date-'.$cpt_bill?>"/><br>
+			<input type="date" class="date_picker" name="p_date_payment" id="<?php echo 'form_set_payment_date-'.$cpt_bill?>"/><br>
 			<br><button type="submit" name="submit_payment" value="Submit">Submit</button> 
 			</fieldset>
 		</form>
