@@ -3,7 +3,7 @@
 <html>
 <head>
 <title>Account</title>
-<script type="text/javascript" src="/js/account.js">
+<script type="text/javascript" src="<?php echo BASEURL.'/js/account.js'?>">
 </script>
 </head>
 <body>
@@ -71,9 +71,12 @@ if($admin_mode && !$edit_mode)
 ?>
 <h1>Bills</h1>
 <?php 
+$cpt_bill = -1;
 foreach($my_bills as $bill)
 {
+	$cpt_bill ++;
 ?>
+<div class="<?php echo 'bill-'.$cpt_bill?>" style="border:1px;">
 	<?php if($admin_mode && $what_to_edit['bill'] 
 	&& $bill_id_to_edit == $bill['id'])
 	{
@@ -333,43 +336,45 @@ foreach($my_bills as $bill)
 	<!-- Add payment -->
 	<?php
 		if(!empty($my_bill_participants[$bill['id']]))
-		{	
+		{
+			$this_bill_participants = $my_bill_participants[$bill['id']];
 	?>
 		<form method="post" id="form_payment_send">
 		  <fieldset>
 			<legend>Add a payment:</legend>
 			<input type="hidden" name="p_bill_id" value = <?php echo $bill['id']?>> 
-			<label for="form_set_payment_payer">Payer</label>
-			<select name="p_payer_id" id="form_set_payment_payer" onchange="configureDropDownLists(this, document.getElementById('form_set_payment_recv'))"> 
+			<label for="<?php echo 'form_set_payment_payer-'.$cpt_bill?>">Payer</label>
+			<select name="p_payer_id" id="<?php echo 'form_set_payment_payer-'.$cpt_bill?>" 
+			onchange="configureDropDownLists(this, document.getElementById('<?php echo 'form_set_payment_recv-'.$cpt_bill?>'))"> 
 	<option disabled selected value="null"> -- select a payer -- </option>
 	<?php
 
-			foreach($my_bill_participants as $participant)
+			foreach($this_bill_participants as $participant)
 			{
 	?>
-				<option value="<?php echo $participant['id']?>"><?php echo $participant['name']?></option>
+				<option value="<?php echo $participant['participant_id']?>"><?php echo $participant['name']?></option>
 	<?php
 			}
 		}//if empty
 	?>
 			</select><br>
-			<label for="form_set_payment_cost">Cost</label>
-			<input type="number" step="0.01" min="0" name="p_cost" id="form_set_payment_cost" required /><br>
-			<label for="form_set_payment_recv">Receiver</label>
-			<select name="p_receiver_id" id="form_set_payment_recv"> 
+			<label for="<?php echo 'form_set_payment_cost-'.$cpt_bill?>">Cost</label>
+			<input type="number" step="0.01" min="0" name="p_cost" id="<?php echo 'form_set_payment_cost-'.$cpt_bill?>" required /><br>
+			<label for="<?php echo 'form_set_payment_recv-'.$cpt_bill?>">Receiver</label>
+			<select name="p_receiver_id" id="<?php echo 'form_set_payment_recv-'.$cpt_bill?>"> 
 			<option value="-1" selected="selected">Group</option>
 			</select><br>
-			<label for="form_set_payment_desc">Description</label>
-			<input type="text" name="p_description" id="form_set_payment_desc" /><br>
-			<label for="form_set_payment_date">Date of payment</label>
-			<input type="date" name="p_date_payment" id="form_set_payment_date"/><br>
+			<label for="<?php echo 'form_set_payment_desc-'.$cpt_bill?>">Description</label>
+			<input type="text" name="p_description" id="<?php echo 'form_set_payment_desc-'.$cpt_bill?>" /><br>
+			<label for="<?php echo 'form_set_payment_date-'.$cpt_bill?>">Date of payment</label>
+			<input type="date" name="p_date_payment" id="<?php echo 'form_set_payment_date-'.$cpt_bill?>"/><br>
 			<br><button type="submit" name="submit_payment" value="Submit">Submit</button> 
 			</fieldset>
 		</form>
 	<?php
 	} //if for displaying possibilities
 ?>
-
+</div> 
 <?php
 }//foreach bill
 }//if bills exist
