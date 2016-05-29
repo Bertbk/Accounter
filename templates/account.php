@@ -5,13 +5,17 @@
 <title>Account</title>
 <link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/bill.css'?>">
 <link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/bill_participant.css'?>">
-<script type="text/javascript" src="<?php echo BASEURL.'/js/account.js'?>"></script>
+<link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/account.css'?>">
 
+<script type="text/javascript" src="<?php echo BASEURL.'/js/account.js'?>"></script>
 <link rel="stylesheet" type="text/css" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/smoothness/jquery-ui.css" media="all">
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
 
-<script type="text/javascript" src="<?php echo BASEURL.'/js/hide_show_add_participant.js'?>"></script>
+<script>
+<?php include BASEURL.'/js/hide_show_add_participant.jquery'?>
+</script>
+
 </head>
 <body>
 <?php if($admin_mode && $edit_mode)
@@ -82,7 +86,7 @@ if($admin_mode && !$edit_mode)
 	<div id="div_add_participant">
 	<p id="show_hide_add_participant"><a href="javascript:void(0)">(+) Add a participant</a></p>	
 <!-- Add participant-->
-	<form method="post" id="show_hide_add_participant_target" style="display:none;">
+	<form method="post" id="show_hide_add_participant_target" class="hidden_at_first">
 	  <fieldset>
 		<legend>Add a participant:</legend>
 		<label for="form_set_participant_name">Name: </label>
@@ -114,7 +118,7 @@ if($admin_mode && !$edit_mode)
 <!-- Add bill-->
 <div id="div_add_bill">
 <p  id="show_hide_add_bill"><a href="javascript:void(0)" >(+) Add a bill</a></p>	
-	<form method="post" id="show_hide_add_bill_target" style="display:none;">
+	<form method="post" id="show_hide_add_bill_target" class="hidden_at_first">
 	  <fieldset>
 		<legend>Add a bill</legend>
 		<label for="form_set_bill_name">Name: </label>
@@ -174,7 +178,7 @@ foreach($my_bills as $bill)
 		</a>
 <?php }	?>
 	</h2>
-	<div style="display:none;" id="<?php echo 'show_hide_bill'.$cpt_bill.'_target'?>">
+	<div class="hidden_at_first" id="<?php echo 'show_hide_bill'.$cpt_bill.'_target'?>">
 	<?php if(!empty($bill['description']) && !is_null($bill['description']))
 	{
 ?>
@@ -253,7 +257,7 @@ foreach($my_bills as $bill)
 		{
 	?>
 	<p id="<?php echo 'show_hide_bill_add_part_'.$cpt_bill?>"><a href="javascript:void(0)">(+) Assign a participant to this bill</a></p>
-		<form method="post" style="display:none;" id=<?php echo 'show_hide_bill_add_part_'.$cpt_bill.'_target'?>>
+		<form method="post" class="hidden_at_first" id=<?php echo 'show_hide_bill_add_part_'.$cpt_bill.'_target'?>>
 		  <fieldset>
 			<legend>Assign a participant to this bill:</legend>
 			<label for="<?php echo 'form_assign_participant_id'.$bill['id']?>">Participant available</label>
@@ -402,7 +406,7 @@ foreach($my_bills as $bill)
 			$this_bill_participants = $my_bill_participants[$bill['id']];
 	?>
 		<form method="post" id="<?php echo 'show_hide_bill_add_paymt_'.$cpt_bill.'_target'?>" 
-		style="display:none;">
+		class="hidden_at_first">
 		  <fieldset>
 			<legend>Add a payment:</legend>
 			<input type="hidden" name="p_bill_id" value = <?php echo $bill['id']?>> 
@@ -446,7 +450,7 @@ foreach($my_bills as $bill)
 		$local_solution = $bill_solutions[$bill['id']];
 	?>
 	<h3>A solution for this bill (see at the end of the page for global solution)</h3>
-	<p>Total money: <?php echo $local_solution['-1']['total']?><br>
+	<p>Total money: <?php echo $local_solution['-1']['total']?>&euro;<br>
 	Nb. parts  : <?php echo $local_solution['-1']['nb_of_parts']?><br>
 	Single part: <?php echo $local_solution['-1']['single']?><br>
 	Nb. people  : <?php echo $local_solution['-1']['nb_of_people']?></p>
@@ -486,7 +490,7 @@ foreach($my_bills as $bill)
 {
 ?>
 	<h1>A solution</h1>
-	<p>Total money: <?php echo $solution['-1']['total']?></p>
+	<p>Total money: <?php echo $solution['-1']['total']?>&euro;</p>
 	<ul>
 <?php
 	foreach($my_participants as $payer)
@@ -501,7 +505,7 @@ foreach($my_bills as $bill)
 			if($refund > 0)
 			{
 ?>
-<li><?php echo $payer['name']?> must refund <?php echo $refund?> &euro; to <?php echo $receiver['name']?></li>
+<li><?php echo $payer['name']?> must refund <?php echo $refund?>&euro; to <?php echo $receiver['name']?></li>
 <?php
 			}
 		}

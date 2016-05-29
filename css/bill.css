@@ -1,6 +1,7 @@
 
 div.bill{
-	border: solid 1px;
+	border-radius: 15px;
+	padding:10px;
 }
 
 .bgColor0 {background-color: #fdd2c2;}
@@ -13,3 +14,13 @@ div.bill{
 .bgColor7 {background-color: #ffe4b7;}
 .bgColor8 {background-color: #d1e2f4;}
 .bgColor9 {background-color: #fee893;}
+
+div.bill h2 a{
+color:black;
+text-decoration: none;
+}
+
+
+[id^="show_hide"] a{
+color:black;
+}

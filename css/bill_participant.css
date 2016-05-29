@@ -3,8 +3,10 @@ span.bill_participant{
 	display: inline-block;
 	color:white;
 	border-radius: 5px;
-	height:150%;
 	text-align:center
+	padding:5px;
+	padding-left:10px;
+	padding-right:10px;
 }
 
 .billpartColor0 {background-color: blue;}
