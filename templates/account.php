@@ -4,6 +4,7 @@
 <head>
 <title>Account</title>
 <link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/bill.css'?>">
+<link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/bill_participant.css'?>">
 <script type="text/javascript" src="<?php echo BASEURL.'/js/account.js'?>"></script>
 </head>
 <body>
@@ -52,7 +53,9 @@ if($admin_mode && !$edit_mode)
 {
 	$link = BASEURL.'/account/'.$hashid.'/admin/edit_participant/'.$participant['hashid'];
 ?>
-	<a href="<?php echo $link?>">edit me</a>
+	<a href="<?php echo $link?>">
+	<img src="<?php echo BASEURL.'/img/pencil.png'?>" alt='Edit me' width="20px" />
+	</a>
 <?php
 }
 ?>		
@@ -65,18 +68,69 @@ if($admin_mode && !$edit_mode)
 <?php }//if !empty(participants)
 ?>
 
+<?php
+//Admin only
+if($admin_mode && !$edit_mode)
+{
+?>
+<!-- Add participant-->
+	<form method="post">
+	  <fieldset>
+		<legend>Add a participant:</legend>
+		<label for="form_set_participant_name">Name: </label>
+		<input type="text" name="p_name_of_participant" id="form_set_participant_name" required /><br>
+		<label for="form_set_participant_nbpeople">Nb. of people: </label>
+		 <input type="number" name="p_nb_of_people" value="1" id="form_set_participant_nbpeople" required /><br>
+		<label for="form_set_participant_email">Email adress: </label>
+		 <input type="email" name="p_email" id="form_set_participant_email"  /><br>
+		 <button type="submit" name="submit_participant" value="Submit">Submit</button> 
+	  </fieldset>
+	</form>
+
+<?php } //admin mode
+?>
+
+
+
 <!-- BILLS -->
 <?php if (is_array($my_bills) && sizeof($my_bills) > 0 )
 {
 ?>
 <h1>Bills</h1>
+
+<?php
+//Admin only
+if($admin_mode && !$edit_mode)
+{
+?>
+<!-- Add bill-->
+
+	<form method="post">
+	  <fieldset>
+		<legend>Add a bill:</legend>
+		<label for="form_set_bill_name">Name: </label>
+		<input type="text" name="p_name_of_bill" id="form_set_bill_name" required /><br>
+		<label for="form_set_bill_description">Description: </label>
+		 <input type="text" name="p_description" id="form_set_bill_description" /><br>
+		 <button type="submit" name="submit_bill" value="Submit">Submit</button> 
+	  </fieldset>
+	</form>
+
+<?php } //admin mode
+?>
+
+
+
 <?php 
 $cpt_bill = -1;
 foreach($my_bills as $bill)
 {
 	$cpt_bill ++;
 ?>
-<div class="bill <?php echo 'bill-'.$cpt_bill?>">
+<div class="bill 
+<?php echo 'bill-'.$cpt_bill?> 
+<?php echo 'bgColor'.$cpt_bill?>
+">
 	<?php if($admin_mode && $what_to_edit['bill'] 
 	&& $bill_id_to_edit == $bill['id'])
 	{
@@ -103,7 +157,9 @@ foreach($my_bills as $bill)
 	{
 		$link = BASEURL.'/account/'.$hashid.'/admin/edit_bill/'.$bill['hashid'];
 		?>
-		<a href='<?php echo $link?>'>edit me</a>
+		<a href='<?php echo $link?>'>
+		<img src="<?php echo BASEURL.'/img/pencil.png'?>" alt='Edit me' width="20px" />
+		</a>
 <?php }	?>
 	</h2>
 	<?php if(!empty($bill['description']) && !is_null($bill['description']))
@@ -119,19 +175,25 @@ foreach($my_bills as $bill)
 	if(!empty($my_bill_participants[$bill['id']]))
 	{
 ?>
-		<p>Participants: 
+		<h3>Participants</h3>
 <?php
 	$current_bill_participants = $my_bill_participants[$bill['id']];
 	$place_submit_button = false; // if editing, place a button after the list
+	$cpt_bill_participant = -1;
 	foreach($current_bill_participants as $bill_participant)
 	{
+		$cpt_bill_participant++;
 		if(!$admin_mode || !$what_to_edit['bill_participant'] 
 		|| $bill_id_to_edit != $bill['id'] || $bill_participant_id_to_edit != $bill_participant['id'])
 		{
-			?><span><?php
+			?><span 
+			class="<?php echo 'bill_participant billpartColor'.$cpt_bill_participant?>">
+			<?php
 			echo $bill_participant['name'].'('.$bill_participant['percent_of_usage'].'%)';
 			if($admin_mode && !$edit_mode){
-				?><a href="<?php echo BASEURL.'/account/'.$hashid.'/admin/edit_bill_part/'.$bill_participant['hashid']?>">edit_me</a>
+				?><a href="<?php echo BASEURL.'/account/'.$hashid.'/admin/edit_bill_part/'.$bill_participant['hashid']?>">
+				<img src="<?php echo BASEURL.'/img/pencil.png'?>" alt='Edit me' width="20px" />
+				</a>
 		<?php	} ?>
 			</span>
 	<?php }
@@ -168,9 +230,9 @@ foreach($my_bills as $bill)
 		$place_submit_button = false;
 	} //if place button
 	?>
-	</p>
 <?php }//if my_bill_participants != empty ?>
 
+<h3>Payments</h3>
 <?php // List of the payments
 	if(isset($my_payments_per_bill[$bill['id']]) && is_array($my_payments_per_bill[$bill['id']])
 		&& count($my_payments_per_bill[$bill['id']]) > 0)
@@ -246,7 +308,9 @@ foreach($my_bills as $bill)
 				{
 		$link = BASEURL.'/account/'.$hashid.'/admin/edit_payment/'.$payment['hashid'];
 	?>
-		<a href="<?php echo $link?>">edit me</a>
+		<a href="<?php echo $link?>">
+		<img src="<?php echo BASEURL.'/img/pencil.png'?>" alt='Edit me' width="20px" />
+		</a>
 	<?php
 				}
 			}//end else admin mode 
@@ -268,7 +332,7 @@ foreach($my_bills as $bill)
 		{
 		$local_solution = $bill_solutions[$bill['id']];
 	?>
-	<h2>A solution for this bill (see at the end of the page for global solution)</h2>
+	<h3>A solution for this bill (see at the end of the page for global solution)</h3>
 	<p>Total money: <?php echo $local_solution['-1']['total']?><br>
 	Nb. parts  : <?php echo $local_solution['-1']['nb_of_parts']?><br>
 	Single part: <?php echo $local_solution['-1']['single']?><br>
@@ -359,7 +423,6 @@ foreach($my_bills as $bill)
 				<option value="<?php echo $participant['participant_id']?>"><?php echo $participant['name']?></option>
 	<?php
 			}
-		}//if empty
 	?>
 			</select><br>
 			<label for="<?php echo 'form_set_payment_cost-'.$cpt_bill?>">Cost</label>
@@ -375,6 +438,9 @@ foreach($my_bills as $bill)
 			<br><button type="submit" name="submit_payment" value="Submit">Submit</button> 
 			</fieldset>
 		</form>
+<?php
+		}//if empty
+?>
 	<?php
 	} //if for displaying possibilities
 ?>
@@ -415,44 +481,6 @@ foreach($my_bills as $bill)
 } //if there is a solution
 ?>
 
-<?php
-//Admin only
-if($admin_mode && !$edit_mode)
-{
-?>
-<!-- Admin mode-->
-	<h1>Administration section</h1>
-	
-<!-- Add bill-->
-
-	<form method="post">
-	  <fieldset>
-		<legend>Add a bill:</legend>
-		<label for="form_set_bill_name">Name: </label>
-		<input type="text" name="p_name_of_bill" id="form_set_bill_name" required /><br>
-		<label for="form_set_bill_description">Description: </label>
-		 <input type="text" name="p_description" id="form_set_bill_description" /><br>
-		 <button type="submit" name="submit_bill" value="Submit">Submit</button> 
-	  </fieldset>
-	</form>
-	
-<!-- Add participant-->
-
-	<form method="post">
-	  <fieldset>
-		<legend>Add a participant:</legend>
-		<label for="form_set_participant_name">Name: </label>
-		<input type="text" name="p_name_of_participant" id="form_set_participant_name" required /><br>
-		<label for="form_set_participant_nbpeople">Nb. of people: </label>
-		 <input type="number" name="p_nb_of_people" value="1" id="form_set_participant_nbpeople" required /><br>
-		<label for="form_set_participant_email">Email adress: </label>
-		 <input type="email" name="p_email" id="form_set_participant_email"  /><br>
-		 <button type="submit" name="submit_participant" value="Submit">Submit</button> 
-	  </fieldset>
-	</form>
-
-<?php } //admin mode
-?>
 <!--Menu -->
 
 <h1>Menu</h1>
