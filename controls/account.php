@@ -25,6 +25,7 @@ include_once(LIBPATH.'/bill_participants/get_bill_participants.php');
 include_once(LIBPATH.'/bill_participants/get_bill_participant_by_hashid.php');
 include_once(LIBPATH.'/bill_participants/update_bill_participant.php');
 include_once(LIBPATH.'/bill_participants/get_free_bill_participants.php');
+include_once(LIBPATH.'/bill_participants/delete_bill_participant.php');
 
 include_once(LIBPATH.'/solutions/compute_bill_solutions.php');
 include_once(LIBPATH.'/solutions/compute_solution.php');
@@ -47,6 +48,12 @@ if($hashid == "" || (strlen($hashid) != 16 && !$admin_mode_url)
 }
 //Edit...
 $what_to_edit = array (
+    "bill"  => false,
+    "participant"  => false,
+    "payment" => false,
+    "bill_participant" => false
+);
+$what_to_delete = array (
     "bill"  => false,
     "participant"  => false,
     "payment" => false,
@@ -87,25 +94,25 @@ $bill_hashid = "";
 $participant_hashid = "";
 empty($_GET['delete_participant']) ? $participant_hashid = "" : $participant_hashid = htmlspecialchars($_GET['delete_participant']);
 $hashid_edit['participant'] = (strlen($participant_hashid)==16)? $participant_hashid : "";
-$what_to_edit['participant'] = !(empty($participant_hashid));
+$what_to_delete['participant'] = !(empty($participant_hashid));
 $participant_hashid = "";
 //Delete a payment ?
 $payment_hashid = "";
 empty($_GET['delete_payment']) ? $payment_hashid = "" : $payment_hashid = htmlspecialchars($_GET['delete_payment']);
 $hashid_edit['payment'] = (strlen($payment_hashid)==16)? $payment_hashid : "";
-$what_to_edit['payment'] = (!empty($payment_hashid));
+$what_to_delete['payment'] = (!empty($payment_hashid));
 $payment_hashid = "";
 //Delete a bill_participant ?
 $bill_part_hashid = "";
 empty($_GET['delete_bill_part']) ? $bill_part_hashid = "" : $bill_part_hashid = htmlspecialchars($_GET['delete_bill_part']);
 $hashid_edit['bill_participant'] = (strlen($bill_part_hashid)==16)? $bill_part_hashid : "";
-$what_to_edit['bill_participant'] = (!empty($bill_part_hashid));
+$what_to_delete['bill_participant'] = (!empty($bill_part_hashid));
 $bill_part_hashid = "";
 //Delete a bill ?
 $bill_hashid = "";
 empty($_GET['delete_bill']) ? $bill_hashid = "" : $bill_hashid = htmlspecialchars($_GET['delete_bill']);
 $hashid_edit['bill'] = (strlen($bill_hashid)==16)? $bill_hashid : "";
-$what_to_edit['bill'] = (!empty($bill_hashid));
+$what_to_delete['bill'] = (!empty($bill_hashid));
 $bill_hashid = "";
 
 /* Treat arguments */
@@ -143,6 +150,10 @@ if(!$admin_mode)
 	{
 		$what_to_edit[$possiblemode] = false;
 	}
+	foreach($what_to_delete as $possiblemode)
+	{
+		$what_to_delete[$possiblemode] = false;
+	}
 	foreach($hashid_edit as $possiblemode)
 	{
 		$hashid_edit[$possiblemode] = "";
@@ -152,6 +163,8 @@ if(!$admin_mode)
 $edit_mode = false;
 foreach($what_to_edit as $possiblemode=>$key)
 {if($what_to_edit[$possiblemode]==true){$edit_mode = true;} }
+foreach($what_to_delete as $possiblemode=>$key)
+{if($what_to_delete[$possiblemode]==true){$edit_mode = true;} }
 
 /* Here, we have an account and we know if we are admin or not.*/
 $account_id = $my_account['id'];
@@ -174,7 +187,7 @@ if($admin_mode && isset($_POST['submit_participant']))
 }
 //Edit participant
 $participant_id_to_edit = null;
-if($admin_mode && $what_to_edit['participant'])
+if($admin_mode && ($what_to_edit['participant'] || $what_to_delete['participant']))
 {
 	$participant_to_edit = get_participant_by_hashid($account_id, $hashid_edit['participant']);
 	if(!empty($participant_to_edit))
@@ -208,7 +221,7 @@ if($admin_mode && isset($_POST['submit_bill']))
 }
 //Edit bill
 $bill_id_to_edit = null;
-if($admin_mode && $what_to_edit['bill'])
+if($admin_mode && ($what_to_edit['bill'] || $what_to_delete['bill']))
 {
 	$bill_to_edit = get_bill_by_hashid($account_id, $hashid_edit['bill']);
 	if(!empty($bill_to_edit))
@@ -252,7 +265,7 @@ if($admin_mode && isset($_POST['submit_payment']))
 }
 //Edit payment
 $payment_id_to_edit = null;
-if($admin_mode && $what_to_edit['payment'])
+if($admin_mode && ($what_to_edit['payment'] || $what_to_delete['payment']))
 {
 	$payment_to_edit = get_payment_by_hashid($account_id, $hashid_edit['payment']);
 	if(!empty($payment_to_edit))
@@ -297,7 +310,7 @@ if($admin_mode && isset($_POST['submit_assign_participant']))
 }
 //Edit bill_participant
 $bill_participant_id_to_edit = null;
-if($admin_mode && $what_to_edit['bill_participant'])
+if($admin_mode && ($what_to_edit['bill_participant'] || $what_to_delete['bill_participant']))
 {
 	$bill_participant_to_edit = get_bill_participant_by_hashid($account_id, $hashid_edit['bill_participant']);
 	if(!empty($bill_participant_to_edit))
@@ -319,14 +332,12 @@ if($admin_mode && isset($_POST['submit_edit_bill_participant']))
 	}
 }
 //Delete bill_participant
-if($admin_mode && isset($_POST['submit_delete_bill_participant']))
+if($admin_mode && $what_to_delete['bill_participant'])
 {
-	$bill_participant_deleted = delete_bill_participant($account_id, $bill_id_to_edit);
-	if($bill_participant_edited)
-	{
-		$redirect_url = 'location:'.BASEURL.'/account/'.$hashid.'/admin';
-		header($redirect_url);
-	}
+	echo '<p>caca</p>';
+	$bill_participant_deleted = delete_bill_participant($account_id, $bill_participant_id_to_edit);
+	$redirect_url = 'location:'.BASEURL.'/account/'.$hashid.'/admin';
+	header($redirect_url);
 }
 
 /* CANCEL EDIT */

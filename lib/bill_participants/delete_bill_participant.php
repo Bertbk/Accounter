@@ -1,17 +1,14 @@
 <?php
 include_once(__DIR__.'/../get_db.php');
 
-include_once(LIBPATH.'/bills/get_bill_by_id.php');
-include_once(LIBPATH.'/participants/get_participant_by_id.php');
-include_once(LIBPATH.'/bill_participants/get_bill_participants_by_bill_id.php');
-
-
-function delete_bill_participant($account_id_arg, $bill_id_arg)
+function delete_bill_participant($account_id_arg, $bill_part_id_arg)
 {
 	$db = get_db();
 
 	$account_id = (int)$account_id_arg;
-	$bill_part_id = (int)$bill_id_arg;
+	$bill_part_id = (int)$bill_part_id_arg;
+	
+	echo '<p>'.$bill_part_id.'</p>';
 	
 	$isgood= false;
 	try
