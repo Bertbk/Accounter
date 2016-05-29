@@ -20,6 +20,7 @@ function get_free_bill_participants($account_id_arg)
 	
 	$bill_participants = get_bill_participants($account_id);
 	
+	$reply = array();
 	foreach($my_participants as $participant)
 	{
 		foreach($my_bills as $bill)
@@ -34,7 +35,10 @@ function get_free_bill_participants($account_id_arg)
 					break;
 				}
 			}
-			$reply[$bill['id']] = $participant;
+			if(!$is_in_this_bill)
+			{
+				$reply[$bill['id']] = $participant;
+			}
 		}
 	}
 	return $reply;

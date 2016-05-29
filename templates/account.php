@@ -298,7 +298,9 @@ foreach($my_bills as $bill)
 	}
 	if($admin_mode && !$edit_mode)
 	{ //Display possibilities
-		//Assign a participant
+		//Assign a participant (if there are free guys)
+		if(!empty($my_free_bill_participants[$bill['id']]))
+		{
 	?>
 		<form method="post">
 		  <fieldset>
@@ -332,7 +334,9 @@ foreach($my_bills as $bill)
 			 <button type="submit" name="submit_assign_participant" value="Submit">Submit</button> 
 		  </fieldset>
 		</form>
-
+<?php 
+		} //if empty free_participants
+?>
 	<!-- Add payment -->
 	<?php
 		if(!empty($my_bill_participants[$bill['id']]))
