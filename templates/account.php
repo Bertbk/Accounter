@@ -494,7 +494,11 @@ style="background-color:<?php echo '#'.$bill['color']?>"
 				if($refund > 0)
 				{
 	?>
-	<li><?php echo $payer['name']?> must refund <?php echo $refund?> &euro; to <?php echo $receiver['name']?></li>
+	<li>
+	<span class='bill_participant' style="background-color:<?php echo '#'.$payer['color']?>"><?php echo $payer['name']?></span> 
+	must refund <?php echo $refund?> &euro; to 
+	<span class='bill_participant' style="background-color:<?php echo '#'.$receiver['color']?>"><?php echo $receiver['name']?></span>
+	</li>
 	<?php
 				}
 			}
@@ -531,7 +535,11 @@ style="background-color:<?php echo '#'.$bill['color']?>"
 			if($refund > 0)
 			{
 ?>
-<li><?php echo $payer['name']?> must refund <?php echo $refund?>&euro; to <?php echo $receiver['name']?></li>
+<li>
+	<span class='bill_participant' style="background-color:<?php echo '#'.$payer['color']?>"><?php echo $payer['name']?></span> 
+	must refund <?php echo $refund?> &euro; to 
+	<span class='bill_participant' style="background-color:<?php echo '#'.$receiver['color']?>"><?php echo $receiver['name']?></span>
+</li>
 <?php
 			}
 		}
