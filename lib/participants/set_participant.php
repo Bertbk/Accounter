@@ -3,7 +3,7 @@ include_once(__DIR__.'/../get_db.php');
 include_once(LIBPATH.'/participants/get_participant_by_name.php');
 include_once(LIBPATH.'/participants/get_participants.php');
 
-include_once(LIBPATH.'/colors/give_me_a_color.php');
+include_once(LIBPATH.'/colors/give_me_next_color.php');
 
 
 function set_participant($account_id_arg, $name_of_participant_arg, $nb_of_people_arg, $email_arg)
@@ -27,8 +27,8 @@ function set_participant($account_id_arg, $name_of_participant_arg, $nb_of_peopl
 		return false;
 	}
 	
-	$n_participant = count(get_participants($account_id));
-	$my_color = give_me_a_color($n_participant, 'participant');
+	$the_participants = get_participants($account_id);
+	$my_color = give_me_next_color(end($the_participants)['color'], 'participant');
 	//When color will come from users, check the reg ex
 	
 	//Hashid

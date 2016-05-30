@@ -148,8 +148,9 @@ foreach($my_bills as $bill)
 ?>
 <div class="bill 
 <?php echo 'bill-'.$cpt_bill?> 
-<?php echo 'bgColor'.$cpt_bill?>
-">
+"
+style="background-color:<?php echo '#'.$bill['color']?>"
+>
 	<?php if($admin_mode && $what_to_edit['bill'] 
 	&& $bill_id_to_edit == $bill['id'])
 	{

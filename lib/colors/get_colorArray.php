@@ -1,11 +1,10 @@
 <?php
 
-function give_me_a_color($cpt_arg, $type_arg)
+function get_colorArray($type_arg)
 {
-	$cpt = (int)$cpt_arg;
-	//Type is Bill or Participant
 	$type_color = htmlspecialchars($type_arg);
-		
+	$colorArray = array();
+
 	$BasicColorArray = array(
 		'AliceBlue' =>'F0F8FF',
 		'AntiqueWhite' =>'FAEBD7',
@@ -157,7 +156,6 @@ function give_me_a_color($cpt_arg, $type_arg)
 		'YellowGreen'=>'9ACD32'
 	);
 	
-	$colorArray = array();
 	if($type_color == 'participant')
 	{
 		$colorArray = array(
@@ -187,26 +185,18 @@ function give_me_a_color($cpt_arg, $type_arg)
 	if($type_color == 'bill')
 	{
 		$colorArray = array(
-		0 =>'fdd2c2',
-		1 =>'fffac3',
-		2 =>'feeae9',
-		3 =>'dbf2f8',
-		4 =>'dbe9c6',
-		5 =>'f4f3b0',
-		6 =>'e9d0e5',
-		7 =>'ffe4b7',
-		8 =>'d1e2f4',
-		9 =>'fee893'
+		0 =>'FDD2C2',
+		1 =>'FFFaC3',
+		2 =>'FEEAE9',
+		3 =>'DBF2F8',
+		4 =>'DBE9C6',
+		5 =>'F4F3B0',
+		6 =>'D9D0E5',
+		7 =>'FFE4B7',
+		8 =>'D1E2F4',
+		9 =>'FEE893'
 		);
 	}
 	
-	$size_array = count($colorArray);
-	if($size_array > 0)
-	{
-		return $colorArray[$cpt%$size_array];
-	}
-	else
-	{
-		return array();
-	}
+	return $colorArray;
 }

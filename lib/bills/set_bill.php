@@ -1,7 +1,9 @@
 <?php
 include_once(__DIR__.'/../get_db.php');
 include_once(LIBPATH.'/bills/get_bill_by_title.php');
+include_once(LIBPATH.'/bills/get_bills.php');
 
+include_once(LIBPATH.'/colors/give_me_next_color.php');
 
 function set_bill($account_id_arg, $title_bill_arg, $description_arg="")
 {
@@ -29,16 +31,21 @@ function set_bill($account_id_arg, $title_bill_arg, $description_arg="")
 	}
 	while(!$hashid);
 	
+	$the_bills = get_bills($account_id);
+	$my_color = give_me_next_color(end($the_bills)['color'], 'bill');
+	//When color will come from users, check the reg ex
+	
 	$isgood= false;
 	try
 	{
-		$myquery = 'INSERT INTO bills(id, account_id, hashid, title, description) 
-		VALUES(NULL, :account_id, :hashid, :title_bill, :description)';
+		$myquery = 'INSERT INTO bills(id, account_id, hashid, title, description, color) 
+		VALUES(NULL, :account_id, :hashid, :title_bill, :description, :my_color)';
 		$prepare_query = $db->prepare($myquery);
 		$prepare_query->bindValue(':account_id', $account_id, PDO::PARAM_INT);
 		$prepare_query->bindValue(':hashid', $hashid, PDO::PARAM_STR);
 		$prepare_query->bindValue(':title_bill', $title_bill, PDO::PARAM_STR);
 		$prepare_query->bindValue(':description', $description, (is_null($description))?(PDO::PARAM_NULL):(PDO::PARAM_STR));
+		$prepare_query->bindValue(':my_color', $my_color, PDO::PARAM_STR);
 		$isgood = $prepare_query->execute();
 		$prepare_query->closeCursor();
 	}
