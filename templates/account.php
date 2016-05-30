@@ -192,7 +192,7 @@ style="background-color:<?php echo '#'.$bill['color']?>"
 		
 <?php }	?>
 	</h2>
-	<div class="hidden_at_first" id="<?php echo 'show_hide_bill'.$cpt_bill.'_target'?>">
+	<div  id="<?php echo 'show_hide_bill'.$cpt_bill.'_target'?>">
 	<?php if(!empty($bill['description']) && !is_null($bill['description']))
 	{
 ?>
