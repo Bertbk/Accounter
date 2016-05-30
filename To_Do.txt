@@ -5,8 +5,6 @@ MAJOR
 1. Créer un installeur
 2. Comments
 3. Multi bill with different parts : n people != n parts (!)
-4. Drop data
-5. Color participant/bill
 
 MINOR
 =====

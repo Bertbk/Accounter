@@ -62,13 +62,13 @@ if($admin_mode && !$edit_mode)
 	$link = BASEURL.'/account/'.$hashid.'/admin/edit_participant/'.$participant['hashid'];
 ?>
 	<a href="<?php echo $link?>">
-	<img src="<?php echo BASEURL.'/img/pencil.png'?>" alt='Edit participant' width="20px" />
+	<img src="<?php echo BASEURL.'/img/pencil_white.png'?>" alt='Edit participant' width="20px" />
 	</a>
 <?php
 	$link = BASEURL.'/account/'.$hashid.'/admin/delete_participant/'.$participant['hashid'];
 ?>
 	<a href="<?php echo $link?>" class="confirmation">
-	<img src="<?php echo BASEURL.'/img/delete.png'?>" alt='Delete participant' width="20px" />
+	<img src="<?php echo BASEURL.'/img/delete_white.png'?>" alt='Delete participant' width="20px" />
 	</a>
 <?php
 }
@@ -223,11 +223,11 @@ style="background-color:<?php echo '#'.$bill['color']?>"
 			echo $bill_participant['name'].'('.$bill_participant['percent_of_usage'].'%)';
 			if($admin_mode && !$edit_mode){
 				?><a href="<?php echo BASEURL.'/account/'.$hashid.'/admin/edit_bill_part/'.$bill_participant['hashid']?>">
-				<img src="<?php echo BASEURL.'/img/pencil.png'?>" alt='Edit this participation' width="20px" />
+				<img src="<?php echo BASEURL.'/img/pencil_white.png'?>" alt='Edit this participation' width="20px" />
 				</a>
 				<a href="<?php echo BASEURL.'/account/'.$hashid.'/admin/delete_bill_part/'.$bill_participant['hashid']?>" 
 				class="confirmation">
-				<img class="confirmation" src="<?php echo BASEURL.'/img/delete.png'?>" alt='Remove this participation' width="20px" />
+				<img class="confirmation" src="<?php echo BASEURL.'/img/delete_white.png'?>" alt='Remove this participation' width="20px" />
 				</a>
 
 		<?php	} ?>
