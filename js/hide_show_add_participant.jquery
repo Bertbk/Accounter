@@ -14,3 +14,8 @@ $('.date_picker').each(function(){
 $(function() {
     $( ".date_picker" ).datepicker({ dateFormat: "dd-mm-yy" })
   });
+  
+  
+$('.confirmation').on('click', function () {
+	return confirm('Are you sure?');
+});

@@ -7,18 +7,21 @@ include_once(LIBPATH.'/participants/get_participant_by_name.php');
 include_once(LIBPATH.'/participants/get_participant_by_hashid.php');
 include_once(LIBPATH.'/participants/set_participant.php');
 include_once(LIBPATH.'/participants/update_participant.php');
+include_once(LIBPATH.'/participants/delete_participant.php');
 
 include_once(LIBPATH.'/payments/get_payments.php');
 include_once(LIBPATH.'/payments/get_payment_by_hashid.php');
 include_once(LIBPATH.'/payments/set_payment.php');
 include_once(LIBPATH.'/payments/update_payment.php');
 include_once(LIBPATH.'/payments/get_payments_by_bills.php');
+include_once(LIBPATH.'/payments/delete_payment.php');
 
 include_once(LIBPATH.'/bills/get_bills.php');
 include_once(LIBPATH.'/bills/get_bill_by_id.php');
 include_once(LIBPATH.'/bills/get_bill_by_hashid.php');
 include_once(LIBPATH.'/bills/set_bill.php');
 include_once(LIBPATH.'/bills/update_bill.php');
+include_once(LIBPATH.'/bills/delete_bill.php');
 
 include_once(LIBPATH.'/bill_participants/set_bill_participant.php');
 include_once(LIBPATH.'/bill_participants/get_bill_participants.php');
@@ -206,6 +209,13 @@ if($admin_mode && isset($_POST['submit_edit_participant']))
 		header($redirect_url);
 	}
 }
+//delete participant
+if($admin_mode && $what_to_delete['participant'])
+{
+	$participant_deleted = delete_participant($account_id, $participant_id_to_edit);
+	$redirect_url = 'location:'.BASEURL.'/account/'.$hashid.'/admin';
+	header($redirect_url);
+}
 
 /*BILL*/
 //New bill
@@ -239,6 +249,13 @@ if($admin_mode && isset($_POST['submit_edit_bill']))
 		$redirect_url = 'location:'.BASEURL.'/account/'.$hashid.'/admin';
 		header($redirect_url);
 	}
+}
+//Delete bill_participant
+if($admin_mode && $what_to_delete['bill'])
+{
+	$bill_deleted = delete_bill($account_id, $bill_id_to_edit);
+	$redirect_url = 'location:'.BASEURL.'/account/'.$hashid.'/admin';
+	header($redirect_url);
 }
 
 /* PAYMENT */
@@ -294,6 +311,14 @@ if($admin_mode && isset($_POST['submit_edit_payment']))
 		}
 	}
 }
+//Delete bill_participant
+if($admin_mode && $what_to_delete['payment'])
+{
+	$payment_deleted = delete_payment($account_id, $payment_id_to_edit);
+	$redirect_url = 'location:'.BASEURL.'/account/'.$hashid.'/admin';
+	header($redirect_url);
+}
+
 
 /* BILL_PARTICIPANT */
 //New one = Assign a participant to a bill
@@ -334,7 +359,6 @@ if($admin_mode && isset($_POST['submit_edit_bill_participant']))
 //Delete bill_participant
 if($admin_mode && $what_to_delete['bill_participant'])
 {
-	echo '<p>caca</p>';
 	$bill_participant_deleted = delete_bill_participant($account_id, $bill_participant_id_to_edit);
 	$redirect_url = 'location:'.BASEURL.'/account/'.$hashid.'/admin';
 	header($redirect_url);

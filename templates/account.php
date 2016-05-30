@@ -52,6 +52,7 @@ if($admin_mode && $what_to_edit['participant'] && $participant['id'] === $partic
 else{ // READ Only
 ?>
 		<li>
+		<span class='bill_participant' style="background-color:<?php echo '#'.$participant['color']?>">
 		<?php echo $participant['name']?> 
 		(<?php echo $participant['nb_of_people'];if(!empty($participant['email'])){echo ', '.$participant['email'];}?>)
 
@@ -66,12 +67,13 @@ if($admin_mode && !$edit_mode)
 <?php
 	$link = BASEURL.'/account/'.$hashid.'/admin/delete_participant/'.$participant['hashid'];
 ?>
-	<a href="<?php echo $link?>">
+	<a href="<?php echo $link?>" class="confirmation">
 	<img src="<?php echo BASEURL.'/img/delete.png'?>" alt='Delete participant' width="20px" />
 	</a>
 <?php
 }
 ?>		
+</span>
 		</li>
 <?php
 }//if/else admin
@@ -98,8 +100,9 @@ if($admin_mode && !$edit_mode)
 		 <input type="number" name="p_nb_of_people" value="1" id="form_set_participant_nbpeople" required /><br>
 		<label for="form_set_participant_email">Email adress: </label>
 		 <input type="email" name="p_email" id="form_set_participant_email"  /><br>
+		 <?php /*
 		<label for="form_set_participant_color">Color: </label>
-		 <input type="email" name="p_color" id="form_set_participant_color"  /><br>
+		 <input type="text" name="p_color" id="form_set_participant_color"  /><br> */?>
 		 <button type="submit" name="submit_participant" value="Submit">Submit</button> 
 	  </fieldset>
 	</form>
@@ -110,9 +113,6 @@ if($admin_mode && !$edit_mode)
 
 
 <!-- BILLS -->
-<?php if (is_array($my_bills) && sizeof($my_bills) > 0 )
-{
-?>
 <h1>Bills</h1>
 
 <?php
@@ -139,7 +139,8 @@ if($admin_mode && !$edit_mode)
 
 
 <!-- Loop on the bills -->
-<?php 
+<?php if (is_array($my_bills) && sizeof($my_bills) > 0 )
+{
 $cpt_bill = -1;
 foreach($my_bills as $bill)
 {
@@ -184,7 +185,7 @@ foreach($my_bills as $bill)
 <?php
 		$link = BASEURL.'/account/'.$hashid.'/admin/delete_bill/'.$bill['hashid'];
 		?>
-		<a href='<?php echo $link?>'>
+		<a href='<?php echo $link?>' class="confirmation">
 		<img src="<?php echo BASEURL.'/img/delete.png'?>" alt='Delete bill' width="20px" />
 		</a>
 		
@@ -216,22 +217,23 @@ foreach($my_bills as $bill)
 		|| $bill_id_to_edit != $bill['id'] || $bill_participant_id_to_edit != $bill_participant['id'])
 		{
 			?><span 
-			class="<?php echo 'bill_participant billpartColor'.$cpt_bill_participant?>">
+			class="<?php echo 'bill_participant'?>" style="background-color:<?php echo '#'.$bill_participant['color']?>">
 			<?php
 			echo $bill_participant['name'].'('.$bill_participant['percent_of_usage'].'%)';
 			if($admin_mode && !$edit_mode){
 				?><a href="<?php echo BASEURL.'/account/'.$hashid.'/admin/edit_bill_part/'.$bill_participant['hashid']?>">
 				<img src="<?php echo BASEURL.'/img/pencil.png'?>" alt='Edit this participation' width="20px" />
 				</a>
-				<a href="<?php echo BASEURL.'/account/'.$hashid.'/admin/delete_bill_part/'.$bill_participant['hashid']?>">
-				<img src="<?php echo BASEURL.'/img/delete.png'?>" alt='Remove this participation' width="20px" />
+				<a href="<?php echo BASEURL.'/account/'.$hashid.'/admin/delete_bill_part/'.$bill_participant['hashid']?>" 
+				class="confirmation">
+				<img class="confirmation" src="<?php echo BASEURL.'/img/delete.png'?>" alt='Remove this participation' width="20px" />
 				</a>
 
 		<?php	} ?>
 			</span>
 	<?php }
 		else
-		{ //Edit activated of THIS bill_participant
+		{ //Edit activated on THIS bill_participant
 			$place_submit_button = true;
 	?>
 			<form method="post">
@@ -393,7 +395,7 @@ foreach($my_bills as $bill)
 <?php
 		$link = BASEURL.'/account/'.$hashid.'/admin/delete_payment/'.$payment['hashid'];
 	?>
-		<a href="<?php echo $link?>">
+		<a class="confirmation" href="<?php echo $link?>">
 		<img src="<?php echo BASEURL.'/img/delete.png'?>" alt='Delete payment' width="20px" />
 		</a>
 

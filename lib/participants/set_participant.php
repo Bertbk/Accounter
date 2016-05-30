@@ -1,6 +1,9 @@
 <?php
 include_once(__DIR__.'/../get_db.php');
 include_once(LIBPATH.'/participants/get_participant_by_name.php');
+include_once(LIBPATH.'/participants/get_participants.php');
+
+include_once(LIBPATH.'/colors/give_me_a_color.php');
 
 
 function set_participant($account_id_arg, $name_of_participant_arg, $nb_of_people_arg, $email_arg)
@@ -24,6 +27,10 @@ function set_participant($account_id_arg, $name_of_participant_arg, $nb_of_peopl
 		return false;
 	}
 	
+	$n_participant = count(get_participants($account_id));
+	$my_color = give_me_a_color($n_participant, 'participant');
+	//When color will come from users, check the reg ex
+	
 	//Hashid
 	do {
 		$hashid = bin2hex(openssl_random_pseudo_bytes(8));
@@ -32,14 +39,15 @@ function set_participant($account_id_arg, $name_of_participant_arg, $nb_of_peopl
 	
 	try
 	{
-		$myquery = 'INSERT INTO participants(id, account_id, hashid, name, nb_of_people, email) 
-		VALUES(NULL, :account_id, :hashid, :name_of_participant, :nb_of_people, :email)';
+		$myquery = 'INSERT INTO participants(id, account_id, hashid, name, nb_of_people, email, color) 
+		VALUES(NULL, :account_id, :hashid, :name_of_participant, :nb_of_people, :email, :my_color)';
 		$prepare_query = $db->prepare($myquery);
 		$prepare_query->bindValue(':account_id', $account_id, PDO::PARAM_INT);
 		$prepare_query->bindValue(':hashid', $hashid, PDO::PARAM_STR);
 		$prepare_query->bindValue(':name_of_participant', $name_of_participant, PDO::PARAM_STR);
 		$prepare_query->bindValue(':nb_of_people', $nb_of_people, PDO::PARAM_INT);
 		$prepare_query->bindValue(':email', $email, (is_null($email))?(PDO::PARAM_NULL):(PDO::PARAM_STR));
+		$prepare_query->bindValue(':my_color', $my_color, PDO::PARAM_STR);
 		$isgood = $prepare_query->execute();
 		$prepare_query->closeCursor();
 	}

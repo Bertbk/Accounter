@@ -6,7 +6,7 @@ include_once(LIBPATH.'/bill_participants/get_bill_participants_by_bill_id.php');
 
 /*
 Return every bill_participants of every bill. The reply is an array such that
-$reply[bill_id] = array of bill_participants + name of participants
+$reply[bill_id] = array of bill_participants + name of participants + color
 */
 function get_bill_participants($account_id_arg)
 {
