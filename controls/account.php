@@ -262,7 +262,8 @@ if($admin_mode && $what_to_delete['bill'])
 //New Payment
 if($admin_mode && isset($_POST['submit_payment']))
 {
-	$p_bill_id = filter_input(INPUT_POST, 'p_bill_id', FILTER_SANITIZE_NUMBER_INT);
+	$p_bill_hashid = filter_input(INPUT_POST, 'p_bill_hashid', FILTER_SANITIZE_STRING);
+	$p_bill = get_bill_by_hashid($account_id, $p_bill_hashid);
 	$p_payer_id = filter_input(INPUT_POST, 'p_payer_id', FILTER_SANITIZE_NUMBER_INT);
 	if(!is_null($p_payer_id))
 	{
@@ -272,7 +273,7 @@ if($admin_mode && isset($_POST['submit_payment']))
 		$p_date_payment  = filter_input(INPUT_POST, 'p_date_payment', FILTER_SANITIZE_STRING);
 		$p_receiver_id = ($p_receiver_id == -1) ? null:$p_receiver_id;
 		$p_date_payment = (empty($p_date_payment))?null:$p_date_payment;
-		$p_payment_added = set_payment($account_id, $p_bill_id, 
+		$p_payment_added = set_payment($account_id, $p_bill['id'], 
 		$p_payer_id, $p_cost, $p_receiver_id, $p_description, $p_date_payment);
 		if(!$p_payment_added)
 		{
@@ -293,7 +294,8 @@ if($admin_mode && ($what_to_edit['payment'] || $what_to_delete['payment']))
 }
 if($admin_mode && isset($_POST['submit_edit_payment']))
 {
-	$p_bill_id = filter_input(INPUT_POST, 'p_bill_id', FILTER_SANITIZE_NUMBER_INT);
+	$p_bill_hashid = filter_input(INPUT_POST, 'p_bill_hashid', FILTER_SANITIZE_STRING);
+	$p_bill = get_bill_by_hashid($account_id, $p_bill_hashid);
 	$p_payer_id = filter_input(INPUT_POST, 'p_payer_id', FILTER_SANITIZE_NUMBER_INT);
 	if(!is_null($p_payer_id))
 	{
@@ -302,7 +304,8 @@ if($admin_mode && isset($_POST['submit_edit_payment']))
 		$p_description = filter_input(INPUT_POST, 'p_description', FILTER_SANITIZE_STRING);
 		$p_date_payment  = filter_input(INPUT_POST, 'p_date_payment', FILTER_SANITIZE_STRING);
 		$p_receiver_id = ($p_receiver_id == -1) ? null:$p_receiver_id;
-		$payment_edited = update_payment($account_id, $p_bill_id, $payment_id_to_edit, 
+		
+		$payment_edited = update_payment($account_id, $p_bill['id'], $payment_id_to_edit, 
 		$p_payer_id, $p_cost, $p_receiver_id, $p_description, $p_date_payment);
 		if($payment_edited)
 		{
@@ -324,10 +327,21 @@ if($admin_mode && $what_to_delete['payment'])
 //New one = Assign a participant to a bill
 if($admin_mode && isset($_POST['submit_assign_participant']))
 {
-	$p_bill_id = filter_input(INPUT_POST, 'p_bill_id', FILTER_SANITIZE_NUMBER_INT);
-	$p_participant_id = filter_input(INPUT_POST, 'p_participant_id', FILTER_SANITIZE_NUMBER_INT);
-	$p_percent_of_use = filter_input(INPUT_POST, 'p_percent_of_use', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);	
-	$association_ok = set_bill_participant($account_id, $p_bill_id, $p_participant_id, $p_percent_of_use);
+	$p_bill_hashid = filter_input(INPUT_POST, 'p_bill_hashid', FILTER_SANITIZE_STRING);
+	$p_bill = get_bill_by_hashid($account_id, $p_bill_hashid);
+	$association_ok = true;
+	foreach ($_POST['p_participant'] as $particip)
+	{
+		if(!isset($particip['hashid']))
+			{continue;}
+		$p_participant_hashid = htmlspecialchars($particip['hashid']);
+		$p_percent_of_use = (float)$particip['percent'];
+		$p_participant = get_participant_by_hashid($account_id, $p_participant_hashid);
+		if(empty($p_participant)){continue;}
+		$association_ok_bis = set_bill_participant($account_id, $p_bill['id'], 
+			$p_participant['id'], $p_percent_of_use);
+		$association_ok = $association_ok ||$association_ok_bis;
+	}
 	if(!$association_ok)
 	{
 		echo '<p>Association couldn\'t be made.</p>';
@@ -376,6 +390,7 @@ $my_bills = get_bills($account_id); // All bills
 $my_participants = get_participants($account_id); //All person
 $my_bill_participants = get_bill_participants($account_id); // Person that added to a bill
 $my_free_bill_participants = get_free_bill_participants($account_id); // Person that can be added to a bill
+
 //Payments
 $my_payments_per_bill = get_payments_by_bills($account_id); //All payments
 

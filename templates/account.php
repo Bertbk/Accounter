@@ -276,36 +276,35 @@ style="background-color:<?php echo '#'.$bill['color']?>"
 		{
 	?>
 	<p id="<?php echo 'show_hide_bill_add_part_'.$cpt_bill?>"><a href="javascript:void(0)">(+) Assign a participant to this bill</a></p>
-		<form method="post" class="hidden_at_first" id=<?php echo 'show_hide_bill_add_part_'.$cpt_bill.'_target'?>>
+		<form method="post" class="hidden_at_first" 
+		enctype="multipart/form-data"
+		id=<?php echo 'show_hide_bill_add_part_'.$cpt_bill.'_target'?>
+		>
 		  <fieldset>
 			<legend>Assign a participant to this bill:</legend>
-			<label for="<?php echo 'form_assign_participant_id'.$bill['id']?>">Participant available</label>
-			<select name="p_participant_id" id="<?php echo 'form_assign_participant_id'.$bill['id']?>"> 
-	<option disabled selected value="null"> -- select a participant -- </option>
-	<?php
-			foreach($my_participants as $participant)
+			<table>
+			<?php
+			$cpt = -1;
+			foreach($my_free_bill_participants[$bill['id']] as $participant)
 			{
-				$isfree = true;
-				foreach($current_bill_participants as $curbill)
-				{
-					if($participant['id'] == $curbill['participant_id'])
-					{
-						$isfree = false;
-						break;
-					}
-				}
-				if(!$isfree){continue;}
+				$cpt++;
 	?>
-				<option value="<?php echo $participant['id']?>"><?php echo $participant['name']?></option>
+			<tr>
+			  <td><input name="p_participant['<?php echo $cpt?>'][hashid]]" 
+				id="<?php echo "form_available_part_".$participant['id']?>"
+				value="<?php echo $participant['hashid']?>" type="checkbox">
+			  <label for="<?php echo "form_available_part_".$participant['id']?>">
+				<?php echo $participant['name']?>
+			  </label>
+				<td><input name="p_participant['<?php echo $cpt?>'][percent]]" type="number" 
+				step="0.01" min="0" max="100" size="5" value="100"></td>
+			</tr>
 	<?php
-			}
+			}//for each participant
 	?>
-			</select><br>		
-			<label for="<?php echo 'form_assign_participant_percent'.$bill['id']?>">Percentage of use: </label>
-			 <input type="number" step="0.01" min="0" max="100" name="p_percent_of_use" 
-			 value="100.00" id="<?php echo 'form_assign_participant_percent'.$bill['id']?>" required /><br>
-			<input type="hidden" name="p_bill_id" value="<?php echo $bill['id']?>">
-			 <button type="submit" name="submit_assign_participant" value="Submit">Submit</button> 
+	</table>
+			<input type="hidden" name="p_bill_hashid" value="<?php echo $bill['hashid']?>">
+			<button type="submit" name="submit_assign_participant" value="Submit">Submit</button> 
 		  </fieldset>
 		</form>
 <?php 
@@ -331,12 +330,12 @@ style="background-color:<?php echo '#'.$bill['color']?>"
 			{ //Edit mode 
 ?>
 		<form method="post" id="form_edit_payment_send">
-			<select name="p_bill_id" id="form_set_payment_bill"> 
+			<select name="p_bill_hashid" id="form_set_payment_bill"> 
 	<?php //list of bills
 			foreach($my_bills as $bill)
 				{
 	?>
-					<option value="<?php echo $bill['id']?>"
+					<option value="<?php echo $bill['hashid']?>"
 					<?php if($bill['id']==$payment_to_edit['bill_id']){echo ' selected';}?>
 					><?php echo $bill['title']?></option>
 	<?php
@@ -435,7 +434,7 @@ style="background-color:<?php echo '#'.$bill['color']?>"
 		class="hidden_at_first">
 		  <fieldset>
 			<legend>Add a payment:</legend>
-			<input type="hidden" name="p_bill_id" value = <?php echo $bill['id']?>> 
+			<input type="hidden" name="p_bill_hashid" value = <?php echo $bill['hashid']?>> 
 			<label for="<?php echo 'form_set_payment_payer-'.$cpt_bill?>">Payer</label>
 			<select name="p_payer_id" id="<?php echo 'form_set_payment_payer-'.$cpt_bill?>" 
 			onchange="configureDropDownLists(this, document.getElementById('<?php echo 'form_set_payment_recv-'.$cpt_bill?>'))"> 
