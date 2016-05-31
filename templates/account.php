@@ -430,11 +430,14 @@ style="background-color:<?php echo '#'.$bill['color']?>"
 <?php
 			$this_bill_participants = $my_bill_participants[$bill['id']];
 	?>
-		<form method="post" id="<?php echo 'show_hide_bill_add_paymt_'.$cpt_bill.'_target'?>" 
+<table>
+	<form method="post" id="<?php echo 'show_hide_bill_add_paymt_'.$cpt_bill.'_target'?>" 
 		class="hidden_at_first">
 		  <fieldset>
 			<legend>Add a payment:</legend>
-			<input type="hidden" name="p_bill_hashid" value = <?php echo $bill['hashid']?>> 
+			<tr><input type="hidden" name="p_bill_hashid" value = <?php echo $bill['hashid']?>> </tr>
+			<tr>
+			<td>
 			<label for="<?php echo 'form_set_payment_payer-'.$cpt_bill?>">Payer</label>
 			<select name="p_payer_id" id="<?php echo 'form_set_payment_payer-'.$cpt_bill?>" 
 			onchange="configureDropDownLists(this, document.getElementById('<?php echo 'form_set_payment_recv-'.$cpt_bill?>'))"> 
@@ -448,20 +451,27 @@ style="background-color:<?php echo '#'.$bill['color']?>"
 	<?php
 			}
 	?>
-			</select><br>
+			</select>
+			</td><td>
 			<label for="<?php echo 'form_set_payment_cost-'.$cpt_bill?>">Cost</label>
 			<input type="number" step="0.01" min="0" name="p_cost" id="<?php echo 'form_set_payment_cost-'.$cpt_bill?>" required /><br>
+			</td><td>
 			<label for="<?php echo 'form_set_payment_recv-'.$cpt_bill?>">Receiver</label>
 			<select name="p_receiver_id" id="<?php echo 'form_set_payment_recv-'.$cpt_bill?>"> 
 			<option value="-1" selected="selected">Group</option>
 			</select><br>
+			</td><td>
 			<label for="<?php echo 'form_set_payment_desc-'.$cpt_bill?>">Description</label>
 			<input type="text" name="p_description" id="<?php echo 'form_set_payment_desc-'.$cpt_bill?>" /><br>
+			</td><td>
 			<label for="<?php echo 'form_set_payment_date-'.$cpt_bill?>">Date of payment</label>
 			<input type="date" class="date_picker" name="p_date_payment" id="<?php echo 'form_set_payment_date-'.$cpt_bill?>"/><br>
-			<br><button type="submit" name="submit_payment" value="Submit">Submit</button> 
+			</td><td>
+			</tr>
+			<tr><button type="submit" name="submit_payment" value="Submit">Submit</button> </tr>
 			</fieldset>
 		</form>
+</table>
 <?php
 		}//if empty
 ?>
