@@ -335,7 +335,9 @@ if($admin_mode && isset($_POST['submit_assign_participant']))
 		if(!isset($particip['hashid']))
 			{continue;}
 		$p_participant_hashid = htmlspecialchars($particip['hashid']);
+		$p_participant_hashid = filter_var($p_participant_hashid, FILTER_SANITIZE_STRING);
 		$p_percent_of_use = (float)$particip['percent'];
+		$p_percent_of_use = filter_var($p_percent_of_use, FILTER_SANITIZE_NUMBER_INT);
 		$p_participant = get_participant_by_hashid($account_id, $p_participant_hashid);
 		if(empty($p_participant)){continue;}
 		$association_ok_bis = set_bill_participant($account_id, $p_bill['id'], 
