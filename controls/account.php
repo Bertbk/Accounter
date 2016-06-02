@@ -56,18 +56,15 @@ $what_to_edit = array (
     "payment" => false,
     "bill_participant" => false
 );
-$what_to_delete = array (
-    "bill"  => false,
-    "participant"  => false,
-    "payment" => false,
-    "bill_participant" => false
-);
+$what_to_delete = $what_to_edit;
 $hashid_edit = array(
-    "bill"  => false,
+    "bill"  => "",
     "participant"  => "",
     "payment" => "",
     "bill_participant" => ""
 );
+$hashid_delete = $hashid_edit;
+
 //Edit a participant ?
 $participant_hashid = "";
 empty($_GET['edit_participant']) ? $participant_hashid = "" : $participant_hashid = htmlspecialchars($_GET['edit_participant']);
@@ -96,25 +93,25 @@ $bill_hashid = "";
 //Delete a participant ?
 $participant_hashid = "";
 empty($_GET['delete_participant']) ? $participant_hashid = "" : $participant_hashid = htmlspecialchars($_GET['delete_participant']);
-$hashid_edit['participant'] = (strlen($participant_hashid)==16)? $participant_hashid : "";
+$hashid_delete['participant'] = (strlen($participant_hashid)==16)? $participant_hashid : "";
 $what_to_delete['participant'] = !(empty($participant_hashid));
 $participant_hashid = "";
 //Delete a payment ?
 $payment_hashid = "";
 empty($_GET['delete_payment']) ? $payment_hashid = "" : $payment_hashid = htmlspecialchars($_GET['delete_payment']);
-$hashid_edit['payment'] = (strlen($payment_hashid)==16)? $payment_hashid : "";
+$hashid_delete['payment'] = (strlen($payment_hashid)==16)? $payment_hashid : "";
 $what_to_delete['payment'] = (!empty($payment_hashid));
 $payment_hashid = "";
 //Delete a bill_participant ?
 $bill_part_hashid = "";
 empty($_GET['delete_bill_part']) ? $bill_part_hashid = "" : $bill_part_hashid = htmlspecialchars($_GET['delete_bill_part']);
-$hashid_edit['bill_participant'] = (strlen($bill_part_hashid)==16)? $bill_part_hashid : "";
+$hashid_delete['bill_participant'] = (strlen($bill_part_hashid)==16)? $bill_part_hashid : "";
 $what_to_delete['bill_participant'] = (!empty($bill_part_hashid));
 $bill_part_hashid = "";
 //Delete a bill ?
 $bill_hashid = "";
 empty($_GET['delete_bill']) ? $bill_hashid = "" : $bill_hashid = htmlspecialchars($_GET['delete_bill']);
-$hashid_edit['bill'] = (strlen($bill_hashid)==16)? $bill_hashid : "";
+$hashid_delete['bill'] = (strlen($bill_hashid)==16)? $bill_hashid : "";
 $what_to_delete['bill'] = (!empty($bill_hashid));
 $bill_hashid = "";
 
@@ -190,7 +187,7 @@ if($admin_mode && isset($_POST['submit_participant']))
 }
 //Edit participant
 $participant_id_to_edit = null;
-if($admin_mode && ($what_to_edit['participant'] || $what_to_delete['participant']))
+if($admin_mode && ($what_to_edit['participant']))
 {
 	$participant_to_edit = get_participant_by_hashid($account_id, $hashid_edit['participant']);
 	if(!empty($participant_to_edit))
@@ -212,7 +209,8 @@ if($admin_mode && isset($_POST['submit_edit_participant']))
 //delete participant
 if($admin_mode && $what_to_delete['participant'])
 {
-	$participant_deleted = delete_participant($account_id, $participant_id_to_edit);
+	$participant_to_delete = get_participant_by_hashid($account_id, $hashid_delete['participant']);
+	$participant_deleted = delete_participant($account_id, $participant_to_delete['id']);
 	$redirect_url = 'location:'.BASEURL.'/account/'.$hashid.'/admin';
 	header($redirect_url);
 }
@@ -231,7 +229,7 @@ if($admin_mode && isset($_POST['submit_bill']))
 }
 //Edit bill
 $bill_id_to_edit = null;
-if($admin_mode && ($what_to_edit['bill'] || $what_to_delete['bill']))
+if($admin_mode && ($what_to_edit['bill']))
 {
 	$bill_to_edit = get_bill_by_hashid($account_id, $hashid_edit['bill']);
 	if(!empty($bill_to_edit))
@@ -253,7 +251,8 @@ if($admin_mode && isset($_POST['submit_edit_bill']))
 //Delete bill_participant
 if($admin_mode && $what_to_delete['bill'])
 {
-	$bill_deleted = delete_bill($account_id, $bill_id_to_edit);
+	$bill_to_delete = get_bill_by_hashid($account_id, $hashid_delete['bill']);
+	$bill_deleted = delete_bill($account_id, $bill_to_delete['id']);
 	$redirect_url = 'location:'.BASEURL.'/account/'.$hashid.'/admin';
 	header($redirect_url);
 }
@@ -293,7 +292,7 @@ if($admin_mode && isset($_POST['submit_payment']))
 }
 //Edit payment
 $payment_id_to_edit = null;
-if($admin_mode && ($what_to_edit['payment'] || $what_to_delete['payment']))
+if($admin_mode && ($what_to_edit['payment']))
 {
 	$payment_to_edit = get_payment_by_hashid($account_id, $hashid_edit['payment']);
 	if(!empty($payment_to_edit))
@@ -327,7 +326,8 @@ if($admin_mode && isset($_POST['submit_edit_payment']))
 //Delete bill_participant
 if($admin_mode && $what_to_delete['payment'])
 {
-	$payment_deleted = delete_payment($account_id, $payment_id_to_edit);
+	$payment_to_delete = get_payment_by_hashid($account_id, $hashid_delete['payment']);
+	$payment_deleted = delete_payment($account_id, $payment_to_delete['id']);
 	$redirect_url = 'location:'.BASEURL.'/account/'.$hashid.'/admin';
 	header($redirect_url);
 }
@@ -361,7 +361,7 @@ if($admin_mode && isset($_POST['submit_assign_participant']))
 }
 //Edit bill_participant
 $bill_participant_id_to_edit = null;
-if($admin_mode && ($what_to_edit['bill_participant'] || $what_to_delete['bill_participant']))
+if($admin_mode && ($what_to_edit['bill_participant']))
 {
 	$bill_participant_to_edit = get_bill_participant_by_hashid($account_id, $hashid_edit['bill_participant']);
 	if(!empty($bill_participant_to_edit))
@@ -385,7 +385,10 @@ if($admin_mode && isset($_POST['submit_edit_bill_participant']))
 //Delete bill_participant
 if($admin_mode && $what_to_delete['bill_participant'])
 {
-	$bill_participant_deleted = delete_bill_participant($account_id, $bill_participant_id_to_edit);
+	$bill_participant_to_delete = 
+		get_bill_participant_by_hashid($account_id, $hashid_delete['bill_participant']);
+	$bill_participant_deleted = delete_bill_participant($account_id, 
+		$bill_participant_to_delete['id']);
 	$redirect_url = 'location:'.BASEURL.'/account/'.$hashid.'/admin';
 	header($redirect_url);
 }

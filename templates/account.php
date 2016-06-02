@@ -28,30 +28,32 @@
 	{
 ?>
 <h1>Participants (<?php echo $n_participants ?>) / People (<?php echo $n_people ?>)</h1>
-<ul>
+<?php
+if($admin_mode && $what_to_edit['participant'])
+{
+?>
+<form method="post">
+<?php 
+}
+?>
+<div id="div_participants">
 <?php
 	foreach($my_participants as $participant)
 	{
 ?>
 <?php
-if($admin_mode && $what_to_edit['participant'] && $participant['id'] === $participant_id_to_edit)
+if($admin_mode && $what_to_edit['participant'] && $participant['id'] == $participant_id_to_edit)
 {
 ?>
-		<li>
-		<form method="post">
-		<input type="text" name="name_of_participant" value="<?php echo $participant_to_edit['name']?>" required />
-		(<input type="number" name="nb_of_people" value="<?php echo $participant_to_edit['nb_of_people']?>" required />)
-		<input type="email" name="email" value="<?php echo $participant_to_edit['email']?>"/>
-		<button type="submit" name="submit_edit_participant" value="Submit">Edit</button>
-		<button type="submit" name="submit_cancel" value="Submit">Cancel</button> 
-	</form>
-
-		</li>
+		<span>
+			<input type="text" name="name_of_participant" value="<?php echo $participant['name']?>" required />
+			(<input type="number" name="nb_of_people" value="<?php echo $participant['nb_of_people']?>" required />)
+			<input type="email" name="email" value="<?php echo $participant['email']?>"/>
+		</span>
 <?php
 }//if
 else{ // READ Only
 ?>
-		<li>
 		<span class='bill_participant' style="background-color:<?php echo '#'.$participant['color']?>">
 		<?php echo $participant['name']?> 
 		(<?php echo $participant['nb_of_people'];if(!empty($participant['email'])){echo ', '.$participant['email'];}?>)
@@ -73,13 +75,24 @@ if($admin_mode && !$edit_mode)
 <?php
 }
 ?>		
-</span>
-		</li>
+	</span>
 <?php
 }//if/else admin
 } //foreach participants
 ?>
-</ul>	
+<?php 
+if($admin_mode && $what_to_edit['participant'])
+{
+?>
+<div>
+<button type="submit" name="submit_edit_participant" value="Submit">Submit change</button>
+<button type="submit" name="submit_cancel" value="Submit">Cancel</button> 
+</div>
+</form>
+<?php 
+}
+?>
+</div>
 <?php }//if !empty(participants)
 ?>
 
