@@ -476,8 +476,6 @@ style="background-color:<?php echo '#'.$bill['color']?>"
 <?php
 	$name_of_people = array_column($this_bill_participants, 'name');
 	$hashid_of_people = array_column($this_bill_participants, 'participant_hashid');
-
-	print_r($name_of_people);
 ?>
 		<p>
 			<a href="#" onclick="AddPaymentLine(<?php echo htmlspecialchars(json_encode($name_of_people)) ?>, 
