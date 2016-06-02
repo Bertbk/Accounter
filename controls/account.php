@@ -199,7 +199,8 @@ if($admin_mode && isset($_POST['submit_edit_participant']))
 {
 	$name_of_participant = filter_input(INPUT_POST, 'name_of_participant', FILTER_SANITIZE_STRING);
 	$nb_of_people = filter_input(INPUT_POST, 'nb_of_people', FILTER_SANITIZE_NUMBER_INT);
-	$participant_edited = update_participant($account_id, $participant_id_to_edit, $name_of_participant, $nb_of_people);
+	$participant_edited = update_participant($account_id, $participant_id_to_edit, 
+		$name_of_participant, $nb_of_people);
 	if($participant_edited)
 	{
 		$redirect_url = 'location:'.BASEURL.'/account/'.$hashid.'/admin';

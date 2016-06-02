@@ -4,8 +4,13 @@ MAJOR
 ======
 1. Créer un installeur
 2. Comments
-3. PROBLEM edit participant
 4. Multi payments
+
+BUGS
+=====
+1. PROBLEM edit participant : nb of people
+2. Payment float are cast to int
+3. Solution is NOT good (probablement erreur d'arrondis car je divise par 100...)
 
 MINOR
 =====
@@ -20,4 +25,4 @@ DESIGN
 NOTES d'INSTALL
 A. Foreign Keys et Contraintes de suppression !
 B. Case insensitive SQL ? A priori j'ai checké, je ne cherche que rarement sur le nom (et alors j'ai mis UPPER)
-
+C. Redirection .htaccess

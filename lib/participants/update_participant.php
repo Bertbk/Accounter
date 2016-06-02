@@ -18,8 +18,12 @@ function update_participant($account_id_arg, $participant_id_arg, $name_of_contr
 		return false;
 	}
 	
+	if($new_nb_of_people < 0)
+	{return false;}
+	
 	//Nothing to change?
-	if($new_name_of_contrib === $contrib['name'] && $new_nb_of_people = $contrib['number_of_parts'])
+	if($new_name_of_contrib === $contrib['name'] 
+	&& $new_nb_of_people == $contrib['nb_of_people'])
 	{
 		return true;
 	}
