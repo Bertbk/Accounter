@@ -1,3 +1,11 @@
 .hidden_at_first{
 	display:none;
 }
+
+img.editicon{
+	height: 1em;
+}
+
+img.deleteicon{
+	height: 1em;
+}

@@ -62,13 +62,13 @@ if($admin_mode && !$edit_mode)
 	$link = BASEURL.'/account/'.$hashid.'/admin/edit_participant/'.$participant['hashid'];
 ?>
 	<a href="<?php echo $link?>">
-	<img src="<?php echo BASEURL.'/img/pencil_white.png'?>" alt='Edit participant' width="20px" />
+	<img src="<?php echo BASEURL.'/img/pencil_white.png'?>" alt='Edit participant' class="editicon" >
 	</a>
 <?php
 	$link = BASEURL.'/account/'.$hashid.'/admin/delete_participant/'.$participant['hashid'];
 ?>
 	<a href="<?php echo $link?>" class="confirmation">
-	<img src="<?php echo BASEURL.'/img/delete_white.png'?>" alt='Delete participant' width="20px" />
+	<img src="<?php echo BASEURL.'/img/delete_white.png'?>" alt='Delete participant' class="deleteicon" >
 	</a>
 <?php
 }
@@ -181,13 +181,13 @@ style="background-color:<?php echo '#'.$bill['color']?>"
 		$link = BASEURL.'/account/'.$hashid.'/admin/edit_bill/'.$bill['hashid'];
 		?>
 		<a href='<?php echo $link?>'>
-		<img src="<?php echo BASEURL.'/img/pencil.png'?>" alt='Edit bill' width="20px" />
+		<img src="<?php echo BASEURL.'/img/pencil.png'?>" alt='Edit bill' class="editicon" />
 		</a>
 <?php
 		$link = BASEURL.'/account/'.$hashid.'/admin/delete_bill/'.$bill['hashid'];
 		?>
 		<a href='<?php echo $link?>' class="confirmation">
-		<img src="<?php echo BASEURL.'/img/delete.png'?>" alt='Delete bill' width="20px" />
+		<img src="<?php echo BASEURL.'/img/delete.png'?>" alt='Delete bill' class="deleteicon" />
 		</a>
 		
 <?php }	?>
@@ -223,11 +223,13 @@ style="background-color:<?php echo '#'.$bill['color']?>"
 			echo $bill_participant['name'].'('.$bill_participant['percent_of_usage'].'%)';
 			if($admin_mode && !$edit_mode){
 				?><a href="<?php echo BASEURL.'/account/'.$hashid.'/admin/edit_bill_part/'.$bill_participant['hashid']?>">
-				<img src="<?php echo BASEURL.'/img/pencil_white.png'?>" alt='Edit this participation' width="20px" />
+				<img src="<?php echo BASEURL.'/img/pencil_white.png'?>" alt='Edit this participation' class="editicon" />
 				</a>
 				<a href="<?php echo BASEURL.'/account/'.$hashid.'/admin/delete_bill_part/'.$bill_participant['hashid']?>" 
 				class="confirmation">
-				<img class="confirmation" src="<?php echo BASEURL.'/img/delete_white.png'?>" alt='Remove this participation' width="20px" />
+				<img class="confirmation deleteicon" 
+					src="<?php echo BASEURL.'/img/delete_white.png'?>"
+					alt='Remove this participation'/>
 				</a>
 
 		<?php	} ?>
@@ -282,29 +284,30 @@ style="background-color:<?php echo '#'.$bill['color']?>"
 		>
 		  <fieldset>
 			<legend>Assign a participant to this bill:</legend>
-			<table>
 			<?php
 			$cpt = -1;
 			foreach($my_free_bill_participants[$bill['id']] as $participant)
 			{
 				$cpt++;
 	?>
-			<tr>
-			  <td><input name="p_participant['<?php echo $cpt?>'][hashid]]" 
+			<div class="Assign_participant_<?php echo $cpt_bill?>_<?php echo $cpt?>">
+			  <span><input name="p_participant['<?php echo $cpt?>'][hashid]]" 
 				id="<?php echo "form_available_part_".$participant['id']?>"
 				value="<?php echo $participant['hashid']?>" type="checkbox">
 			  <label for="<?php echo "form_available_part_".$participant['id']?>">
 				<?php echo $participant['name']?>
 			  </label>
-				<td><input name="p_participant['<?php echo $cpt?>'][percent]]" type="number" 
-				step="0.01" min="0" max="100" size="5" value="100"></td>
-			</tr>
+			  </span>
+				<span><input name="p_participant['<?php echo $cpt?>'][percent]]" type="number" 
+				step="0.01" min="0" max="100" size="5" value="100"></span>
+			</div>
 	<?php
 			}//for each participant
 	?>
-	</table>
-			<input type="hidden" name="p_bill_hashid" value="<?php echo $bill['hashid']?>">
-			<button type="submit" name="submit_assign_participant" value="Submit">Submit</button> 
+			<div>
+				<span><input type="hidden" name="p_bill_hashid" value="<?php echo $bill['hashid']?>"></span>
+				<span><button type="submit" name="submit_assign_participant" value="Submit">Submit</button></span>
+			</div>
 		  </fieldset>
 		</form>
 <?php 
@@ -390,13 +393,13 @@ style="background-color:<?php echo '#'.$bill['color']?>"
 		$link = BASEURL.'/account/'.$hashid.'/admin/edit_payment/'.$payment['hashid'];
 	?>
 		<a href="<?php echo $link?>">
-		<img src="<?php echo BASEURL.'/img/pencil.png'?>" alt='Edit payment' width="20px" />
+		<img src="<?php echo BASEURL.'/img/pencil.png'?>" alt='Edit payment' class="editicon" />
 		</a>
 <?php
 		$link = BASEURL.'/account/'.$hashid.'/admin/delete_payment/'.$payment['hashid'];
 	?>
 		<a class="confirmation" href="<?php echo $link?>">
-		<img src="<?php echo BASEURL.'/img/delete.png'?>" alt='Delete payment' width="20px" />
+		<img src="<?php echo BASEURL.'/img/delete.png'?>" alt='Delete payment' class="deleteicon" />
 		</a>
 
 		<?php
@@ -430,50 +433,50 @@ style="background-color:<?php echo '#'.$bill['color']?>"
 <?php
 			$this_bill_participants = $my_bill_participants[$bill['id']];
 	?>
-<table>
 	<form method="post" id="<?php echo 'show_hide_bill_add_paymt_'.$cpt_bill.'_target'?>" 
 		class="hidden_at_first">
 		  <fieldset>
 			<legend>Add a payment:</legend>
-			<tr><input type="hidden" name="p_bill_hashid" value = <?php echo $bill['hashid']?>> </tr>
-			<tr>
-			<td>
-			<label for="<?php echo 'form_set_payment_payer-'.$cpt_bill?>">Payer</label>
-			<select name="p_payer_id" id="<?php echo 'form_set_payment_payer-'.$cpt_bill?>" 
-			onchange="configureDropDownLists(this, document.getElementById('<?php echo 'form_set_payment_recv-'.$cpt_bill?>'))"> 
-	<option disabled selected value="null"> -- select a payer -- </option>
+			<div><input type="hidden" name="p_bill_hashid" value = <?php echo $bill['hashid']?>> </div>
+			<div class="div_set_payment_payer_<?php echo $cpt_bill?>">
+			<label for="<?php echo 'form_set_payment_payer_'.$cpt_bill?>_0">Payer</label>
+			<span>
+				<select name="p_payer_id" id="form_set_payment_payer_<?php echo $cpt_bill?>_0" 
+				onchange="configureDropDownLists(this, document.getElementById('<?php echo 'form_set_payment_recv-'.$cpt_bill?>'))"> 
+				<option disabled selected value="null"> -- select a payer -- </option>
 	<?php
 
-			foreach($this_bill_participants as $participant)
-			{
+				foreach($this_bill_participants as $participant)
+				{
 	?>
-				<option value="<?php echo $participant['participant_id']?>"><?php echo $participant['name']?></option>
+					<option value="<?php echo $participant['participant_id']?>"><?php echo $participant['name']?></option>
 	<?php
-			}
+				}
 	?>
-			</select>
-			</td><td>
-			<label for="<?php echo 'form_set_payment_cost-'.$cpt_bill?>">Cost</label>
-			<input type="number" step="0.01" min="0" name="p_cost" id="<?php echo 'form_set_payment_cost-'.$cpt_bill?>" required /><br>
-			</td><td>
-			<label for="<?php echo 'form_set_payment_recv-'.$cpt_bill?>">Receiver</label>
-			<select name="p_receiver_id" id="<?php echo 'form_set_payment_recv-'.$cpt_bill?>"> 
+				</select>
+			</span><span>
+			<label for="<?php echo 'form_set_payment_cost_'.$cpt_bill?>_0">Cost</label>
+			<input type="number" step="0.01" min="0" name="p_cost" id="<?php echo 'form_set_payment_cost_'.$cpt_bill?>_0" required />
+			</span><span>
+			<label for="<?php echo 'form_set_payment_recv_'.$cpt_bill?>_0">Receiver</label>
+			<select name="p_receiver_id" id="<?php echo 'form_set_payment_recv_'.$cpt_bill?>_0"> 
 			<option value="-1" selected="selected">Group</option>
-			</select><br>
-			</td><td>
-			<label for="<?php echo 'form_set_payment_desc-'.$cpt_bill?>">Description</label>
-			<input type="text" name="p_description" id="<?php echo 'form_set_payment_desc-'.$cpt_bill?>" /><br>
-			</td><td>
-			<label for="<?php echo 'form_set_payment_date-'.$cpt_bill?>">Date of payment</label>
-			<input type="date" class="date_picker" name="p_date_payment" id="<?php echo 'form_set_payment_date-'.$cpt_bill?>"/><br>
-			</td><td>
-			</tr>
-			<tr><button type="submit" name="submit_payment" value="Submit">Submit</button> </tr>
+			</select>
+			</span><span>
+			<label for="<?php echo 'form_set_payment_desc_'.$cpt_bill?>_0">Description</label>
+			<input type="text" name="p_description" id="<?php echo 'form_set_payment_desc_'.$cpt_bill?>_0" />
+			</span><span>
+			<label for="<?php echo 'form_set_payment_date_'.$cpt_bill?>_0">Date of payment</label>
+			<input type="date" class="date_picker" name="p_date_payment" id="<?php echo 'form_set_payment_date_'.$cpt_bill?>_0"/>
+			</span>
+			</div>
+			<div>
+				<button type="submit" name="submit_payment" value="Submit">Submit</button>
+			</div>
 			</fieldset>
 		</form>
-</table>
 <?php
-		}//if empty
+		}//if bill_participants not empty (ie: payment possible)
 ?>
 	<?php
 	} //if for displaying possibilities
