@@ -41,20 +41,21 @@ if($admin_mode && $what_to_edit['participant'])
 	foreach($my_participants as $participant)
 	{
 ?>
+	<span class='bill_participant' style="background-color:<?php echo '#'.$participant['color']?>">
 <?php
 if($admin_mode && $what_to_edit['participant'] && $participant['id'] == $participant_id_to_edit)
 {
 ?>
-		<span>
-			<input type="text" name="name_of_participant" value="<?php echo $participant['name']?>" required />
-			(<input type="number" name="nb_of_people" value="<?php echo $participant['nb_of_people']?>" required />)
-			<input type="email" name="email" value="<?php echo $participant['email']?>"/>
-		</span>
+			<input type="text" name="name_of_participant" class="input_name"
+			value="<?php echo $participant['name']?>" required />
+			(<input type="number" name="nb_of_people" class="input_number"
+			min="1" step="1" value="<?php echo $participant['nb_of_people']?>" required />)
+			<input type="email" name="email" class="input_email"
+			value="<?php echo $participant['email']?>"/>
 <?php
 }//if
 else{ // READ Only
 ?>
-		<span class='bill_participant' style="background-color:<?php echo '#'.$participant['color']?>">
 		<?php echo $participant['name']?> 
 		(<?php echo $participant['nb_of_people'];if(!empty($participant['email'])){echo ', '.$participant['email'];}?>)
 
@@ -75,9 +76,11 @@ if($admin_mode && !$edit_mode)
 <?php
 }
 ?>		
-	</span>
 <?php
 }//if/else admin
+?>
+	</span>
+<?php
 } //foreach participants
 ?>
 <?php 
@@ -107,16 +110,25 @@ if($admin_mode && !$edit_mode)
 	<form method="post" id="show_hide_add_participant_target" class="hidden_at_first">
 	  <fieldset>
 		<legend>Add a participant:</legend>
+		<span>
 		<label for="form_set_participant_name">Name: </label>
-		<input type="text" name="p_name_of_participant" id="form_set_participant_name" required /><br>
+		<input type="text" name="p_name_of_participant" 
+		id="form_set_participant_name" class="input_name" required />
+		</span><span>
 		<label for="form_set_participant_nbpeople">Nb. of people: </label>
-		 <input type="number" name="p_nb_of_people" value="1" id="form_set_participant_nbpeople" required /><br>
+		 <input type="number" name="p_nb_of_people" value="1" 
+		 id="form_set_participant_nbpeople" class="input_number" required />
+		</span><span>
 		<label for="form_set_participant_email">Email adress: </label>
-		 <input type="email" name="p_email" id="form_set_participant_email"  /><br>
+		 <input type="email" name="p_email" 
+		 id="form_set_participant_email" class="input_email" />
 		 <?php /*
 		<label for="form_set_participant_color">Color: </label>
 		 <input type="text" name="p_color" id="form_set_participant_color"  /><br> */?>
+		 </span>
+		 <div>
 		 <button type="submit" name="submit_participant" value="Submit">Submit</button> 
+		 </div>
 	  </fieldset>
 	</form>
 </div>
@@ -134,16 +146,22 @@ if($admin_mode && !$edit_mode)
 {
 ?>
 <!-- Add bill-->
+<p  id="show_hide_add_bill"><a href="javascript:void(0)" >(+) Add a bill</a></p>
 <div id="div_add_bill">
-<p  id="show_hide_add_bill"><a href="javascript:void(0)" >(+) Add a bill</a></p>	
 	<form method="post" id="show_hide_add_bill_target" class="hidden_at_first">
 	  <fieldset>
 		<legend>Add a bill</legend>
+		<span>
 		<label for="form_set_bill_name">Name: </label>
-		<input type="text" name="p_name_of_bill" id="form_set_bill_name" required /><br>
+		<input type="text" name="p_name_of_bill" 
+		id="form_set_bill_name" class="input_bill_name" required />
+		</span><span>
 		<label for="form_set_bill_description">Description: </label>
-		 <input type="text" name="p_description" id="form_set_bill_description" /><br>
+		 <input type="text" name="p_description" 
+		 id="form_set_bill_description" class="input_bill_desc" />
+		</span><div>
 		 <button type="submit" name="submit_bill" value="Submit">Submit</button> 
+		 </div>
 	  </fieldset>
 	</form>
 </div>
@@ -161,8 +179,7 @@ foreach($my_bills as $bill)
 ?>
 <div class="bill 
 <?php echo 'bill-'.$cpt_bill?> 
-"
-style="background-color:<?php echo '#'.$bill['color']?>"
+"style="background-color:<?php echo '#'.$bill['color']?>"
 >
 	<?php if($admin_mode && $what_to_edit['bill'] 
 	&& $bill_id_to_edit == $bill['id'])
@@ -171,14 +188,16 @@ style="background-color:<?php echo '#'.$bill['color']?>"
 	<form method="post">
 	<h2>
 	<label for="form_edit_bill_name">Title: </label>
-	<input type="text" name="p_title" id="form_edit_bill_name"  
-	value="<?php echo $bill['title']?>" required />
+	<input type="text" name="p_title" id="form_edit_bill_name"
+	class="input_bill_name"	value="<?php echo $bill['title']?>" required />
 	</h2>
 	<label for="form_edit_bill_description">Description: </label>
 	 <input type="text" name="p_description" id="form_edit_bill_description" 
-	 value="<?php echo $bill['description']?>"/><br>
-	<button type="submit" name="submit_edit_bill" value="Submit">Submit</button> 
-	<button type="submit" name="submit_cancel" value="Submit">Cancel</button> 
+	 class="input_bill_desc" value="<?php echo $bill['description']?>"/>
+	 <div>
+		<button type="submit" name="submit_edit_bill" value="Submit">Submit</button> 
+		<button type="submit" name="submit_cancel" value="Submit">Cancel</button> 
+	</div>
 	</form>
 	<?php	
 	}
@@ -265,7 +284,8 @@ style="background-color:<?php echo '#'.$bill['color']?>"
 			}
 	?>
 			</select>
-			 (<input type="number" step="0.01" min="0" max="100" name="p_percent_of_use" 
+			 (<input type="number" step="0.01" min="0" max="100" name="p_percent_of_use"
+				class="input_percent"
 			 value="<?php echo $bill_participant['percent_of_usage']?>" required />%)		 
 	<?php
 		}//else admin mode
@@ -311,8 +331,9 @@ style="background-color:<?php echo '#'.$bill['color']?>"
 				<?php echo $participant['name']?>
 			  </label>
 			  </span>
-				<span><input name="p_participant['<?php echo $cpt?>'][percent]]" type="number" 
-				step="0.01" min="0" max="100" size="5" value="100"></span>
+				<span><input name="p_participant['<?php echo $cpt?>'][percent]]" type="number"
+						class="input_percent" step="0.01" min="0" max="100" size="5" 
+						value="100"></span>
 			</div>
 	<?php
 			}//for each participant
@@ -371,7 +392,9 @@ style="background-color:<?php echo '#'.$bill['color']?>"
 				}
 	?>
 			</select>
-			<input type="number" step="0.01" min="0" name="p_cost" value="<?php echo $payment_to_edit['cost']?>" required />
+			<input type="number" step="0.01" min="0" name="p_cost" 
+				class="input_paymt_cost"
+				value="<?php echo $payment_to_edit['cost']?>" required />
 			<select name="p_receiver_id" id="form_edit_payment_recv" selected="<?php echo $payment_to_edit['receiver_id']?>"> 
 			<option value="-1" >Group</option>
 	<?php
@@ -387,11 +410,15 @@ style="background-color:<?php echo '#'.$bill['color']?>"
 				}
 	?>
 			</select>
-			<input type="text" name="p_description" value="<?php echo $payment_to_edit['description']?>" />
-			<input type="date" class="date_picker" name="p_date_payment" value="<?php echo $payment_to_edit['date_of_payment']?>"/>
-			<br>
-			<button type="submit" name="submit_edit_payment" value="Submit">Submit</button> 
-			<button type="submit" name="submit_cancel" value="Submit">Cancel</button> 
+			<input type="text" name="p_description" class="input_paymt_desc"
+			value="<?php echo $payment_to_edit['description']?>" />
+			<input type="date" class="date_picker" name="p_date_payment" 
+				class="input_paymt_date"
+				value="<?php echo $payment_to_edit['date_of_payment']?>"/>
+			<div>
+			<span><button type="submit" name="submit_edit_payment" value="Submit">Submit</button> </span>
+			<span><button type="submit" name="submit_cancel" value="Submit">Cancel</button> </span>
+			</div>
 		</form>
 	<?php
 			}
@@ -471,7 +498,9 @@ style="background-color:<?php echo '#'.$bill['color']?>"
 				</select>
 			</span><span>
 			<label for="<?php echo 'form_set_payment_cost_'.$cpt_bill?>_0">Cost</label>
-			<input type="number" step="0.01" min="0" name="p_cost" id="<?php echo 'form_set_payment_cost_'.$cpt_bill?>_0" required />
+			<input type="number" step="0.01" min="0" name="p_cost" 
+				id="<?php echo 'form_set_payment_cost_'.$cpt_bill?>_0" required 
+				class="input_paymt_cost"/>
 			</span><span>
 			<label for="<?php echo 'form_set_payment_recv_'.$cpt_bill?>_0">Receiver</label>
 			<select name="p_receiver_id" id="<?php echo 'form_set_payment_recv_'.$cpt_bill?>_0"> 
@@ -479,10 +508,14 @@ style="background-color:<?php echo '#'.$bill['color']?>"
 			</select>
 			</span><span>
 			<label for="<?php echo 'form_set_payment_desc_'.$cpt_bill?>_0">Description</label>
-			<input type="text" name="p_description" id="<?php echo 'form_set_payment_desc_'.$cpt_bill?>_0" />
+			<input type="text" name="p_description" 
+				id="<?php echo 'form_set_payment_desc_'.$cpt_bill?>_0" 
+				class="input_paymt_desc"/>
 			</span><span>
 			<label for="<?php echo 'form_set_payment_date_'.$cpt_bill?>_0">Date of payment</label>
-			<input type="date" class="date_picker" name="p_date_payment" id="<?php echo 'form_set_payment_date_'.$cpt_bill?>_0"/>
+			<input type="date" class="date_picker" name="p_date_payment" 
+					id="<?php echo 'form_set_payment_date_'.$cpt_bill?>_0"
+					class="input_paymt_date"/>
 			</span>
 			</div>
 		</div>

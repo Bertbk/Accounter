@@ -39,23 +39,24 @@ function AddPaymentLine(name_of_people, hashid_of_people, cpt_bill)
 	var span_date = document.createElement("span");
 
 	var select_payer = document.createElement("select");
-	var select_payer_id = "form_set_payment_payer_"+ cpt_bill + "_" + AddPaymentLine.counter
-	select_payer.id = select_payer_id;
+	select_payer.id = "form_set_payment_payer_"+ cpt_bill + "_" + AddPaymentLine.counter
 	var input_cost = document.createElement("input");
 	input_cost.id = "form_set_payment_cost_"+ cpt_bill + "_" + AddPaymentLine.counter;
 	input_cost.type="number";
 	input_cost.min="0";
 	input_cost.step="0.01";
+	input_cost.className += " input_paymt_cost";
 	var select_receiver = document.createElement("select");
-	var select_receiver_id = "form_set_payment_recv_"+ cpt_bill + "_" + AddPaymentLine.counter;
-	select_receiver.id = select_receiver_id;
+	select_receiver.id = "form_set_payment_recv_"+ cpt_bill + "_" + AddPaymentLine.counter;
 	var input_description = document.createElement("input");
 	input_description.id = "form_set_payment_desc_"+ cpt_bill + "_" + AddPaymentLine.counter;
 	input_description.type="text";
+	input_description.className += " input_paymt_desc";
 	var input_date = document.createElement("input");
 	input_date.id = "form_set_payment_date_"+ cpt_bill + "_" + AddPaymentLine.counter;
 	input_date.type="date";
-	input_date.class="date_picker";
+	input_date.className += " date_picker";
+	input_date.className += " input_paymt_date";
 	
 	//Construct the list of payer
 	var opt_null = document.createElement("option");

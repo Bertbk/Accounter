@@ -9,3 +9,30 @@ img.editicon{
 img.deleteicon{
 	height: 1em;
 }
+
+input.input_bill_name{
+	width:15em;
+}
+input.input_bill_desc{
+	width:15em;
+}
+input.input_name{
+	width:10em;
+}
+input.input_number{
+	width:3em;
+}
+input.input_email{
+	width:10em;
+}
+
+input.input_paymt_cost{
+	width:5em;
+}
+input.input_paymt_desc{
+	width:10em;
+}
+
+input.input_percent{
+	width:5em;
+}
