@@ -26,7 +26,6 @@ function AddPaymentLine(name_of_people, hashid_of_people, cpt_bill)
 		AddPaymentLine.counter = 1;
 	}
 	
-	
 	if(name_of_people.length != hashid_of_people.length)
 	{return false;}
 //on va juste ajouter un <p>caca</p> au bon endroit :)
@@ -40,14 +39,16 @@ function AddPaymentLine(name_of_people, hashid_of_people, cpt_bill)
 	var span_date = document.createElement("span");
 
 	var select_payer = document.createElement("select");
-	select_payer.id = "form_set_payment_payer_"+ cpt_bill + "_" + AddPaymentLine.counter;
+	var select_payer_id = "form_set_payment_payer_"+ cpt_bill + "_" + AddPaymentLine.counter
+	select_payer.id = select_payer_id;
 	var input_cost = document.createElement("input");
 	input_cost.id = "form_set_payment_cost_"+ cpt_bill + "_" + AddPaymentLine.counter;
 	input_cost.type="number";
 	input_cost.min="0";
 	input_cost.step="0.01";
 	var select_receiver = document.createElement("select");
-	select_receiver.id = "form_set_payment_recv_"+ cpt_bill + "_" + AddPaymentLine.counter;
+	var select_receiver_id = "form_set_payment_recv_"+ cpt_bill + "_" + AddPaymentLine.counter;
+	select_receiver.id = select_receiver_id;
 	var input_description = document.createElement("input");
 	input_description.id = "form_set_payment_desc_"+ cpt_bill + "_" + AddPaymentLine.counter;
 	input_description.type="text";
@@ -70,14 +71,16 @@ function AddPaymentLine(name_of_people, hashid_of_people, cpt_bill)
 		opt.text = name_of_people[i];
 		select_payer.appendChild(opt);
 	}
-//	select_payer.onclick = configureDropDownLists(select_payer, select_receiver);
 
 	var opt_group = document.createElement("option");
 	opt_group.selected=true;
 	opt_group.value = "-1";
 	opt_group.text = "Group";
 	select_receiver.appendChild(opt_group);
-
+	
+	select_payer.onchange=function(){
+		configureDropDownLists(this, select_receiver);
+	};
 
 	//Set label
 	var label_payer = document.createElement("Label");
@@ -124,37 +127,3 @@ function AddPaymentLine(name_of_people, hashid_of_people, cpt_bill)
    AddPaymentLine.counter ++;
    return false;
 }
-/*
-OK			<div class="div_set_payment_payer_<?php echo $cpt_bill?>">
-			<label for="<?php echo 'form_set_payment_payer_'.$cpt_bill?>_0">Payer</label>
-			<span>
-				<select name="p_payer_hashid" id="form_set_payment_payer_<?php echo $cpt_bill?>_0" 
-				onchange="configureDropDownLists(this, document.getElementById('<?php echo 'form_set_payment_recv-'.$cpt_bill?>'))"> 
-				<option disabled selected value="null"> -- select a payer -- </option>
-	<?php
-
-				foreach($this_bill_participants as $participant)
-				{
-	?>
-					<option value="<?php echo $participant['participant_hashid']?>"><?php echo $participant['name']?></option>
-	<?php
-				}
-	?>
-				</select>
-			</span><span>
-			<label for="<?php echo 'form_set_payment_cost_'.$cpt_bill?>_0">Cost</label>
-			<input type="number" step="0.01" min="0" name="p_cost" id="<?php echo 'form_set_payment_cost_'.$cpt_bill?>_0" required />
-			</span><span>
-			<label for="<?php echo 'form_set_payment_recv_'.$cpt_bill?>_0">Receiver</label>
-			<select name="p_receiver_id" id="<?php echo 'form_set_payment_recv_'.$cpt_bill?>_0"> 
-			<option value="-1" selected="selected">Group</option>
-			</select>
-			</span><span>
-			<label for="<?php echo 'form_set_payment_desc_'.$cpt_bill?>_0">Description</label>
-			<input type="text" name="p_description" id="<?php echo 'form_set_payment_desc_'.$cpt_bill?>_0" />
-			</span><span>
-			<label for="<?php echo 'form_set_payment_date_'.$cpt_bill?>_0">Date of payment</label>
-			<input type="date" class="date_picker" name="p_date_payment" id="<?php echo 'form_set_payment_date_'.$cpt_bill?>_0"/>
-			</span>
-			</div>
-			*/

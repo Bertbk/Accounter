@@ -330,7 +330,7 @@ style="background-color:<?php echo '#'.$bill['color']?>"
 	?><li><?php
 			if($admin_mode && $what_to_edit['payment'] 
 			&& $payment['id'] === $payment_id_to_edit)
-			{ //Edit mode 
+			{ //!!!! Edit mode  !!!!
 ?>
 		<form method="post" id="form_edit_payment_send">
 			<select name="p_bill_hashid" id="form_set_payment_bill"> 
@@ -444,7 +444,7 @@ style="background-color:<?php echo '#'.$bill['color']?>"
 			<span>
 			<label for="<?php echo 'form_set_payment_payer_'.$cpt_bill?>_0">Payer</label>
 				<select name="p_payer_hashid" id="form_set_payment_payer_<?php echo $cpt_bill?>_0" 
-				onchange="configureDropDownLists(this, document.getElementById('<?php echo 'form_set_payment_recv-'.$cpt_bill?>'))"> 
+				onchange="configureDropDownLists(this, document.getElementById('<?php echo 'form_set_payment_recv_'.$cpt_bill.'_0'?>'))"> 
 				<option disabled selected value="null"> -- select a payer -- </option>
 	<?php
 
