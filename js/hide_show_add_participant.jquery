@@ -5,17 +5,25 @@ $(function(){
   });
 });
 
-$(document).ready(function(){
-		$('.date_picker').each(function(){
-    $(this).datepicker();
-	})
-});
-
 
 $(document).ready(function() {
 	$('.confirmation').on('click', function () {
 		return confirm('Are you sure?');
-	})
+	});
+});
+
+$(document).ready(function(){
+		$('.date_picker').each(function(){
+				$(this).datepicker();
+		});
 });
 
 
+
+/* Dummy for test
+$(document).ready(function(){
+	$('div').each(function () { 
+	alert('coucou'); 
+	});
+});
+*/
