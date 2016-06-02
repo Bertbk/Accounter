@@ -2,7 +2,7 @@
 include_once(__DIR__.'/../get_db.php');
 
 /*
-Return an array of the bill_participants of a bill + the name of the participant + Color
+Return an array of the bill_participants of a bill + the name of the participant + Color + hashid
 */
 function get_bill_participants_by_bill_id($account_id_arg, $bill_id_arg)
 {
@@ -16,7 +16,9 @@ function get_bill_participants_by_bill_id($account_id_arg, $bill_id_arg)
 	try
 	{
 		$myquery = 'SELECT bill_participants.*, participants.name AS name, 
-		participants.nb_of_people AS nb_of_people, participants.color AS color
+		participants.nb_of_people AS nb_of_people, 
+		participants.color AS color,
+		participants.hashid AS participant_hashid
 		FROM bill_participants 
 		LEFT JOIN participants ON participants.id=bill_participants.participant_id 
 		WHERE bill_participants.account_id=:account_id AND bill_participants.bill_id=:bill_id' ;

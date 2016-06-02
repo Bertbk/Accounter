@@ -376,7 +376,8 @@ style="background-color:<?php echo '#'.$bill['color']?>"
 			</select>
 			<input type="text" name="p_description" value="<?php echo $payment_to_edit['description']?>" />
 			<input type="date" class="date_picker" name="p_date_payment" value="<?php echo $payment_to_edit['date_of_payment']?>"/>
-			<br><button type="submit" name="submit_edit_payment" value="Submit">Submit</button> 
+			<br>
+			<button type="submit" name="submit_edit_payment" value="Submit">Submit</button> 
 			<button type="submit" name="submit_cancel" value="Submit">Cancel</button> 
 		</form>
 	<?php
@@ -431,17 +432,18 @@ style="background-color:<?php echo '#'.$bill['color']?>"
 		<p id="<?php echo 'show_hide_bill_add_paymt_'.$cpt_bill?>"><a href="javascript:void(0)">
 		(+) Add a payment</a></p>
 <?php
-			$this_bill_participants = $my_bill_participants[$bill['id']];
+		$this_bill_participants = $my_bill_participants[$bill['id']];
 	?>
-	<form method="post" id="<?php echo 'show_hide_bill_add_paymt_'.$cpt_bill.'_target'?>" 
-		class="hidden_at_first">
+		<form method="post" id="<?php echo 'show_hide_bill_add_paymt_'.$cpt_bill.'_target'?>" 
+			class="hidden_at_first">
 		  <fieldset>
 			<legend>Add a payment:</legend>
+		<div id="<?php echo 'div_option_add_payment_'.$cpt_bill?>">
 			<div><input type="hidden" name="p_bill_hashid" value = <?php echo $bill['hashid']?>> </div>
-			<div class="div_set_payment_payer_<?php echo $cpt_bill?>">
-			<label for="<?php echo 'form_set_payment_payer_'.$cpt_bill?>_0">Payer</label>
+			<div class="div_set_payment_<?php echo $cpt_bill?>">
 			<span>
-				<select name="p_payer_id" id="form_set_payment_payer_<?php echo $cpt_bill?>_0" 
+			<label for="<?php echo 'form_set_payment_payer_'.$cpt_bill?>_0">Payer</label>
+				<select name="p_payer_hashid" id="form_set_payment_payer_<?php echo $cpt_bill?>_0" 
 				onchange="configureDropDownLists(this, document.getElementById('<?php echo 'form_set_payment_recv-'.$cpt_bill?>'))"> 
 				<option disabled selected value="null"> -- select a payer -- </option>
 	<?php
@@ -449,7 +451,7 @@ style="background-color:<?php echo '#'.$bill['color']?>"
 				foreach($this_bill_participants as $participant)
 				{
 	?>
-					<option value="<?php echo $participant['participant_id']?>"><?php echo $participant['name']?></option>
+					<option value="<?php echo $participant['participant_hashid']?>"><?php echo $participant['name']?></option>
 	<?php
 				}
 	?>
@@ -470,6 +472,22 @@ style="background-color:<?php echo '#'.$bill['color']?>"
 			<input type="date" class="date_picker" name="p_date_payment" id="<?php echo 'form_set_payment_date_'.$cpt_bill?>_0"/>
 			</span>
 			</div>
+		</div>
+<?php
+	$name_of_people = array_column($this_bill_participants, 'name');
+	$hashid_of_people = array_column($this_bill_participants, 'participant_hashid');
+
+	print_r($name_of_people);
+?>
+		<p>
+			<a href="#" onclick="AddPaymentLine(<?php echo htmlspecialchars(json_encode($name_of_people)) ?>, 
+				<?php echo htmlspecialchars(json_encode($hashid_of_people)) ?>,
+				<?php echo $cpt_bill?>);
+				return false;">
+			Test me
+			</a>
+		</p>
+		
 			<div>
 				<button type="submit" name="submit_payment" value="Submit">Submit</button>
 			</div>

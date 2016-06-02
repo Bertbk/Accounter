@@ -19,3 +19,14 @@ $(function() {
 $('.confirmation').on('click', function () {
 	return confirm('Are you sure?');
 });
+
+/*
+$(document).ready(function(){
+  $("[id^=form_set_payment_payer_]").click(function(){
+  alert('caca');
+  	 var my_id = $(this).attr('id');
+	var target_id = '#' + my_id.replace("payer", "recv");
+	configureDropDownLists($(this), $(target_id));
+  });
+});
+*/

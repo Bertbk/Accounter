@@ -264,7 +264,17 @@ if($admin_mode && isset($_POST['submit_payment']))
 {
 	$p_bill_hashid = filter_input(INPUT_POST, 'p_bill_hashid', FILTER_SANITIZE_STRING);
 	$p_bill = get_bill_by_hashid($account_id, $p_bill_hashid);
-	$p_payer_id = filter_input(INPUT_POST, 'p_payer_id', FILTER_SANITIZE_NUMBER_INT);
+	$p_payer_hashid = filter_input(INPUT_POST, 'p_payer_hashid', FILTER_SANITIZE_STRING);
+	$p_payer= null;
+	if(!is_null($p_payer_hashid))
+	{
+		$p_payer  = get_participant_by_hashid($account_id, $p_payer_hashid);
+	}
+	$p_payer_id = null;
+	if(!empty($p_payer))
+	{
+		$p_payer_id = $p_payer['id'];
+	}
 	if(!is_null($p_payer_id))
 	{
 		$p_cost = filter_input(INPUT_POST, 'p_cost', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
