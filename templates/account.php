@@ -178,8 +178,7 @@ foreach($my_bills as $bill)
 	$cpt_bill ++;
 ?>
 <div class="bill 
-<?php echo 'bill-'.$cpt_bill?> 
-"style="background-color:<?php echo '#'.$bill['color']?>"
+<?php echo 'bill-'.$cpt_bill?>" style="background-color:<?php echo '#'.$bill['color']?>"
 >
 	<?php if($admin_mode && $what_to_edit['bill'] 
 	&& $bill_id_to_edit == $bill['id'])
@@ -412,8 +411,8 @@ foreach($my_bills as $bill)
 			</select>
 			<input type="text" name="p_description" class="input_paymt_desc"
 			value="<?php echo $payment_to_edit['description']?>" />
-			<input type="date" class="date_picker" name="p_date_payment" 
-				class="input_paymt_date"
+			<input type="date" name="p_date_payment" 
+				class="input_paymt_date date_picker"
 				value="<?php echo $payment_to_edit['date_of_payment']?>"/>
 			<div>
 			<span><button type="submit" name="submit_edit_payment" value="Submit">Submit</button> </span>
@@ -516,9 +515,9 @@ foreach($my_bills as $bill)
 						class="input_paymt_desc" />
 				</span><span>
 				<label for="<?php echo 'form_set_payment_date_'.$cpt_bill?>_0">Date of payment</label>
-				<input type="date" class="date_picker" name="p_payment[0][date_payment]]" 
+				<input type="date" name="p_payment[0][date_payment]]" 
 						id="<?php echo 'form_set_payment_date_'.$cpt_bill?>_0"
-						class="input_paymt_date"/>
+						class="date_picker input_paymt_date"/>
 				</span>
 			</div>
 		</div>

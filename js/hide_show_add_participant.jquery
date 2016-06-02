@@ -2,21 +2,20 @@ $(function(){
   $("[id^=show_hide]").click(function(){
 	 var target_id = '#' + $(this).attr('id') + '_target';
 	 $(target_id).slideToggle("fast");
-//    $(this).next().slideToggle("fast");
   });
 });
 
-
-$('.date_picker').each(function(){
+$(document).ready(function(){
+		$('.date_picker').each(function(){
     $(this).datepicker();
+	})
 });
 
-$(function() {
-    $( ".date_picker" ).datepicker({ dateFormat: "dd-mm-yy" })
-  });
-  
-  
-$('.confirmation').on('click', function () {
-	return confirm('Are you sure?');
+
+$(document).ready(function() {
+	$('.confirmation').on('click', function () {
+		return confirm('Are you sure?');
+	})
 });
+
 

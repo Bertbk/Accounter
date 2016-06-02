@@ -10,6 +10,7 @@ function configureDropDownLists(payer, receiver) {
 		}
 	}
 }
+
 function createOptionDropDown(ddl, text, value) {
 	var opt = document.createElement('option');
 	opt.value = value;
