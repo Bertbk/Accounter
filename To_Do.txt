@@ -4,11 +4,11 @@ MAJOR
 ======
 1. Créer un installeur
 2. Comments
-4. Multi payments
+3. Multi payments
 
 BUGS
 =====
-1. PROBLEM edit participant : nb of people
+1. Participant email
 2. Payment float are cast to int
 3. Solution is NOT good (probablement erreur d'arrondis car je divise par 100...)
 

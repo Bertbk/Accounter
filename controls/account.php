@@ -264,27 +264,46 @@ if($admin_mode && isset($_POST['submit_payment']))
 {
 	$p_bill_hashid = filter_input(INPUT_POST, 'p_bill_hashid', FILTER_SANITIZE_STRING);
 	$p_bill = get_bill_by_hashid($account_id, $p_bill_hashid);
-	$p_payer_hashid = filter_input(INPUT_POST, 'p_payer_hashid', FILTER_SANITIZE_STRING);
-	$p_payer= null;
-	if(!is_null($p_payer_hashid))
+
+	foreach ($_POST['p_payment'] as $payment)
 	{
-		$p_payer  = get_participant_by_hashid($account_id, $p_payer_hashid);
-	}
-	$p_payer_id = null;
-	if(!empty($p_payer))
-	{
+		if(!isset($payment['payer_hashid']))
+			{continue;}
+		$p_payer_hashid = htmlspecialchars($payment['payer_hashid']);
+		$p_payer_hashid = filter_var($p_payer_hashid, FILTER_SANITIZE_STRING);
+		if($p_payer_hashid == null)
+			{continue;}
+		$p_payer = get_participant_by_hashid($account_id, $p_payer_hashid);
+		if(empty($p_payer))
+			{continue;}
 		$p_payer_id = $p_payer['id'];
-	}
-	if(!is_null($p_payer_id))
-	{
-		$p_cost = filter_input(INPUT_POST, 'p_cost', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-		$p_receiver_id = filter_input(INPUT_POST, 'p_receiver_id', FILTER_SANITIZE_NUMBER_INT);
-		$p_description = filter_input(INPUT_POST, 'p_description', FILTER_SANITIZE_STRING);
-		$p_date_payment  = filter_input(INPUT_POST, 'p_date_payment', FILTER_SANITIZE_STRING);
-		$p_receiver_id = ($p_receiver_id == -1) ? null:$p_receiver_id;
+
+		if(!isset($payment['cost']))
+			{continue;}
+		$p_cost = filter_var($payment['cost'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+		if($p_cost <= 0)
+		{continue;}
+
+		if(!isset($payment['recv_hashid']))
+			{continue;}
+		$p_recv_hashid = htmlspecialchars($payment['recv_hashid']);
+		$p_recv_hashid = filter_var($p_recv_hashid, FILTER_SANITIZE_STRING);
+		$p_recv_id = null;
+
+		if($p_recv_hashid != '-1')
+		{
+			$p_recv = get_participant_by_hashid($account_id, $p_recv_hashid);
+			if(empty($p_recv))
+			{continue;}
+			$p_recv_id = $p_recv['id'];
+		}
+		
+		$p_description = filter_var($payment['description'], FILTER_SANITIZE_STRING);
+		$p_description = (empty($p_description))?null:$p_description;
+		$p_date_payment  = filter_var($payment['date_payment'], FILTER_SANITIZE_STRING);
 		$p_date_payment = (empty($p_date_payment))?null:$p_date_payment;
 		$p_payment_added = set_payment($account_id, $p_bill['id'], 
-		$p_payer_id, $p_cost, $p_receiver_id, $p_description, $p_date_payment);
+		$p_payer_id, $p_cost, $p_recv_id, $p_description, $p_date_payment);
 		if(!$p_payment_added)
 		{
 			echo '<p>payment couldn\'t be added.</p>';

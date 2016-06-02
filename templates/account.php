@@ -479,44 +479,47 @@ foreach($my_bills as $bill)
 		  <fieldset>
 			<legend>Add a payment:</legend>
 		<div id="<?php echo 'div_option_add_payment_'.$cpt_bill?>">
-			<div><input type="hidden" name="p_bill_hashid" value = <?php echo $bill['hashid']?>> </div>
+			<div>
+				<input type="hidden" name="p_bill_hashid" value = <?php echo $bill['hashid']?>>
+			</div>
 			<div class="div_set_payment_<?php echo $cpt_bill?>">
-			<span>
-			<label for="<?php echo 'form_set_payment_payer_'.$cpt_bill?>_0">Payer</label>
-				<select name="p_payer_hashid" id="form_set_payment_payer_<?php echo $cpt_bill?>_0" 
-				onchange="configureDropDownLists(this, document.getElementById('<?php echo 'form_set_payment_recv_'.$cpt_bill.'_0'?>'))"> 
-				<option disabled selected value="null"> -- select a payer -- </option>
-	<?php
+				<span>
+					<label for="<?php echo 'form_set_payment_payer_'.$cpt_bill?>_0">Payer</label>
+						<select name="p_payment[0][payer_hashid]]" 
+						id="form_set_payment_payer_<?php echo $cpt_bill?>_0" 
+						onchange="configureDropDownLists(this, document.getElementById('<?php echo 'form_set_payment_recv_'.$cpt_bill.'_0'?>'))"> 
+						<option disabled selected value="null"> -- select a payer -- </option>
+			<?php
 
-				foreach($this_bill_participants as $participant)
-				{
-	?>
-					<option value="<?php echo $participant['participant_hashid']?>"><?php echo $participant['name']?></option>
-	<?php
-				}
-	?>
-				</select>
-			</span><span>
-			<label for="<?php echo 'form_set_payment_cost_'.$cpt_bill?>_0">Cost</label>
-			<input type="number" step="0.01" min="0" name="p_cost" 
-				id="<?php echo 'form_set_payment_cost_'.$cpt_bill?>_0" required 
-				class="input_paymt_cost"/>
-			</span><span>
-			<label for="<?php echo 'form_set_payment_recv_'.$cpt_bill?>_0">Receiver</label>
-			<select name="p_receiver_id" id="<?php echo 'form_set_payment_recv_'.$cpt_bill?>_0"> 
-			<option value="-1" selected="selected">Group</option>
-			</select>
-			</span><span>
-			<label for="<?php echo 'form_set_payment_desc_'.$cpt_bill?>_0">Description</label>
-			<input type="text" name="p_description" 
-				id="<?php echo 'form_set_payment_desc_'.$cpt_bill?>_0" 
-				class="input_paymt_desc"/>
-			</span><span>
-			<label for="<?php echo 'form_set_payment_date_'.$cpt_bill?>_0">Date of payment</label>
-			<input type="date" class="date_picker" name="p_date_payment" 
-					id="<?php echo 'form_set_payment_date_'.$cpt_bill?>_0"
-					class="input_paymt_date"/>
-			</span>
+						foreach($this_bill_participants as $participant)
+						{
+			?>
+							<option value="<?php echo $participant['participant_hashid']?>"><?php echo $participant['name']?></option>
+			<?php
+						}
+			?>
+						</select>
+				</span><span>
+					<label for="<?php echo 'form_set_payment_cost_'.$cpt_bill?>_0">Cost</label>
+					<input type="number" step="0.01" min="0" name="p_payment[0][cost]]" 
+						id="<?php echo 'form_set_payment_cost_'.$cpt_bill?>_0" required 
+						class="input_paymt_cost"/>
+				</span><span>
+					<label for="<?php echo 'form_set_payment_recv_'.$cpt_bill?>_0">Receiver</label>
+					<select name="p_payment[0][recv_hashid]]" id="<?php echo 'form_set_payment_recv_'.$cpt_bill?>_0"> 
+					<option value="-1" selected="selected">Group</option>
+					</select>
+				</span><span>
+					<label for="<?php echo 'form_set_payment_desc_'.$cpt_bill?>_0">Description</label>
+					<input type="text" name="p_payment[0][description]]" 
+						id="<?php echo 'form_set_payment_desc_'.$cpt_bill?>_0" 
+						class="input_paymt_desc" />
+				</span><span>
+				<label for="<?php echo 'form_set_payment_date_'.$cpt_bill?>_0">Date of payment</label>
+				<input type="date" class="date_picker" name="p_payment[0][date_payment]]" 
+						id="<?php echo 'form_set_payment_date_'.$cpt_bill?>_0"
+						class="input_paymt_date"/>
+				</span>
 			</div>
 		</div>
 <?php
