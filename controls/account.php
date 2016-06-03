@@ -454,6 +454,22 @@ $my_free_bill_participants = get_free_bill_participants($account_id); // Person 
 //Payments
 $my_payments_per_bill = get_payments_by_bills($account_id); //All payments
 
+//For JS : create the list of payer to send to JS
+$list_of_possible_payers= Array(Array(Array()));
+foreach($my_bills as $bill)
+{
+	$cpt = -1;
+	foreach ($my_bill_participants[$bill['id']] as $bill_participant)
+	{
+		$cpt ++;
+		$list_of_possible_payers[$bill['hashid']][$cpt] = 
+		Array(
+			'part_name' => $bill_participant['name'],
+			'part_hashid' => $bill_participant['participant_hashid']
+		);
+	}
+}
+
 //solution
 $bill_solutions = compute_bill_solutions($account_id);
 $solution = compute_solution($account_id);

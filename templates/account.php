@@ -368,19 +368,22 @@ foreach($my_bills as $bill)
 			if($admin_mode && $what_to_edit['payment'] 
 			&& $payment['id'] === $payment_id_to_edit)
 			{ //!!!! Edit mode  !!!!
+
 ?>
 		<form method="post" id="form_edit_payment_send">
 			<label for="form_edit_payment_bill_<?php echo $bill['id']?>">
 				Move to another bill
 			</label>
-			<select name="p_bill_hashid" id="form_edit_payment_bill_<?php echo $bill['id']?>"> 
+			<select name="p_bill_hashid" id="form_edit_payment_bill_<?php echo $bill['id']?>"
+			onchange="CreatePossiblePayersLists(this, document.getElementById('form_edit_payment_payer_<?php echo $bill['id']?>'),	
+			<?php echo htmlspecialchars(json_encode($list_of_possible_payers, 3))?>)"> 
 	<?php //list of bills
-			foreach($my_bills as $bill)
+			foreach($my_bills as $sub_bill)
 				{
 	?>
-					<option value="<?php echo $bill['hashid']?>"
-					<?php if($bill['id']==$payment_to_edit['bill_id']){echo ' selected';}?>
-					><?php echo $bill['title']?></option>
+					<option value="<?php echo $sub_bill['hashid']?>"
+					<?php if($sub_bill['id']==$payment_to_edit['bill_id']){echo ' selected';}?>
+					><?php echo $sub_bill['title']?></option>
 	<?php
 				}
 	?>

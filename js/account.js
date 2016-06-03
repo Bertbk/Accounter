@@ -1,6 +1,17 @@
 //Menu for a payment
+function createOptionDropDown(ddl, text, value) {
+	var opt = document.createElement('option');
+	opt.value = value;
+	opt.text = text;
+	ddl.options.add(opt);
+}
+
+/*
+When submitting/editing a payment, a payer cannot also be the receiver.
+So the list of possible receiver must be adapted with respect to the selected payer.
+*/
 function DropDownListsBetweenParticipants(payer, receiver) {
-    var choice1 = payer.value;
+	var choice1 = payer.value;
 	receiver.length= 0;
 	createOptionDropDown(receiver, 'Group', -1);
 	for (i = 0; i < payer.options.length; i++) {
@@ -11,15 +22,38 @@ function DropDownListsBetweenParticipants(payer, receiver) {
 	}
 }
 
-function createOptionDropDown(ddl, text, value) {
-	var opt = document.createElement('option');
-	opt.value = value;
-	opt.text = text;
-	ddl.options.add(opt);
+
+/*
+When editing a payment, the bill can be changed. In that case, the list of possible participants
+must be adapted in consequence.
+billListElement: element in DOM selecting the bills
+payerListElement : Select element in DOM
+billParticipants : Array of the available bill_participants
+*/
+function CreatePossiblePayersLists(billListElement, payerListElement, billParticipants) 
+{
+	var list_bill_part = billParticipants;
+	payerListElement.length = 0;
+	var bill_choice = billListElement.value;
+	//Loop on every possible payer
+	for (var bill_hashids in list_bill_part) {
+  if (list_bill_part.hasOwnProperty(bill_hashids)) {
+		if(bill_choice == bill_hashids)
+		{
+			for (var cpt in list_bill_part[bill_hashids]) {
+				var part_name = list_bill_part[bill_hashids][cpt]['part_name'];
+				var part_hashid = list_bill_part[bill_hashids][cpt]['part_hashid'];
+				createOptionDropDown(payerListElement, part_name, part_hashid );
+			}
+		}
+  }
+}
+//	payerListElement.selected=originalPayerHashid;
+
 }
 
 
-//Add a form for a payment (multiple submit) 
+//Add a row for the form to submit a payment (multiple submit) 
 function AddPaymentLine(name_of_people, hashid_of_people, cpt_bill)
 {
 	if(typeof AddPaymentLine.counter == 'undefined')
