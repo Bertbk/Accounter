@@ -390,7 +390,7 @@ foreach($my_bills as $bill)
 			Payer
 			</label>
 			<select name="p_payer_hashid" 
-			onchange="configureDropDownLists(this, document.getElementById(form_edit_payment_recv_<?php echo $bill['id']?>))"
+			onchange="DropDownListsBetweenParticipants(this, document.getElementById(form_edit_payment_recv_<?php echo $bill['id']?>))"
 			id="form_edit_payment_payer_<?php echo $bill['id']?>"
 			>
 	<?php
@@ -398,7 +398,7 @@ foreach($my_bills as $bill)
 				{
 	?>
 					<option value="<?php echo $participant['hashid']?>"
-					<?php if($participant['id']==$payment_to_edit['payer_id']){echo ' selected';}?>
+					<?php if($participant['hashid']==$payment_to_edit['payer_hashid']){echo ' selected';}?>
 					>
 					<?php echo $participant['name']?></option>
 	<?php
@@ -427,8 +427,8 @@ foreach($my_bills as $bill)
 				{
 					if($participant['id'] == $payment_to_edit['payer_id']){continue;}
 	?>
-					<option value="<?php echo $participant['id']?>"
-					<?php if($participant['id']==$payment_to_edit['receiver_id']){echo ' selected';}?>
+					<option value="<?php echo $participant['hashid']?>"
+					<?php if($participant['hashid']==$payment_to_edit['receiver_hashid']){echo ' selected';}?>
 					>
 					<?php echo $participant['name']?></option>
 	<?php
@@ -533,7 +533,7 @@ foreach($my_bills as $bill)
 					<label for="<?php echo 'form_set_payment_payer_'.$cpt_bill?>_0">Payer</label>
 						<select name="p_payment[0][payer_hashid]]" 
 						id="form_set_payment_payer_<?php echo $cpt_bill?>_0" 
-						onchange="configureDropDownLists(this, document.getElementById('<?php echo 'form_set_payment_recv_'.$cpt_bill.'_0'?>'))"> 
+						onchange="DropDownListsBetweenParticipants(this, document.getElementById('<?php echo 'form_set_payment_recv_'.$cpt_bill.'_0'?>'))"> 
 						<option disabled selected value="null"> -- select a payer -- </option>
 			<?php
 
@@ -577,7 +577,7 @@ foreach($my_bills as $bill)
 				<?php echo htmlspecialchars(json_encode($hashid_of_people)) ?>,
 				<?php echo $cpt_bill?>);
 				return false;">
-			Test me
+			(+) Add a row
 			</a>
 		</p>
 		

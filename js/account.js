@@ -1,5 +1,5 @@
 //Menu for a payment
-function configureDropDownLists(payer, receiver) {
+function DropDownListsBetweenParticipants(payer, receiver) {
     var choice1 = payer.value;
 	receiver.length= 0;
 	createOptionDropDown(receiver, 'Group', -1);
@@ -86,7 +86,7 @@ function AddPaymentLine(name_of_people, hashid_of_people, cpt_bill)
 	select_receiver.appendChild(opt_group);
 	
 	select_payer.onchange=function(){
-		configureDropDownLists(this, select_receiver);
+		DropDownListsBetweenParticipants(this, select_receiver);
 	};
 
 	//Set label
