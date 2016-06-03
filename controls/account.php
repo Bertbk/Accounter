@@ -323,6 +323,7 @@ if($admin_mode && ($what_to_edit['payment']))
 }
 if($admin_mode && isset($_POST['submit_edit_payment']))
 {
+	echo $hashid_edit['payment'];
 	$p_bill_hashid = filter_input(INPUT_POST, 'p_bill_hashid', FILTER_SANITIZE_STRING);
 	$p_bill = get_bill_by_hashid($account_id, $p_bill_hashid);
 	$p_payer_id = filter_input(INPUT_POST, 'p_payer_id', FILTER_SANITIZE_NUMBER_INT);
@@ -339,7 +340,7 @@ if($admin_mode && isset($_POST['submit_edit_payment']))
 		if($payment_edited)
 		{
 			$redirect_url = 'location:'.BASEURL.'/account/'.$hashid.'/admin';
-			header($redirect_url);
+			//header($redirect_url);
 		}
 	}
 }

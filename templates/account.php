@@ -18,7 +18,7 @@
 <?php if($admin_mode && $edit_mode)
 {
 ?>
-<p>Edit mode activated <form method="post"><button type="submit" name="submit_cancel" value="Submit">Cancel</button></form></p>
+<div><p>Edit mode activated </p><form method="post"><button type="submit" name="submit_cancel" value="Submit">Cancel</button></form></div>
 <?php } ?>
 
 <h1>Welcome to the account: <?php echo $my_account['title']?></h1>
@@ -355,18 +355,25 @@ foreach($my_bills as $bill)
 		&& count($my_payments_per_bill[$bill['id']]) > 0)
 	{
 		$current_payment = $my_payments_per_bill[$bill['id']];
+		$cpt_paymt = -1;
 	?>
 	<ul>
 	<?php
 		foreach($current_payment as $payment)
 		{
-	?><li><?php
+			$cpt_paymt++;
+	?><li>
+			<div id="div_payment_<?php echo $cpt_bill.'_'.$cpt_paymt?>">
+	<?php
 			if($admin_mode && $what_to_edit['payment'] 
 			&& $payment['id'] === $payment_id_to_edit)
 			{ //!!!! Edit mode  !!!!
 ?>
 		<form method="post" id="form_edit_payment_send">
-			<select name="p_bill_hashid" id="form_set_payment_bill"> 
+			<label for="form_edit_payment_bill_<?php echo $bill['id']?>">
+				Move to another bill
+			</label>
+			<select name="p_bill_hashid" id="form_edit_payment_bill_<?php echo $bill['id']?>"> 
 	<?php //list of bills
 			foreach($my_bills as $bill)
 				{
@@ -378,12 +385,19 @@ foreach($my_bills as $bill)
 				}
 	?>
 			</select>
-			<select name="p_payer_id" onchange="configureDropDownLists(this, document.getElementById('form_edit_payment_recv'))" > 
+			
+			<label for="form_edit_payment_payer_<?php echo $bill['id']?>">
+			Payer
+			</label>
+			<select name="p_payer_hashid" 
+			onchange="configureDropDownLists(this, document.getElementById(form_edit_payment_recv_<?php echo $bill['id']?>))"
+			id="form_edit_payment_payer_<?php echo $bill['id']?>"
+			>
 	<?php
 				foreach($my_participants as $participant)
 				{
 	?>
-					<option value="<?php echo $participant['id']?>"
+					<option value="<?php echo $participant['hashid']?>"
 					<?php if($participant['id']==$payment_to_edit['payer_id']){echo ' selected';}?>
 					>
 					<?php echo $participant['name']?></option>
@@ -391,10 +405,22 @@ foreach($my_bills as $bill)
 				}
 	?>
 			</select>
+			
+			<label for="form_edit_payment_cost_<?php echo $bill['id']?>">
+			Cost
+			</label>
 			<input type="number" step="0.01" min="0" name="p_cost" 
 				class="input_paymt_cost"
+				id="form_edit_payment_cost_<?php echo $bill['id']?>"
 				value="<?php echo $payment_to_edit['cost']?>" required />
-			<select name="p_receiver_id" id="form_edit_payment_recv" selected="<?php echo $payment_to_edit['receiver_id']?>"> 
+			
+			<label for="form_edit_payment_recv_<?php echo $bill['id']?>">
+				Receiver
+			</label>
+			<select name="p_receiver_id" 
+			id="form_edit_payment_recv_<?php echo $bill['id']?>"
+			selected="<?php echo $payment_to_edit['receiver_id']?>"
+			> 
 			<option value="-1" >Group</option>
 	<?php
 			foreach($my_participants as $participant)
@@ -409,10 +435,20 @@ foreach($my_bills as $bill)
 				}
 	?>
 			</select>
+			
+			<label for='form_edit_payment_desc_<?php echo $bill['id']?>'>
+			Description
+			</label>
 			<input type="text" name="p_description" class="input_paymt_desc"
+			id="form_edit_payment_desc_<?php echo $bill['id']?>"
 			value="<?php echo $payment_to_edit['description']?>" />
+			
+			<label for="form_edit_payment_date_<?php echo $bill['id']?>">
+			Date of payment
+			</label>
 			<input type="date" name="p_date_payment" 
 				class="input_paymt_date date_picker"
+				id="form_edit_payment_date_<?php echo $bill['id']?>"
 				value="<?php echo $payment_to_edit['date_of_payment']?>"/>
 			<div>
 			<span><button type="submit" name="submit_edit_payment" value="Submit">Submit</button> </span>
@@ -423,8 +459,18 @@ foreach($my_bills as $bill)
 			}
 			else{//Read only
 		?>
-			<?php echo $payment['payer_name']?> paid <?php echo $payment['cost']?>&euro; to 
-			<?php echo (is_null($payment['receiver_name']))?'all':$payment['receiver_name']?>
+			<span class='bill_participant' style="background-color:<?php echo '#'.$payment['payer_color']?>">
+			<?php echo $payment['payer_name']?>
+			</span>
+			paid <?php echo $payment['cost']?>&euro; to 
+			<?php if(is_null($payment['receiver_name'])) {?>
+				<span class="bill_participant group_color">
+				Group
+				</span>
+			<?php }else{ ?>
+			<span class="bill_participant" style="background-color:<?php echo '#'.$payment['receiver_color']?>">			
+			<?php echo $payment['payer_name']?></span>
+			<?php }?>
 			<?php if(!empty($payment['date_creation'])){echo ', the '.str_replace('-', '/',$payment['date_creation']);}?>
 			<?php if(!empty($payment['description'])){echo 'for '.$payment['description'];}?>
 	<?php //EDIT BUTTON
@@ -446,6 +492,7 @@ foreach($my_bills as $bill)
 				}
 			}//end else admin mode 
 			?>
+			</div>
 		</li>
 <?php	}//foreach current payment 
 ?>
