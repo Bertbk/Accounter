@@ -8,7 +8,7 @@ if ( !defined('ACCOUNTPATH') )
 if ( !defined('BASEURL') )
     define('BASEURL','http://localhost/Accounter');
 if ( !defined('PREFIX') )
-    define('PREFIX','');
+    define('PREFIX','acpt_');
 if ( !defined('TABLE_ACCOUNTS') )
 	define('TABLE_ACCOUNTS', PREFIX.'accounts');
 if ( !defined('TABLE_BILLS') )

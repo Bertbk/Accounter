@@ -181,8 +181,10 @@ $cpt_bill = -1;
 foreach($my_bills as $bill)
 {
 	$cpt_bill ++;
-	$this_bill_participants = $my_bill_participants[$bill['id']];
-	$this_free_bill_participants = $my_free_bill_participants[$bill['id']];
+	if(!empty($my_bill_participants[$bill['id']]))
+	{$this_bill_participants = $my_bill_participants[$bill['id']];}
+	if(!empty($my_free_bill_participants[$bill['id']]))
+	{	$this_free_bill_participants = $my_free_bill_participants[$bill['id']];}
 ?>
 <div class="bill 
 <?php echo 'bill-'.$cpt_bill?>" style="background-color:<?php echo '#'.$bill['color']?>"

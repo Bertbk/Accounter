@@ -80,7 +80,7 @@ function update_payment($account_id_arg, $bill_id_arg, $payment_id_arg, $payer_i
 	$isgood= false;
 	try
 	{
-		$myquery = 'UPDATE payments 
+		$myquery = 'UPDATE '.TABLE_PAYMENTS.' 
 		SET bill_id=:new_bill_id, payer_id=:new_payer_id, cost=:new_cost, receiver_id=:new_receiver_id, 
 		description=:new_description, date_of_payment=:new_date_of_payment
 		WHERE id=:payment_id';

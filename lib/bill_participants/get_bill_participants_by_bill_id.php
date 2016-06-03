@@ -15,13 +15,13 @@ function get_bill_participants_by_bill_id($account_id_arg, $bill_id_arg)
 
 	try
 	{
-		$myquery = 'SELECT bill_participants.*, participants.name AS name, 
-		participants.nb_of_people AS nb_of_people, 
-		participants.color AS color,
-		participants.hashid AS participant_hashid
+		$myquery = 'SELECT '.TABLE_BILL_PARTICIPANTS.'.*, '.TABLE_PARTICIPANTS.'.name AS name, 
+		'.TABLE_PARTICIPANTS.'.nb_of_people AS nb_of_people, 
+		'.TABLE_PARTICIPANTS.'.color AS color,
+		'.TABLE_PARTICIPANTS.'.hashid AS participant_hashid
 		FROM '.TABLE_BILL_PARTICIPANTS.'  
-		LEFT JOIN '.TABLE_PARTICIPANTS.' ON participants.id=bill_participants.participant_id 
-		WHERE bill_participants.account_id=:account_id AND bill_participants.bill_id=:bill_id' ;
+		LEFT JOIN '.TABLE_PARTICIPANTS.' ON '.TABLE_PARTICIPANTS.'.id='.TABLE_BILL_PARTICIPANTS.'.participant_id 
+		WHERE '.TABLE_BILL_PARTICIPANTS.'.account_id=:account_id AND '.TABLE_BILL_PARTICIPANTS.'.bill_id=:bill_id' ;
 		$prepare_query = $db->prepare($myquery);
 		$prepare_query->bindValue(':account_id', $account_id, PDO::PARAM_INT);
 		$prepare_query->bindValue(':bill_id', $bill_id, PDO::PARAM_INT);

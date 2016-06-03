@@ -10,7 +10,8 @@ function get_payment_by_id($account_id_arg, $payment_id_arg)
 	
 	try
 	{
-		$myquery = 'SELECT * FROM payments WHERE account_id=:account_id AND id=:payment_id';
+		$myquery = 'SELECT * FROM '.TABLE_PAYMENTS.'
+		WHERE account_id=:account_id AND id=:payment_id';
 		$prepare_query = $db->prepare($myquery);
 		$prepare_query->bindValue(':account_id', $account_id, PDO::PARAM_INT);
 		$prepare_query->bindValue(':payment_id', $payment_id, PDO::PARAM_STR);

@@ -46,7 +46,7 @@ function set_payment($account_id_arg, $bill_id_arg, $payer_id_arg, $cost_arg, $r
 	
 	try
 	{
-		$myquery = 'INSERT INTO payments (id, account_id, bill_id, hashid, payer_id, cost, receiver_id, description, date_of_payment) 
+		$myquery = 'INSERT INTO '.TABLE_PAYMENTS.' (id, account_id, bill_id, hashid, payer_id, cost, receiver_id, description, date_of_payment) 
 		VALUES(NULL, :account_id, :bill_id, :hashid, :payer_id, :cost, :receiver_id, :description, :date_of_payment)';
 		$prepare_query = $db->prepare($myquery);
 		$prepare_query->bindValue(':account_id', $account_id, PDO::PARAM_INT);
