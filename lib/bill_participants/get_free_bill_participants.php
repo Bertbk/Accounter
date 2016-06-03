@@ -2,8 +2,9 @@
 include_once(__DIR__.'/../get_db.php');
 
 include_once(LIBPATH.'/bills/get_bills.php');
-include_once(LIBPATH.'/bill_participants/get_bill_participants_by_bill_id.php');
 include_once(LIBPATH.'/participants/get_participants.php');
+include_once(LIBPATH.'/bill_participants/is_this_participant_in_bill.php');
+
 
 /*
 Same as get_bill_participants but give the participants that are NOT in the bills
@@ -25,16 +26,7 @@ function get_free_bill_participants($account_id_arg)
 	{
 		foreach($my_bills as $bill)
 		{
-			$bill_parts = $bill_participants[$bill['id']];
-			$is_in_this_bill = false;
-			foreach($bill_parts as $bill_part)
-			{                              
-				if($bill_part['participant_id'] == $participant['id'])
-				{
-					$is_in_this_bill = true;
-					break;
-				}
-			}
+			$is_in_this_bill = is_this_participant_in_bill($account_id, $bill['id'], $participant['id']);
 			if(!$is_in_this_bill)
 			{
 				$reply[$bill['id']][$participant['id']] = $participant;

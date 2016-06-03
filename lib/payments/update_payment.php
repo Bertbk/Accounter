@@ -57,6 +57,14 @@ function update_payment($account_id_arg, $bill_id_arg, $payment_id_arg, $payer_i
 		return true;
 	}
 	
+	//FIXME if moving to another bill, check if people exists
+	if($new_bill_id != $payment_to_edit['bill_id'])
+	{
+		$participants_new_bill = get_bill_participants_by_bill_id($account_id, $bill_id);
+		
+	}
+	
+	
 	$isgood= false;
 	try
 	{
