@@ -1,6 +1,7 @@
 <?php
 include_once(__DIR__.'/../get_db.php');
 include_once(LIBPATH.'/payments/get_payment_by_id.php');
+include_once(LIBPATH.'/bill_participants/is_this_participant_in_bill.php');
 
 
 function update_payment($account_id_arg, $bill_id_arg, $payment_id_arg, $payer_id_arg, $cost_arg, 
@@ -57,11 +58,27 @@ function update_payment($account_id_arg, $bill_id_arg, $payment_id_arg, $payer_i
 		return true;
 	}
 	
-	//FIXME if moving to another bill, check if people exists
+	// If moving to another bill, check if people exists
 	if($new_bill_id != $payment_to_edit['bill_id'])
 	{
-		$participants_new_bill = get_bill_participants_by_bill_id($account_id, $bill_id);
-		
+		$payer_validated = is_this_participant_in_bill($account_id, $new_bill_id, $new_payer_id);
+		if(!$payer_validated)
+		{			?>
+<script> alert("Payer non valid");</script>			
+			<?php
+		}
+		$recv_validated = true;
+		if(!is_null($new_receiver_id))
+		{
+			$recv_validated = is_this_participant_in_bill($account_id, $new_bill_id, $new_receiver_id);
+		}
+		if(!$payer_validated || !recv_validated)
+		{
+			?>
+<script> alert('Problem while moving bill');</script>			
+			<?php
+			return false;
+		}
 	}
 	
 	

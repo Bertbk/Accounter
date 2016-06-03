@@ -14,11 +14,11 @@ function is_this_participant_in_bill($account_id_arg, $bill_id_arg, $participant
 	$bill_id = (int)$bill_id_arg;
 	$participant_id = (int)$participant_id_arg;
 	
-	$participants = get_bill_participants_by_bill_id($account_id, $bill_id);
+	$bill_participants = get_bill_participants_by_bill_id($account_id, $bill_id);
 	
-	foreach($participants as $participant)
+	foreach($bill_participants as $bill_participant)
 	{
-		if($participant['id'] == $participant_id)
+		if($bill_participant['participant_id'] == $participant_id)
 		{
 			return true;
 		}
