@@ -390,7 +390,7 @@ foreach($my_bills as $bill)
 			Payer
 			</label>
 			<select name="p_payer_hashid" 
-			onchange="DropDownListsBetweenParticipants(this, document.getElementById(form_edit_payment_recv_<?php echo $bill['id']?>))"
+			onchange="DropDownListsBetweenParticipants(this, document.getElementById('form_edit_payment_recv_<?php echo $bill['id']?>'))"
 			id="form_edit_payment_payer_<?php echo $bill['id']?>"
 			>
 	<?php
@@ -419,7 +419,7 @@ foreach($my_bills as $bill)
 			</label>
 			<select name="p_receiver_id" 
 			id="form_edit_payment_recv_<?php echo $bill['id']?>"
-			> 
+			>
 			<option value="-1" >Group</option>
 	<?php
 			foreach($this_bill_participants as $bill_participant)
