@@ -15,4 +15,4 @@ foreach($accounts as $key => $accounts_backup)
     $accounts[$key]['description'] = htmlspecialchars($accounts_backup['description']);
 }
 
-include_once('/templates/index.php');
+include_once(ABSPATH.'/templates/index.php');

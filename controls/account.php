@@ -482,5 +482,5 @@ foreach($my_participants  as $participant)
 	$n_people += (int)$participant['nb_of_people'] ;
 }
 
-include_once('/templates/account.php');
+include_once(ABSPATH.'/templates/account.php');
 ?>
