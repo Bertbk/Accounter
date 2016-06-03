@@ -323,25 +323,47 @@ if($admin_mode && ($what_to_edit['payment']))
 }
 if($admin_mode && isset($_POST['submit_edit_payment']))
 {
-	echo $hashid_edit['payment'];
+	$payment_edited = false;
 	$p_bill_hashid = filter_input(INPUT_POST, 'p_bill_hashid', FILTER_SANITIZE_STRING);
 	$p_bill = get_bill_by_hashid($account_id, $p_bill_hashid);
-	$p_payer_id = filter_input(INPUT_POST, 'p_payer_id', FILTER_SANITIZE_NUMBER_INT);
-	if(!is_null($p_payer_id))
+	$p_payer_hashid = filter_input(INPUT_POST, 'p_payer_hashid', FILTER_SANITIZE_STRING);
+	$p_payer = get_participant_by_hashid($account_id, $p_payer_hashid);
+	if(!empty($p_payer))
 	{
+		$p_payer_id = $p_payer['id'];
 		$p_cost = filter_input(INPUT_POST, 'p_cost', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-		$p_receiver_id = filter_input(INPUT_POST, 'p_receiver_id', FILTER_SANITIZE_NUMBER_INT);
-		$p_description = filter_input(INPUT_POST, 'p_description', FILTER_SANITIZE_STRING);
-		$p_date_payment  = filter_input(INPUT_POST, 'p_date_payment', FILTER_SANITIZE_STRING);
-		$p_receiver_id = ($p_receiver_id == -1) ? null:$p_receiver_id;
-		
-		$payment_edited = update_payment($account_id, $p_bill['id'], $payment_id_to_edit, 
-		$p_payer_id, $p_cost, $p_receiver_id, $p_description, $p_date_payment);
-		if($payment_edited)
+		$p_receiver_hashid = filter_input(INPUT_POST, 'p_receiver_hashid', FILTER_SANITIZE_STRING);
+		$recv_pb = false;
+		if(is_null($p_receiver_hashid) ||$p_receiver_hashid == -1)
 		{
-			$redirect_url = 'location:'.BASEURL.'/account/'.$hashid.'/admin';
-			//header($redirect_url);
+			$p_receiver_id= null;
 		}
+		else{
+			$p_recv = get_participant_by_hashid($account_id, $p_receiver_hashid);
+			if(!empty($p_recv))
+			{
+				$p_receiver_id = $p_recv['id'];
+			}
+			else
+			{$recv_pb = true;}
+		}
+		if(!$recv_pb)
+		{
+			$p_description = filter_input(INPUT_POST, 'p_description', FILTER_SANITIZE_STRING);
+			$p_date_payment  = filter_input(INPUT_POST, 'p_date_payment', FILTER_SANITIZE_STRING);		
+			$payment_edited = update_payment($account_id, $p_bill['id'], $payment_id_to_edit, 
+			$p_payer_id, $p_cost, $p_receiver_id, $p_description, $p_date_payment);
+		}
+	}
+	if($payment_edited)
+	{
+		$redirect_url = 'location:'.BASEURL.'/account/'.$hashid.'/admin';
+		header($redirect_url);
+	}
+	else{
+	?>
+<script>alert('problem while editing');</script>				
+	<?php
 	}
 }
 //Delete bill_participant

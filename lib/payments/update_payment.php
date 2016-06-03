@@ -3,11 +3,13 @@ include_once(__DIR__.'/../get_db.php');
 include_once(LIBPATH.'/payments/get_payment_by_id.php');
 
 
-function update_payment($account_id_arg, $payment_id_arg, $payer_id_arg, $cost_arg, $receiver_id_arg="", $description_arg="", $date_of_payment_arg="")
+function update_payment($account_id_arg, $bill_id_arg, $payment_id_arg, $payer_id_arg, $cost_arg, 
+			$receiver_id_arg="", $description_arg="", $date_of_payment_arg="")
 {
 	$db = get_db();
 
 	$account_id = (int)$account_id_arg;
+	$new_bill_id = (int)$bill_id_arg;
 	$payment_id = (int)$payment_id_arg;
 	$new_payer_id = (int)$payer_id_arg;
 	$new_cost = (float)$cost_arg;
@@ -44,7 +46,8 @@ function update_payment($account_id_arg, $payment_id_arg, $payer_id_arg, $cost_a
 	}
 	
 	//Check if nothing to do
-	if($new_payer_id === $payment_to_edit['payer_id']
+	if($new_bill_id === $payment_to_edit['bill_id']
+	&& $new_payer_id === $payment_to_edit['payer_id']
 	&& $new_cost === $payment_to_edit['cost']
 	&& $new_receiver_id === $payment_to_edit['receiver_id']
 	&& $new_description === $payment_to_edit['description']
@@ -58,10 +61,11 @@ function update_payment($account_id_arg, $payment_id_arg, $payer_id_arg, $cost_a
 	try
 	{
 		$myquery = 'UPDATE payments 
-		SET payer_id=:new_payer_id, cost=:new_cost, receiver_id=:new_receiver_id, 
+		SET bill_id=:new_bill_id, payer_id=:new_payer_id, cost=:new_cost, receiver_id=:new_receiver_id, 
 		description=:new_description, date_of_payment=:new_date_of_payment
 		WHERE id=:payment_id';
 		$prepare_query = $db->prepare($myquery);
+		$prepare_query->bindValue(':new_bill_id', $new_bill_id, PDO::PARAM_INT);
 		$prepare_query->bindValue(':new_payer_id', $new_payer_id, PDO::PARAM_INT);
 		$prepare_query->bindValue(':new_cost', $new_cost, PDO::PARAM_STR);
 		$prepare_query->bindValue(':new_receiver_id', $new_receiver_id, ((is_null($new_receiver_id))?(PDO::PARAM_NULL):(PDO::PARAM_INT)));
