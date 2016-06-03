@@ -394,14 +394,13 @@ foreach($my_bills as $bill)
 			id="form_edit_payment_payer_<?php echo $bill['id']?>"
 			>
 	<?php
-				foreach($my_free_bill_participants as $bill_participant)
+				foreach($this_bill_participants as $bill_participant)
 				{
-					print_r($bill_participant);
 	?>
 					<option value="<?php echo $bill_participant['participant_hashid']?>"
-					<?php if($bill_participant['participant_hashid']==$payment_to_edit['payer_hashid']){echo ' selected';}?>
+					<?php if($bill_participant['participant_id']==$payment_to_edit['payer_id']){echo ' selected';}?>
 					>
-					<?php echo $bill_participant['participant_name']?></option>
+					<?php echo $bill_participant['name']?></option>
 	<?php
 				}
 	?>
@@ -420,18 +419,17 @@ foreach($my_bills as $bill)
 			</label>
 			<select name="p_receiver_id" 
 			id="form_edit_payment_recv_<?php echo $bill['id']?>"
-			selected="<?php echo $payment_to_edit['receiver_id']?>"
 			> 
 			<option value="-1" >Group</option>
 	<?php
-			foreach($my_participants as $participant)
+			foreach($this_bill_participants as $bill_participant)
 				{
-					if($participant['id'] == $payment_to_edit['payer_id']){continue;}
+					if($bill_participant['participant_id'] == $payment_to_edit['payer_id']){continue;}
 	?>
-					<option value="<?php echo $participant['hashid']?>"
-					<?php if($participant['hashid']==$payment_to_edit['receiver_hashid']){echo ' selected';}?>
+					<option value="<?php echo $bill_participant['participant_hashid']?>"
+					<?php if($bill_participant['participant_id']==$payment_to_edit['receiver_id']){echo ' selected';}?>
 					>
-					<?php echo $participant['name']?></option>
+					<?php echo $bill_participant['name']?></option>
 	<?php
 				}
 	?>

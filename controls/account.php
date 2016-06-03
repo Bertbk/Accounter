@@ -319,6 +319,8 @@ if($admin_mode && ($what_to_edit['payment']))
 	{
 		$payment_id_to_edit = $payment_to_edit['id'];
 		$bill_id_to_edit = $payment_to_edit['bill_id'];
+
+		
 	}
 }
 if($admin_mode && isset($_POST['submit_edit_payment']))
