@@ -59,26 +59,21 @@ function update_payment($account_id_arg, $bill_id_arg, $payment_id_arg, $payer_i
 	}
 	
 	// If moving to another bill, check if people exists
-	if($new_bill_id != $payment_to_edit['bill_id'])
-	{
-		$payer_validated = is_this_participant_in_bill($account_id, $new_bill_id, $new_payer_id);
-		if(!$payer_validated)
-		{			?>
+
+	$payer_validated = is_this_participant_in_bill($account_id, $new_bill_id, $new_payer_id);
+	if(!$payer_validated)
+	{			?>
 <script> alert("Payer non valid");</script>			
-			<?php
-		}
-		$recv_validated = true;
-		if(!is_null($new_receiver_id))
-		{
-			$recv_validated = is_this_participant_in_bill($account_id, $new_bill_id, $new_receiver_id);
-		}
-		if(!$payer_validated || !recv_validated)
-		{
-			?>
-<script> alert('Problem while moving bill');</script>			
-			<?php
-			return false;
-		}
+		<?php
+	}
+	$recv_validated = true;
+	if(!is_null($new_receiver_id))
+	{
+		$recv_validated = is_this_participant_in_bill($account_id, $new_bill_id, $new_receiver_id);
+	}
+	if(!$payer_validated || !recv_validated)
+	{
+		return false;
 	}
 	
 	
