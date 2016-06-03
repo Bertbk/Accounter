@@ -176,6 +176,8 @@ $cpt_bill = -1;
 foreach($my_bills as $bill)
 {
 	$cpt_bill ++;
+	$this_bill_participants = $my_bill_participants[$bill['id']];
+	$this_free_bill_participants = $my_free_bill_participants[$bill['id']];
 ?>
 <div class="bill 
 <?php echo 'bill-'.$cpt_bill?>" style="background-color:<?php echo '#'.$bill['color']?>"
@@ -233,16 +235,14 @@ foreach($my_bills as $bill)
 ?>
 
 <?php // Display the current participant of this bill
-	$current_bill_participants =array();
-	if(!empty($my_bill_participants[$bill['id']]))
+	if(!empty($this_bill_participants))
 	{
 ?>
 		<h3>Participants</h3>
 <?php
-	$current_bill_participants = $my_bill_participants[$bill['id']];
 	$place_submit_button = false; // if editing, place a button after the list
 	$cpt_bill_participant = -1;
-	foreach($current_bill_participants as $bill_participant)
+	foreach($this_bill_participants as $bill_participant)
 	{
 		$cpt_bill_participant++;
 		if(!$admin_mode || !$what_to_edit['bill_participant'] 
@@ -306,7 +306,7 @@ foreach($my_bills as $bill)
 	if($admin_mode && !$edit_mode)
 	{ //Display possibilities
 		//Assign a participant (if there are free guys)
-		if(!empty($my_free_bill_participants[$bill['id']]))
+		if(!empty($this_free_bill_participants))
 		{
 	?>
 	<p id="<?php echo 'show_hide_bill_add_part_'.$cpt_bill?>"><a href="javascript:void(0)">(+) Assign a participant to this bill</a></p>
@@ -318,7 +318,7 @@ foreach($my_bills as $bill)
 			<legend>Assign a participant to this bill:</legend>
 			<?php
 			$cpt = -1;
-			foreach($my_free_bill_participants[$bill['id']] as $participant)
+			foreach($this_free_bill_participants as $participant)
 			{
 				$cpt++;
 	?>
@@ -354,12 +354,12 @@ foreach($my_bills as $bill)
 	if(isset($my_payments_per_bill[$bill['id']]) && is_array($my_payments_per_bill[$bill['id']])
 		&& count($my_payments_per_bill[$bill['id']]) > 0)
 	{
-		$current_payment = $my_payments_per_bill[$bill['id']];
+		$this_payment = $my_payments_per_bill[$bill['id']];
 		$cpt_paymt = -1;
 	?>
 	<ul>
 	<?php
-		foreach($current_payment as $payment)
+		foreach($this_payment as $payment)
 		{
 			$cpt_paymt++;
 	?><li>
@@ -394,13 +394,14 @@ foreach($my_bills as $bill)
 			id="form_edit_payment_payer_<?php echo $bill['id']?>"
 			>
 	<?php
-				foreach($my_participants as $participant)
+				foreach($my_free_bill_participants as $bill_participant)
 				{
+					print_r($bill_participant);
 	?>
-					<option value="<?php echo $participant['hashid']?>"
-					<?php if($participant['hashid']==$payment_to_edit['payer_hashid']){echo ' selected';}?>
+					<option value="<?php echo $bill_participant['participant_hashid']?>"
+					<?php if($bill_participant['participant_hashid']==$payment_to_edit['payer_hashid']){echo ' selected';}?>
 					>
-					<?php echo $participant['name']?></option>
+					<?php echo $bill_participant['participant_name']?></option>
 	<?php
 				}
 	?>
@@ -469,7 +470,7 @@ foreach($my_bills as $bill)
 				</span>
 			<?php }else{ ?>
 			<span class="bill_participant" style="background-color:<?php echo '#'.$payment['receiver_color']?>">			
-			<?php echo $payment['payer_name']?></span>
+			<?php echo $payment['receiver_name']?></span>
 			<?php }?>
 			<?php if(!empty($payment['date_creation'])){echo ', the '.str_replace('-', '/',$payment['date_creation']);}?>
 			<?php if(!empty($payment['description'])){echo 'for '.$payment['description'];}?>
@@ -517,9 +518,6 @@ foreach($my_bills as $bill)
 ?>
 		<p id="<?php echo 'show_hide_bill_add_paymt_'.$cpt_bill?>"><a href="javascript:void(0)">
 		(+) Add a payment</a></p>
-<?php
-		$this_bill_participants = $my_bill_participants[$bill['id']];
-	?>
 		<form method="post" id="<?php echo 'show_hide_bill_add_paymt_'.$cpt_bill.'_target'?>" 
 			class="hidden_at_first">
 		  <fieldset>
@@ -537,10 +535,10 @@ foreach($my_bills as $bill)
 						<option disabled selected value="null"> -- select a payer -- </option>
 			<?php
 
-						foreach($this_bill_participants as $participant)
+						foreach($this_bill_participants as $bill_participant)
 						{
 			?>
-							<option value="<?php echo $participant['participant_hashid']?>"><?php echo $participant['name']?></option>
+							<option value="<?php echo $bill_participant['participant_hashid']?>"><?php echo $bill_participant['name']?></option>
 			<?php
 						}
 			?>
