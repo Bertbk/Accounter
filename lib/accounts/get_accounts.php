@@ -7,7 +7,7 @@ function get_accounts()
 
 	try
 	{
-		$myquery = 'SELECT * FROM accounts';
+		$myquery = 'SELECT * FROM '.TABLE_ACCOUNTS;
 		$prepare_query = $db->prepare($myquery);
 		$prepare_query->execute();
 		$reponse = $prepare_query->fetchAll();

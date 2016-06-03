@@ -56,7 +56,7 @@ function set_bill_participant($account_id_arg, $bill_id_arg, $participant_id_arg
 	$isgood= false;
 	try
 	{
-		$myquery = 'INSERT INTO bill_participants(id, account_id, bill_id, hashid, participant_id, percent_of_usage) 
+		$myquery = 'INSERT INTO '.TABLE_BILL_PARTICIPANTS.'(id, account_id, bill_id, hashid, participant_id, percent_of_usage) 
 		VALUES(NULL, :account_id, :bill_id, :hashid, :participant_id, :percent_of_use)';
 		$prepare_query = $db->prepare($myquery);
 		$prepare_query->bindValue(':account_id', $account_id, PDO::PARAM_INT);

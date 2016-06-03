@@ -39,7 +39,7 @@ function set_participant($account_id_arg, $name_of_participant_arg, $nb_of_peopl
 	
 	try
 	{
-		$myquery = 'INSERT INTO participants(id, account_id, hashid, name, nb_of_people, email, color) 
+		$myquery = 'INSERT INTO  '.TABLE_PARTICIPANTS.' (id, account_id, hashid, name, nb_of_people, email, color) 
 		VALUES(NULL, :account_id, :hashid, :name_of_participant, :nb_of_people, :email, :my_color)';
 		$prepare_query = $db->prepare($myquery);
 		$prepare_query->bindValue(':account_id', $account_id, PDO::PARAM_INT);

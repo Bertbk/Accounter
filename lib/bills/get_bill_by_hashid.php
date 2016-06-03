@@ -10,7 +10,8 @@ function get_bill_by_hashid($account_id_arg, $hashid_arg)
 
 	try
 	{
-		$myquery = 'SELECT * FROM bills WHERE account_id=:account_id AND hashid=:hashid';
+		$myquery = 'SELECT * FROM  '.TABLE_BILLS.'
+  		WHERE account_id=:account_id AND hashid=:hashid';
 		$prepare_query = $db->prepare($myquery);
 		$prepare_query->bindValue(':account_id', $account_id, PDO::PARAM_INT);
 		$prepare_query->bindValue(':hashid', $hashid, PDO::PARAM_STR);

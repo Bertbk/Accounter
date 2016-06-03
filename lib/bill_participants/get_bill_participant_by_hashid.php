@@ -10,7 +10,8 @@ function get_bill_participant_by_hashid($account_id_arg, $bill_participant_hashi
 	
 	try
 	{
-		$myquery = 'SELECT * FROM bill_participants WHERE account_id=:account_id AND hashid=:bill_participant_hashid';
+		$myquery = 'SELECT * FROM '.TABLE_BILL_PARTICIPANTS.' 
+		 WHERE account_id=:account_id AND hashid=:bill_participant_hashid';
 		$prepare_query = $db->prepare($myquery);
 		$prepare_query->bindValue(':account_id', $account_id, PDO::PARAM_INT);
 		$prepare_query->bindValue(':bill_participant_hashid', $bill_participant_hashid, PDO::PARAM_STR);

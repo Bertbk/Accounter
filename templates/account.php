@@ -21,13 +21,18 @@
 <div><p>Edit mode activated </p><form method="post"><button type="submit" name="submit_cancel" value="Submit">Cancel</button></form></div>
 <?php } ?>
 
+<!--Menu -->
+
+<h1>Home</h1>
+
+<p><a href='<?php echo BASEURL.''?>'>Come back to the main menu</a></p>
+
 <h1>Welcome to the account: <?php echo $my_account['title']?></h1>
-<p>Associated email adress : <?php echo $my_account['email']?></p>
 	
 <?php if (is_array($my_participants) && sizeof($my_participants) > 0 ) 
 	{
 ?>
-<h1>Participants (<?php echo $n_participants ?>) / People (<?php echo $n_people ?>)</h1>
+<h1><?php echo $n_participants ?> participants for <?php echo $n_people ?> people</h1>
 <?php
 if($admin_mode && $what_to_edit['participant'])
 {
@@ -138,7 +143,7 @@ if($admin_mode && !$edit_mode)
 
 
 <!-- BILLS -->
-<h1>Bills</h1>
+<h1>Our bills</h1>
 
 <?php
 //Admin only
@@ -672,13 +677,6 @@ foreach($my_bills as $bill)
 } //if there is a solution
 ?>
 
-<!--Menu -->
-
-<h1>Menu</h1>
-<ul>
-<li><a href='<?php echo BASEURL.''?>'>Main Menu</a></li>
-<li><a href='<?php echo BASEURL.'/create.php'?>'>Create a new account</a></li>
-</ul>
 
 </body>
 </html>

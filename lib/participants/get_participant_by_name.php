@@ -10,7 +10,8 @@ function get_participant_by_name($account_id_arg, $contrib_name_arg)
 	
 	try
 	{
-		$myquery = 'SELECT * FROM participants WHERE account_id=:account_id AND upper(name)=upper(:contrib_name)';
+		$myquery = 'SELECT * FROM  '.TABLE_PARTICIPANTS.' 
+		 WHERE account_id=:account_id AND upper(name)=upper(:contrib_name)';
 		$prepare_query = $db->prepare($myquery);
 		$prepare_query->bindValue(':account_id', $account_id, PDO::PARAM_INT);
 		$prepare_query->bindValue(':contrib_name', $contrib_name, PDO::PARAM_STR); 

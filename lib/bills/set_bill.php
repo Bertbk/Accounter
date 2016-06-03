@@ -38,7 +38,7 @@ function set_bill($account_id_arg, $title_bill_arg, $description_arg="")
 	$isgood= false;
 	try
 	{
-		$myquery = 'INSERT INTO bills(id, account_id, hashid, title, description, color) 
+		$myquery = 'INSERT INTO '.TABLE_BILLS.'(id, account_id, hashid, title, description, color) 
 		VALUES(NULL, :account_id, :hashid, :title_bill, :description, :my_color)';
 		$prepare_query = $db->prepare($myquery);
 		$prepare_query->bindValue(':account_id', $account_id, PDO::PARAM_INT);

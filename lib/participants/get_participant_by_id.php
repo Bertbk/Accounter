@@ -10,7 +10,8 @@ function get_participant_by_id($account_id_arg, $contrib_id_arg)
 
 	try
 	{
-		$myquery = 'SELECT * FROM participants WHERE account_id=:account_id AND id=:contrib_id';
+		$myquery = 'SELECT * FROM  '.TABLE_PARTICIPANTS.' 
+		 WHERE account_id=:account_id AND id=:contrib_id';
 		$prepare_query = $db->prepare($myquery);
 		$prepare_query->bindValue(':account_id', $account_id, PDO::PARAM_INT);
 		$prepare_query->bindValue(':contrib_id', $contrib_id, PDO::PARAM_INT);

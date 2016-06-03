@@ -46,8 +46,8 @@ function update_participant($account_id_arg, $participant_id_arg, $name_of_contr
 	
 	try
 	{
-		$myquery = 'UPDATE participants 
-		SET name=:new_name_of_contrib, nb_of_people=:new_nb_of_people
+		$myquery = 'UPDATE  '.TABLE_PARTICIPANTS.' 
+		 SET name=:new_name_of_contrib, nb_of_people=:new_nb_of_people
 		WHERE id=:participant_id';
 		$prepare_query = $db->prepare($myquery);
 		$prepare_query->bindValue(':new_name_of_contrib', $new_name_of_contrib, PDO::PARAM_STR);

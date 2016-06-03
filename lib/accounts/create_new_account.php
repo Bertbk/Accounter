@@ -24,7 +24,8 @@ function create_new_account($hashid_arg, $hashid_admin_arg, $title_of_account_ar
 
 	try
 	{
-		$myquery = 'INSERT INTO accounts(id, hashid, hashid_admin, title, email, description) VALUES(NULL, :hashid, :hashid_admin, :title, :email, :description)';
+		$myquery = 'INSERT INTO '.TABLE_ACCOUNTS.'(id, hashid, hashid_admin, title, email, description) 
+		VALUES(NULL, :hashid, :hashid_admin, :title, :email, :description)';
 		$prepare_query = $db->prepare($myquery);
 		$prepare_query->bindValue(':hashid', $hashid, PDO::PARAM_STR);
 		$prepare_query->bindValue(':hashid_admin', $hashid_admin, PDO::PARAM_STR);

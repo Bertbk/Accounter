@@ -19,8 +19,8 @@ function get_bill_participants_by_bill_id($account_id_arg, $bill_id_arg)
 		participants.nb_of_people AS nb_of_people, 
 		participants.color AS color,
 		participants.hashid AS participant_hashid
-		FROM bill_participants 
-		LEFT JOIN participants ON participants.id=bill_participants.participant_id 
+		FROM '.TABLE_BILL_PARTICIPANTS.'  
+		LEFT JOIN '.TABLE_PARTICIPANTS.' ON participants.id=bill_participants.participant_id 
 		WHERE bill_participants.account_id=:account_id AND bill_participants.bill_id=:bill_id' ;
 		$prepare_query = $db->prepare($myquery);
 		$prepare_query->bindValue(':account_id', $account_id, PDO::PARAM_INT);

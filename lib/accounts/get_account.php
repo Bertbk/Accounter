@@ -14,7 +14,8 @@ function get_account($hash_id_arg)
 	
 	try
 	{
-		$myquery = 'SELECT * FROM accounts WHERE hashid=:hash_id';
+		$myquery = 'SELECT * FROM '.TABLE_ACCOUNTS.' 
+		 WHERE hashid=:hash_id';
 		$prepare_query = $db->prepare($myquery);
 		$prepare_query->bindValue(':hash_id', $hash_id, PDO::PARAM_STR);
 		$prepare_query->execute();

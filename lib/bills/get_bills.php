@@ -10,7 +10,8 @@ function get_bills($account_id_arg)
 
 	try
 	{
-		$myquery = 'SELECT * FROM bills WHERE account_id=:account_id ';
+		$myquery = 'SELECT * FROM  '.TABLE_BILLS.'
+		 WHERE account_id=:account_id ';
 		$prepare_query = $db->prepare($myquery);
 		$prepare_query->bindValue(':account_id', $account_id, PDO::PARAM_INT);
 		$isgood = $prepare_query->execute();

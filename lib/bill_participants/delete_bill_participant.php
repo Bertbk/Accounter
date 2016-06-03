@@ -11,8 +11,8 @@ function delete_bill_participant($account_id_arg, $bill_part_id_arg)
 	$isgood= false;
 	try
 	{
-		$myquery = 'DELETE FROM bill_participants 
-		WHERE id=:bill_part_id';
+		$myquery = 'DELETE FROM '.TABLE_BILL_PARTICIPANTS.'  
+		 WHERE id=:bill_part_id';
 		$prepare_query = $db->prepare($myquery);
 		$prepare_query->bindValue(':bill_part_id', $bill_part_id, PDO::PARAM_INT);
 		$isgood = $prepare_query->execute();

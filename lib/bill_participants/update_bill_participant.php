@@ -25,7 +25,6 @@ function update_bill_participant($account_id_arg, $bill_participant_id_arg, $par
 	//Check if the new participant is not already choosen
 	$bill_participants = get_bill_participants_by_bill_id($account_id, $bill_part_to_edit['bill_id']);
 	if(empty($bill_participants)){
-		echo '<p>caca</p>';
 		return false;
 	}
 
@@ -59,7 +58,7 @@ function update_bill_participant($account_id_arg, $bill_participant_id_arg, $par
 	$isgood= false;
 	try
 	{		
-		$myquery = 'UPDATE bill_participants 
+		$myquery = 'UPDATE '.TABLE_BILL_PARTICIPANTS.' 
 		SET participant_id=:new_participant_id, percent_of_usage=:new_percent_of_usage
 		WHERE id=:bill_participant_id';
 		$prepare_query = $db->prepare($myquery);

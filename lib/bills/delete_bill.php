@@ -11,8 +11,8 @@ function delete_bill($account_id_arg, $bill_id_arg)
 	$isgood= false;
 	try
 	{
-		$myquery = 'DELETE FROM bills 
-		WHERE id=:bill_id';
+		$myquery = 'DELETE FROM  '.TABLE_BILLS.' 
+		 WHERE id=:bill_id';
 		$prepare_query = $db->prepare($myquery);
 		$prepare_query->bindValue(':bill_id', $bill_id, PDO::PARAM_INT);
 		$isgood = $prepare_query->execute();
