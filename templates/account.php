@@ -566,7 +566,7 @@ foreach($my_bills as $bill)
 			{
 				$vid = $receiver['id'];
 				if(!isset($local_solution[$uid][$vid])){continue;}
-				$refund = $local_solution[$uid][$vid];
+				$refund = number_format((float)$local_solution[$uid][$vid], 2, '.', '');
 				if($refund > 0)
 				{
 	?>
@@ -607,7 +607,7 @@ foreach($my_bills as $bill)
 		{
 			$vid = $receiver['id'];
 			if(!isset($solution[$uid][$vid])){continue;}
-			$refund = $solution[$uid][$vid];
+							$refund = number_format((float)$solution[$uid][$vid], 2, '.', '');
 			if($refund > 0)
 			{
 ?>

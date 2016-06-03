@@ -45,7 +45,7 @@ function compute_bill_solution($account_id_arg, $bill_id_arg)
 	foreach($my_bill_participants as $contrib)
 	{
 		$nb_of_people += (int)$contrib['nb_of_people'];
-		$nb_of_parts += (float)$contrib['percent_of_usage'] *  (int)$contrib['nb_of_people'];
+		$nb_of_parts += (float)$contrib['percent_of_usage'] *  (float)$contrib['nb_of_people'];
 		$Debts[$contrib['participant_id']] = 0;
 		foreach($my_bill_participants as $contrib2)
 		{
@@ -72,12 +72,12 @@ function compute_bill_solution($account_id_arg, $bill_id_arg)
 	$debt_of_all = 0;
 	if($nb_of_parts > 0 )
 	{
-		$debt_of_all = number_format($total_payment / $nb_of_parts, 2, '.', '');
+		$debt_of_all = ($total_payment / $nb_of_parts);
 		foreach($my_bill_participants as $contrib)
 		{
 			$uid = $contrib['participant_id'];
 			$my_part = (int)$contrib['nb_of_people'] * (float)$contrib['percent_of_usage'] ;
-			$Debts[$uid] += number_format($debt_of_all * $my_part, 2, '.', '');
+			$Debts[$uid] +=($debt_of_all * $my_part);
 			//Debts is not what everyone should pay (positive) or should receive (negative)
 			if($Debts[$uid] <= 0)
 			{
@@ -128,8 +128,8 @@ function compute_bill_solution($account_id_arg, $bill_id_arg)
 	}
 	
 	//Usefull values
-	$Refunds[-1]['total'] = number_format((float)$total_payment, 2, '.', '');
-	$Refunds[-1]['single'] = number_format((float)$debt_of_all, 2, '.', '');
+	$Refunds[-1]['total'] = $total_payment;
+	$Refunds[-1]['single'] = $debt_of_all;
 	$Refunds[-1]['nb_of_people'] = (int)$nb_of_people ;
 	$Refunds[-1]['nb_of_parts'] = (int)$nb_of_parts ;
 	
