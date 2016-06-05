@@ -7,7 +7,7 @@ if(isset($_POST['submit_install']))
 {
 	$host = filter_input(INPUT_POST, 'host', FILTER_SANITIZE_STRING);
 	$username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
-	$passwd = filter_input(INPUT_POST, 'passwd', FILTER_SANITIZE_STRING);
+	$passwd = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
 	$passwd = is_null($passwd)?"":$passwd;
 	$dbname = filter_input(INPUT_POST, 'dbname', FILTER_SANITIZE_STRING);
 	$db_ok = test_db($host, $username, $passwd, $dbname);
@@ -36,10 +36,6 @@ if(isset($_POST['submit_install']))
 <body>
 
 <h1>Installation</h1>
-<p><?		$current_url =  "//{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
-echo $current_url;
-?>
-</p>
 <div>
 <form method="post">
 <div>

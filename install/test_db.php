@@ -6,6 +6,7 @@ function test_db($host_arg, $username_arg, $password_arg, $dbname_arg)
 	$host = htmlspecialchars($host_arg);
 	$username = htmlspecialchars($username_arg);
 	$password = htmlspecialchars($password_arg);
+	$password = is_null($password)?'':$password;
 	$dbname = htmlspecialchars($dbname_arg);
 	
 	try
