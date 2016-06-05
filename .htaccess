@@ -1,15 +1,20 @@
-RewriteEngine On 
-RewriteRule  ^index.html$  index.php [L] 
-RewriteRule  ^account/([a-z0-9]+)$  account.php/?hash=$1 [L]
-RewriteRule  ^account/([a-z0-9]+)/admin/?$  account.php/?hash=$1&admin=true [L]
-RewriteRule  ^account/([a-z0-9]+)/admin/edit_participant/([a-z0-9]+)$ account.php/?hash=$1&admin=true&edit_participant=$2 [L]
-RewriteRule  ^account/([a-z0-9]+)/admin/edit_payment/([a-z0-9]+)$ account.php/?hash=$1&admin=true&edit_payment=$2 [L]
-RewriteRule  ^account/([a-z0-9]+)/admin/edit_bill_part/([a-z0-9]+)$ account.php/?hash=$1&admin=true&edit_bill_part=$2 [L]
-RewriteRule  ^account/([a-z0-9]+)/admin/edit_bill/([a-z0-9]+)$ account.php/?hash=$1&admin=true&edit_bill=$2 [L]
+RewriteEngine On
+Options -Indexes
+Options -MultiViews
+RewriteBase /accounter
 
-RewriteRule  ^account/([a-z0-9]+)/admin/delete_participant/([a-z0-9]+)$ account.php/?hash=$1&admin=true&delete_participant=$2 [L]
-RewriteRule  ^account/([a-z0-9]+)/admin/delete_payment/([a-z0-9]+)$ account.php/?hash=$1&admin=true&delete_payment=$2 [L]
-RewriteRule  ^account/([a-z0-9]+)/admin/delete_bill_part/([a-z0-9]+)$ account.php/?hash=$1&admin=true&delete_bill_part=$2 [L]
-RewriteRule  ^account/([a-z0-9]+)/admin/delete_bill/([a-z0-9]+)$ account.php/?hash=$1&admin=true&delete_bill=$2 [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
 
+RewriteRule ^account/([a-zA-Z0-9]{16})$ account.php?hash=$1 [QSA,L]
+RewriteRule ^account/([a-zA-Z0-9]{32})/admin/edit_participant/([a-z0-9]{16})$ account.php?hash=$1&admin=true&edit_participant=$2 [QSA,L]
+RewriteRule ^account/([a-zA-Z0-9]{32})/admin/edit_payment/([a-z0-9]{16})$ account.php?hash=$1&admin=true&edit_payment=$2 [QSA,L]
+RewriteRule ^account/([a-zA-Z0-9]{32})/admin/edit_bill_part/([a-z0-9]{16})$ account.php?hash=$1&admin=true&edit_bill_part=$2 [QSA,L]
+RewriteRule ^account/([a-zA-Z0-9]{32})/admin/edit_bill/([a-z0-9]{16})$ account.php?hash=$1&admin=true&edit_bill=$2 [QSA,L]
 
+RewriteRule ^account/([a-zA-Z0-9]{32})/admin/delete_participant/([a-z0-9]{16})$ account.php?hash=$1&admin=true&delete_participant=$2 [QSA,L]
+RewriteRule ^account/([a-zA-Z0-9]{32})/admin/delete_payment/([a-z0-9]{16})$ account.php?hash=$1&admin=true&delete_payment=$2 [QSA,L]
+RewriteRule ^account/([a-zA-Z0-9]{32})/admin/delete_bill_part/([a-z0-9]{16})$ account.php?hash=$1&admin=true&delete_bill_part=$2 [QSA,L]
+RewriteRule ^account/([a-zA-Z0-9]{32})/admin/delete_bill/([a-z0-9]{16})$ account.php?hash=$1&admin=true&delete_bill=$2 [QSA,L]
+
+RewriteRule ^account/([a-zA-Z0-9]{32})/admin/?$ account.php?hash=$1&admin=true [QSA,L]
