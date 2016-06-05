@@ -1,4 +1,3 @@
-
 <?php
 
 function create_config_file($host_arg, $username_arg, $password_arg, $dbname_arg,

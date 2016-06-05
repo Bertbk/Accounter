@@ -3,20 +3,21 @@ include_once(__DIR__.'/create_config_file.php');
 include_once(__DIR__.'/test_db.php');
 
 
-if($_POST['submit_install'])
+if(isset($_POST['submit_install']))
 {
 	$host = filter_input(INPUT_POST, 'host', FILTER_SANITIZE_STRING);
 	$username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
 	$passwd = filter_input(INPUT_POST, 'passwd', FILTER_SANITIZE_STRING);
+	$passwd = is_null($passwd)?"":$passwd;
 	$dbname = filter_input(INPUT_POST, 'dbname', FILTER_SANITIZE_STRING);
 	$db_ok = test_db($host, $username, $passwd, $dbname);
 	if($db_ok)
 	{
 		$prefix = filter_input(INPUT_POST, 'prefix', FILTER_SANITIZE_STRING);
-		$current_url = $_SERVER['REQUEST_URI'];
-		$base_url = substr($string , 0, strlen($current_url) - strlen('/install/'));
+		$current_url =  "//{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
+		$base_url = substr($current_url , 0, strlen($current_url) - strlen('/install/install.php'));
 		
-		$config_created = create_config_file($host, $username, $passwd, $dbname, $prefix, $baseurl);
+		$config_created = create_config_file($host, $username, $passwd, $dbname, $prefix, $base_url);
 		if($config_created)
 		{
 			include_once(__DIR__.'/create_tables.php');
@@ -29,12 +30,16 @@ if($_POST['submit_install'])
 
 <html>
 <head>
+
 </head>
 
 <body>
 
 <h1>Installation</h1>
-
+<p><?		$current_url =  "//{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
+echo $current_url;
+?>
+</p>
 <div>
 <form method="post">
 <div>
@@ -56,7 +61,7 @@ if($_POST['submit_install'])
 		Password
 		</label>		
 		<input type="text" name="password" 
-		id="input_password" class="input_name" required />
+		id="input_password" class="input_name" />
 </div>
 <div>
 		<label for="input_dbname">
