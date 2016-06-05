@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__.'/../config-app.php';
+require_once __DIR__.'/../site/config-app.php';
 include_once(LIBPATH.'/accounts/create_new_account.php');
 
 $create_success = false;

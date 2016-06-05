@@ -1,14 +1,17 @@
 <?php
+
+$config_array = include('site/config.php');
+
 if ( !defined('ABSPATH') )
     define('ABSPATH', dirname(__FILE__));
 if ( !defined('LIBPATH') )
-    define('LIBPATH', dirname(__FILE__) . '/lib');
+    define('LIBPATH', ABSPATH . '/lib');
 if ( !defined('ACCOUNTPATH') )
-    define('ACCOUNTPATH', dirname(__FILE__) . '/account');
+    define('ACCOUNTPATH', ABSPATH . '/account');
 if ( !defined('BASEURL') )
-    define('BASEURL','http://localhost/Accounter');
+    define('BASEURL',$config_array['baseurl']);
 if ( !defined('PREFIX') )
-    define('PREFIX','acpt_');
+    define('PREFIX',$config_array['prefix_table']);
 if ( !defined('TABLE_ACCOUNTS') )
 	define('TABLE_ACCOUNTS', PREFIX.'accounts');
 if ( !defined('TABLE_BILLS') )
@@ -19,3 +22,5 @@ if ( !defined('TABLE_PARTICIPANTS') )
 	define('TABLE_PARTICIPANTS', PREFIX.'participants');
 	if ( !defined('TABLE_PAYMENTS') )
 	define('TABLE_PAYMENTS', PREFIX.'payments');
+
+unset($config_array);

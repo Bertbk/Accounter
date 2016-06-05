@@ -1,5 +1,5 @@
 <?php 
-require_once __DIR__.'/../config-app.php';
+require_once __DIR__.'/../site/config-app.php';
 
 include_once(LIBPATH.'/accounts/get_accounts.php');
 $accounts = get_accounts();
