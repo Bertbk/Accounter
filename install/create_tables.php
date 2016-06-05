@@ -143,7 +143,7 @@ $configs = include(SITEPATH.'/config.php');
     bill_id INT UNSIGNED NOT NULL,
     payer_id INT UNSIGNED NOT NULL,
     cost DECIMAL(12,2) NOT NULL,
-    receiver_id INT UNSIGNED NOT NULL,
+    receiver_id INT UNSIGNED,
 		description VARCHAR(255),
 		date_of_payment DATE,
     PRIMARY KEY (id),
