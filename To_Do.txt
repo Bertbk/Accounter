@@ -4,13 +4,10 @@ MAJOR
 ======
 1. Créer un installeur
 2. Comments
-3. Multi payments
 
 BUGS
 =====
 1. Participant email
-2. Payment float are cast to int
-3. Solution is NOT good (probablement erreur d'arrondis car je divise par 100...)
 
 MINOR
 =====

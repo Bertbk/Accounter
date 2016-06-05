@@ -1,4 +1,6 @@
 <?php 
+require_once __DIR__.'/../config-app.php';
+
 include_once(LIBPATH.'/accounts/get_account.php');
 include_once(LIBPATH.'/accounts/get_account_admin.php');
 

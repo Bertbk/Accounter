@@ -1,6 +1,6 @@
 <?php
 
-$config_array = include('site/config.php');
+$config_array = include(__DIR__.'/site/config.php');
 
 if ( !defined('ABSPATH') )
     define('ABSPATH', dirname(__FILE__));
@@ -8,6 +8,8 @@ if ( !defined('LIBPATH') )
     define('LIBPATH', ABSPATH . '/lib');
 if ( !defined('ACCOUNTPATH') )
     define('ACCOUNTPATH', ABSPATH . '/account');
+if ( !defined('SITEPATH') )
+    define('SITEPATH', ABSPATH . '/site');
 if ( !defined('BASEURL') )
     define('BASEURL',$config_array['baseurl']);
 if ( !defined('PREFIX') )

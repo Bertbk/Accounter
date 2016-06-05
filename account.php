@@ -1,4 +1,4 @@
 <?php 
-include_once(__DIR__.'/site/config-app.php');
+include_once(__DIR__.'/config-app.php');
 include_once(__DIR__.'/controls/account.php');
 ?>
