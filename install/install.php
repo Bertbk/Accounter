@@ -1,7 +1,80 @@
 <?php 
 include_once(__DIR__.'/create_config_file.php');
-create_config_file('localhost', 'root', '', 'testdb', 'cpt_', 'http://localhost/test');
-include_once(__DIR__.'/create_tables.php');
-include_once(__DIR__.'/clean_install.php');
+include_once(__DIR__.'/test_db.php');
+
+
+if($_POST['submit_install'])
+{
+	$host = filter_input(INPUT_POST, 'host', FILTER_SANITIZE_STRING);
+	$username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
+	$passwd = filter_input(INPUT_POST, 'passwd', FILTER_SANITIZE_STRING);
+	$dbname = filter_input(INPUT_POST, 'dbname', FILTER_SANITIZE_STRING);
+	$db_ok = test_db($host, $username, $passwd, $dbname);
+	if($db_ok)
+	{
+		$prefix = filter_input(INPUT_POST, 'prefix', FILTER_SANITIZE_STRING);
+		$current_url = $_SERVER['REQUEST_URI'];
+		$base_url = substr($string , 0, strlen($current_url) - strlen('/install/'));
+		
+		$config_created = create_config_file($host, $username, $passwd, $dbname, $prefix, $baseurl);
+		if($config_created)
+		{
+			include_once(__DIR__.'/create_tables.php');
+			include_once(__DIR__.'/clean_install.php');
+		}
+	}
+}
 
 ?>
+
+<html>
+<head>
+</head>
+
+<body>
+
+<h1>Installation</h1>
+
+<div>
+<form method="post">
+<div>
+		<label for="input_host">
+		Host
+		</label>		
+		<input type="text" name="host" 
+		id="input_host" class="input_name" required />
+</div>
+<div>
+		<label for="input_username">
+		Username
+		</label>		
+		<input type="text" name="username" 
+		id="input_username" class="input_name" required />
+</div>
+<div>
+		<label for="input_password">
+		Password
+		</label>		
+		<input type="text" name="password" 
+		id="input_password" class="input_name" required />
+</div>
+<div>
+		<label for="input_dbname">
+		Database name
+		</label>		
+		<input type="text" name="dbname" 
+		id="input_dbname" class="input_name" required />
+</div>
+<div>
+		<label for="input_prefix">
+		Prefix for table (default = cpter_)
+		</label>
+		<input type="text" name="prefix" 
+		id="input_prefix" class="input_name" value='cpter_'/>
+</div>
+<button type="submit" name="submit_install" value="Submit">Submit</button></div>
+</form>
+</div>
+</body>
+
+</html>
