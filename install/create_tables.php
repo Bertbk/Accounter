@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__.'/../config-app.php';
 
-$configs = include(ABSPATH.'/config.php');
+$configs = include(SITEPATH.'/config.php');
 
 	try
 	{
