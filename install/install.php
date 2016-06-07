@@ -14,10 +14,11 @@ if(isset($_POST['submit_install']))
 	if($db_ok)
 	{
 		$prefix = filter_input(INPUT_POST, 'prefix', FILTER_SANITIZE_STRING);
+		$email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
 		$current_url =  "//{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
 		$base_url = substr($current_url , 0, strlen($current_url) - strlen('/install/install.php'));
 		
-		$config_created = create_config_file($host, $username, $passwd, $dbname, $prefix, $base_url);
+		$config_created = create_config_file($host, $username, $passwd, $dbname, $prefix, $base_url, $email);
 		if($config_created)
 		{
 			include_once(__DIR__.'/create_tables.php');
@@ -66,6 +67,14 @@ if(isset($_POST['submit_install']))
 		<input type="text" name="dbname" 
 		id="input_dbname" class="input_name" required />
 </div>
+<div>
+		<label for="input_email">
+		Email address (retrieve accounts, etc.)
+		</label>
+		<input type="email" name="email" 
+		id="input_email" class="input_name" required/>
+</div>
+
 <div>
 		<label for="input_prefix">
 		Prefix for table (default = cpter_)

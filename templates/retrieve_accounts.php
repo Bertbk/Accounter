@@ -13,11 +13,17 @@
 <h1>Retrieve your accounts</h1>
 
 <?php 
-if($problem)
+if($problem == 1)
 {
 	?>
 		<p>Sorry, no account associated with this email address has been found. <br>
 		Please try again with another email address.</p>
+<?php	
+}
+else if($problem == 2)
+{
+	?>
+		<p>Sorry, the email couldn't be sent.</p>
 <?php	
 }
 ?>

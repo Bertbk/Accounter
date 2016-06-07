@@ -1,7 +1,7 @@
 <?php
 
 function create_config_file($host_arg, $username_arg, $password_arg, $dbname_arg,
-														$prefix_arg, $baseurl_arg)
+														$prefix_arg, $baseurl_arg, $email_arg)
 {
 	$host = htmlspecialchars($host_arg);
 	$username = htmlspecialchars($username_arg);
@@ -9,7 +9,13 @@ function create_config_file($host_arg, $username_arg, $password_arg, $dbname_arg
 	$dbname = htmlspecialchars($dbname_arg);
 	$prefix = htmlspecialchars($prefix_arg);
 	$baseurl = htmlspecialchars($baseurl_arg);
+	$email = filter_var(htmlspecialchars($email_arg), FILTER_SANITIZE_EMAIL);
 	
+	if(!$email)
+	{
+		return false;
+	}
+		
 	try
 	{
 	$query_db = 'mysql:host='.$host.'; dbname='.$dbname.'; charset=utf8';
@@ -35,8 +41,10 @@ function create_config_file($host_arg, $username_arg, $password_arg, $dbname_arg
 	fwrite($myfile, $txt);
 	$txt = "'prefix_table' => '".$prefix."',\n";
 	fwrite($myfile, $txt);
-	$txt = "'baseurl' => '".$baseurl."'\n";
+	$txt = "'baseurl' => '".$baseurl.",'\n";
 	fwrite($myfile, $txt);
+	$txt = "'email	' => '".$email."'\n";
+	fwrite($myfile, $txt);	
 	$txt = ");\n";
 	fwrite($myfile, $txt);
 	fclose($myfile);
