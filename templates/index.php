@@ -31,9 +31,12 @@ foreach ($accounts as $account)
 ?>
 </table>
 
-<h1>Create an account</h1>
-<ul>
-<li><a href=<?php echo BASEURL.'/create.php'?>>Create a new account</a></li>
+<h1>Menu</h1>
+<ul><li>
+<a href=<?php echo BASEURL.'/create.php'?>>Create a new account</a></li>
+
+<li>
+<a href=<?php echo BASEURL.'/retrieve_accounts.php'?>>Retrieve your accounts</a></li>
 </ul>
 
 </body>

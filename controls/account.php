@@ -419,7 +419,6 @@ if($admin_mode && ($what_to_edit['bill_participant']))
 }
 if($admin_mode && isset($_POST['submit_edit_bill_participant']))
 {
-
 	$p_participant_id = filter_input(INPUT_POST, 'p_participant_id', FILTER_SANITIZE_NUMBER_INT);
 	$p_percent_of_use = filter_input(INPUT_POST, 'p_percent_of_use', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);	
 	$bill_participant_edited = update_bill_participant($account_id, $bill_participant_id_to_edit, $p_participant_id, $p_percent_of_use);
