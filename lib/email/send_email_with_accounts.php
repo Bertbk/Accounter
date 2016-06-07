@@ -14,24 +14,11 @@ function send_email_with_accounts($email_arg, $arrayOfAccounts_arg)
 		return false;
 	}
 
-	$arrayOfAccounts = htmlspecialchars($arrayOfAccounts_arg);
 	
-	if(is_null($arrayOfAccounts) || empty($arrayOfAccounts))
+	if(is_null($arrayOfAccounts_arg) || empty($arrayOfAccounts_arg))
 	{return false;}
-
-	//send email
-	//filter according to some servers
-	if (!preg_match("#^[a-z0-9._-]+@(hotmail|live|msn).[a-z]{2,4}$#", $dest_email))
-	{
-		$br = "\r\n";
-	}
-	else
-	{
-		$br = "\n";
-	}
-	
-	$filtered_array = array();
-	foreach($arrayOfAccounts as $key => $account)
+	$filtered_array = array(array());
+	foreach($arrayOfAccounts_arg as $key => $account)
 	{
 		if(!isset($account['title']))
 			{return false;}
@@ -48,6 +35,17 @@ function send_email_with_accounts($email_arg, $arrayOfAccounts_arg)
 		$filtered_array[$key]['hashid_admin'] = filter_var(htmlspecialchars($account['hashid_admin']), FILTER_SANITIZE_STRING);
 	}
 	
+	//send email
+	//filter according to some servers
+	if (!preg_match("#^[a-z0-9._-]+@(hotmail|live|msn).[a-z]{2,4}$#", $dest_email))
+	{
+		$br = "\r\n";
+	}
+	else
+	{
+		$br = "\n";
+	}
+	
 	//=====txt and html text
 	$message_txt = "Please find here the list of your accounts :".$br;
 	foreach($filtered_array as $account)
@@ -59,29 +57,29 @@ function send_email_with_accounts($email_arg, $arrayOfAccounts_arg)
 		$message_txt = $message_txt."  Admin link      : ".$admin_link.$br;
 	}
 
-	$message_html = '<html><head></head><body>
-	<p>Please find here the list of your accounts:</p>';
+	$message_html = '<html><head></head><body>';
+	$message_html = $message_html.'<p>Please find here the list of your accounts:</p>';
 	$message_html = $message_html.'<ul>';
 	foreach($filtered_array as $account)
 	{
-		$message_html = $message_html.'<li>'.$account['title'].' :';
+		$message_html = $message_html.'<li>'.$account['title'].':';
 		$part_link  = BASEURL.'/account/'.$account['hashid'];
 		$admin_link = BASEURL.'/account/'.$account['hashid_admin'].'/admin';
+		$message_html = $message_html.'<ul>';
 		$message_html = $message_html."<li>Participant link: <a href='".$part_link."'>".$part_link."</a></li>";
 		$message_html = $message_html."<li>Admin link      : <a href='".$admin_link."'>".$admin_link."</a></li>";
 		$message_html = $message_html.'</ul>';
 		$message_html = $message_html.'</li>';
 	}	
 	$message_html = $message_html.'</ul>';
-	$message_html = '</body></html>';
-
+	$message_html = $message_html.'</body></html>';
  
 	//=====Boundary creation
 	$boundary = "-----=".md5(rand());
 	//==========
 	 
 	//=====Object
-	$topic = "Hey mon ami !";
+	$topic = "[Accounter] Link to your accounts";
 	//=========
 	 
 	//=====Header of the email

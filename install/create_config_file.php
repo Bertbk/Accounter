@@ -41,7 +41,7 @@ function create_config_file($host_arg, $username_arg, $password_arg, $dbname_arg
 	fwrite($myfile, $txt);
 	$txt = "'prefix_table' => '".$prefix."',\n";
 	fwrite($myfile, $txt);
-	$txt = "'baseurl' => '".$baseurl.",'\n";
+	$txt = "'baseurl' => '".$baseurl."',\n";
 	fwrite($myfile, $txt);
 	$txt = "'email	' => '".$email."'\n";
 	fwrite($myfile, $txt);	
