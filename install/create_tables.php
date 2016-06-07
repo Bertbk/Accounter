@@ -1,7 +1,9 @@
 <?php
 require_once __DIR__.'/../config-app.php';
 
-$configs = include(SITEPATH.'/config.php');
+function create_tables()
+{
+	$configs = include(SITEPATH.'/config.php');
 
 	try
 	{
@@ -32,7 +34,7 @@ $configs = include(SITEPATH.'/config.php');
 	}
 	catch (Exception $e)
 	{
-		echo 'Fail to connect: ' . $e->getMessage();
+			return 'Fail to connect: ' . $e->getMessage();
 	}
 	
 	// BILLS
@@ -60,7 +62,7 @@ $configs = include(SITEPATH.'/config.php');
 	}
 	catch (Exception $e)
 	{
-		echo 'Fail to connect: ' . $e->getMessage();
+			return 'Fail to connect: ' . $e->getMessage();
 	}
 	
 	// PARTICIPANTS
@@ -89,7 +91,7 @@ $configs = include(SITEPATH.'/config.php');
 	}
 	catch (Exception $e)
 	{
-		echo 'Fail to connect: ' . $e->getMessage();
+			return 'Fail to connect: ' . $e->getMessage();
 	}
 
 	
@@ -130,7 +132,7 @@ $configs = include(SITEPATH.'/config.php');
 	}
 	catch (Exception $e)
 	{
-		echo 'Fail to connect: ' . $e->getMessage();
+			return 'Fail to connect: ' . $e->getMessage();
 	}
 	
 	// PAYMENTS
@@ -179,5 +181,8 @@ $configs = include(SITEPATH.'/config.php');
 	}
 	catch (Exception $e)
 	{
-		echo 'Fail to connect: ' . $e->getMessage();
+			return 'Fail to connect: ' . $e->getMessage();
 	}
+	
+	return '';
+}

@@ -1,6 +1,7 @@
 <?php 
 include_once(__DIR__.'/create_config_file.php');
 include_once(__DIR__.'/test_db.php');
+include_once(__DIR__.'/create_tables.php');
 
 
 if(isset($_POST['submit_install']))
@@ -21,8 +22,15 @@ if(isset($_POST['submit_install']))
 		$config_created = create_config_file($host, $username, $passwd, $dbname, $prefix, $base_url, $email);
 		if($config_created)
 		{
-			include_once(__DIR__.'/create_tables.php');
-			header('location: ../clean_install.php');
+			$table_created = create_tables();
+			if(empty($table_created))
+			{
+				include_once(__DIR__.'/clean.php');
+			}
+			else
+			{
+				echo $table_created;
+			}
 		}
 	}
 }

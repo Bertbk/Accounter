@@ -1,4 +1,3 @@
-
 <?php
 
 function test_db($host_arg, $username_arg, $password_arg, $dbname_arg)
@@ -16,7 +15,7 @@ function test_db($host_arg, $username_arg, $password_arg, $dbname_arg)
 	}
 	catch (Exception $e)
 	{
-			die('Fail to connect : ' . $e->getMessage());
+			//die('Fail to connect : ' . $e->getMessage());
 			return false;
 	}
 	return true;
