@@ -1,23 +1,31 @@
 A FAIRE
 
+INSTALLEUR
+==========
+1. Si aucun fichier config présent, index.php doit aller vers l'installeur
+2. 
+
 MAJOR
 ======
 1. Créer un installeur
-2. Comments
+2. Multiple receivers for a payment
+3. Store the solution with a check value ? Or a "refund" possible ? Or a "Bill" named "Refund"... ?
+4. Sending emails
+5. Comments
 
 BUGS
 =====
-1. Participant email
+1. Participant email (What bug ?!)
 
 MINOR
 =====
-1. Hide/Show details de Payments : ne montrer que la somme finale, clic pour details (JAVASCRIPT)
-2. Payment local multiple (A a payé 10euros à (B,C) donc B et C doivent 5euros à A)
 
 DESIGN
 ======
 
 1. Label sous l'input
+
+
 ----
 NOTES d'INSTALL
 A. Foreign Keys et Contraintes de suppression !
