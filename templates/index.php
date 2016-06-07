@@ -4,7 +4,6 @@
 <head>
 </head>
 <body>
-
 <h1>Table of the accounts</h1>
 
 <table style="width:100%" border="1">
@@ -38,6 +37,5 @@ foreach ($accounts as $account)
 <li>
 <a href=<?php echo BASEURL.'/retrieve_accounts.php'?>>Retrieve your accounts</a></li>
 </ul>
-
 </body>
 </html>

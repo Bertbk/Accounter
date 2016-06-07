@@ -22,7 +22,7 @@ if(isset($_POST['submit_install']))
 		if($config_created)
 		{
 			include_once(__DIR__.'/create_tables.php');
-			include_once(__DIR__.'/clean_install.php');
+			header('location: ../clean_install.php');
 		}
 	}
 }
