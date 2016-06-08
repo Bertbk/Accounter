@@ -346,7 +346,7 @@ foreach($my_bills as $bill)
 	?>
 			<div>
 				<span><input type="hidden" name="p_bill_hashid" value="<?php echo $bill['hashid']?>"></span>
-				<span><button type="submit" name="submit_assign_participant" value="Submit">Submit</button></span>
+				<span><button type="submit" name="submit_new_bill_participant" value="Submit">Submit</button></span>
 			</div>
 		  </fieldset>
 		</form>

@@ -34,93 +34,32 @@ include_once(LIBPATH.'/bill_participants/delete_bill_participant.php');
 
 include_once(LIBPATH.'/solutions/compute_bill_solutions.php');
 include_once(LIBPATH.'/solutions/compute_solution.php');
+
+include_once(LIBPATH.'/hashid/validate_hashid.php');
+
+
 /* Get arguments */
 //Get if admin mode is asked to be activated 
 $admin_mode_url = false;
 if(!empty($_GET['admin']))
 {
-	$admin_mode_url  = (boolean)$_GET['admin'];
+	$admin_mode_url = (boolean)$_GET['admin'];
 }
 
-//Get Hashid
+//Get Hashid of the account
 $hashid = "";
 empty($_GET['hash']) ? $hashid = "" : $hashid = htmlspecialchars($_GET['hash']);
-//If no hashid then go back home
-if($hashid == "" || (strlen($hashid) != 16 && !$admin_mode_url) 
-	||(strlen($hashid) != 32 && $admin_mode_url))
+//If no or bad hashid then go back home
+if(!validate_hashid($hashid)
+	||!validate_hashid_admin($hashid_admin))
 {
 	header ('location: '.BASEURL);
 }
-//Edit...
-$what_to_edit = array (
-    "bill"  => false,
-    "participant"  => false,
-    "payment" => false,
-    "bill_participant" => false
-);
-$what_to_delete = $what_to_edit;
-$hashid_edit = array(
-    "bill"  => "",
-    "participant"  => "",
-    "payment" => "",
-    "bill_participant" => ""
-);
-$hashid_delete = $hashid_edit;
 
-//Edit a participant ?
-$participant_hashid = "";
-empty($_GET['edit_participant']) ? $participant_hashid = "" : $participant_hashid = htmlspecialchars($_GET['edit_participant']);
-$hashid_edit['participant'] = (strlen($participant_hashid)==16)? $participant_hashid : "";
-$what_to_edit['participant'] = !(empty($participant_hashid));
-$participant_hashid = "";
-//Edit a payment ?
-$payment_hashid = "";
-empty($_GET['edit_payment']) ? $payment_hashid = "" : $payment_hashid = htmlspecialchars($_GET['edit_payment']);
-$hashid_edit['payment'] = (strlen($payment_hashid)==16)? $payment_hashid : "";
-$what_to_edit['payment'] = (!empty($payment_hashid));
-$payment_hashid = "";
-//Edit a bill_participant ?
-$bill_part_hashid = "";
-empty($_GET['edit_bill_part']) ? $bill_part_hashid = "" : $bill_part_hashid = htmlspecialchars($_GET['edit_bill_part']);
-$hashid_edit['bill_participant'] = (strlen($bill_part_hashid)==16)? $bill_part_hashid : "";
-$what_to_edit['bill_participant'] = (!empty($bill_part_hashid));
-$bill_part_hashid = "";
-//Edit a bill ?
-$bill_hashid = "";
-empty($_GET['edit_bill']) ? $bill_hashid = "" : $bill_hashid = htmlspecialchars($_GET['edit_bill']);
-$hashid_edit['bill'] = (strlen($bill_hashid)==16)? $bill_hashid : "";
-$what_to_edit['bill'] = (!empty($bill_hashid));
-$bill_hashid = "";
-
-//Delete a participant ?
-$participant_hashid = "";
-empty($_GET['delete_participant']) ? $participant_hashid = "" : $participant_hashid = htmlspecialchars($_GET['delete_participant']);
-$hashid_delete['participant'] = (strlen($participant_hashid)==16)? $participant_hashid : "";
-$what_to_delete['participant'] = !(empty($participant_hashid));
-$participant_hashid = "";
-//Delete a payment ?
-$payment_hashid = "";
-empty($_GET['delete_payment']) ? $payment_hashid = "" : $payment_hashid = htmlspecialchars($_GET['delete_payment']);
-$hashid_delete['payment'] = (strlen($payment_hashid)==16)? $payment_hashid : "";
-$what_to_delete['payment'] = (!empty($payment_hashid));
-$payment_hashid = "";
-//Delete a bill_participant ?
-$bill_part_hashid = "";
-empty($_GET['delete_bill_part']) ? $bill_part_hashid = "" : $bill_part_hashid = htmlspecialchars($_GET['delete_bill_part']);
-$hashid_delete['bill_participant'] = (strlen($bill_part_hashid)==16)? $bill_part_hashid : "";
-$what_to_delete['bill_participant'] = (!empty($bill_part_hashid));
-$bill_part_hashid = "";
-//Delete a bill ?
-$bill_hashid = "";
-empty($_GET['delete_bill']) ? $bill_hashid = "" : $bill_hashid = htmlspecialchars($_GET['delete_bill']);
-$hashid_delete['bill'] = (strlen($bill_hashid)==16)? $bill_hashid : "";
-$what_to_delete['bill'] = (!empty($bill_hashid));
-$bill_hashid = "";
-
-/* Treat arguments */
 $my_account = array();
-$admin_mode = false;
-$edit_mode = false;
+$admin_mode = false; //validates the admin mode or not
+$edit_mode = false; //validates the edit mode or not (in edit mode, display changes for a particular data)
+//FIND THE ACCOUNT
 if(!$admin_mode_url)
 {
 	//Simple search
@@ -130,320 +69,300 @@ else
 {
 	//Admin search
 	$my_account = get_account_admin($hashid);
-	//If result, then admin mode activated
 	if(!empty($my_account))
-	{
-		$admin_mode = true;
-	}
-	//else: try but fail
+	{	$admin_mode = true; }
 }
 
+//Go back home if it's a failure
 if(empty($my_account))
 {
 	header ('location: '.BASEURL);
 }
 
-//If not admin, then no edit priviledges
-if(!$admin_mode)
-{
-	$payment_hashid = "";
-	$participant_hashid = "";
-	foreach($what_to_edit as $possiblemode)
-	{
-		$what_to_edit[$possiblemode] = false;
-	}
-	foreach($what_to_delete as $possiblemode)
-	{
-		$what_to_delete[$possiblemode] = false;
-	}
-	foreach($hashid_edit as $possiblemode)
-	{
-		$hashid_edit[$possiblemode] = "";
-	}
-}
-
-$edit_mode = false;
-foreach($what_to_edit as $possiblemode=>$key)
-{if($what_to_edit[$possiblemode]==true){$edit_mode = true;} }
-foreach($what_to_delete as $possiblemode=>$key)
-{if($what_to_delete[$possiblemode]==true){$edit_mode = true;} }
-
-/* Here, we have an account and we know if we are admin or not.*/
 $account_id = $my_account['id'];
-$bill_id_to_edit = "";
+$link_to_account = BASEURL.'/account/'.$my_account['hashid'];
+$link_to_account_admin = BASEURL.'/account/'.$my_account['hashid_admin'].'/admin';
 
-/* PARTICIPANT*/
-//New participant
-if($admin_mode && isset($_POST['submit_participant']))
-{
-	$p_name_of_participant = filter_input(INPUT_POST, 'p_name_of_participant', FILTER_SANITIZE_STRING);
-	$p_nb_of_people = filter_input(INPUT_POST, 'p_nb_of_people', FILTER_SANITIZE_NUMBER_INT);
-	$p_email = filter_input(INPUT_POST, 'p_email', FILTER_SANITIZE_EMAIL, FILTER_VALIDATE_EMAIL);
-	if(!empty($p_name_of_participant)){
-		$p_participant_recorded = set_participant($account_id, $p_name_of_participant, $p_nb_of_people, $p_email);
-	}
-	if(!$p_participant_recorded)
-	{
-		echo '<p>participant couldn\'t be added.</p>';
-	}
-}
-//Edit participant
-$participant_id_to_edit = null;
-if($admin_mode && ($what_to_edit['participant']))
-{
-	$participant_to_edit = get_participant_by_hashid($account_id, $hashid_edit['participant']);
-	if(!empty($participant_to_edit))
-	{
-		$participant_id_to_edit = $participant_to_edit['id'];
-	}
-}
-if($admin_mode && isset($_POST['submit_edit_participant']))
-{
-	$name_of_participant = filter_input(INPUT_POST, 'name_of_participant', FILTER_SANITIZE_STRING);
-	$nb_of_people = filter_input(INPUT_POST, 'nb_of_people', FILTER_SANITIZE_NUMBER_INT);
-	$participant_edited = update_participant($account_id, $participant_id_to_edit, 
-		$name_of_participant, $nb_of_people);
-	if($participant_edited)
-	{
-		$redirect_url = 'location:'.BASEURL.'/account/'.$hashid.'/admin';
-		header($redirect_url);
-	}
-}
-//delete participant
-if($admin_mode && $what_to_delete['participant'])
-{
-	$participant_to_delete = get_participant_by_hashid($account_id, $hashid_delete['participant']);
-	$participant_deleted = delete_participant($account_id, $participant_to_delete['id']);
-	$redirect_url = 'location:'.BASEURL.'/account/'.$hashid.'/admin';
-	header($redirect_url);
-}
 
-/*BILL*/
-//New bill
-if($admin_mode && isset($_POST['submit_bill']))
+/* ARGUMENTS FOR ADMIN MODE */
+if($admin_mode)
 {
-	$p_name_of_bill = filter_input(INPUT_POST, 'p_name_of_bill', FILTER_SANITIZE_STRING);
-	$p_description = filter_input(INPUT_POST, 'p_description', FILTER_SANITIZE_STRING);
-	$p_bill_recorded = set_bill($account_id, $p_name_of_bill, $p_description);
-	if(!$p_bill_recorded)
-	{
-		echo '<p>bill couldn\'t be added.</p>';
-	}
-}
-//Edit bill
-$bill_id_to_edit = null;
-if($admin_mode && ($what_to_edit['bill']))
-{
-	$bill_to_edit = get_bill_by_hashid($account_id, $hashid_edit['bill']);
-	if(!empty($bill_to_edit))
-	{
-		$bill_id_to_edit = $bill_to_edit['id'];
-	}
-}
-if($admin_mode && isset($_POST['submit_edit_bill']))
-{
-	$p_title = filter_input(INPUT_POST, 'p_title', FILTER_SANITIZE_STRING);
-	$p_description = filter_input(INPUT_POST, 'p_description', FILTER_SANITIZE_STRING);
-	$bill_edited = update_bill($account_id, $bill_id_to_edit, $p_title, $p_description);
-	if($bill_edited)
-	{
-		$redirect_url = 'location:'.BASEURL.'/account/'.$hashid.'/admin';
-		header($redirect_url);
-	}
-}
-//Delete bill_participant
-if($admin_mode && $what_to_delete['bill'])
-{
-	$bill_to_delete = get_bill_by_hashid($account_id, $hashid_delete['bill']);
-	$bill_deleted = delete_bill($account_id, $bill_to_delete['id']);
-	$redirect_url = 'location:'.BASEURL.'/account/'.$hashid.'/admin';
-	header($redirect_url);
-}
+	//Modify saved data
+	$TypeOfData = array("participant", "payment", "bill", "bill_participant");
+	$PossibleAction = array("new", "edit", "update", "delete");
 
-/* PAYMENT */
-//New Payment
-if($admin_mode && isset($_POST['submit_payment']))
-{
-	$p_bill_hashid = filter_input(INPUT_POST, 'p_bill_hashid', FILTER_SANITIZE_STRING);
-	$p_bill = get_bill_by_hashid($account_id, $p_bill_hashid);
-
-	foreach ($_POST['p_payment'] as $payment)
+	$type_of_data_to_be_modified = ""; //a member of $TypeOfData
+	$action_on_data_to_be_modified = ""; // a member of $PossibleAction
+	$data_to_be_modified = array(); //The data obtained by sql
+	//We take the first arguments of type edit_XXX or delete_XXX where XXX is a "member" of $TypeOfData
+	foreach($_GET  as $key => $arg)
 	{
-		if(!isset($payment['payer_hashid']))
+		$res_reg;
+		$is_good = preg_match("/^(edit|delete)_(participant|payment|bill|bill_participant)$/", $key, $res_reg);
+		if(!$is_good )
 			{continue;}
-		$p_payer_hashid = htmlspecialchars($payment['payer_hashid']);
-		$p_payer_hashid = filter_var($p_payer_hashid, FILTER_SANITIZE_STRING);
-		if($p_payer_hashid == null)
-			{continue;}
-		$p_payer = get_participant_by_hashid($account_id, $p_payer_hashid);
-		if(empty($p_payer))
-			{continue;}
-		$p_payer_id = $p_payer['id'];
+		if(empty($_GET[$key]))
+			{break;}
+		$tmp_action = $res_reg[0];
+		$tmp_type = $res_reg[1];
+		$type_hashid = htmlspecialchars($_GET[$key]);
+		//If hashid is wrong, we reset every data (assuming it's an attack or a random test)
+		if(!validate_hashid($type_hashid))
+			{break;}
+		//It's a valid hashid, now get the data
+		if($tmp_action == "participant")
+		{ $data_to_be_modified = get_participant_by_hashid($account_id, $type_hashid);}
+		elseif($tmp_action == "payment")
+		{ $data_to_be_modified = get_payment_by_hashid($account_id, $type_hashid);}
+		elseif($tmp_action == "bill")
+		{ $data_to_be_modified = get_bill_by_hashid($account_id, $type_hashid);}
+		elseif($tmp_action == "bill_participant")
+		{ $data_to_be_modified = get_bill_participant_by_hashid($account_id, $type_hashid);}
+		else{break;}
 
-		if(!isset($payment['cost']))
+		if(empty($data_to_be_modified))
+		{$data_to_be_modified = null;
+			break;}
+		//Now, we have the data to be modified, so we know what to do.
+		//We skip every other arguments
+		$type_of_data_to_be_modified = $tmp_type;
+		$action_on_data_to_be_modified = $tmp_action;
+		break;
+	}
+	
+	//We now know if there is a data to be modified or not. We have to check if the user used the FORM to :
+	// - to cancel and come back to "non edit" mode
+	// - to add new data
+	// - to update new data
+	foreach($_POST  as $key => $arg)
+	{
+		$res_reg;
+		$is_good = preg_match("/^submit_(edit_|)(participant|payment|bill|cancel)$/", 
+			$key, $res_reg);
+		if(!$is_good )
 			{continue;}
-		$p_cost = filter_var($payment['cost'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-		if($p_cost <= 0)
-		{continue;}
+		if(!isset($_POST[$key]))
+			{break;}
+		$tmp_edit_or_not = $res_reg[0] =='edit';
+		$tmp_type = $res_reg[1];
 
-		if(!isset($payment['recv_hashid']))
-			{continue;}
-		$p_recv_hashid = htmlspecialchars($payment['recv_hashid']);
-		$p_recv_hashid = filter_var($p_recv_hashid, FILTER_SANITIZE_STRING);
-		$p_recv_id = null;
-
-		if($p_recv_hashid != '-1')
+		//Submit button of an edit form has been clicked
+		//Verify that the data to be updated IS of the same type than the data selected
+		if($tmp_edit_or_not && $type_of_data_to_be_modified === $tmp_type)
 		{
-			$p_recv = get_participant_by_hashid($account_id, $p_recv_hashid);
-			if(empty($p_recv))
-			{continue;}
-			$p_recv_id = $p_recv['id'];
+			$action_on_data_to_be_modified = "update";
+			break;
 		}
-		
-		$p_description = filter_var($payment['description'], FILTER_SANITIZE_STRING);
-		$p_description = (empty($p_description))?null:$p_description;
-		$p_date_payment  = filter_var($payment['date_payment'], FILTER_SANITIZE_STRING);
-		$p_date_payment = (empty($p_date_payment))?null:$p_date_payment;
-		$p_payment_added = set_payment($account_id, $p_bill['id'], 
-		$p_payer_id, $p_cost, $p_recv_id, $p_description, $p_date_payment);
-		if(!$p_payment_added)
+		//It's not an update
+		//Cancel ?
+		if($tmp_type == 'cancel')
 		{
-			echo '<p>payment couldn\'t be added.</p>';
-		}
-	}
+			header('location:'.$link_to_account_admin);
+		}		
+		//Otherwise, it's a new data to be stored
+		$action_on_data_to_be_modified = "new";
+		$type_of_data_to_be_modified = $res_reg[1];
+		break;
+	}	
 }
-//Edit payment
-$payment_id_to_edit = null;
-if($admin_mode && ($what_to_edit['payment']))
-{
-	$payment_to_edit = get_payment_by_hashid($account_id, $hashid_edit['payment']);
-	if(!empty($payment_to_edit))
-	{
-		$payment_id_to_edit = $payment_to_edit['id'];
-		$bill_id_to_edit = $payment_to_edit['bill_id'];
 
-		
-	}
-}
-if($admin_mode && isset($_POST['submit_edit_payment']))
+if($action_on_data_to_be_modified == "edit")
+	{$edit_mode == true;}
+/* Here, we have an account and we know if we are admin or not.
+Extract every data about the account and/or do the admin actions
+*/
+/* PARTICIPANT */
+//New DATA
+if($admin_mode)
 {
-	$payment_edited = false;
-	$p_bill_hashid = filter_input(INPUT_POST, 'p_bill_hashid', FILTER_SANITIZE_STRING);
-	$p_bill = get_bill_by_hashid($account_id, $p_bill_hashid);
-	$p_payer_hashid = filter_input(INPUT_POST, 'p_payer_hashid', FILTER_SANITIZE_STRING);
-	$p_payer = get_participant_by_hashid($account_id, $p_payer_hashid);
-	if(!empty($p_payer))
+	if($action_on_data_to_be_modified = "new")
 	{
-		$p_payer_id = $p_payer['id'];
-		$p_cost = filter_input(INPUT_POST, 'p_cost', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-		$p_receiver_hashid = filter_input(INPUT_POST, 'p_receiver_hashid', FILTER_SANITIZE_STRING);
-		$recv_pb = false;
-		if(is_null($p_receiver_hashid) ||$p_receiver_hashid == -1)
+		if($type_of_data_to_be_modified == "participant")
 		{
-			$p_receiver_id= null;
-		}
-		else{
-			$p_recv = get_participant_by_hashid($account_id, $p_receiver_hashid);
-			if(!empty($p_recv))
-			{
-				$p_receiver_id = $p_recv['id'];
+			$p_name_of_participant = filter_input(INPUT_POST, 'p_name_of_participant', FILTER_SANITIZE_STRING);
+			$p_nb_of_people = filter_input(INPUT_POST, 'p_nb_of_people', FILTER_SANITIZE_NUMBER_INT);
+			$p_email = filter_input(INPUT_POST, 'p_email', FILTER_SANITIZE_EMAIL, FILTER_VALIDATE_EMAIL);
+			if(!empty($p_name_of_participant)){
+				$p_participant_recorded = set_participant($account_id, $p_name_of_participant, $p_nb_of_people, $p_email);
 			}
-			else
-			{$recv_pb = true;}
+			if(!$p_participant_recorded)
+			{
+				//echo '<p>participant couldn\'t be added.</p>';
+			}
+		}elseif($type_of_data_to_be_modified == "bill")
+		{$p_name_of_bill = filter_input(INPUT_POST, 'p_name_of_bill', FILTER_SANITIZE_STRING);
+		$p_description = filter_input(INPUT_POST, 'p_description', FILTER_SANITIZE_STRING);
+		$p_bill_recorded = set_bill($account_id, $p_name_of_bill, $p_description);
 		}
-		if(!$recv_pb)
+		elseif($type_of_data_to_be_modified == "bill_participant")
+		{ $p_bill_hashid = filter_input(INPUT_POST, 'p_bill_hashid', FILTER_SANITIZE_STRING);
+			$p_bill = get_bill_by_hashid($account_id, $p_bill_hashid);
+			$association_ok = true;
+			foreach ($_POST['p_participant'] as $particip)
+			{
+				if(!isset($particip['hashid']))
+					{continue;}
+				$p_participant_hashid = htmlspecialchars($particip['hashid']);
+				$p_participant_hashid = filter_var($p_participant_hashid, FILTER_SANITIZE_STRING);
+				$p_percent_of_use = (float)$particip['percent'];
+				$p_percent_of_use = filter_var($p_percent_of_use, FILTER_SANITIZE_NUMBER_INT);
+				$p_participant = get_participant_by_hashid($account_id, $p_participant_hashid);
+				if(empty($p_participant)){continue;}
+				$association_ok_bis = set_bill_participant($account_id, $p_bill['id'], 
+					$p_participant['id'], $p_percent_of_use);
+				$association_ok = $association_ok ||$association_ok_bis;
+			}
+		}
+		elseif($type_of_data_to_be_modified == "payment")
+		{ $p_bill_hashid = filter_input(INPUT_POST, 'p_bill_hashid', FILTER_SANITIZE_STRING);
+			$p_bill = get_bill_by_hashid($account_id, $p_bill_hashid);
+
+			foreach ($_POST['p_payment'] as $payment)
+			{
+				if(!isset($payment['payer_hashid']))
+					{continue;}
+				$p_payer_hashid = htmlspecialchars($payment['payer_hashid']);
+				$p_payer_hashid = filter_var($p_payer_hashid, FILTER_SANITIZE_STRING);
+				if($p_payer_hashid == null)
+					{continue;}
+				$p_payer = get_participant_by_hashid($account_id, $p_payer_hashid);
+				if(empty($p_payer))
+					{continue;}
+				$p_payer_id = $p_payer['id'];
+
+				if(!isset($payment['cost']))
+					{continue;}
+				$p_cost = filter_var($payment['cost'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+				if($p_cost <= 0)
+				{continue;}
+
+				if(!isset($payment['recv_hashid']))
+					{continue;}
+				$p_recv_hashid = htmlspecialchars($payment['recv_hashid']);
+				$p_recv_hashid = filter_var($p_recv_hashid, FILTER_SANITIZE_STRING);
+				$p_recv_id = null;
+
+				if($p_recv_hashid != '-1')
+				{
+					$p_recv = get_participant_by_hashid($account_id, $p_recv_hashid);
+					if(empty($p_recv))
+					{continue;}
+					$p_recv_id = $p_recv['id'];
+				}
+				
+				$p_description = filter_var($payment['description'], FILTER_SANITIZE_STRING);
+				$p_description = (empty($p_description))?null:$p_description;
+				$p_date_payment  = filter_var($payment['date_payment'], FILTER_SANITIZE_STRING);
+				$p_date_payment = (empty($p_date_payment))?null:$p_date_payment;
+				$p_payment_added = set_payment($account_id, $p_bill['id'], 
+				$p_payer_id, $p_cost, $p_recv_id, $p_description, $p_date_payment);
+			}
+		}
+	}
+	//Edit: Nothing to do, we already have extracted the data
+	//So, next one: Action == update
+	else if($action_on_data_to_be_modified = "update")
+	{
+		if($type_of_data_to_be_modified == "participant")
+		{ $name_of_participant = filter_input(INPUT_POST, 'name_of_participant', FILTER_SANITIZE_STRING);
+			$nb_of_people = filter_input(INPUT_POST, 'nb_of_people', FILTER_SANITIZE_NUMBER_INT);
+			$participant_edited = update_participant($account_id, $participant_id_to_edit, 
+				$name_of_participant, $nb_of_people);
+			if($participant_edited)
+			{
+				$redirect_url = 'location:'.BASEURL.'/account/'.$hashid.'/admin';
+				header($redirect_url);
+			}
+		} elseif($type_of_data_to_be_modified == "bill")
 		{
+			$p_title = filter_input(INPUT_POST, 'p_title', FILTER_SANITIZE_STRING);
 			$p_description = filter_input(INPUT_POST, 'p_description', FILTER_SANITIZE_STRING);
-			$p_date_payment  = filter_input(INPUT_POST, 'p_date_payment', FILTER_SANITIZE_STRING);		
-			$payment_edited = update_payment($account_id, $p_bill['id'], $payment_id_to_edit, 
-			$p_payer_id, $p_cost, $p_receiver_id, $p_description, $p_date_payment);
+			$bill_edited = update_bill($account_id, $bill_id_to_edit, $p_title, $p_description);
+			if($bill_edited)
+			{
+				$redirect_url = 'location:'.BASEURL.'/account/'.$hashid.'/admin';
+				header($redirect_url);
+			}
+		}elseif($type_of_data_to_be_modified == "bill_participant")
+		{ $p_participant_id = filter_input(INPUT_POST, 'p_participant_id', FILTER_SANITIZE_NUMBER_INT);
+			$p_percent_of_use = filter_input(INPUT_POST, 'p_percent_of_use', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);	
+			$bill_participant_edited = update_bill_participant($account_id, $bill_participant_id_to_edit, $p_participant_id, $p_percent_of_use);
+			if($bill_participant_edited)
+			{
+				$redirect_url = 'location:'.BASEURL.'/account/'.$hashid.'/admin';
+				header($redirect_url);
+			}
+		}elseif($type_of_data_to_be_modified == "payment")
+		{
+			$payment_edited = false;
+			$p_bill_hashid = filter_input(INPUT_POST, 'p_bill_hashid', FILTER_SANITIZE_STRING);
+			$p_bill = get_bill_by_hashid($account_id, $p_bill_hashid);
+			$p_payer_hashid = filter_input(INPUT_POST, 'p_payer_hashid', FILTER_SANITIZE_STRING);
+			$p_payer = get_participant_by_hashid($account_id, $p_payer_hashid);
+			if(!empty($p_payer))
+			{
+				$p_payer_id = $p_payer['id'];
+				$p_cost = filter_input(INPUT_POST, 'p_cost', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+				$p_receiver_hashid = filter_input(INPUT_POST, 'p_receiver_hashid', FILTER_SANITIZE_STRING);
+				$recv_pb = false;
+				if(is_null($p_receiver_hashid) ||$p_receiver_hashid == -1)
+				{
+					$p_receiver_id= null;
+				}
+				else{
+					$p_recv = get_participant_by_hashid($account_id, $p_receiver_hashid);
+					if(!empty($p_recv))
+					{
+						$p_receiver_id = $p_recv['id'];
+					}
+					else
+					{$recv_pb = true;}
+				}
+				if(!$recv_pb)
+				{
+					$p_description = filter_input(INPUT_POST, 'p_description', FILTER_SANITIZE_STRING);
+					$p_date_payment  = filter_input(INPUT_POST, 'p_date_payment', FILTER_SANITIZE_STRING);		
+					$payment_edited = update_payment($account_id, $p_bill['id'], $payment_id_to_edit, 
+					$p_payer_id, $p_cost, $p_receiver_id, $p_description, $p_date_payment);
+				}
+			}
+			if($payment_edited)
+			{
+				$redirect_url = 'location:'.BASEURL.'/account/'.$hashid.'/admin';
+				header($redirect_url);
+			}
+			else{ //problem
+			}
 		}
 	}
-	if($payment_edited)
+	//Action == Delete
+	elseif($action_on_data_to_be_modified = "delete")
 	{
-		$redirect_url = 'location:'.BASEURL.'/account/'.$hashid.'/admin';
-		header($redirect_url);
+		if($type_of_data_to_be_modified == "participant")
+		{
+			$participant_to_delete = get_participant_by_hashid($account_id, $hashid_delete['participant']);
+			$participant_deleted = delete_participant($account_id, $participant_to_delete['id']);
+			$redirect_url = 'location:'.BASEURL.'/account/'.$hashid.'/admin';
+			header($redirect_url);
+		}	elseif($type_of_data_to_be_modified == "bill")
+		{	$bill_to_delete = get_bill_by_hashid($account_id, $hashid_delete['bill']);
+			$bill_deleted = delete_bill($account_id, $bill_to_delete['id']);
+			$redirect_url = 'location:'.BASEURL.'/account/'.$hashid.'/admin';
+			header($redirect_url);
+		}	elseif($type_of_data_to_be_modified == "bill_participant")
+		{	$bill_participant_to_delete = 
+			get_bill_participant_by_hashid($account_id, $hashid_delete['bill_participant']);
+			$bill_participant_deleted = delete_bill_participant($account_id, 
+			$bill_participant_to_delete['id']);
+			$redirect_url = 'location:'.BASEURL.'/account/'.$hashid.'/admin';
+			header($redirect_url);
+		}	elseif($type_of_data_to_be_modified == "payment")
+		{	$payment_to_delete = get_payment_by_hashid($account_id, $hashid_delete['payment']);
+			$payment_deleted = delete_payment($account_id, $payment_to_delete['id']);
+			$redirect_url = 'location:'.BASEURL.'/account/'.$hashid.'/admin';
+			header($redirect_url);
+		}
 	}
-	else{
-	?>
-<script>alert('problem while editing');</script>				
-	<?php
-	}
-}
-//Delete bill_participant
-if($admin_mode && $what_to_delete['payment'])
-{
-	$payment_to_delete = get_payment_by_hashid($account_id, $hashid_delete['payment']);
-	$payment_deleted = delete_payment($account_id, $payment_to_delete['id']);
-	$redirect_url = 'location:'.BASEURL.'/account/'.$hashid.'/admin';
-	header($redirect_url);
-}
-
-
-/* BILL_PARTICIPANT */
-//New one = Assign a participant to a bill
-if($admin_mode && isset($_POST['submit_assign_participant']))
-{
-	$p_bill_hashid = filter_input(INPUT_POST, 'p_bill_hashid', FILTER_SANITIZE_STRING);
-	$p_bill = get_bill_by_hashid($account_id, $p_bill_hashid);
-	$association_ok = true;
-	foreach ($_POST['p_participant'] as $particip)
-	{
-		if(!isset($particip['hashid']))
-			{continue;}
-		$p_participant_hashid = htmlspecialchars($particip['hashid']);
-		$p_participant_hashid = filter_var($p_participant_hashid, FILTER_SANITIZE_STRING);
-		$p_percent_of_use = (float)$particip['percent'];
-		$p_percent_of_use = filter_var($p_percent_of_use, FILTER_SANITIZE_NUMBER_INT);
-		$p_participant = get_participant_by_hashid($account_id, $p_participant_hashid);
-		if(empty($p_participant)){continue;}
-		$association_ok_bis = set_bill_participant($account_id, $p_bill['id'], 
-			$p_participant['id'], $p_percent_of_use);
-		$association_ok = $association_ok ||$association_ok_bis;
-	}
-	if(!$association_ok)
-	{
-		echo '<p>Association couldn\'t be made.</p>';
-	}
-}
-//Edit bill_participant
-$bill_participant_id_to_edit = null;
-if($admin_mode && ($what_to_edit['bill_participant']))
-{
-	$bill_participant_to_edit = get_bill_participant_by_hashid($account_id, $hashid_edit['bill_participant']);
-	if(!empty($bill_participant_to_edit))
-	{
-		$bill_participant_id_to_edit = $bill_participant_to_edit['id'];
-		$bill_id_to_edit = $bill_participant_to_edit['bill_id'];
-	}
-}
-if($admin_mode && isset($_POST['submit_edit_bill_participant']))
-{
-	$p_participant_id = filter_input(INPUT_POST, 'p_participant_id', FILTER_SANITIZE_NUMBER_INT);
-	$p_percent_of_use = filter_input(INPUT_POST, 'p_percent_of_use', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);	
-	$bill_participant_edited = update_bill_participant($account_id, $bill_participant_id_to_edit, $p_participant_id, $p_percent_of_use);
-	if($bill_participant_edited)
-	{
-		$redirect_url = 'location:'.BASEURL.'/account/'.$hashid.'/admin';
-		header($redirect_url);
-	}
-}
-//Delete bill_participant
-if($admin_mode && $what_to_delete['bill_participant'])
-{
-	$bill_participant_to_delete = 
-		get_bill_participant_by_hashid($account_id, $hashid_delete['bill_participant']);
-	$bill_participant_deleted = delete_bill_participant($account_id, 
-		$bill_participant_to_delete['id']);
-	$redirect_url = 'location:'.BASEURL.'/account/'.$hashid.'/admin';
-	header($redirect_url);
-}
-
-/* CANCEL EDIT */
-if($admin_mode && isset($_POST['submit_cancel']))
-{
-	$redirect_url = 'location:'.BASEURL.'/account/'.$hashid.'/admin';
-	header($redirect_url);
 }
 
 /* Computations and values used in display */
