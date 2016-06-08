@@ -6,6 +6,7 @@ INSTALLEUR
 
 MAJOR
 ======
+0. FILTER !!!!
 1. Multiple receivers for a payment
 2. Store the solution with a check value ? Or a "refund" possible ? Or a "Bill" named "Refund"... ?
 3. Comments

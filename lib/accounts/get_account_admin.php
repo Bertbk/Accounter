@@ -3,8 +3,8 @@ include_once(__DIR__.'/../get_db.php');
 
 function get_account_admin($hash_id_admin_arg)
 {
-	$hash_id_admin = htmlspecialchars($hash_id_admin_arg);
-	if(!is_string($hash_id_admin) || strlen($hash_id_admin) != 32)
+	$hash_id_admin = filter_var(htmlspecialchars($hash_id_admin_arg), FILTER_SANITIZE_STRING);
+	if(!is_string($hash_id_admin) || !preg_match("^[a-z0-9]{32}$", $hash_id_admin))
 	{
 		return array();
 	}

@@ -23,16 +23,21 @@ function send_email_with_accounts($email_arg, $arrayOfAccounts_arg)
 		if(!isset($account['title']))
 			{return false;}
 		if(!isset($account['hashid']))
-			{if(!preg_match("^[a-z0-9]{16}$", $account['hashid']))
-				{ return false;}
-			}
+			{return false;}
 		if(!isset($account['hashid_admin']))
-			{if(!preg_match("^[a-z0-9]{32}$", $account['hashid_admin']))
-				{ return false;}
-			}
+			{return false;}
+		
+		$sanitized_hashid = filter_var(htmlspecialchars($account['hashid']), FILTER_SANITIZE_STRING);
+		if(!preg_match("^[a-z0-9]{16}$", $sanitized_hashid)
+			{return false;}
+
+		$sanitized_hashid_admin = filter_var(htmlspecialchars($account['hashid_admin']), FILTER_SANITIZE_STRING);
+		if(!preg_match("^[a-z0-9]{32}$", $sanitized_hashid_admin)
+			{return false;}
+
 		$filtered_array[$key]['title'] = filter_var(htmlspecialchars($account['title']), FILTER_SANITIZE_STRING);
-		$filtered_array[$key]['hashid'] = filter_var(htmlspecialchars($account['hashid']), FILTER_SANITIZE_STRING);
-		$filtered_array[$key]['hashid_admin'] = filter_var(htmlspecialchars($account['hashid_admin']), FILTER_SANITIZE_STRING);
+		$filtered_array[$key]['hashid'] = $sanitized_hashid;
+		$filtered_array[$key]['hashid_admin'] = $sanitized_hashid_admin;
 	}
 	
 	//send email

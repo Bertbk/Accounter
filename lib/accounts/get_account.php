@@ -3,9 +3,8 @@ include_once(__DIR__.'/../get_db.php');
 
 function get_account($hash_id_arg)
 {
-	$hash_id = htmlspecialchars($hash_id_arg);
-
-	if(!is_string($hash_id) || strlen($hash_id) != 16)
+	$hash_id = filter_var(htmlspecialchars($hash_id_arg), FILTER_SANITIZE_STRING);
+	if(!is_string($hash_id) || !preg_match("/^[a-z0-9]{32}$/", $hash_id))
 	{
 		return array();
 	}

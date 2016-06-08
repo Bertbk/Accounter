@@ -21,6 +21,31 @@ else
 ?>
 <h1>Create a new account</h1>
 
+<?php 
+//if Error
+if(!empty($errArray))
+{
+?>
+<div class="error">
+<p>Error: </p>
+<ul>
+<?php 
+foreach($errArray as $err)
+{
+?>
+<li>
+<?php  echo $err ?>
+</li>
+<?php	
+}
+?>
+</ul>
+</div>
+<?php	
+}
+?>
+
+
 <form method="post">
   <fieldset>
     <legend>Create a new account:</legend>

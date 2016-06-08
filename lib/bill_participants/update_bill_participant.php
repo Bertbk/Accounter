@@ -4,7 +4,7 @@ include_once(LIBPATH.'/bill_participants/get_bill_participants_by_bill_id.php');
 include_once(LIBPATH.'/bill_participants/get_bill_participant_by_id.php');
 
 
-function update_bill_participant($account_id_arg, $bill_participant_id_arg, $participant_id_arg, $percent_of_usage_arg = "")
+function update_bill_participant($account_id_arg, $bill_participant_id_arg, $participant_id_arg, $percent_of_usage_arg)
 {
 	$db = get_db();
 	
