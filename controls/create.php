@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__.'/../config-app.php';
 include_once(LIBPATH.'/accounts/create_new_account.php');
+include_once(LIBPATH.'/email/send_email_new_account.php');
 
 $create_success = false;
 
@@ -27,12 +28,7 @@ if(isset($_POST['submit']))
 	{
 		echo '<p> Problem while creating account. Please try again</p>';
 	}
-	/*
-	else
-	{
-		$link_contrib = BASEURL.'/account/'.$hashid;
-		$link_admin = BASEURL.'/account/'.$hashid_admin.'/admin';		
-	}*/
+	$email_sent = send_email_new_account($hashid);
 	unset($_POST);
 	$redirect_to_account_created = 'Location:'.BASEURL.'/account_created.php?hash='.$hashid.'&hash_admin='.$hashid_admin;
 	$header_str = $redirect_to_account_created;

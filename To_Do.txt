@@ -2,8 +2,7 @@ A FAIRE
 
 INSTALLEUR
 ==========
-1. Si aucun fichier config présent, index.php doit aller vers l'installeur
-2. 
+1. 
 
 MAJOR
 ======
