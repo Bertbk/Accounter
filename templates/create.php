@@ -5,20 +5,7 @@
 </head>
 <body>
 
-<?php 
-if($create_success)
-{
-?>
-	<h1> Accoung created</h1>
-	<ul>
-	<li>Contributor link  :<a href="<?php echo $link_contrib?>"><?php echo $link_contrib?> </a></li>
-	<li>Administrator link:<a href="<?php echo $link_admin?>"><?php echo $link_admin?> </a> </li>
-	</ul>
-<?php
-}
-else
-{
-?>
+
 <h1>Create a new account</h1>
 
 <?php 
@@ -27,7 +14,7 @@ if(!empty($errArray))
 {
 ?>
 <div class="error">
-<p>Error: </p>
+<h2>Error: </h2>
 <ul>
 <?php 
 foreach($errArray as $err)
@@ -64,9 +51,6 @@ foreach($errArray as $err)
 <li><a href=<?php echo BASEURL?>>Main Menu</a></li>
 </ul>
 
-<?php
-}
-?>
 
 </body>
 </html>

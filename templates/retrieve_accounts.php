@@ -13,20 +13,29 @@
 <h1>Retrieve your accounts</h1>
 
 <?php 
-if($problem == 1)
+//if Error
+if(!empty($errArray))
 {
-	?>
-		<p>Sorry, no account associated with this email address has been found. <br>
-		Please try again with another email address.</p>
-<?php	
-}
-else if($problem == 2)
+?>
+<div class="error">
+<h2>Error</h2>
+<ul>
+<?php 
+foreach($errArray as $err)
 {
-	?>
-		<p>Sorry, the email couldn't be sent.</p>
+?>
+<li>
+<?php  echo $err ?>
+</li>
 <?php	
 }
 ?>
+</ul>
+</div>
+<?php	
+}
+?>
+
 
 <div id="form_retrieve_accounts">
 <form method="post" action="<?php echo BASEURL.'/accounts_retrieved.php'?>">
