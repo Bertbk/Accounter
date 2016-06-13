@@ -38,94 +38,26 @@ include_once(LIBPATH.'/solutions/compute_solution.php');
 include_once(LIBPATH.'/hashid/validate_hashid.php');
 
 
-/* Get arguments */
-//Get if admin mode is asked to be activated 
-$admin_mode_url = false;
-if(!empty($_GET['admin']))
+if(isset($_POST['cancel']))
 {
-	$admin_mode_url = (boolean)$_GET['admin'];
+	header('location:'.$link_to_account_admin);
 }
 
-//Get Hashid of the account
-$hashid = "";
-empty($_GET['hash']) ? $hashid = "" : $hashid = htmlspecialchars($_GET['hash']);
-//If no or bad hashid then go back home
-if(!validate_hashid($hashid)
-	||!validate_hashid_admin($hashid_admin))
-{
-	header ('location: '.BASEURL);
-}
-
-$my_account = array();
-$admin_mode = false; //validates the admin mode or not
-$edit_mode = false; //validates the edit mode or not (in edit mode, display changes for a particular data)
-//FIND THE ACCOUNT
-if(!$admin_mode_url)
-{
-	//Simple search
-	$my_account = get_account($hashid);
-}
-else
-{
-	//Admin search
-	$my_account = get_account_admin($hashid);
-	if(!empty($my_account))
-	{	$admin_mode = true; }
-}
-
-//Go back home if it's a failure
-if(empty($my_account))
-{
-	header ('location: '.BASEURL);
-}
-
-$account_id = $my_account['id'];
-$link_to_account = BASEURL.'/account/'.$my_account['hashid'];
-$link_to_account_admin = BASEURL.'/account/'.$my_account['hashid_admin'].'/admin';
 
 
-/* ARGUMENTS FOR ADMIN MODE */
-if($admin_mode)
-{
-	//Cancel ?
-	if(isset($_POST['cancel']))
-	{
-		header('location:'.$link_to_account_admin);
-	}
-	
-	//Modify saved data
-	$TypeOfData = array("participant", "payment", "bill", "bill_participant");
-	$PossibleAction = array("new", "edit", "update", "delete");
 
-	$type_of_data_to_be_modified = ""; //a member of $TypeOfData
-	$action_on_data_to_be_modified = ""; // a member of $PossibleAction
-	$data_to_be_modified = array(); //The data obtained by sql
-	//We take the first arguments of type edit_XXX or delete_XXX where XXX is a "member" of $TypeOfData
-	//We look here for an edition/delete mode
-	foreach($_GET  as $key => $arg)
-	{
-		$res_reg;
-		$is_good = preg_match("/^(edit|delete)_(participant|payment|bill|bill_participant)$/", $key, $res_reg);
-		if(!$is_good )
-			{continue;}
-		if(empty($_GET[$key]))
-			{break;}
-		$tmp_action = $res_reg[0];
-		$tmp_type = $res_reg[1];
-		$type_hashid = htmlspecialchars($_GET[$key]);
-		//If hashid is wrong, we reset every data (assuming it's an attack or a random test)
-		if(!validate_hashid($type_hashid))
-			{break;}
-		//It's a valid hashid, now get the data
-		if($tmp_action == "participant")
-		{ $data_to_be_modified = get_participant_by_hashid($account_id, $type_hashid);}
-		elseif($tmp_action == "payment")
-		{ $data_to_be_modified = get_payment_by_hashid($account_id, $type_hashid);}
-		elseif($tmp_action == "bill")
-		{ $data_to_be_modified = get_bill_by_hashid($account_id, $type_hashid);}
-		elseif($tmp_action == "bill_participant")
-		{ $data_to_be_modified = get_bill_participant_by_hashid($account_id, $type_hashid);}
-		else{break;}
+/*	
+//It's a valid hashid, now get the data
+if($tmp_action == "participant")
+{ $data_to_be_modified = get_participant_by_hashid($account_id, $type_hashid);}
+elseif($tmp_action == "payment")
+{ $data_to_be_modified = get_payment_by_hashid($account_id, $type_hashid);}
+elseif($tmp_action == "bill")
+{ $data_to_be_modified = get_bill_by_hashid($account_id, $type_hashid);}
+elseif($tmp_action == "bill_participant")
+{ $data_to_be_modified = get_bill_participant_by_hashid($account_id, $type_hashid);}
+else{break;}
+*/
 
 		if(empty($data_to_be_modified))
 		{$data_to_be_modified = null;

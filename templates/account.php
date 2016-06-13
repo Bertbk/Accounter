@@ -93,7 +93,7 @@ if($admin_mode && $what_to_edit['participant'])
 {
 ?>
 <div>
-<button type="submit" name="submit_edit_participant" value="Submit">Submit change</button>
+<button type="submit" name="submit_update_participant" value="Submit">Submit change</button>
 <button type="submit" name="submit_cancel" value="Submit">Cancel</button> 
 </div>
 </form>
@@ -132,7 +132,7 @@ if($admin_mode && !$edit_mode)
 		 <input type="text" name="p_color" id="form_set_participant_color"  /><br> */?>
 		 </span>
 		 <div>
-		 <button type="submit" name="submit_participant" value="Submit">Submit</button> 
+		 <button type="submit" name="submit_new_participant" value="Submit">Submit</button> 
 		 </div>
 	  </fieldset>
 	</form>
@@ -165,7 +165,7 @@ if($admin_mode && !$edit_mode)
 		 <input type="text" name="p_description" 
 		 id="form_set_bill_description" class="input_bill_desc" />
 		</span><div>
-		 <button type="submit" name="submit_bill" value="Submit">Submit</button> 
+		 <button type="submit" name="submit_new_bill" value="Submit">Submit</button> 
 		 </div>
 	  </fieldset>
 	</form>
@@ -203,7 +203,7 @@ foreach($my_bills as $bill)
 	 <input type="text" name="p_description" id="form_edit_bill_description" 
 	 class="input_bill_desc" value="<?php echo $bill['description']?>"/>
 	 <div>
-		<button type="submit" name="submit_edit_bill" value="Submit">Submit</button> 
+		<button type="submit" name="submit_update_bill" value="Submit">Submit</button> 
 		<button type="submit" name="submit_cancel" value="Submit">Cancel</button> 
 	</div>
 	</form>
@@ -300,7 +300,7 @@ foreach($my_bills as $bill)
 	if($place_submit_button)
 	{
 	?>
-		<br><button type="submit" name="submit_edit_bill_participant" value="Submit">Submit</button> 
+		<br><button type="submit" name="submit_update_bill_participant" value="Submit">Submit</button> 
 		<button type="submit" name="submit_cancel" value="Submit">Cancel</button> 
 		</form>
 	<?php
@@ -460,7 +460,7 @@ foreach($my_bills as $bill)
 				id="form_edit_payment_date_<?php echo $bill['id']?>"
 				value="<?php echo $payment_to_edit['date_of_payment']?>"/>
 			<div>
-			<span><button type="submit" name="submit_edit_payment" value="Submit">Submit</button> </span>
+			<span><button type="submit" name="submit_update_payment" value="Submit">Submit</button> </span>
 			<span><button type="submit" name="submit_cancel" value="Submit">Cancel</button> </span>
 			</div>
 		</form>
@@ -588,7 +588,7 @@ foreach($my_bills as $bill)
 		</p>
 		
 			<div>
-				<button type="submit" name="submit_payment" value="Submit">Submit</button>
+				<button type="submit" name="submit_new_payment" value="Submit">Submit</button>
 			</div>
 			</fieldset>
 		</form>

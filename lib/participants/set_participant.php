@@ -5,16 +5,21 @@ include_once(LIBPATH.'/participants/get_participants.php');
 
 include_once(LIBPATH.'/colors/give_me_next_color.php');
 
+include_once(LIBPATH.'/hashid/validate_hashid.php');
 
-function set_participant($account_id_arg, $name_of_participant_arg, $nb_of_people_arg, $email_arg)
+function set_participant($account_id_arg, $hash_id_arg, $name_of_participant_arg, $nb_of_people_arg, $email_arg)
 {
 	$db = get_db();
 
 	$account_id = (int)$account_id_arg;
+	$hash_id = htmlspecialchars($hash_id_arg);
 	$name_of_participant = htmlspecialchars($name_of_participant_arg);
 	$nb_of_people = (int)$nb_of_people_arg;
 	$email = htmlspecialchars($email_arg);
 	$email = (empty($email))?null:$email;
+	
+	if(validate_hashid($hash_id_arg) == false)
+	{return false;}
 	
 	$does_this_guy_exists = get_participant_by_name($account_id, $name_of_participant);
 	if(!empty($does_this_guy_exists))
@@ -30,12 +35,6 @@ function set_participant($account_id_arg, $name_of_participant_arg, $nb_of_peopl
 	$the_participants = get_participants($account_id);
 	$my_color = give_me_next_color(end($the_participants)['color'], 'participant');
 	//When color will come from users, check the reg ex
-	
-	//Hashid
-	do {
-		$hashid = bin2hex(openssl_random_pseudo_bytes(8));
-	}
-	while(!$hashid);
 	
 	try
 	{
