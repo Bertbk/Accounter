@@ -1,13 +1,16 @@
 <?php
 include_once(__DIR__.'/../get_db.php');
 
+include_once(LIBPATH.'/hashid/validate_hashid.php');
+
 function get_account($hash_id_arg)
 {
-	$hash_id = filter_var(htmlspecialchars($hash_id_arg), FILTER_SANITIZE_STRING);
-	if(!is_string($hash_id) || !preg_match("/^[a-z0-9]{32}$/", $hash_id))
+	
+	if(validate_hashid($hash_id_arg)== false)
 	{
 		return array();
 	}
+	$hash_id = $hash_id_arg;
 	
 	$db = get_db();
 	

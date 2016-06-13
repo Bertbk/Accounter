@@ -1,14 +1,16 @@
 <?php
 include_once(__DIR__.'/../get_db.php');
 
+include_once(LIBPATH.'/hashid/validate_hashid.php');
+
 function get_account_admin($hash_id_admin_arg)
 {
-	$hash_id_admin = filter_var(htmlspecialchars($hash_id_admin_arg), FILTER_SANITIZE_STRING);
-	if(!is_string($hash_id_admin) || !preg_match("^[a-z0-9]{32}$", $hash_id_admin))
+	if(validate_hashid_admin($hash_id_admin_arg)== false)
 	{
 		return array();
 	}
-	
+	$hash_id_admin = $hash_id_admin_arg;
+		
 	$db = get_db();
 	
 	try

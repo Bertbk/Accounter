@@ -12,25 +12,27 @@ function set_participant($account_id_arg, $hash_id_arg, $name_of_participant_arg
 	$db = get_db();
 
 	$account_id = (int)$account_id_arg;
-	$hash_id = htmlspecialchars($hash_id_arg);
-	$name_of_participant = htmlspecialchars($name_of_participant_arg);
+	$hash_id = $hash_id_arg;
+	$name_of_participant = $name_of_participant_arg;
 	$nb_of_people = (int)$nb_of_people_arg;
-	$email = htmlspecialchars($email_arg);
+	$email = $email_arg;
 	$email = (empty($email))?null:$email;
+	
+	if(!empty($email))
+	{
+		$email = filter_var($email, FILTER_SANITIZE_EMAIL);
+		$email = filter_var($email, FILTER_VALIDATE_EMAIL);
+		if($email === false)
+		{return false;}
+	}
 	
 	if(validate_hashid($hash_id_arg) == false)
 	{return false;}
 	
+	//Check if a participant with the same name already exists
 	$does_this_guy_exists = get_participant_by_name($account_id, $name_of_participant);
 	if(!empty($does_this_guy_exists))
-	{
-?>
-<script type="text/javascript">
-  alert('participant with the same name already reccorded!');
-</script>
-<?php
-		return false;
-	}
+	{		return false;	}
 	
 	$the_participants = get_participants($account_id);
 	$my_color = give_me_next_color(end($the_participants)['color'], 'participant');
@@ -52,7 +54,7 @@ function set_participant($account_id_arg, $hash_id_arg, $name_of_participant_arg
 	}
 	catch (Exception $e)
 	{
-		echo 'Fail to connect: ' . $e->getMessage();
+		//echo 'Fail to connect: ' . $e->getMessage();
 	}
 	return $isgood;
 }
