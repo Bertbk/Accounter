@@ -15,6 +15,9 @@
 
 </head>
 <body>
+
+<?php include(__DIR__.'/error.php'); ?>
+
 <?php if($admin_mode && $edit_mode)
 {
 ?>
@@ -112,11 +115,16 @@ if($admin_mode && !$edit_mode)
 	<div id="div_add_participant">
 	<p id="show_hide_add_participant"><a href="javascript:void(0)">(+) Add a participant</a></p>	
 <!-- Add participant-->
-	<form method="post" id="show_hide_add_participant_target" class="hidden_at_first">
+	<form method="post" 
+	action="../../controls/action/new_participant.php"
+	id="show_hide_add_participant_target" 
+	class="hidden_at_first">
 	  <fieldset>
 		<legend>Add a participant:</legend>
 		<span>
 		<label for="form_set_participant_name">Name: </label>
+		<input type="hidden" name="p_hashid_account" 
+		value="<?php echo $my_account['hashid_admin']?>" />
 		<input type="text" name="p_name_of_participant" 
 		id="form_set_participant_name" class="input_name" required />
 		</span><span>

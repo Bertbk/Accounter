@@ -37,6 +37,8 @@ include_once(LIBPATH.'/solutions/compute_solution.php');
 
 include_once(LIBPATH.'/hashid/validate_hashid.php');
 
+session_start();
+
 $my_account = array();
 $admin_mode = false; //validates the admin mode or not
 $edit_mode = false; //validates the edit mode or not (in edit mode, display changes for a particular data)
@@ -132,6 +134,9 @@ foreach($my_participants  as $participant)
 	$n_participants += 1 ;
 	$n_people += (int)$participant['nb_of_people'] ;
 }
+
+
+
 
 include_once(ABSPATH.'/templates/account.php');
 ?>

@@ -7,22 +7,21 @@ include_once(LIBPATH.'/colors/give_me_next_color.php');
 
 include_once(LIBPATH.'/hashid/validate_hashid.php');
 
-function set_participant($account_id_arg, $hash_id_arg, $name_of_participant_arg, $nb_of_people_arg, $email_arg)
+function set_participant($account_id_arg, $hashid_arg, $name_of_participant_arg, $nb_of_people_arg, $email_arg)
 {
 	$db = get_db();
 
 	$account_id = (int)$account_id_arg;
-	$hash_id = $hash_id_arg;
+	$hashid = $hashid_arg;
 	$name_of_participant = $name_of_participant_arg;
 	$nb_of_people = (int)$nb_of_people_arg;
 	$email = $email_arg;
-	$email = (empty($email))?null:$email;
-	
-	if(!empty($email))
+	/*
+	if(!is_null($email))
 	{
 		$email = filter_var($email, FILTER_SANITIZE_EMAIL);
 		$email = filter_var($email, FILTER_VALIDATE_EMAIL);
-		if($email === false)
+		if($email == false)
 		{return false;}
 	}
 	
@@ -33,7 +32,7 @@ function set_participant($account_id_arg, $hash_id_arg, $name_of_participant_arg
 	$does_this_guy_exists = get_participant_by_name($account_id, $name_of_participant);
 	if(!empty($does_this_guy_exists))
 	{		return false;	}
-	
+*/	
 	$the_participants = get_participants($account_id);
 	$my_color = give_me_next_color(end($the_participants)['color'], 'participant');
 	//When color will come from users, check the reg ex
