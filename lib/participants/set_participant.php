@@ -16,7 +16,7 @@ function set_participant($account_id_arg, $hashid_arg, $name_of_participant_arg,
 	$name_of_participant = $name_of_participant_arg;
 	$nb_of_people = (int)$nb_of_people_arg;
 	$email = $email_arg;
-	/*
+	
 	if(!is_null($email))
 	{
 		$email = filter_var($email, FILTER_SANITIZE_EMAIL);
@@ -25,14 +25,14 @@ function set_participant($account_id_arg, $hashid_arg, $name_of_participant_arg,
 		{return false;}
 	}
 	
-	if(validate_hashid($hash_id_arg) == false)
+	if(validate_hashid($hashid) == false)
 	{return false;}
 	
 	//Check if a participant with the same name already exists
 	$does_this_guy_exists = get_participant_by_name($account_id, $name_of_participant);
 	if(!empty($does_this_guy_exists))
 	{		return false;	}
-*/	
+	
 	$the_participants = get_participants($account_id);
 	$my_color = give_me_next_color(end($the_participants)['color'], 'participant');
 	//When color will come from users, check the reg ex

@@ -30,12 +30,12 @@
 
 <p><a href='<?php echo BASEURL.''?>'>Come back to the main menu</a></p>
 
-<h1>Welcome to the account: <?php echo $my_account['title']?></h1>
+<h1>Welcome to the account: <?php echo htmlspecialchars($my_account['title'])?></h1>
 	
 <?php if (is_array($my_participants) && sizeof($my_participants) > 0 ) 
 	{
 ?>
-<h1><?php echo $n_participants ?> participants for <?php echo $n_people ?> people</h1>
+<h1><?php echo (int)$n_participants ?> participants for <?php echo (int)$n_people ?> people</h1>
 <?php
 if($admin_mode && $what_to_edit['participant'])
 {
