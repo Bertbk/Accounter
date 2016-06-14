@@ -37,13 +37,10 @@
 ?>
 <h1><?php echo (int)$n_participants ?> participants for <?php echo (int)$n_people ?> people</h1>
 <?php
-if($admin_mode && $what_to_edit['participant'])
-{
-?>
+if($admin_mode && $edit_mode === 'participant')
+{ ?>
 <form method="post">
-<?php 
-}
-?>
+<?php  } ?>
 <div id="div_participants">
 <?php
 	foreach($my_participants as $participant)
@@ -51,7 +48,7 @@ if($admin_mode && $what_to_edit['participant'])
 ?>
 	<span class='bill_participant' style="background-color:<?php echo '#'.$participant['color']?>">
 <?php
-if($admin_mode && $what_to_edit['participant'] && $participant['id'] == $participant_id_to_edit)
+if($admin_mode && $edit_mode === 'participant' && $participant['hashid'] === $edit_hashid)
 {
 ?>
 			<input type="text" name="name_of_participant" class="input_name"
@@ -70,13 +67,13 @@ else{ // READ Only
 <?php //Edit link
 if($admin_mode && !$edit_mode)
 {
-	$link = BASEURL.'/account/'.$hashid.'/admin/edit_participant/'.$participant['hashid'];
+	$link = $link_to_account_admin.'/edit/participant/'.$participant['hashid'];
 ?>
 	<a href="<?php echo $link?>">
 	<img src="<?php echo BASEURL.'/img/pencil_white.png'?>" alt='Edit participant' class="editicon" >
 	</a>
 <?php
-	$link = BASEURL.'/account/'.$hashid.'/admin/delete_participant/'.$participant['hashid'];
+	$link =$link_to_account_admin.'/delete/participant/'.$participant['hashid'];
 ?>
 	<a href="<?php echo $link?>" class="confirmation">
 	<img src="<?php echo BASEURL.'/img/delete_white.png'?>" alt='Delete participant' class="deleteicon" >
@@ -92,7 +89,7 @@ if($admin_mode && !$edit_mode)
 } //foreach participants
 ?>
 <?php 
-if($admin_mode && $what_to_edit['participant'])
+if($admin_mode && $edit_mode === 'participant')
 {
 ?>
 <div>
