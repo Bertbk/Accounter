@@ -72,22 +72,27 @@ if($admin_mode && !$edit_mode)
 	<a href="<?php echo $link?>">
 	<img src="<?php echo BASEURL.'/img/pencil_white.png'?>" alt='Edit participant' class="editicon" >
 	</a>
-<?php
-	$link =$link_to_account_admin.'/delete/participant/'.$participant['hashid'];
-// ?>
-	<form method="post" class="deleteicon">
+	<form method="post" 
+	class="deleteicon"
+	action="../../controls/action/delete_participant.php"
+		>
 		<input type="hidden" 
-		name="accound_hashid"
-		value=<?php echo $my_account['hashid_admin']?>/>
-	<span>
+		name="p_hashid_account" 
+		value=<?php echo $my_account['hashid_admin']?>
+		/>
+		<input type="hidden"  
+		name="p_hashid_participant" 
+		value=<?php echo $participant['hashid']?> 
+		/>
+		<span>
 		<input type="image" 
-		name="participant_hashid"
-		value=<?php echo $participant['hashid']?>
-		src="<?php echo BASEURL.'/img/delete_white.png'?>" 
-		border="0" 
-		class="confirmation deleteicon"
-		alt="Delete participant" />
-	</span>
+			name="submit_delete_participant"
+			src="<?php echo BASEURL.'/img/delete_white.png'?>" 
+			border="0" 
+			class="confirmation deleteicon"
+			alt="Delete participant" 
+			value="Submit">
+		</span>
 	</form>
 <?php
 }
@@ -117,7 +122,7 @@ if($admin_mode && $edit_mode === 'participant')
 
 <?php
 //Admin only
-if($admin_mode && !$edit_mode)
+if($admin_mode && $edit_mode===false)
 {
 	?>
 	<div id="div_add_participant">

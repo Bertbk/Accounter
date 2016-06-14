@@ -20,9 +20,8 @@ function delete_participant($account_id_arg, $participant_id_arg)
 	}
 	catch (Exception $e)
 	{
-		echo 'Fail to connect: ' . $e->getMessage();
+	//	echo 'Fail to connect: ' . $e->getMessage();
 	}
-	return $isgood;
 	
 	return $isgood;
 }

@@ -4,6 +4,10 @@
 <head>
 </head>
 <body>
+
+<?php include(__DIR__.'/error.php'); ?>
+
+
 <h1>Table of the accounts</h1>
 
 <table style="width:100%" border="1">

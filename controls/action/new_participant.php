@@ -13,22 +13,21 @@ include_once(LIBPATH.'/hashid/create_hashid.php');
 //Session is used to send back errors to account.php (if any)
 session_start();
 
-$create_success = false;
 $errArray = array(); //error messages
-$link_account ="" ;
+$redirect_link ="" ;
 
 if(isset($_POST['submit_new_participant']))
 {
 	$ErrorEmptyMessage = array(
+		'p_hashid_account' => 'No acount number provided',
 		'p_name_of_participant' => 'Please provide a name',
-		'p_nb_of_people' => 'Please provide a number of people',
-		'p_hashid_account' => 'No acount number provided'
+		'p_nb_of_people' => 'Please provide a number of people'
    );
 	 
 	$ErrorMessage = array(
+		'p_hashid_account' => 'Account number not valid',
 		'p_name_of_participant' => 'Name is not valid',
 		'p_nb_of_people' => 'Number of people is not valid',
-		'p_hashid_account' => 'Account number not valid',
 		'p_email' => 'Email address is not valid'
    );
 
@@ -38,9 +37,13 @@ if(isset($_POST['submit_new_participant']))
 		array_push($errArray, $ErrorEmptyMessage[$key]);
 	}
 	else{
-		$hashid_admin = $_POST[$key];
-		if(validate_hashid_admin($hashid_admin)== false)
-		{array_push($errArray, $ErrorMessage[$key]);}
+		if(validate_hashid_admin($_POST[$key])== false)
+		{
+			array_push($errArray, $ErrorMessage[$key]);
+		}
+		else{
+			$hashid_admin = $_POST[$key];
+			}
 	}
 	//Get the account
 	if(empty($errArray))
@@ -53,7 +56,7 @@ if(isset($_POST['submit_new_participant']))
 	
 	$key = 'p_name_of_participant';
 	if(empty($_POST[$key])) { //If empty
-		array_push($errArray, ErrorEmptyMessage[$key]);
+		array_push($errArray, $ErrorEmptyMessage[$key]);
 	}
 	else{
 		$name_of_participant = $_POST[$key];
@@ -61,7 +64,7 @@ if(isset($_POST['submit_new_participant']))
 	
 	$key = 'p_nb_of_people';
 	if(empty($_POST[$key])) { //If empty
-		array_push($errArray, ErrorEmptyMessage[$key]);
+		array_push($errArray, $ErrorEmptyMessage[$key]);
 	}
 	else{
 		$nb_of_people = filter_input(INPUT_POST, $key, FILTER_VALIDATE_INT);
@@ -115,9 +118,9 @@ if(!(empty($errArray)))
 
 if(empty($account))
 {
-	$link_account = BASEURL;
+	$redirect_link = BASEURL;
 }
 else{
-	$link_account = BASEURL.'/account/'.$account['hashid_admin'].'/admin';
+	$redirect_link = BASEURL.'/account/'.$account['hashid_admin'].'/admin';
 }
-header('location: '.$link_account);
+header('location: '.$redirect_link);

@@ -1,12 +1,18 @@
 <?php
 include_once(__DIR__.'/../get_db.php');
+include_once(LIBPATH.'/hashid/validate_hashid.php');
 
 function get_participant_by_hashid($account_id_arg, $contrib_hashid_arg)
 {
+	if(validate_hashid($contrib_hashid_arg)== false)
+	{
+		return array();
+	}
+	
 	$db = get_db();
 
 	$account_id = (int)$account_id_arg;
-	$contrib_hashid = htmlspecialchars($contrib_hashid_arg);
+	$contrib_hashid = $contrib_hashid_arg;
 	
 	try
 	{
@@ -19,7 +25,7 @@ function get_participant_by_hashid($account_id_arg, $contrib_hashid_arg)
 	}
 	catch (Exception $e)
 	{
-		echo 'Fail to connect: ' . $e->getMessage();
+//		echo 'Fail to connect: ' . $e->getMessage();
 	}
 	$reply = $prepare_query->fetchAll();
 	$prepare_query->closeCursor();
