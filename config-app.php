@@ -20,6 +20,8 @@ else
 			define('SITEPATH', ABSPATH . '/site');
 	if ( !defined('BASEURL') )
 			define('BASEURL',$config_array['baseurl']);
+	if ( !defined('ACTIONPATH') )
+			define('ACTIONPATH', BASEURL.'/controls/action');
 	if ( !defined('PREFIX') )
 			define('PREFIX',$config_array['prefix_table']);
 	if ( !defined('TABLE_ACCOUNTS') )

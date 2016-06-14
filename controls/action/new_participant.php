@@ -19,13 +19,13 @@ $redirect_link ="" ;
 if(isset($_POST['submit_new_participant']))
 {
 	$ErrorEmptyMessage = array(
-		'p_hashid_account' => 'No acount number provided',
+		'p_hashid_account' => 'Please provide an acount',
 		'p_name_of_participant' => 'Please provide a name',
 		'p_nb_of_people' => 'Please provide a number of people'
    );
 	 
 	$ErrorMessage = array(
-		'p_hashid_account' => 'Account number not valid',
+		'p_hashid_account' => 'Account is not valid',
 		'p_name_of_participant' => 'Name is not valid',
 		'p_nb_of_people' => 'Number of people is not valid',
 		'p_email' => 'Email address is not valid'
