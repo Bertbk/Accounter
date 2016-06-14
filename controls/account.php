@@ -42,7 +42,8 @@ session_start();
 $my_account = array();
 $admin_mode = false; //validates the admin mode or not
 $edit_mode = false; //validates the edit mode or not (in edit mode, display changes for a particular data)
-$edit_id = false; //
+$edit_type = ""; // which type of data are edited ?
+$edit_hashid = ""; //
 
 /* Get arguments */
 //Get Hashid of the account
@@ -93,7 +94,7 @@ $link_to_account_admin = BASEURL.'/account/'.$my_account['hashid_admin'].'/admin
 if($admin_mode)
 {
 	//Cancel ?
-	if(isset($_POST['cancel']))
+	if(isset($_POST['submit_cancel']))
 	{
 		header('location:'.$link_to_account_admin);
 	}
@@ -106,9 +107,9 @@ if($admin_mode)
 if($admin_mode && !empty($_GET['edit']) && !empty($_GET['edit_hashid']))
 {
 	$edit_mode = $_GET['edit'];
-	$edit_id = $_GET['edit_hashid'];
+	$edit_hashid = $_GET['edit_hashid'];
 	
-	if(validate_hashid($edit_id) == false
+	if(validate_hashid($edit_hashid) == false
 	||
 	($edit_mode !== "participant"
 	&& $edit_mode !== "bill"

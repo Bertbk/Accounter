@@ -18,7 +18,7 @@
 
 <?php include(__DIR__.'/error.php'); ?>
 
-<?php if($admin_mode && $edit_mode)
+<?php if($admin_mode && $edit_mode !== false)
 {
 ?>
 <div><p>Edit mode activated </p><form method="post"><button type="submit" name="submit_cancel" value="Submit">Cancel</button></form></div>
@@ -48,7 +48,7 @@ if($admin_mode && $edit_mode === 'participant')
 ?>
 	<span class='bill_participant' style="background-color:<?php echo '#'.$participant['color']?>">
 <?php
-if($admin_mode && $edit_mode === 'participant' && $participant['hashid'] === $edit_hashid)
+if($admin_mode && $edit_mode == 'participant' && $participant['hashid'] == $edit_hashid)
 {
 ?>
 			<input type="text" name="name_of_participant" class="input_name"
@@ -74,10 +74,21 @@ if($admin_mode && !$edit_mode)
 	</a>
 <?php
 	$link =$link_to_account_admin.'/delete/participant/'.$participant['hashid'];
-?>
-	<a href="<?php echo $link?>" class="confirmation">
-	<img src="<?php echo BASEURL.'/img/delete_white.png'?>" alt='Delete participant' class="deleteicon" >
-	</a>
+// ?>
+	<form method="post" class="deleteicon">
+		<input type="hidden" 
+		name="accound_hashid"
+		value=<?php echo $my_account['hashid_admin']?>/>
+	<span>
+		<input type="image" 
+		name="participant_hashid"
+		value=<?php echo $participant['hashid']?>
+		src="<?php echo BASEURL.'/img/delete_white.png'?>" 
+		border="0" 
+		class="confirmation deleteicon"
+		alt="Delete participant" />
+	</span>
+	</form>
 <?php
 }
 ?>		

@@ -10,6 +10,15 @@ img.deleteicon{
 	height: 1em;
 }
 
+form.deleteicon{
+	display: inline-block;
+}
+
+form.deleteicon input[type="image"]{
+	height: 1em;
+	font-size: inherit;
+}
+
 input.input_bill_name{
 	width:15em;
 }

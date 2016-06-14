@@ -7,10 +7,10 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 
 RewriteRule ^account/([a-zA-Z0-9]{16})$ account.php?hash=$1 [QSA,L]
-RewriteRule ^account/([a-zA-Z0-9]{32})/admin/edit_participant/([a-z0-9]{16})$ account.php?hash=$1&admin=true&edit_participant=$2 [QSA,L]
-RewriteRule ^account/([a-zA-Z0-9]{32})/admin/edit_payment/([a-z0-9]{16})$ account.php?hash=$1&admin=true&edit_payment=$2 [QSA,L]
-RewriteRule ^account/([a-zA-Z0-9]{32})/admin/edit_bill_part/([a-z0-9]{16})$ account.php?hash=$1&admin=true&edit_bill_part=$2 [QSA,L]
-RewriteRule ^account/([a-zA-Z0-9]{32})/admin/edit_bill/([a-z0-9]{16})$ account.php?hash=$1&admin=true&edit_bill=$2 [QSA,L]
+RewriteRule ^account/([a-zA-Z0-9]{32})/admin/edit/participant/([a-z0-9]{16})$ account.php?hash=$1&admin=true&edit=participant&edit_hashid=$2 [QSA,L]
+RewriteRule ^account/([a-zA-Z0-9]{32})/admin/edit/payment/([a-z0-9]{16})$ account.php?hash=$1&admin=true&edit=payment&edit_hashid=$2 [QSA,L]
+RewriteRule ^account/([a-zA-Z0-9]{32})/admin/edit/bill_part/([a-z0-9]{16})$ account.php?hash=$1&admin=true&edit=bill_participant&edit_hashid=$2 [QSA,L]
+RewriteRule ^account/([a-zA-Z0-9]{32})/admin/edit/bill/([a-z0-9]{16})$ account.php?hash=$1&admin=true&edit=bill&edit_hashid=$2 [QSA,L]
 
 RewriteRule ^account/([a-zA-Z0-9]{32})/admin/delete_participant/([a-z0-9]{16})$ account.php?hash=$1&admin=true&delete_participant=$2 [QSA,L]
 RewriteRule ^account/([a-zA-Z0-9]{32})/admin/delete_payment/([a-z0-9]{16})$ account.php?hash=$1&admin=true&delete_payment=$2 [QSA,L]
