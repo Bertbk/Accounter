@@ -643,7 +643,7 @@ foreach($my_bills as $bill)
 						class="input_paymt_desc" />
 				</span><span>
 				<label for="<?php echo 'form_set_payment_date_'.$cpt_bill?>_0">Date of payment</label>
-				<input type="date" name="p_payment[0][p_date_payment]]" 
+				<input type="date" name="p_payment[0][p_date_of_payment]]" 
 						id="<?php echo 'form_set_payment_date_'.$cpt_bill?>_0"
 						class="date_picker input_paymt_date"/>
 				</span>
@@ -651,7 +651,7 @@ foreach($my_bills as $bill)
 		</div>
 <?php
 	$name_of_people = array_column($this_bill_participants, 'name');
-	$hashid_of_people = array_column($this_bill_participants, 'participant_hashid');
+	$hashid_of_people = array_column($this_bill_participants, 'hashid');
 ?>
 		<p>
 			<a href="#" onclick="AddPaymentLine(<?php echo htmlspecialchars(json_encode($name_of_people)) ?>, 

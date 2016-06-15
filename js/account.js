@@ -75,28 +75,28 @@ function AddPaymentLine(name_of_people, hashid_of_people, cpt_bill)
 
 	var select_payer = document.createElement("select");
 	select_payer.id = "form_set_payment_payer_"+ cpt_bill + "_" + AddPaymentLine.counter
-	select_payer.name = "p_payment["+ AddPaymentLine.counter +"][payer_hashid]]";
+	select_payer.name = "p_payment["+ AddPaymentLine.counter +"][p_hashid_payer]]";
 	var input_cost = document.createElement("input");
 	input_cost.id = "form_set_payment_cost_"+ cpt_bill + "_" + AddPaymentLine.counter;
 	input_cost.type="number";
 	input_cost.min="0";
 	input_cost.step="0.01";
 	input_cost.className += " input_paymt_cost";
-	input_cost.name = "p_payment["+ AddPaymentLine.counter +"][cost]]";
+	input_cost.name = "p_payment["+ AddPaymentLine.counter +"][p_cost]]";
 	var select_receiver = document.createElement("select");
 	select_receiver.id = "form_set_payment_recv_"+ cpt_bill + "_" + AddPaymentLine.counter;
-	select_receiver.name = "p_payment["+ AddPaymentLine.counter +"][recv_hashid]]";
+	select_receiver.name = "p_payment["+ AddPaymentLine.counter +"][p_hashid_recv]]";
 	var input_description = document.createElement("input");
 	input_description.id = "form_set_payment_desc_"+ cpt_bill + "_" + AddPaymentLine.counter;
 	input_description.type="text";
 	input_description.className += " input_paymt_desc";
-	input_description.name = "p_payment["+ AddPaymentLine.counter +"][description]]";
+	input_description.name = "p_payment["+ AddPaymentLine.counter +"][p_description]]";
 	var input_date = document.createElement("input");
 	input_date.id = "form_set_payment_date_"+ cpt_bill + "_" + AddPaymentLine.counter;
 	input_date.type="date";
 	input_date.className += " date_picker";
 	input_date.className += " input_paymt_date";
-	input_date.name = "p_payment["+ AddPaymentLine.counter +"][date_payment]]";
+	input_date.name = "p_payment["+ AddPaymentLine.counter +"][p_date_of_payment]]";
 	
 	//Construct the list of payer
 	var opt_null = document.createElement("option");

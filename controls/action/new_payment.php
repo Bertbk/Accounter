@@ -142,7 +142,7 @@ if(isset($_POST['submit_new_payment']))
 			array_push($errArray2, $ErrorEmptyMessage[$key]);
 		}
 		else{
-			if($payment[$key] == -1)
+			if($payment[$key] == -1 || is_null($payment[$key]))
 			{
 				$receiver_id = null; //Group
 			}
@@ -157,7 +157,7 @@ if(isset($_POST['submit_new_payment']))
 			}
 		}
 		//Get the receiver
-		if(empty($errArray2) && $payment[$key] != -1)
+		if(empty($errArray2) && ($payment[$key] != -1 || !is_null($payment[$key])))
 		{		
 			$receiver = get_bill_participant_by_hashid($account['id'], $hashid_recv);
 			if(empty($receiver))
