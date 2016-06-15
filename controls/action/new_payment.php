@@ -144,7 +144,7 @@ if(isset($_POST['submit_new_payment']))
 		else{
 			if($payment[$key] == -1)
 			{
-				$receiver['id'] = null; //Group
+				$receiver_id = null; //Group
 			}
 			else {
 				if(validate_hashid($payment[$key])== false)
@@ -152,16 +152,17 @@ if(isset($_POST['submit_new_payment']))
 					array_push($errArray2, $ErrorMessage[$key]);
 				}
 				else{
-					$hashid_payer = $payment[$key];
+					$hashid_recv = $payment[$key];
 				}
 			}
 		}
 		//Get the receiver
 		if(empty($errArray2) && $payment[$key] != -1)
 		{		
-			$receiver = hashid_payer($account['id'], $hashid_payer);
+			$receiver = get_bill_participant_by_hashid($account['id'], $hashid_recv);
 			if(empty($receiver))
 			{	array_push($errArray2, $ErrorMessage[$key]); }
+			$receiver_id = $receiver['id'];
 		}
 		
 		// COST
@@ -239,8 +240,7 @@ if(isset($_POST['submit_new_payment']))
 		//Save the payment
 		if(empty($errArray2))
 		{
-			$recv_id = is_null($hashid_payer)?null:$receiver['id'];
-			$success = set_payment($account['id'], $hashid_payment, $bill['id'], $payer['id'], $cost, $recv_id, $description, $date_of_payment);	
+			$success = set_payment($account['id'], $hashid_payment, $bill['id'], $payer['id'], $cost, $receiver_id, $description, $date_of_payment);	
 			if(!$success)
 			{array_push($errArray2, 'Server error: Problem while attempting to add a payment'); 	}
 		}
