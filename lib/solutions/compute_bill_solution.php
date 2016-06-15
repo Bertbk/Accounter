@@ -57,13 +57,13 @@ function compute_bill_solution($account_id_arg, $bill_id_arg)
 	foreach ($my_payments as $payment)
 	{
 		$my_pay = number_format((float)$payment['cost'], 2, '.', '');
-		if(!is_null($payment['receiver_id']))
+		if(!is_null($payment['real_recv_id']))
 		{//Local payment
-			$Refunds[$payment['receiver_id']][$payment['payer_id']] += $my_pay;
+			$Refunds[$payment['real_recv_id']][$payment['real_payer_id']] += $my_pay;
 		}
 		else{//global payment
 			$total_payment += $my_pay;
-			$Debts[$payment['payer_id']] -= $my_pay;
+			$Debts[$payment['real_payer_id']] -= $my_pay;
 		}
 	}
 	

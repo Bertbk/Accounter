@@ -8,7 +8,7 @@ include_once(LIBPATH.'/payments/get_payments_by_bill_id.php');
 Return an array of every payments of the account, sorted by bills :
 $reply is an array of size = number of bills.
 $reply['bill_id'] = array of payments associated to the bill.
-$reply[i] also contains name of payer and receiver.
+$reply['bill_id'] also contains name of payer and receiver + their (real) id (not the one of bill_participant)
 */
 function get_payments($account_id_arg)
 {

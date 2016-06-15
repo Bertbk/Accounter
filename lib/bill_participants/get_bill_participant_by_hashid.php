@@ -8,7 +8,7 @@ function get_bill_participant_by_hashid($account_id_arg, $bill_participant_hashi
 
 	$account_id = (int)$account_id_arg;
 	$bill_participant_hashid = $bill_participant_hashid_arg;
-	if(validate_hashid($bill_participant_hashid))
+	if(validate_hashid($bill_participant_hashid)==false)
 	{return false;}
 	
 	try

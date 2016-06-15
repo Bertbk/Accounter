@@ -17,11 +17,15 @@ function get_payments_by_bill_id($account_id_arg, $bill_id_arg)
 	try
 	{
 		$myquery = 'SELECT '.TABLE_PAYMENTS.'.*, 
+		bill_part1.participant_id AS real_payer_id,
+		bill_part2.participant_id AS real_recv_id,
 		contribs1.name AS payer_name, contribs1.color AS payer_color,
 		contribs2.name AS receiver_name, contribs2.color AS receiver_color
 		FROM '.TABLE_PAYMENTS.' 
-		LEFT  JOIN '.TABLE_PARTICIPANTS.' contribs1 ON contribs1.id='.TABLE_PAYMENTS.'.payer_id 
-		LEFT  JOIN '.TABLE_PARTICIPANTS.' contribs2 ON contribs2.id='.TABLE_PAYMENTS.'.receiver_id
+		LEFT  JOIN '.TABLE_BILL_PARTICIPANTS.' bill_part1 ON bill_part1.id='.TABLE_PAYMENTS.'.payer_id 
+		LEFT  JOIN '.TABLE_BILL_PARTICIPANTS.' bill_part2 ON bill_part2.id='.TABLE_PAYMENTS.'.receiver_id
+		LEFT  JOIN '.TABLE_PARTICIPANTS.' contribs1 ON contribs1.id=bill_part1.participant_id 
+		LEFT  JOIN '.TABLE_PARTICIPANTS.' contribs2 ON contribs2.id=bill_part2.participant_id
 		WHERE '.TABLE_PAYMENTS.'.account_id=:account_id AND '.TABLE_PAYMENTS.'.bill_id=:bill_id';
 		$prepare_query = $db->prepare($myquery);
 		$prepare_query->bindValue(':account_id', $account_id, PDO::PARAM_INT);
