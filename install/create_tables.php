@@ -165,12 +165,12 @@ function create_tables()
 				ON UPDATE CASCADE,
 		CONSTRAINT fk_paymt_payer_id
         FOREIGN KEY (payer_id)
-        REFERENCES '.TABLE_PARTICIPANTS.'(id)
+        REFERENCES '.TABLE_BILL_PARTICIPANTS.'(id)
 				ON DELETE CASCADE
 				ON UPDATE CASCADE,
 		CONSTRAINT fk_paymt_receiver_id
         FOREIGN KEY (receiver_id)
-        REFERENCES '.TABLE_PARTICIPANTS.'(id)
+        REFERENCES '.TABLE_BILL_PARTICIPANTS.'(id)
 				ON DELETE CASCADE
 				ON UPDATE CASCADE
 		)
