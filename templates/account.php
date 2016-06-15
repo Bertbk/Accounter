@@ -80,14 +80,8 @@ if($admin_mode && !$edit_mode)
 	class="deleteicon"
 	action="<?php echo ACTIONPATH.'/delete_participant.php'?>"
 		>
-		<input type="hidden" 
-		name="p_hashid_account" 
-		value=<?php echo $my_account['hashid_admin']?>
-		/>
-		<input type="hidden"  
-		name="p_hashid_participant" 
-		value=<?php echo $participant['hashid']?> 
-		/>
+		<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>"/>
+		<input type="hidden" name="p_hashid_participant" value="<?php echo $participant['hashid']?>"/>
 		<span>
 		<input type="image" 
 			name="submit_delete_participant"
@@ -558,17 +552,30 @@ foreach($my_bills as $bill)
 	<?php //EDIT BUTTON
 			if($admin_mode && !$edit_mode)
 				{
-		$link = BASEURL.'/account/'.$hashid.'/admin/edit_payment/'.$payment['hashid'];
 	?>
-		<a href="<?php echo $link?>">
+		<a href="<?php echo $link_to_account_admin.'/edit/payment/'.$payment['hashid']?>">
 		<img src="<?php echo BASEURL.'/img/pencil.png'?>" alt='Edit payment' class="editicon" />
 		</a>
-<?php
-		$link = BASEURL.'/account/'.$hashid.'/admin/delete_payment/'.$payment['hashid'];
-	?>
-		<a class="confirmation" href="<?php echo $link?>">
-		<img src="<?php echo BASEURL.'/img/delete.png'?>" alt='Delete payment' class="deleteicon" />
-		</a>
+
+			<form method="post" 
+	class="deleteicon"
+	action="<?php echo ACTIONPATH.'/delete_payment.php'?>"
+		>
+		<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>"/>
+		<input type="hidden" name="p_hashid_payment" value="<?php echo $payment['hashid']?>" />
+		<span>
+		<input type="image" 
+			name="submit_delete_payment"
+			src="<?php echo BASEURL.'/img/delete.png'?>" 
+			border="0" 
+			class="confirmation deleteicon"
+			alt="Delete payment" 
+			value="Submit">
+		</span>
+	</form>
+		
+		
+
 
 		<?php
 				}
@@ -605,8 +612,8 @@ foreach($my_bills as $bill)
 			<legend>Add a payment:</legend>
 		<div id="<?php echo 'div_option_add_payment_'.$cpt_bill?>">
 			<div>
-				<input type="hidden" name="p_hashid_account" value = <?php echo $my_account['hashid_admin']?>>
-				<input type="hidden" name="p_hashid_bill" value = <?php echo $bill['hashid']?>>
+				<input type="hidden" name="p_hashid_account" value ="<?php echo $my_account['hashid_admin']?>">
+				<input type="hidden" name="p_hashid_bill" value ="<?php echo $bill['hashid']?>">
 			</div>
 			<div class="div_set_payment_<?php echo $cpt_bill?>">
 				<span>
