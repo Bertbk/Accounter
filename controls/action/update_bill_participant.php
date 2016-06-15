@@ -27,7 +27,6 @@ if(isset($_POST['submit_update_bill_participant']))
 		'p_hashid_account' => 'Please provide an acount',
 		'p_hashid_bill_participant' => 'Please provide a participation',
 		'p_participant' => 'Please provide a participant',
-		'p_hashid_participant' => 'Please provide a participant',
 		'p_percent_of_use' => 'Please provide a percentage'
    );
 	 
@@ -35,7 +34,6 @@ if(isset($_POST['submit_update_bill_participant']))
 		'p_hashid_account' => 'Account is not valid',
 		'p_hashid_bill_participant' => 'Participation is not valid',
 		'p_participant' => 'Participant is not valid',
-		'p_hashid_participant' => 'Participant is not valid',
 		'p_percent_of_use' => 'Percent is not valid'
    );
 
@@ -91,29 +89,7 @@ if(isset($_POST['submit_update_bill_participant']))
 			array_push($errArray, 'This participation does not belong to this account.');
 		}
 	}
-	
-	//NEW PARTICIPANT
-	$key = 'p_hashid_participant';
-	 if(empty($_POST[$key])) { //If empty
-		array_push($errArray, $ErrorEmptyMessage[$key]);
-	}
-	else{
-		if(validate_hashid($_POST[$key])== false)
-		{
-			array_push($errArray, $ErrorMessage[$key]);
-		}
-		else{
-			$hashid_participant = $_POST[$key];
-			}
-	}
-	//Get the participant
-	if(empty($errArray))
-	{		
-		$new_participant = get_participant_by_hashid($account['id'], $hashid_participant);
-		if(empty($new_participant))
-		{	array_push($errArray, $ErrorMessage[$key]); }
-	}
-		
+			
 	// NEW PERCENT OF USE
 	$key = 'p_percent_of_use';
 	if(empty($_POST[$key])) { //If empty
@@ -127,40 +103,10 @@ if(isset($_POST['submit_update_bill_participant']))
 		}
 	}
 
-	//Get the (current) bill and the current participant
-	$bill = get_bill_by_id($account['id'], $bill_participant['bill_id']);
-	$participant = get_participant_by_id($account['id'], $bill_participant['participant_id']);
-		
-	//Check if the accounts match
-	if(empty($errArray))
-	{
-		if($new_participant['account_id'] !== $account['id'])
-		{
-			array_push($errArray, 'This participant does not belong to this account.');
-		}
-		if($new_participant['account_id'] !== $bill['account_id'])
-		{
-			array_push($errArray, 'Participant and bill do not belong to the same account');
-		}
-	}
-		
-	//Check if the bill_participant is not already affected to the bill
-	if(empty($errArray) && $new_participant['id'] != $participant['id'])
-	{
-		$registred_bill_part = get_bill_participants_by_bill_id($account['id'], $bill['id']);
-		foreach ($registred_bill_part as $bill_part)
-		{
-				if($bill_part['participant_id'] == $new_participant['id'])
-				{
-					{array_push($errArray, 'Participation already registred!'); 	}
-				}
-		}
-	}
-
 	//Update the bill_participant
 	if(empty($errArray))
 	{
-		$success = update_bill_participant($account['id'], $bill_participant['id'], $new_participant['id'], $new_percent_of_use);	
+		$success = update_bill_participant($account['id'], $bill_participant['id'], $new_percent_of_use);	
 		if(!$success)
 		{array_push($errArray, 'Server error: Problem while attempting to update a participation'); 	}
 	}
