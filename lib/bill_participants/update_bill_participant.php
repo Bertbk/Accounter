@@ -18,42 +18,32 @@ function update_bill_participant($account_id_arg, $bill_participant_id_arg, $par
 	//Get current bill_participant
 	$bill_part_to_edit = get_bill_participant_by_id($account_id, $bill_participant_id);
 	if(empty($bill_part_to_edit))
-	{
-		return false;
-	}
+	{		return false;	}
 	
 	//Check if the new participant is not already choosen
 	$bill_participants = get_bill_participants_by_bill_id($account_id, $bill_part_to_edit['bill_id']);
 	if(empty($bill_participants)){
 		return false;
 	}
-
 	foreach ($bill_participants as $bill_part)
 	{
 			if($bill_part['participant_id'] == $new_participant_id
 				&& $bill_part['id'] != $bill_participant_id)
-			{
-?>
-<script type="text/javascript">
-  alert('This person is already a participant for this bill!');
-</script>
-<?php
-				return false;
-			}
+			{				return false;			}
 	}
 
+	//Check new percentage
 	if($new_percent_of_usage > 100 || $new_percent_of_usage < 0)
 	{return false;}
 	
 
 	//Check if nothing to do
 	if($new_participant_id === $bill_part_to_edit['participant_id']
-	&& $new_percent_of_use === $bill_part_to_edit['percent_of_use']
+	&& $new_percent_of_usage === $bill_part_to_edit['percent_of_usage']
 	)
 	{
-		return false;
+		return true;
 	}
-	
 	
 	$isgood= false;
 	try
@@ -70,7 +60,7 @@ function update_bill_participant($account_id_arg, $bill_participant_id_arg, $par
 	}
 	catch (Exception $e)
 	{
-		echo 'Fail to connect: ' . $e->getMessage();
+//		echo 'Fail to connect: ' . $e->getMessage();
 	}
 	return $isgood;
 }

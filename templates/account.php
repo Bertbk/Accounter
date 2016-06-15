@@ -310,8 +310,12 @@ foreach($my_bills as $bill)
 			//Edit activated on THIS bill_participant
 			$place_submit_button = true;
 	?>
-			<form method="post">
-			<select name="p_participant_hashid" selected="<?php echo $bill_participant['participant_hashid']?>">
+			<form method="post"
+			action="<?php echo ACTIONPATH.'/update_bill_participant.php'?>"
+			>
+			<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
+			<input type="hidden" name="p_hashid_bill_participant" value="<?php echo $bill_participant['hashid']?>">
+			<select name="p_hashid_participant" selected="<?php echo $bill_participant['participant_hashid']?>">
 	<?php
 			foreach($my_participants as $participant)
 			{
@@ -343,14 +347,8 @@ foreach($my_bills as $bill)
 	class="deleteicon"
 	action="<?php echo ACTIONPATH.'/delete_bill_participant.php'?>"
 		>
-		<input type="hidden" 
-		name="p_hashid_account" 
-		value="<?php echo $my_account['hashid_admin']?>"
-		/>
-		<input type="hidden"  
-		name="p_hashid_bill_participant" 
-		value="<?php echo $bill_participant['hashid']?>"
-		/>
+		<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>"/>
+		<input type="hidden" name="p_hashid_bill_participant" value="<?php echo $bill_participant['hashid']?>"	/>
 		<span>
 		<input type="image" 
 			name="submit_delete_bill_participant"
