@@ -9,7 +9,7 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^account/([a-zA-Z0-9]{16})$ account.php?hash=$1 [QSA,L]
 RewriteRule ^account/([a-zA-Z0-9]{32})/admin/edit/participant/([a-z0-9]{16})$ account.php?hash=$1&admin=true&edit=participant&edit_hashid=$2 [QSA,L]
 RewriteRule ^account/([a-zA-Z0-9]{32})/admin/edit/payment/([a-z0-9]{16})$ account.php?hash=$1&admin=true&edit=payment&edit_hashid=$2 [QSA,L]
-RewriteRule ^account/([a-zA-Z0-9]{32})/admin/edit/bill_part/([a-z0-9]{16})$ account.php?hash=$1&admin=true&edit=bill_participant&edit_hashid=$2 [QSA,L]
+RewriteRule ^account/([a-zA-Z0-9]{32})/admin/edit/bill_participant/([a-z0-9]{16})$ account.php?hash=$1&admin=true&edit=bill_participant&edit_hashid=$2 [QSA,L]
 RewriteRule ^account/([a-zA-Z0-9]{32})/admin/edit/bill/([a-z0-9]{16})$ account.php?hash=$1&admin=true&edit=bill&edit_hashid=$2 [QSA,L]
 
 RewriteRule ^account/([a-zA-Z0-9]{32})/admin/?$ account.php?hash=$1&admin=true [QSA,L]
