@@ -6,7 +6,7 @@ include_once(LIBPATH.'/hashid/validate_hashid.php');
 
 function filter_valid_hashid($hashid_arg)
 {
-	$hashid = htmlspecialchars($hashid_arg);
+	$hashid = $hashid_arg;
 	$isgood = validate_hashid($hashid);
 	if($isgood)
 	{

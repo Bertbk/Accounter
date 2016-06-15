@@ -59,7 +59,7 @@ function update_participant($account_id_arg, $participant_id_arg, $name_of_contr
 	}
 	catch (Exception $e)
 	{
-		echo 'Fail to connect: ' . $e->getMessage();
+	//	echo 'Fail to connect: ' . $e->getMessage();
 	}
 	return $isgood;
 }

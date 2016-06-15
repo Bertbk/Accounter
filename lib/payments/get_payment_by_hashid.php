@@ -1,12 +1,16 @@
 <?php
 include_once(__DIR__.'/../get_db.php');
+include_once(LIBPATH.'/hashid/validate_hashid.php');
 
 function get_payment_by_hashid($account_id_arg, $payment_hashid_arg)
 {
 	$db = get_db();
 
 	$account_id = (int)$account_id_arg;
-	$payment_hashid = htmlspecialchars($payment_hashid_arg);
+	$payment_hashid = $payment_hashid_arg;
+	
+	if(!validate_hashid($payment_hashid))
+	{return false;}
 	
 	try
 	{

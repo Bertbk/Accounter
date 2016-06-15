@@ -6,7 +6,7 @@ function get_participant_by_name($account_id_arg, $contrib_name_arg)
 	$db = get_db();
 
 	$account_id = (int)$account_id_arg;
-	$contrib_name = htmlspecialchars($contrib_name_arg);
+	$contrib_name = $contrib_name_arg;
 	
 	try
 	{
@@ -19,7 +19,7 @@ function get_participant_by_name($account_id_arg, $contrib_name_arg)
 	}
 	catch (Exception $e)
 	{
-		echo 'Fail to connect: ' . $e->getMessage();
+	//	echo 'Fail to connect: ' . $e->getMessage();
 	}
 	$reply = $prepare_query->fetchAll();
 	$prepare_query->closeCursor();

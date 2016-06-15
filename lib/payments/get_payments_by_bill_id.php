@@ -30,7 +30,7 @@ function get_payments_by_bill_id($account_id_arg, $bill_id_arg)
 	}
 	catch (Exception $e)
 	{
-		echo 'Fail to connect: ' . $e->getMessage();
+//		echo 'Fail to connect: ' . $e->getMessage();
 	}
 	$reply = $prepare_query->fetchAll();
 	$prepare_query->closeCursor();

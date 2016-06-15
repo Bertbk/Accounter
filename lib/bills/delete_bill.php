@@ -20,7 +20,7 @@ function delete_bill($account_id_arg, $bill_id_arg)
 	}
 	catch (Exception $e)
 	{
-		echo 'Fail to connect: ' . $e->getMessage();
+	//	echo 'Fail to connect: ' . $e->getMessage();
 	}
 	return $isgood;
 	

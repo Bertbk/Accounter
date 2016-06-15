@@ -15,8 +15,8 @@ function update_payment($account_id_arg, $bill_id_arg, $payment_id_arg, $payer_i
 	$new_payer_id = (int)$payer_id_arg;
 	$new_cost = (float)$cost_arg;
 	$new_receiver_id = (is_null($receiver_id_arg)||empty($receiver_id_arg))?null:(int)$receiver_id_arg;
-	$new_description = htmlspecialchars($description_arg);
-	$new_date_of_payment = htmlspecialchars($date_of_payment_arg);
+	$new_description = $description_arg;
+	$new_date_of_payment = $date_of_payment_arg;
 
 	$new_receiver_id = empty($new_receiver_id) ? null:$new_receiver_id;
 	$new_description = empty($new_description) ? null:$new_description;
@@ -39,6 +39,10 @@ function update_payment($account_id_arg, $bill_id_arg, $payment_id_arg, $payer_i
 	if(!is_null($new_date_of_payment))
 	{
 		$new_date_of_payment = str_replace('/', '-',$new_date_of_payment);
+		$date_parsed = date_parse($new_date_of_payment);
+		if ($date_parsed == false || !checkdate($date_parsed['month'], $date_parsed['day'], $date_parsed['year'])) {
+			$new_date_of_payment = null;
+		}
 	}
 	
 	if($new_payer_id === $new_receiver_id)
@@ -61,11 +65,7 @@ function update_payment($account_id_arg, $bill_id_arg, $payment_id_arg, $payer_i
 	// If moving to another bill, check if people exists
 
 	$payer_validated = is_this_participant_in_bill($account_id, $new_bill_id, $new_payer_id);
-	if(!$payer_validated)
-	{			?>
-<script> alert("Payer non valid");</script>			
-		<?php
-	}
+
 	$recv_validated = true;
 	if(!is_null($new_receiver_id))
 	{
@@ -97,7 +97,7 @@ function update_payment($account_id_arg, $bill_id_arg, $payment_id_arg, $payer_i
 	}
 	catch (Exception $e)
 	{
-		echo 'Fail to connect: ' . $e->getMessage();
+	//	echo 'Fail to connect: ' . $e->getMessage();
 	}
 	return $isgood;
 }

@@ -1,25 +1,26 @@
 <?php
 include_once(__DIR__.'/../get_db.php');
+include_once(LIBPATH.'/hashid/validate_hashid.php');
 
 function create_new_account($hashid_arg, $hashid_admin_arg, $title_of_account_arg, $contact_email_arg, $description_arg ="")
 {
 	$db = get_db();
 
-	$hashid = htmlspecialchars($hashid_arg);
-	if(!is_string($hashid) || strlen($hashid) != 16)
+	$hashid = $hashid_arg;
+	if(validate_hashid($hash_id)== false)
 	{
-		return false;
+		return array();
 	}
 	
-	$hashid_admin = htmlspecialchars($hashid_admin_arg);
-	if(!is_string($hashid_admin) || strlen($hashid_admin) != 32)
+	$hashid_admin = $hashid_admin_arg;
+	if(validate_hashid_admin($hashid_admin)== false)
 	{
-		return false;
+		return array();
 	}
 
-	$title_of_account = htmlspecialchars($title_of_account_arg);
-	$contact_email = htmlspecialchars($contact_email_arg);
-	$description = htmlspecialchars($description_arg);
+	$title_of_account = $title_of_account_arg;
+	$contact_email = $contact_email_arg;
+	$description = $description_arg;
 	$description = (empty($description))?null:$description;
 
 	try
@@ -37,7 +38,7 @@ function create_new_account($hashid_arg, $hashid_admin_arg, $title_of_account_ar
 	}
 	catch (Exception $e)
 	{
-		echo 'Fail to connect: ' . $e->getMessage();
+//		echo 'Fail to connect: ' . $e->getMessage();
 	}
 	
 	return $isgood;

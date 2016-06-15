@@ -6,7 +6,7 @@ function get_bill_by_title($account_id_arg, $bill_title_arg)
 	$db = get_db();
 
 	$account_id = (int)$account_id_arg;
-	$bill_title = htmlspecialchars($bill_title_arg);
+	$bill_title = $bill_title_arg;
 	
 	try
 	{
@@ -19,7 +19,7 @@ function get_bill_by_title($account_id_arg, $bill_title_arg)
 	}
 	catch (Exception $e)
 	{
-		echo 'Fail to connect: ' . $e->getMessage();
+	//	echo 'Fail to connect: ' . $e->getMessage();
 	}
 	$reply = $prepare_query->fetchAll();
 	$prepare_query->closeCursor();

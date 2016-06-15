@@ -24,7 +24,7 @@ function get_account($hash_id_arg)
 	}
 	catch (Exception $e)
 	{
-		echo 'Fail to connect: ' . $e->getMessage();
+	//	echo 'Fail to connect: ' . $e->getMessage();
 	}
 
 	$reply = $prepare_query->fetchAll();

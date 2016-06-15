@@ -5,14 +5,11 @@ function get_accounts_by_email($email_arg)
 {
 	$db = get_db();
 	
-	$my_email = htmlspecialchars($email_arg);
-	$my_email = filter_var($my_email, FILTER_VALIDATE_EMAIL);
+	$my_email = filter_var($email_arg, FILTER_VALIDATE_EMAIL);
 	
 	//Check is email is "valid"
 	if(!$my_email)
-	{
-		return array();
-	}
+	{		return array();	}
 
 	try
 	{
@@ -26,7 +23,7 @@ function get_accounts_by_email($email_arg)
 	}
 	catch (Exception $e)
 	{
-		echo 'Fail to connect : ' . $e->getMessage();
+	//	echo 'Fail to connect : ' . $e->getMessage();
 	}
 	$prepare_query->closeCursor();
 	return $reply;

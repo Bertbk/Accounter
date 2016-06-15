@@ -1,15 +1,16 @@
 <?php
 require_once __DIR__.'/../../config-app.php';
+include_once(LIBPATH.'/hashid/validate_hashid.php');
 
 function send_email_with_accounts($email_arg, $arrayOfAccounts_arg)
 {
 	$configs = include(SITEPATH.'/config.php');
 
-	$dest_email = htmlspecialchars($email_arg);
+	$dest_email = filter_var($email_arg, FILTER_SANITIZE_EMAIL);
 	$dest_email = filter_var($dest_email, FILTER_VALIDATE_EMAIL);
 	
 	//Check is email is "valid"
-	if(!$dest_email)
+	if($dest_email === false)
 	{
 		return false;
 	}
@@ -17,7 +18,9 @@ function send_email_with_accounts($email_arg, $arrayOfAccounts_arg)
 	
 	if(is_null($arrayOfAccounts_arg) || empty($arrayOfAccounts_arg))
 	{return false;}
-	$filtered_array = array(array());
+	$html_array = array(array());
+	$txt_array = array(array());
+	
 	foreach($arrayOfAccounts_arg as $key => $account)
 	{
 		if(!isset($account['title']))
@@ -27,17 +30,21 @@ function send_email_with_accounts($email_arg, $arrayOfAccounts_arg)
 		if(!isset($account['hashid_admin']))
 			{return false;}
 		
-		$sanitized_hashid = filter_var(htmlspecialchars($account['hashid']), FILTER_SANITIZE_STRING);
-		if(!preg_match("^[a-z0-9]{16}$", $sanitized_hashid)
-			{return false;}
+		$hashid = $hashid_arg;
+		if(validate_hashid($hashid)== false)
+		{	return array();	}
 
-		$sanitized_hashid_admin = filter_var(htmlspecialchars($account['hashid_admin']), FILTER_SANITIZE_STRING);
-		if(!preg_match("^[a-z0-9]{32}$", $sanitized_hashid_admin)
-			{return false;}
+		$hashid_admin = $hashid_admin_arg;
+		if(validate_hashid_admin($hashid_admin)== false)
+		{	return array();	}
 
-		$filtered_array[$key]['title'] = filter_var(htmlspecialchars($account['title']), FILTER_SANITIZE_STRING);
-		$filtered_array[$key]['hashid'] = $sanitized_hashid;
-		$filtered_array[$key]['hashid_admin'] = $sanitized_hashid_admin;
+		$html_array[$key]['title'] = htmlspecialchars($account['title']);
+		$html_array[$key]['hashid'] = $hashid;
+		$html_array[$key]['hashid_admin'] = $hashid_admin;
+
+		$txt_array[$key]['title'] = htmlspecialchars($account['title']);
+		$txt_array[$key]['hashid'] = $hashid;
+		$txt_array[$key]['hashid_admin'] = $hashid_admin;
 	}
 	
 	//send email
@@ -53,11 +60,11 @@ function send_email_with_accounts($email_arg, $arrayOfAccounts_arg)
 	
 	//=====txt and html text
 	$message_txt = "Please find here the list of your accounts :".$br;
-	foreach($filtered_array as $account)
+	foreach($txt_array as $txt_msg)
 	{
-		$part_link  = BASEURL.'/account/'.$account['hashid'];
-		$admin_link = BASEURL.'/account/'.$account['hashid_admin'].'/admin';
-		$message_txt = $message_txt.'- '.$account['title'].' :'.$br;
+		$part_link  = BASEURL.'/account/'.$txt_msg['hashid'];
+		$admin_link = BASEURL.'/account/'.$txt_msg['hashid_admin'].'/admin';
+		$message_txt = $message_txt.'- '.$txt_msg['title'].' :'.$br;
 		$message_txt = $message_txt."  Participant link: ".$part_link.$br;
 		$message_txt = $message_txt."  Admin link      : ".$admin_link.$br;
 	}
@@ -65,11 +72,11 @@ function send_email_with_accounts($email_arg, $arrayOfAccounts_arg)
 	$message_html = '<html><head></head><body>';
 	$message_html = $message_html.'<p>Please find here the list of your accounts:</p>';
 	$message_html = $message_html.'<ul>';
-	foreach($filtered_array as $account)
+	foreach($html_array as $html_msg)
 	{
-		$message_html = $message_html.'<li>'.$account['title'].':';
-		$part_link  = BASEURL.'/account/'.$account['hashid'];
-		$admin_link = BASEURL.'/account/'.$account['hashid_admin'].'/admin';
+		$message_html = $message_html.'<li>'.$html_msg['title'].':';
+		$part_link  = BASEURL.'/account/'.$html_msg['hashid'];
+		$admin_link = BASEURL.'/account/'.$html_msg['hashid_admin'].'/admin';
 		$message_html = $message_html.'<ul>';
 		$message_html = $message_html."<li>Participant link: <a href='".$part_link."'>".$part_link."</a></li>";
 		$message_html = $message_html."<li>Admin link      : <a href='".$admin_link."'>".$admin_link."</a></li>";

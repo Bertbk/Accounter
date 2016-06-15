@@ -6,7 +6,7 @@ function get_payment_by_id($account_id_arg, $payment_id_arg)
 	$db = get_db();
 
 	$account_id = (int)$account_id_arg;
-	$payment_id = htmlspecialchars($payment_id_arg);
+	$payment_id = (int)$payment_id_arg;
 	
 	try
 	{
@@ -19,7 +19,7 @@ function get_payment_by_id($account_id_arg, $payment_id_arg)
 	}
 	catch (Exception $e)
 	{
-		echo 'Fail to connect: ' . $e->getMessage();
+	//	echo 'Fail to connect: ' . $e->getMessage();
 	}
 	$reply = $prepare_query->fetchAll();
 	$prepare_query->closeCursor();

@@ -10,8 +10,8 @@ function update_bill($account_id_arg, $bill_id_arg, $title_bill, $description_ar
 
 	$account_id = (int)$account_id_arg;
 	$bill_id = (int)$bill_id_arg;
-	$new_title_of_bill = htmlspecialchars($title_bill);
-	$new_description = htmlspecialchars($description_arg);
+	$new_title_of_bill = $title_bill;
+	$new_description = $description_arg;
 	$new_description = (empty($new_description))?null:$new_description;
 
 	$bill_to_edit = get_bill_by_id($account_id, $bill_id);

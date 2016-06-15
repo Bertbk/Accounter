@@ -23,7 +23,7 @@ function get_account_admin($hash_id_admin_arg)
 	}
 	catch (Exception $e)
 	{
-		echo 'Fail to connect : ' . $e->getMessage();
+//		echo 'Fail to connect : ' . $e->getMessage();
 	}
 
 	$reply = $prepare_query->fetchAll();

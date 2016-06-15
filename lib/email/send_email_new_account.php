@@ -2,13 +2,14 @@
 require_once __DIR__.'/../../config-app.php';
 
 include_once(LIBPATH.'/accounts/get_account.php');
+include_once(LIBPATH.'/hashid/validate_hashid.php');
 
 function send_email_new_account($account_hashid_arg)
 {
 	$configs = include(SITEPATH.'/config.php');
 
-	$account_hashid = filter_var(htmlspecialchars($account_hashid_arg), FILTER_SANITIZE_STRING);
-	if(!preg_match("^[a-z0-9]{16}$", $account_hashid))
+	$account_hashid = $account_hashid_arg;
+	if(validate_hashid($account_hashid) == false)
 		{ return false;}
 	
 	$account = get_account($account_hashid);
@@ -18,11 +19,11 @@ function send_email_new_account($account_hashid_arg)
 		return false;
 	}
 		
-	$dest_email = htmlspecialchars($account['email']);
+	$dest_email = filter_var($account['email'], FILTER_SANITIZE_EMAIL);
 	$dest_email = filter_var($dest_email, FILTER_VALIDATE_EMAIL);
 	
 	//Check is email is "valid"
-	if(!$dest_email)
+	if($dest_email == false)
 	{
 		return false;
 	}
@@ -34,12 +35,12 @@ function send_email_new_account($account_hashid_arg)
 			{ return false;}
 		}
 	if(!isset($account['hashid_admin']))
-		{if(!preg_match("^[a-z0-9]{32}$", $account['hashid_admin']))
+		{if(validate_hashid_admin($account['hashid_admin'])== false)
 			{ return false;}
 		}
-	$filtered_account['title'] = filter_var(htmlspecialchars($account['title']), FILTER_SANITIZE_STRING);
-	$filtered_account['hashid'] = filter_var(htmlspecialchars($account['hashid']), FILTER_SANITIZE_STRING);
-	$filtered_account['hashid_admin'] = filter_var(htmlspecialchars($account['hashid_admin']), FILTER_SANITIZE_STRING);
+		
+	$html_array['title'] = htmlspecialchars($account['title']);			
+	$txt_array['title'] = $account['title'];
 	
 	//send email
 	//filter according to some servers
@@ -53,16 +54,15 @@ function send_email_new_account($account_hashid_arg)
 	}
 	
 	//=====txt and html text
-	$part_link  = BASEURL.'/account/'.$filtered_account['hashid'];
-	$admin_link = BASEURL.'/account/'.$filtered_account['hashid_admin'].'/admin';
+	$part_link  = BASEURL.'/account/'.$account['hashid'];
+	$admin_link = BASEURL.'/account/'.$account['hashid_admin'].'/admin';
 	//txt
-	$message_txt = "Your Account ".$filtered_account['title']." has been created:".$br;
-	$message_txt = $message_txt.'- '.$filtered_account['title'].' :'.$br;
+	$message_txt = "Your Account ".$txt_array['title']." has been created:".$br;
 	$message_txt = $message_txt."  Participant link         : ".$part_link.$br;
 	$message_txt = $message_txt."  Admin link (DO NOT SHARE): ".$admin_link.$br;
 	//html
 	$message_html = '<html><head></head><body>';
-	$message_html = $message_html.'<p>Your Account '.$filtered_account['title'].' has been created:</p>';
+	$message_html = $message_html.'<p>Your Account '.$html_array['title'].' has been created:</p>';
 	$message_html = $message_html.'<ul>';
 	$message_html = $message_html."<li>Participant link         : <a href='".$part_link."'>".$part_link."</a></li>";
 	$message_html = $message_html."<li>Admin link (DO NOT SHARE): <a href='".$admin_link."'>".$admin_link."</a></li>";

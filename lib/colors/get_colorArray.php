@@ -2,7 +2,7 @@
 
 function get_colorArray($type_arg)
 {
-	$type_color = htmlspecialchars($type_arg);
+	$type_color = $type_arg;
 	$colorArray = array();
 
 	$BasicColorArray = array(
