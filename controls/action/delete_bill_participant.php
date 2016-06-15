@@ -48,7 +48,7 @@ if(isset($_POST['submit_delete_bill_participant_x']))
 		{	array_push($errArray, $ErrorMessage['p_hashid_account']); }
 	}
 
-	//PARTICIPANT
+	//BILL PARTICIPANT
 	$key = 'p_hashid_bill_participant';
 	if(empty($_POST[$key])) { //If empty
 		array_push($errArray, $ErrorEmptyMessage[$key]);
@@ -60,7 +60,7 @@ if(isset($_POST['submit_delete_bill_participant_x']))
 		$hashid_bill_participant = $_POST[$key];		
 		}
 	}
-	//Get the participant
+	//Get the bill participant
 	if(empty($errArray))
 	{		
 		$bill_participant = get_bill_participant_by_hashid($account['id'], $hashid_bill_participant);
@@ -68,7 +68,14 @@ if(isset($_POST['submit_delete_bill_participant_x']))
 		{	array_push($errArray, $ErrorMessage['p_hashid_bill_participant']); }
 	}
 
-	//Delete the participant
+	//Check if accounts match
+	if(empty($errArray))
+	{		
+		if($bill_participant['account_id'] !== $account['id'])
+		{	array_push($errArray, $ErrorMessage['Accounts mismatch']); }
+	}
+	
+	//Delete the bill participant
 	if(empty($errArray))
 	{
 		$success = delete_bill_participant($account['id'], $bill_participant['id']);	
