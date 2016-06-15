@@ -39,7 +39,9 @@
 <?php
 if($admin_mode && $edit_mode === 'participant')
 { ?>
-<form method="post">
+<form method="post"
+action="<?php echo ACTIONPATH.'/update_participant.php'?>"
+>
 <?php  } ?>
 <div id="div_participants">
 <?php
@@ -51,9 +53,11 @@ if($admin_mode && $edit_mode === 'participant')
 if($admin_mode && $edit_mode == 'participant' && $participant['hashid'] == $edit_hashid)
 {
 ?>
-			<input type="text" name="name_of_participant" class="input_name"
+			<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
+			<input type="hidden" name="p_hashid_participant" value="<?php echo $participant['hashid']?>">
+			<input type="text" name="p_name_of_participant" class="input_name"
 			value="<?php echo $participant['name']?>" required />
-			(<input type="number" name="nb_of_people" class="input_number"
+			(<input type="number" name="p_nb_of_people" class="input_number"
 			min="1" step="1" value="<?php echo $participant['nb_of_people']?>" required />)
 			<input type="email" name="email" class="input_email"
 			value="<?php echo $participant['email']?>"/>
