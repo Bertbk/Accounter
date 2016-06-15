@@ -157,7 +157,7 @@ if(isset($_POST['submit_new_payment']))
 			}
 		}
 		//Get the receiver
-		if(empty($errArray2) && ($payment[$key] != -1 || !is_null($payment[$key])))
+		if(empty($errArray2) && ($payment[$key] != -1 && !is_null($payment[$key])))
 		{		
 			$receiver = get_bill_participant_by_hashid($account['id'], $hashid_recv);
 			if(empty($receiver))
@@ -223,15 +223,15 @@ if(isset($_POST['submit_new_payment']))
 			{
 				array_push($errArray2, 'This payer does not belong to this bill.');
 			}
-			if(!is_null($receiver['id']) && $receiver['account_id'] !== $account['id'])
+			if(!is_null($receiver_id) && $receiver['account_id'] !== $account['id'])
 			{
 				array_push($errArray2, 'This receiver does not belong to this account.');
 			}
-			if(!is_null($receiver['id']) && $receiver['bill_id'] !== $bill['id'])
+			if(!is_null($receiver_id) && $receiver['bill_id'] !== $bill['id'])
 			{
 				array_push($errArray2, 'This receiver does not belong to this bill.');
 			}
-			if(!is_null($receiver['id']) && $receiver['bill_id'] !== $payer['bill_id'])
+			if(!is_null($receiver_id) && $receiver['bill_id'] !== $payer['bill_id'])
 			{
 				array_push($errArray2, 'Payer and receiver do not belong to the same bill.');
 			}

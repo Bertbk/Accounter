@@ -2,6 +2,7 @@
 include_once(__DIR__.'/../get_db.php');
 
 include_once(LIBPATH.'/hashid/validate_hashid.php');
+include_once(LIBPATH.'/bill_participants/get_bill_participant_by_id.php');
 
 function set_payment($account_id_arg, $hashid_arg, $bill_id_arg, $payer_id_arg, $cost_arg, $receiver_id_arg, $description_arg, $date_of_payment_arg)
 {
@@ -34,12 +35,21 @@ function set_payment($account_id_arg, $hashid_arg, $bill_id_arg, $payer_id_arg, 
 	{return false;}
 	
 	if($receiver_id == -1)
-	{		$receiver_id = null;	}
-
+	// {		$receiver_id = null;	}
 
 	if($payer_id === $receiver_id)
 	{
 		return false;
+	}
+	
+	$participation_payer = get_bill_participant_by_id($account_id, $payer_id);
+	if($participation_payer['bill_id'] != $bill_id )
+	{return false;}
+	if(!is_null($receiver_id))
+	{
+		$participation_recv = get_bill_participant_by_id($account_id, $receiver_id);
+		if($participation_recv['bill_id'] != $bill_id )
+		{return false;}
 	}
 	
 	$isgood = false;

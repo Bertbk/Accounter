@@ -1,11 +1,11 @@
 <?php
 include_once(__DIR__.'/../get_db.php');
 include_once(LIBPATH.'/payments/get_payment_by_id.php');
-include_once(LIBPATH.'/bill_participants/is_this_participant_in_bill.php');
+include_once(LIBPATH.'/bill_participants/get_bill_participant_by_id.php');
 
 
 function update_payment($account_id_arg, $bill_id_arg, $payment_id_arg, $payer_id_arg, $cost_arg, 
-			$receiver_id_arg="", $description_arg="", $date_of_payment_arg="")
+			$receiver_id_arg, $description_arg, $date_of_payment_arg)
 {
 	$db = get_db();
 
@@ -23,17 +23,13 @@ function update_payment($account_id_arg, $bill_id_arg, $payment_id_arg, $payer_i
 	$new_date_of_payment = empty($new_date_of_payment) ? null:$new_date_of_payment;
 	
 	if($new_receiver_id == -1)
-	{
-		$new_receiver_id=null;
-	}
+	{		$new_receiver_id=null;	}
 	
 	//Get current payment
 	$payment_to_edit = get_payment_by_id($account_id, $payment_id);
 	
 	if(empty($payment_to_edit))
-	{
-		return true;
-	}
+	{		return false;	}
 	
 	//Change style of date to match sql
 	if(!is_null($new_date_of_payment))
@@ -46,9 +42,7 @@ function update_payment($account_id_arg, $bill_id_arg, $payment_id_arg, $payer_i
 	}
 	
 	if($new_payer_id === $new_receiver_id)
-	{
-		return false;
-	}
+	{		return false;	}
 	
 	//Check if nothing to do
 	if($new_bill_id === $payment_to_edit['bill_id']
@@ -63,17 +57,14 @@ function update_payment($account_id_arg, $bill_id_arg, $payment_id_arg, $payer_i
 	}
 	
 	// If moving to another bill, check if people exists
-
-	$payer_validated = is_this_participant_in_bill($account_id, $new_bill_id, $new_payer_id);
-
-	$recv_validated = true;
-	if(!is_null($new_receiver_id))
+	$new_participation_payer = get_bill_participant_by_id($account_id, $new_payer_id);
+	if($new_participation_payer['bill_id'] != $new_bill_id )
+	{return false;}
+	if(!is_null($receiver_id))
 	{
-		$recv_validated = is_this_participant_in_bill($account_id, $new_bill_id, $new_receiver_id);
-	}
-	if(!$payer_validated || !recv_validated)
-	{
-		return false;
+		$new_participation_recv = get_bill_participant_by_id($account_id, $new_receiver_id);
+		if($new_participation_recv['bill_id'] != $new_bill_id )
+		{return false;}
 	}
 	
 	

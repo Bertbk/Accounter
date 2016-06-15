@@ -439,10 +439,12 @@ foreach($my_bills as $bill)
 ?>
 		<form method="post" id="form_edit_payment_send"
 		action="<?php echo ACTIONPATH.'/update_payment.php'?>">
-			<label for="form_edit_payment_bill_<?php echo $cpt_bill?>">
+			<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>"/>
+		<input type="hidden" name="p_hashid_payment" value="<?php echo $payment['hashid']?>" />
+		<label for="form_edit_payment_bill_<?php echo $cpt_bill?>">
 				Move to another bill
 			</label>
-			<select name="p_bill_hashid" id="form_edit_payment_bill_<?php echo $cpt_bill?>"
+			<select name="p_hashid_bill" id="form_edit_payment_bill_<?php echo $cpt_bill?>"
 			onchange="CreatePossiblePayersLists(this, document.getElementById('form_edit_payment_payer_<?php echo $cpt_bill?>'),	
 			<?php echo htmlspecialchars(json_encode($list_of_possible_payers, 3))?>)"> 
 	<?php //list of bills
@@ -460,7 +462,7 @@ foreach($my_bills as $bill)
 			<label for="form_edit_payment_payer_<?php echo $bill['id']?>">
 			Payer
 			</label>
-			<select name="p_payer_hashid" 
+			<select name="p_hashid_payer" 
 			onchange="DropDownListsBetweenParticipants(this, document.getElementById('form_edit_payment_recv_<?php echo $bill['id']?>'))"
 			id="form_edit_payment_payer_<?php echo $bill['id']?>"
 			>
@@ -468,7 +470,7 @@ foreach($my_bills as $bill)
 				foreach($this_bill_participants as $bill_participant)
 				{
 	?>
-					<option value="<?php echo $bill_participant['participant_hashid']?>"
+					<option value="<?php echo $bill_participant['hashid']?>"
 					<?php if($bill_participant['participant_id']==$payment['payer_id']){echo ' selected';}?>
 					>
 					<?php echo htmlspecialchars($bill_participant['name'])?></option>
@@ -488,7 +490,7 @@ foreach($my_bills as $bill)
 			<label for="form_edit_payment_recv_<?php echo $bill['id']?>">
 				Receiver
 			</label>
-			<select name="p_receiver_id" 
+			<select name="p_hashid_recv" 
 			id="form_edit_payment_recv_<?php echo $bill['id']?>"
 			>
 			<option value="-1" >Group</option>
@@ -497,7 +499,7 @@ foreach($my_bills as $bill)
 				{
 					if($bill_participant['participant_id'] == $payment['payer_id']){continue;}
 	?>
-					<option value="<?php echo $bill_participant['participant_hashid']?>"
+					<option value="<?php echo $bill_participant['hashid']?>"
 					<?php if($bill_participant['participant_id']==$payment['receiver_id']){echo ' selected';}?>
 					>
 					<?php echo htmlspecialchars($bill_participant['name'])?></option>
@@ -516,7 +518,7 @@ foreach($my_bills as $bill)
 			<label for="form_edit_payment_date_<?php echo $bill['id']?>">
 			Date of payment
 			</label>
-			<input type="date" name="p_date_payment" 
+			<input type="date" name="p_date_of_payment" 
 				class="input_paymt_date date_picker"
 				id="form_edit_payment_date_<?php echo $bill['id']?>"
 				value="<?php echo $payment['date_of_payment']?>"/>
