@@ -6,7 +6,7 @@ function get_bill_by_hashid($account_id_arg, $hashid_arg)
 	$db = get_db();
 
 	$account_id = (int)$account_id_arg;
-	$hashid = htmlspecialchars($hashid_arg);
+	$hashid = $hashid_arg;
 
 	try
 	{
@@ -19,7 +19,7 @@ function get_bill_by_hashid($account_id_arg, $hashid_arg)
 	}
 	catch (Exception $e)
 	{
-		echo 'Fail to connect: ' . $e->getMessage();
+	//	echo 'Fail to connect: ' . $e->getMessage();
 	}
 	$reply = $prepare_query->fetchAll();
 	$prepare_query->closeCursor();

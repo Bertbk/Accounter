@@ -5,12 +5,15 @@ include_once(LIBPATH.'/bills/get_bill_by_id.php');
 include_once(LIBPATH.'/participants/get_participant_by_id.php');
 include_once(LIBPATH.'/bill_participants/get_bill_participants_by_bill_id.php');
 
+include_once(LIBPATH.'/hashid/validate_hashid.php');
 
-function set_bill_participant($account_id_arg, $bill_id_arg, $participant_id_arg, $percent_of_use_arg = "")
+
+function set_bill_participant($account_id_arg, $hashid_arg, $bill_id_arg, $participant_id_arg, $percent_of_use_arg)
 {
 	$db = get_db();
 
 	$account_id = (int)$account_id_arg;
+	$hashid = $hashid_arg;
 	$bill_id = (int)$bill_id_arg;
 	$participant_id = (int)$participant_id_arg;
 	$percent_of_use = (float)$percent_of_use_arg;
@@ -24,26 +27,19 @@ function set_bill_participant($account_id_arg, $bill_id_arg, $participant_id_arg
 	if($the_participant['account_id'] != $the_bill['account_id'])
 	{return false;}
 
+	if(validate_hashid($hashid) === false)
+	{return false;}
+
 	//check that the entry is not already existant
 	$bill_participants = get_bill_participants_by_bill_id($account_id, $bill_id);
 	foreach ($bill_participants as $bill_part)
 	{
 			if($bill_part['participant_id'] == $participant_id)
 			{
-?>
-<script type="text/javascript">
-  alert('Thi person is already a participant!');
-</script>
-<?php
 				return false;
 			}
 	}
-		
-	//Hashid
-	do {
-		$hashid = bin2hex(openssl_random_pseudo_bytes(8));
-	}
-	while(!$hashid);
+	
 
 	$percent_of_use = is_null($percent_of_use)?100:$percent_of_use;
 	$percent_of_use = empty($percent_of_use)?100:$percent_of_use;
@@ -69,7 +65,7 @@ function set_bill_participant($account_id_arg, $bill_id_arg, $participant_id_arg
 	}
 	catch (Exception $e)
 	{
-		echo 'Fail to connect: ' . $e->getMessage();
+	//	echo 'Fail to connect: ' . $e->getMessage();
 	}
 	return $isgood;
 }

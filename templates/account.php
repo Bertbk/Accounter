@@ -67,9 +67,9 @@ else{ // READ Only
 <?php //Edit link
 if($admin_mode && !$edit_mode)
 {
-	$link = $link_to_account_admin.'/edit/participant/'.$participant['hashid'];
+	$link_tmp = $link_to_account_admin.'/edit/participant/'.$participant['hashid'];
 ?>
-	<a href="<?php echo $link?>">
+	<a href="<?php echo $link_tmp?>">
 	<img src="<?php echo BASEURL.'/img/pencil_white.png'?>" alt='Edit participant' class="editicon" >
 	</a>
 	<form method="post" 
@@ -162,7 +162,7 @@ if($admin_mode && $edit_mode===false)
 ?>
 
 <!-- BILLS -->
-<h1>Our bills</h1>
+<h1>The bills</h1>
 <?php
 //Admin only
 if($admin_mode && $edit_mode == false)
@@ -205,6 +205,8 @@ $cpt_bill = -1;
 foreach($my_bills as $bill)
 {
 	$cpt_bill ++;
+	$this_bill_participants = array();
+	$this_free_bill_participants = array();
 	if(!empty($my_bill_participants[$bill['id']]))
 	{$this_bill_participants = $my_bill_participants[$bill['id']];}
 	if(!empty($my_free_bill_participants[$bill['id']]))
@@ -213,9 +215,12 @@ foreach($my_bills as $bill)
 <div class="bill 
 <?php echo 'bill-'.$cpt_bill?>" style="background-color:<?php echo '#'.$bill['color']?>"
 >
-	<?php if($admin_mode && $edit_mode === 'bill' 
-	&& $edit_hashid === $bill['hashid'])
-	{
+	<?php 
+	//Edit the Bill (name, description, ...)
+	if($admin_mode 
+					&& $edit_mode === 'bill' 
+					&& $edit_hashid === $bill['hashid'])
+					{
 	?>
 	<form method="post">
 	<h2>
@@ -234,26 +239,41 @@ foreach($my_bills as $bill)
 	<?php	
 	}
 	else{
-?>
-
+	//Display only
+	?>
 	<h2><a href="javascript:void(0)" id="<?php echo 'show_hide_bill'.$cpt_bill?>">
-	<?php echo $bill['title'] ?>
+	<?php echo htmlspecialchars($bill['title']) ?>
 	</a>
 	<?php
-	if($admin_mode && !$edit_mode)
+	if($admin_mode && $edit_mode === false)
 	{
-		$link = BASEURL.'/account/'.$hashid.'/admin/edit_bill/'.$bill['hashid'];
+		$link_tmp = $link_to_account_admin.'/edit/bill/'.$bill['hashid'];
 		?>
-		<a href='<?php echo $link?>'>
+		<a href='<?php echo $link_tmp?>'>
 		<img src="<?php echo BASEURL.'/img/pencil.png'?>" alt='Edit bill' class="editicon" />
 		</a>
-<?php
-		$link = BASEURL.'/account/'.$hashid.'/admin/delete_bill/'.$bill['hashid'];
-		?>
-		<a href='<?php echo $link?>' class="confirmation">
-		<img src="<?php echo BASEURL.'/img/delete.png'?>" alt='Delete bill' class="deleteicon" />
-		</a>
-		
+	<form method="post" 
+	class="deleteicon"
+	action="<?php echo ACTIONPATH.'/delete_bill.php'?>"
+		>
+		<input type="hidden" 
+		name="p_hashid_account" 
+		value=<?php echo $my_account['hashid_admin']?>
+		/>
+		<input type="hidden"  
+		name="p_hashid_bill" 
+		value=<?php echo $bill['hashid']?> 
+		/>
+		<span>
+		<input type="image" 
+			name="submit_delete_bill"
+			src="<?php echo BASEURL.'/img/delete.png'?>" 
+			border="0" 
+			class="confirmation deleteicon"
+			alt="Delete bill" 
+			value="Submit">
+		</span>
+	</form>		
 <?php }	?>
 	</h2>
 	<div  id="<?php echo 'show_hide_bill'.$cpt_bill.'_target'?>">
@@ -276,38 +296,20 @@ foreach($my_bills as $bill)
 	foreach($this_bill_participants as $bill_participant)
 	{
 		$cpt_bill_participant++;
-		if(!$admin_mode || !$what_to_edit['bill_participant'] 
-		|| $bill_id_to_edit != $bill['id'] || $bill_participant_id_to_edit != $bill_participant['id'])
+		if(  $admin_mode === true
+			&& $edit_mode === 'bill_participant' 
+			&& $edit_hashid === $bill_participant['hashid'])
 		{
-			?><span 
-			class="<?php echo 'bill_participant'?>" style="background-color:<?php echo '#'.$bill_participant['color']?>">
-			<?php
-			echo htmlspecialchars($bill_participant['name']).'('.(float)$bill_participant['percent_of_usage'].'%)';
-			if($admin_mode && !$edit_mode){
-				?><a href="<?php echo BASEURL.'/account/'.$hashid.'/admin/edit_bill_part/'.$bill_participant['hashid']?>">
-				<img src="<?php echo BASEURL.'/img/pencil_white.png'?>" alt='Edit this participation' class="editicon" />
-				</a>
-				<a href="<?php echo BASEURL.'/account/'.$hashid.'/admin/delete_bill_part/'.$bill_participant['hashid']?>" 
-				class="confirmation">
-				<img class="confirmation deleteicon" 
-					src="<?php echo BASEURL.'/img/delete_white.png'?>"
-					alt='Remove this participation'/>
-				</a>
-
-		<?php	} ?>
-			</span>
-	<?php }
-		else
-		{ //Edit activated on THIS bill_participant
+			//Edit activated on THIS bill_participant
 			$place_submit_button = true;
 	?>
 			<form method="post">
-			<select name="p_participant_id" selected="<?php echo $bill_participant['participant_id']?>">
+			<select name="p_participant_hashid" selected="<?php echo $bill_participant['participant_hashid']?>">
 	<?php
 			foreach($my_participants as $participant)
 			{
 	?>
-				<option value="<?php echo $participant['id']?>" 
+				<option value="<?php echo $participant['hashid']?>" 
 				<?php if($participant['id']==$bill_participant['participant_id']){echo ' selected';}?>
 				><?php echo htmlspecialchars($participant['name'])?></option>
 	<?php
@@ -316,8 +318,46 @@ foreach($my_bills as $bill)
 			</select>
 			 (<input type="number" step="0.01" min="0" max="100" name="p_percent_of_use"
 				class="input_percent"
-			 value="<?php echo (float)$bill_participant['percent_of_usage']?>" required />%)		 
-	<?php
+			 value="<?php echo (float)$bill_participant['percent_of_usage']?>" required />%)
+	<?php }
+		else
+		{ 
+?>
+		<span 
+			class="<?php echo 'bill_participant'?>" style="background-color:<?php echo '#'.$bill_participant['color']?>">
+			<?php
+			echo htmlspecialchars($bill_participant['name']).' ('.(float)$bill_participant['percent_of_usage'].'%)';
+			if($admin_mode === true
+			&& $edit_mode === false){
+				?><a href="<?php echo $link_to_account_admin.'/edit/bill_participant/'.$bill_participant['hashid']?>">
+				<img src="<?php echo BASEURL.'/img/pencil_white.png'?>" alt='Edit this participation' class="editicon" />
+				</a>				
+	<form method="post" 
+	class="deleteicon"
+	action="<?php echo ACTIONPATH.'/delete_bill_participant.php'?>"
+		>
+		<input type="hidden" 
+		name="p_hashid_account" 
+		value=<?php echo $my_account['hashid_admin']?>
+		/>
+		<input type="hidden"  
+		name="p_hashid_bill_participant" 
+		value=<?php echo $bill_participant['hashid']?> 
+		/>
+		<span>
+		<input type="image" 
+			name="submit_delete_bill_participant"
+			src="<?php echo BASEURL.'/img/delete.png'?>" 
+			border="0" 
+			class="confirmation deleteicon"
+			alt="Delete this participation" 
+			value="Submit">
+		</span>
+	</form>		
+
+		<?php	} ?>
+			</span>
+			<?php
 		}//else admin mode
 	}//foreach participant in this bill
 	//Submit button for editing
@@ -344,6 +384,7 @@ foreach($my_bills as $bill)
 		<form method="post" class="hidden_at_first" 
 		enctype="multipart/form-data"
 		id=<?php echo 'show_hide_bill_add_part_'.$cpt_bill.'_target'?>
+		action="<?php echo ACTIONPATH.'/new_bill_participant.php'?>"
 		>
 		  <fieldset>
 			<legend>Assign a participant to this bill:</legend>
@@ -354,14 +395,16 @@ foreach($my_bills as $bill)
 				$cpt++;
 	?>
 			<div class="Assign_participant_<?php echo $cpt_bill?>_<?php echo $cpt?>">
-			  <span><input name="p_participant['<?php echo $cpt?>'][hashid]]" 
+			<input type="hidden" name="p_hashid_account" value=<?php echo $my_account['hashid_admin']?>>
+			<input type="hidden" name="p_hashid_bill" value=<?php echo $bill['hashid']?>>
+			  <span><input name="p_participant['<?php echo $cpt?>'][p_hashid_participant]]" 
 				id="<?php echo "form_available_part_".$participant['id']?>"
 				value="<?php echo $participant['hashid']?>" type="checkbox">
 			  <label for="<?php echo "form_available_part_".$participant['id']?>">
 				<?php echo htmlspecialchars($participant['name'])?>
 			  </label>
 			  </span>
-				<span><input name="p_participant['<?php echo $cpt?>'][percent]]" type="number"
+				<span><input name="p_participant['<?php echo $cpt?>'][p_percent_of_use]]" type="number"
 						class="input_percent" step="0.01" min="0" max="100" size="5" 
 						value="100"></span>
 			</div>
