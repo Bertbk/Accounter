@@ -226,10 +226,13 @@ foreach($my_bills as $bill)
 					&& $edit_hashid === $bill['hashid'])
 					{
 	?>
-	<form method="post">
-	<h2>
+	<form method="post"
+	action="<?php echo ACTIONPATH.'/update_bill.php'?>">
+		<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>"/>
+		<input type="hidden" name="p_hashid_bill" value="<?php echo $bill['hashid']?>" />
+		<h2>
 	<label for="form_edit_bill_name">Title: </label>
-	<input type="text" name="p_title" id="form_edit_bill_name"
+	<input type="text" name="p_title_of_bill" id="form_edit_bill_name"
 	class="input_bill_name"	value="<?php echo htmlspecialchars($bill['title'])?>" required />
 	</h2>
 	<label for="form_edit_bill_description">Description: </label>
@@ -262,11 +265,11 @@ foreach($my_bills as $bill)
 		>
 		<input type="hidden" 
 		name="p_hashid_account" 
-		value=<?php echo $my_account['hashid_admin']?>
+		value="<?php echo $my_account['hashid_admin']?>"
 		/>
 		<input type="hidden"  
 		name="p_hashid_bill" 
-		value=<?php echo $bill['hashid']?> 
+		value="<?php echo $bill['hashid']?>"
 		/>
 		<span>
 		<input type="image" 
@@ -342,11 +345,11 @@ foreach($my_bills as $bill)
 		>
 		<input type="hidden" 
 		name="p_hashid_account" 
-		value=<?php echo $my_account['hashid_admin']?>
+		value="<?php echo $my_account['hashid_admin']?>"
 		/>
 		<input type="hidden"  
 		name="p_hashid_bill_participant" 
-		value=<?php echo $bill_participant['hashid']?> 
+		value="<?php echo $bill_participant['hashid']?>"
 		/>
 		<span>
 		<input type="image" 
@@ -399,8 +402,8 @@ foreach($my_bills as $bill)
 				$cpt++;
 	?>
 			<div class="Assign_participant_<?php echo $cpt_bill?>_<?php echo $cpt?>">
-			<input type="hidden" name="p_hashid_account" value=<?php echo $my_account['hashid_admin']?>>
-			<input type="hidden" name="p_hashid_bill" value=<?php echo $bill['hashid']?>>
+			<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
+			<input type="hidden" name="p_hashid_bill" value="<?php echo $bill['hashid']?>">
 			  <span><input name="p_participant['<?php echo $cpt?>'][p_hashid_participant]" 
 				id="<?php echo "form_available_part_".$participant['id']?>"
 				value="<?php echo $participant['hashid']?>" type="checkbox">

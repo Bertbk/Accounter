@@ -77,12 +77,12 @@ if(isset($_POST['submit_new_bill']))
 			{ array_push($errArray, "Server error: problem while creating hashid.");}
 	}
 
-	//Check if two bills have the same name
+	//Check if two bills have the same title
 	if(empty($errArray))
 	{
 		$does_this_bill_exists = get_bill_by_title($account['id'], $title_of_bill);
 		if(!empty($does_this_bill_exists))
-		{array_push($errArray, 'Another bill has the same name'); 	}
+		{array_push($errArray, 'Another bill has the same title'); 	}
 	}
 
 	//Save the bill

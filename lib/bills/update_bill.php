@@ -1,6 +1,7 @@
 <?php
 include_once(__DIR__.'/../get_db.php');
 include_once(LIBPATH.'/bills/get_bill_by_id.php');
+include_once(LIBPATH.'/bills/get_bill_by_title.php');
 
 
 function update_bill($account_id_arg, $bill_id_arg, $title_bill, $description_arg = "")
@@ -21,7 +22,7 @@ function update_bill($account_id_arg, $bill_id_arg, $title_bill, $description_ar
 	
 	//Nothing to change?
 	if($new_title_of_bill === $bill_to_edit['title'] 
-	&& $new_description = $bill_to_edit['description'])
+	&& $new_description == $bill_to_edit['description'])
 	{
 		return false;
 	}
@@ -31,14 +32,7 @@ function update_bill($account_id_arg, $bill_id_arg, $title_bill, $description_ar
 	{
 		$isthetitlefree = get_bill_by_title($account_id, $new_title_of_bill);
 		if(!empty($isthetitlefree))
-		{
-?>
-<script type="text/javascript">
-  alert('bill with the same title already reccorded!');
-</script>
-<?php
-			return false;
-		}
+		{			return false;		}
 	}
 
 	try
@@ -55,7 +49,7 @@ function update_bill($account_id_arg, $bill_id_arg, $title_bill, $description_ar
 	}
 	catch (Exception $e)
 	{
-		echo 'Fail to connect: ' . $e->getMessage();
+	//	echo 'Fail to connect: ' . $e->getMessage();
 	}
 	return $isgood;
 }
