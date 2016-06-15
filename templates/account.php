@@ -471,7 +471,7 @@ foreach($my_bills as $bill)
 				{
 	?>
 					<option value="<?php echo $bill_participant['hashid']?>"
-					<?php if($bill_participant['participant_id']==$payment['payer_id']){echo ' selected';}?>
+					<?php if($bill_participant['id']==$payment['payer_id']){echo ' selected';}?>
 					>
 					<?php echo htmlspecialchars($bill_participant['name'])?></option>
 	<?php
@@ -497,7 +497,7 @@ foreach($my_bills as $bill)
 	<?php
 			foreach($this_bill_participants as $bill_participant)
 				{
-					if($bill_participant['participant_id'] == $payment['payer_id']){continue;}
+					if($bill_participant['id'] == $payment['payer_id']){continue;}
 	?>
 					<option value="<?php echo $bill_participant['hashid']?>"
 					<?php if($bill_participant['participant_id']==$payment['receiver_id']){echo ' selected';}?>
