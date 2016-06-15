@@ -16,43 +16,56 @@ session_start();
 $errArray = array(); //error messages
 $redirect_link ="" ;
 
-if(isset($_POST['submit_update_bill']))
-{
-	$ErrorEmptyMessage = array(
+
+$ErrorEmptyMessage = array(
 		'p_hashid_account' => 'Please provide an acount',
 		'p_hashid_bill' => 'Please provide a bill',
 		'p_title_of_bill' => 'Please provide a title',
-   );
-	 
-	$ErrorMessage = array(
-		'p_hashid_account' => 'Account is not valid',
-		'p_hashid_bill' => 'Participant is not valid',
-		'p_title_of_bill' => 'Title is not valid',
-		'p_description' => 'Description is not valid'
-   );
+ );
+ 
+$ErrorMessage = array(
+	'p_hashid_account' => 'Account is not valid',
+	'p_hashid_bill' => 'Participant is not valid',
+	'p_title_of_bill' => 'Title is not valid',
+	'p_description' => 'Description is not valid'
+ );
 
-	//ACCOUNT
-	$key = 'p_hashid_account';
-	if(empty($_POST[$key])) { //If empty
-		array_push($errArray, $ErrorEmptyMessage[$key]);
+//ACCOUNT
+$key = 'p_hashid_account';
+if(empty($_POST[$key])) { //If empty
+	array_push($errArray, $ErrorEmptyMessage[$key]);
+}
+else{
+	if(validate_hashid_admin($_POST[$key])== false)
+	{
+		array_push($errArray, $ErrorMessage[$key]);
 	}
 	else{
-		if(validate_hashid_admin($_POST[$key])== false)
-		{
-			array_push($errArray, $ErrorMessage[$key]);
+		$hashid_admin = $_POST[$key];
 		}
-		else{
-			$hashid_admin = $_POST[$key];
-			}
-	}
-	//Get the account
-	if(empty($errArray))
-	{		
-		$account = get_account_admin($hashid_admin);
-		if(empty($account))
-		{	array_push($errArray, $ErrorMessage[$key]); }
-	}
+}
+//Get the account
+if(empty($errArray))
+{		
+	$account = get_account_admin($hashid_admin);
+	if(empty($account))
+	{	array_push($errArray, $ErrorMessage[$key]); }
+}
 
+if(empty($account))
+{
+	$redirect_link = BASEURL;
+}
+else{
+	$redirect_link = BASEURL.'/account/'.$account['hashid_admin'].'/admin';
+}
+
+if(isset($_POST['submit_cancel']))
+{
+	header('location:'.$link_to_account_admin);
+}
+else if(isset($_POST['submit_update_bill']))
+{
 	//BILL
 	$key = 'p_hashid_bill';
 	if(empty($_POST[$key])) { //If empty
@@ -123,11 +136,5 @@ if(!(empty($errArray)))
 	$_SESSION['errors'] = $errArray;
 }
 
-if(empty($account))
-{
-	$redirect_link = BASEURL;
-}
-else{
-	$redirect_link = BASEURL.'/account/'.$account['hashid_admin'].'/admin';
-}
+
 header('location: '.$redirect_link);

@@ -16,45 +16,59 @@ session_start();
 $errArray = array(); //error messages
 $redirect_link ="" ;
 
-if(isset($_POST['submit_update_participant']))
-{
-	$ErrorEmptyMessage = array(
+$ErrorEmptyMessage = array(
 		'p_hashid_account' => 'Please provide an acount',
 		'p_hashid_participant' => 'Please provide a participant',
 		'p_name_of_participant' => 'Please provide a name',
 		'p_nb_of_people' => 'Please provide a number of people'
    );
 	 
-	$ErrorMessage = array(
-		'p_hashid_account' => 'Account is not valid',
-		'p_hashid_participant' => 'Participant is not valid',
-		'p_name_of_participant' => 'Name is not valid',
-		'p_nb_of_people' => 'Number of people is not valid',
-		'p_email' => 'Email address is not valid'
-   );
+$ErrorMessage = array(
+	'p_hashid_account' => 'Account is not valid',
+	'p_hashid_participant' => 'Participant is not valid',
+	'p_name_of_participant' => 'Name is not valid',
+	'p_nb_of_people' => 'Number of people is not valid',
+	'p_email' => 'Email address is not valid'
+ );
+ 
 
-	//ACCOUNT
-	$key = 'p_hashid_account';
-	if(empty($_POST[$key])) { //If empty
-		array_push($errArray, $ErrorEmptyMessage[$key]);
+//ACCOUNT
+$key = 'p_hashid_account';
+if(empty($_POST[$key])) { //If empty
+	array_push($errArray, $ErrorEmptyMessage[$key]);
+}
+else{
+	if(validate_hashid_admin($_POST[$key])== false)
+	{
+		array_push($errArray, $ErrorMessage[$key]);
 	}
 	else{
-		if(validate_hashid_admin($_POST[$key])== false)
-		{
-			array_push($errArray, $ErrorMessage[$key]);
+		$hashid_admin = $_POST[$key];
 		}
-		else{
-			$hashid_admin = $_POST[$key];
-			}
-	}
-	//Get the account
-	if(empty($errArray))
-	{		
-		$account = get_account_admin($hashid_admin);
-		if(empty($account))
-		{	array_push($errArray, $ErrorMessage[$key]); }
-	}
+}
+//Get the account
+if(empty($errArray))
+{		
+	$account = get_account_admin($hashid_admin);
+	if(empty($account))
+	{	array_push($errArray, $ErrorMessage['p_hashid_account']); }
+}
 
+//REDIRECTION LINK
+if(empty($account))
+{
+	$redirect_link = BASEURL;
+}
+else{
+	$redirect_link = BASEURL.'/account/'.$account['hashid_admin'].'/admin';
+}
+
+if(isset($_POST['submit_cancel']))
+{
+	header('location:'.$link_to_account_admin);
+}
+else if(isset($_POST['submit_update_participant']))
+{
 	//PARTICIPANT
 	$key = 'p_hashid_participant';
 	if(empty($_POST[$key])) { //If empty
@@ -141,11 +155,4 @@ if(!(empty($errArray)))
 	$_SESSION['errors'] = $errArray;
 }
 
-if(empty($account))
-{
-	$redirect_link = BASEURL;
-}
-else{
-	$redirect_link = BASEURL.'/account/'.$account['hashid_admin'].'/admin';
-}
 header('location: '.$redirect_link);

@@ -309,21 +309,15 @@ foreach($my_bills as $bill)
 			>
 			<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
 			<input type="hidden" name="p_hashid_bill_participant" value="<?php echo $bill_participant['hashid']?>">
-			<select name="p_hashid_participant" selected="<?php echo $bill_participant['participant_hashid']?>">
-	<?php
-			foreach($my_participants as $participant)
-			{
-	?>
-				<option value="<?php echo $participant['hashid']?>" 
-				<?php if($participant['id']==$bill_participant['participant_id']){echo ' selected';}?>
-				><?php echo htmlspecialchars($participant['name'])?></option>
-	<?php
-			}
-	?>
-			</select>
+			<span 
+			class="<?php echo 'bill_participant'?>" style="background-color:<?php echo '#'.$bill_participant['color']?>"
+			>
+			<?php
+			echo htmlspecialchars($bill_participant['name']);?>		
 			 (<input type="number" step="0.01" min="0" max="100" name="p_percent_of_use"
 				class="input_percent"
 			 value="<?php echo (float)$bill_participant['percent_of_usage']?>" required />%)
+ 			</span>
 	<?php }
 		else
 		{ 
