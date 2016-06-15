@@ -213,19 +213,19 @@ foreach($my_bills as $bill)
 <div class="bill 
 <?php echo 'bill-'.$cpt_bill?>" style="background-color:<?php echo '#'.$bill['color']?>"
 >
-	<?php if($admin_mode && $what_to_edit['bill'] 
-	&& $bill_id_to_edit == $bill['id'])
+	<?php if($admin_mode && $edit_mode === 'bill' 
+	&& $edit_hashid === $bill['hashid'])
 	{
 	?>
 	<form method="post">
 	<h2>
 	<label for="form_edit_bill_name">Title: </label>
 	<input type="text" name="p_title" id="form_edit_bill_name"
-	class="input_bill_name"	value="<?php echo $bill['title']?>" required />
+	class="input_bill_name"	value="<?php echo htmlspecialchars($bill['title'])?>" required />
 	</h2>
 	<label for="form_edit_bill_description">Description: </label>
 	 <input type="text" name="p_description" id="form_edit_bill_description" 
-	 class="input_bill_desc" value="<?php echo $bill['description']?>"/>
+	 class="input_bill_desc" value="<?php echo htmlspecialchars($bill['description'])?>"/>
 	 <div>
 		<button type="submit" name="submit_update_bill" value="Submit">Submit</button> 
 		<button type="submit" name="submit_cancel" value="Submit">Cancel</button> 
@@ -260,7 +260,7 @@ foreach($my_bills as $bill)
 	<?php if(!empty($bill['description']) && !is_null($bill['description']))
 	{
 ?>
-	<p><?php echo $bill['description']?></p>
+	<p><?php echo htmlspecialchars($bill['description'])?></p>
 <?php }?>
 <?php }//if/else admin 
 ?>
@@ -282,7 +282,7 @@ foreach($my_bills as $bill)
 			?><span 
 			class="<?php echo 'bill_participant'?>" style="background-color:<?php echo '#'.$bill_participant['color']?>">
 			<?php
-			echo $bill_participant['name'].'('.$bill_participant['percent_of_usage'].'%)';
+			echo htmlspecialchars($bill_participant['name']).'('.(float)$bill_participant['percent_of_usage'].'%)';
 			if($admin_mode && !$edit_mode){
 				?><a href="<?php echo BASEURL.'/account/'.$hashid.'/admin/edit_bill_part/'.$bill_participant['hashid']?>">
 				<img src="<?php echo BASEURL.'/img/pencil_white.png'?>" alt='Edit this participation' class="editicon" />
@@ -309,14 +309,14 @@ foreach($my_bills as $bill)
 	?>
 				<option value="<?php echo $participant['id']?>" 
 				<?php if($participant['id']==$bill_participant['participant_id']){echo ' selected';}?>
-				><?php echo $participant['name']?></option>
+				><?php echo htmlspecialchars($participant['name'])?></option>
 	<?php
 			}
 	?>
 			</select>
 			 (<input type="number" step="0.01" min="0" max="100" name="p_percent_of_use"
 				class="input_percent"
-			 value="<?php echo $bill_participant['percent_of_usage']?>" required />%)		 
+			 value="<?php echo (float)$bill_participant['percent_of_usage']?>" required />%)		 
 	<?php
 		}//else admin mode
 	}//foreach participant in this bill
@@ -358,7 +358,7 @@ foreach($my_bills as $bill)
 				id="<?php echo "form_available_part_".$participant['id']?>"
 				value="<?php echo $participant['hashid']?>" type="checkbox">
 			  <label for="<?php echo "form_available_part_".$participant['id']?>">
-				<?php echo $participant['name']?>
+				<?php echo htmlspecialchars($participant['name'])?>
 			  </label>
 			  </span>
 				<span><input name="p_participant['<?php echo $cpt?>'][percent]]" type="number"
