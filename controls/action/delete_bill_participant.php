@@ -3,8 +3,8 @@ require_once __DIR__.'/../../config-app.php';
 
 include_once(LIBPATH.'/accounts/get_account_admin.php');
 
-include_once(LIBPATH.'/participants/get_participant_by_hashid.php');
-include_once(LIBPATH.'/participants/delete_participant.php');
+include_once(LIBPATH.'/bill_participants/get_bill_participant_by_hashid.php');
+include_once(LIBPATH.'/bill_participants/delete_bill_participant.php');
 
 include_once(LIBPATH.'/hashid/validate_hashid.php');
 
@@ -16,16 +16,16 @@ $errArray = array(); //error messages
 $redirect_link ="" ;
 
 // the "_x" is here because the button is an image
-if(isset($_POST['submit_delete_participant_x']))
+if(isset($_POST['submit_delete_bill_participant_x']))
 {
 	$ErrorEmptyMessage = array(
 		'p_hashid_account' => 'No acount provided',
-		'p_hashid_participant' => 'No participant provided'
+		'p_hashid_bill_participant' => 'No participation provided'
    );
 	 
 	$ErrorMessage = array(
 		'p_hashid_account' => 'Account not valid',
-		'p_hashid_participant' => 'Participant not valid'
+		'p_hashid_bill_participant' => 'Participation not valid'
    );
 
 	//ACCOUNT
@@ -49,7 +49,7 @@ if(isset($_POST['submit_delete_participant_x']))
 	}
 
 	//PARTICIPANT
-	$key = 'p_hashid_participant';
+	$key = 'p_hashid_bill_participant';
 	if(empty($_POST[$key])) { //If empty
 		array_push($errArray, $ErrorEmptyMessage[$key]);
 	}
@@ -57,23 +57,23 @@ if(isset($_POST['submit_delete_participant_x']))
 		if(validate_hashid($_POST[$key]) == false)
 		{array_push($errArray, $ErrorMessage[$key]);}
 	else{
-		$hashid_participant = $_POST[$key];		
+		$hashid_bill_participant = $_POST[$key];		
 		}
 	}
 	//Get the participant
 	if(empty($errArray))
 	{		
-		$participant = get_participant_by_hashid($account['id'], $hashid_participant);
-		if(empty($participant))
-		{	array_push($errArray, $ErrorMessage['p_hashid_participant']); }
+		$bill_participant = get_bill_participant_by_hashid($account['id'], $hashid_bill_participant);
+		if(empty($bill_participant))
+		{	array_push($errArray, $ErrorMessage['p_hashid_bill_participant']); }
 	}
 
 	//Delete the participant
 	if(empty($errArray))
 	{
-		$success = delete_participant($account['id'], $participant['id']);	
+		$success = delete_bill_participant($account['id'], $bill_participant['id']);	
 		if(!$success)
-		{array_push($errArray, 'Server error: Problem while attempting to delete a participant'); 	}
+		{array_push($errArray, 'Server error: Problem while attempting to delete a participation'); 	}
 	}
 }
 

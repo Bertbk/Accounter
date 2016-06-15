@@ -347,7 +347,7 @@ foreach($my_bills as $bill)
 		<span>
 		<input type="image" 
 			name="submit_delete_bill_participant"
-			src="<?php echo BASEURL.'/img/delete.png'?>" 
+			src="<?php echo BASEURL.'/img/delete_white.png'?>" 
 			border="0" 
 			class="confirmation deleteicon"
 			alt="Delete this participation" 
@@ -397,14 +397,14 @@ foreach($my_bills as $bill)
 			<div class="Assign_participant_<?php echo $cpt_bill?>_<?php echo $cpt?>">
 			<input type="hidden" name="p_hashid_account" value=<?php echo $my_account['hashid_admin']?>>
 			<input type="hidden" name="p_hashid_bill" value=<?php echo $bill['hashid']?>>
-			  <span><input name="p_participant['<?php echo $cpt?>'][p_hashid_participant]]" 
+			  <span><input name="p_participant['<?php echo $cpt?>'][p_hashid_participant]" 
 				id="<?php echo "form_available_part_".$participant['id']?>"
 				value="<?php echo $participant['hashid']?>" type="checkbox">
 			  <label for="<?php echo "form_available_part_".$participant['id']?>">
 				<?php echo htmlspecialchars($participant['name'])?>
 			  </label>
 			  </span>
-				<span><input name="p_participant['<?php echo $cpt?>'][p_percent_of_use]]" type="number"
+				<span><input name="p_participant['<?php echo $cpt?>'][p_percent_of_use]" type="number"
 						class="input_percent" step="0.01" min="0" max="100" size="5" 
 						value="100"></span>
 			</div>

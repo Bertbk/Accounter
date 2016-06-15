@@ -103,17 +103,17 @@ if(isset($_POST['submit_new_bill_participant']))
 	 foreach ($_POST['p_participant'] as $particip)
 	 {
 		$errArray2 = array(); // Error array for each participant
-		$key2 = 'p_hashid_participant';
-		 if(empty($particip[$key2])) { //If empty
-			array_push($errArray2, $ErrorEmptyMessage[$key2]);
+		$key = 'p_hashid_participant';
+		 if(empty($particip[$key])) { //If empty
+			array_push($errArray2, $ErrorEmptyMessage[$key]);
 		}
 		else{
-			if(validate_hashid($particip[$key2])== false)
+			if(validate_hashid($particip[$key])== false)
 			{
-				array_push($errArray2, $ErrorMessage[$key2]);
+				array_push($errArray2, $ErrorMessage[$key]);
 			}
 			else{
-				$hashid_participant = $particip[$key2];
+				$hashid_participant = $particip[$key];
 				}
 		}
 		//Get the participant
@@ -126,11 +126,11 @@ if(isset($_POST['submit_new_bill_participant']))
 		
 		// PERCENT OF USE
 		$key = 'p_percent_of_use';
-		if(empty($particip[$key2])) { //If empty
-			array_push($errArray2, $ErrorEmptyMessage[$key2]);
+		if(empty($particip[$key])) { //If empty
+			array_push($errArray2, $ErrorEmptyMessage[$key]);
 		}
 		else{
-			$percent_of_use = (float)$particip[$key2];
+			$percent_of_use = (float)$particip[$key];
 			if($percent_of_use < 0 ||$percent_of_use > 100)
 			{
 				array_push($errArray2, $ErrorMessage['p_percent_of_use']);
