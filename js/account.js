@@ -42,7 +42,7 @@ function CreatePossiblePayersLists(billListElement, payerListElement, billPartic
 		{
 			for (var cpt in list_bill_part[bill_hashids]) {
 				var part_name = list_bill_part[bill_hashids][cpt]['part_name'];
-				var part_hashid = list_bill_part[bill_hashids][cpt]['hashid'];
+				var part_hashid = list_bill_part[bill_hashids][cpt]['part_hashid'];
 				createOptionDropDown(payerListElement, part_name, part_hashid );
 			}
 		}

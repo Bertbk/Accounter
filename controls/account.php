@@ -141,7 +141,7 @@ foreach($my_bills as $bill)
 		$list_of_possible_payers[$bill['hashid']][$cpt] = 
 		Array(
 			'part_name' => $bill_participant['name'],
-			'part_hashid' => $bill_participant['participant_hashid']
+			'part_hashid' => $bill_participant['hashid']
 		);
 	}
 }

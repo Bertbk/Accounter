@@ -459,12 +459,12 @@ foreach($my_bills as $bill)
 	?>
 			</select>
 			
-			<label for="form_edit_payment_payer_<?php echo $bill['id']?>">
+			<label for="form_edit_payment_payer_<?php echo $cpt_bill?>">
 			Payer
 			</label>
 			<select name="p_hashid_payer" 
 			onchange="DropDownListsBetweenParticipants(this, document.getElementById('form_edit_payment_recv_<?php echo $bill['id']?>'))"
-			id="form_edit_payment_payer_<?php echo $bill['id']?>"
+			id="form_edit_payment_payer_<?php echo $cpt_bill?>"
 			>
 	<?php
 				foreach($this_bill_participants as $bill_participant)
@@ -479,19 +479,19 @@ foreach($my_bills as $bill)
 	?>
 			</select>
 			
-			<label for="form_edit_payment_cost_<?php echo $bill['id']?>">
+			<label for="form_edit_payment_cost_<?php echo $cpt_bill?>">
 			Cost
 			</label>
 			<input type="number" step="0.01" min="0" name="p_cost" 
 				class="input_paymt_cost"
-				id="form_edit_payment_cost_<?php echo $bill['id']?>"
+				id="form_edit_payment_cost_<?php echo $cpt_bill?>"
 				value="<?php echo (float)$payment['cost']?>" required />
 			
-			<label for="form_edit_payment_recv_<?php echo $bill['id']?>">
+			<label for="form_edit_payment_recv_<?php echo $cpt_bill?>">
 				Receiver
 			</label>
 			<select name="p_hashid_recv" 
-			id="form_edit_payment_recv_<?php echo $bill['id']?>"
+			id="form_edit_payment_recv_<?php echo $cpt_bill?>"
 			>
 			<option value="-1" >Group</option>
 	<?php
