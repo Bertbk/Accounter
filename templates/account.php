@@ -56,17 +56,17 @@ if($admin_mode && $edit_mode == 'participant' && $participant['hashid'] == $edit
 			<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
 			<input type="hidden" name="p_hashid_participant" value="<?php echo $participant['hashid']?>">
 			<input type="text" name="p_name_of_participant" class="input_name"
-			value="<?php echo $participant['name']?>" required />
+			value="<?php echo htmlspecialchars($participant['name'])?>" required />
 			(<input type="number" name="p_nb_of_people" class="input_number"
-			min="1" step="1" value="<?php echo $participant['nb_of_people']?>" required />)
+			min="1" step="1" value="<?php echo (int)$participant['nb_of_people']?>" required />)
 			<input type="email" name="email" class="input_email"
-			value="<?php echo $participant['email']?>"/>
+			value="<?php echo htmlspecialchars($participant['email'])?>"/>
 <?php
 }//if
 else{ // READ Only
 ?>
-		<?php echo $participant['name']?> 
-		(<?php echo $participant['nb_of_people'];if(!empty($participant['email'])){echo ', '.$participant['email'];}?>)
+		<?php echo htmlspecialchars($participant['name'])?> 
+		(<?php echo (int)$participant['nb_of_people'];if(!empty($participant['email'])){echo ', '.htmlspecialchars($participant['email']);}?>)
 
 <?php //Edit link
 if($admin_mode && !$edit_mode)
