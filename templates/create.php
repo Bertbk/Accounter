@@ -2,8 +2,15 @@
 
 <html>
 <head>
+<title>Create a new account</title>
+<link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/global.css'?>">
 </head>
 <body>
+
+<div id="content">
+<header>
+<?php include(__DIR__.'/header/header.php'); ?>
+</header>
 
 
 <h1>Create a new account</h1>
@@ -46,11 +53,6 @@ foreach($errArray as $err)
   </fieldset>
 </form>
 
-<h1>Menu</h1>
-<ul>
-<li><a href=<?php echo BASEURL?>>Main Menu</a></li>
-</ul>
-
-
+</div> <!-- content -->
 </body>
 </html>

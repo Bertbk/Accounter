@@ -7,7 +7,7 @@ function create_new_account($hashid_arg, $hashid_admin_arg, $title_of_account_ar
 	$db = get_db();
 
 	$hashid = $hashid_arg;
-	if(validate_hashid($hash_id)== false)
+	if(validate_hashid($hashid)== false)
 	{
 		return array();
 	}
