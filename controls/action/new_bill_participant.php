@@ -18,6 +18,8 @@ include_once(LIBPATH.'/hashid/create_hashid.php');
 session_start();
 
 $errArray = array(); //error messages
+$warnArray = array(); //warning messages
+$successArray = array(); //success messages
 $redirect_link ="" ;
 
 if(isset($_POST['submit_new_bill_participant']))
@@ -179,6 +181,10 @@ if(isset($_POST['submit_new_bill_participant']))
 			$success = set_bill_participant($account['id'], $hashid_bill_participant, $bill['id'], $participant['id'], $percent_of_use);	
 			if(!$success)
 			{array_push($errArray2, 'Server error: Problem while attempting to add a participation'); 	}
+			else
+			{
+				array_push($successArray, 'Participation has been successfully added');
+			}
 		}
 		//Merge the errors
 		if(!empty($errArray2))
@@ -193,6 +199,14 @@ if(isset($_POST['submit_new_bill_participant']))
 if(!(empty($errArray)))
 {
 	$_SESSION['errors'] = $errArray;
+}
+if(!(empty($warnArray)))
+{
+	$_SESSION['warnings'] = $warnArray;
+}
+if(!(empty($successArray)))
+{
+	$_SESSION['success'] = $successArray;
 }
 
 if(empty($account))

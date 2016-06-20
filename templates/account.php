@@ -16,7 +16,9 @@
 </head>
 <body>
 
-<?php include(__DIR__.'/error.php'); ?>
+<?php include(__DIR__.'/errors.php'); ?>
+<?php include(__DIR__.'/warnings.php'); ?>
+<?php include(__DIR__.'/success.php'); ?>
 
 <?php if($admin_mode && $edit_mode !== false)
 {

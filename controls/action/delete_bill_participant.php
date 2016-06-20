@@ -13,8 +13,9 @@ include_once(LIBPATH.'/hashid/validate_hashid.php');
 session_start();
 
 $errArray = array(); //error messages
+$warnArray = array(); //warning messages
+$successArray = array(); //success messages
 $redirect_link ="" ;
-
 // the "_x" is here because the button is an image
 if(isset($_POST['submit_delete_bill_participant_x']))
 {
@@ -81,6 +82,10 @@ if(isset($_POST['submit_delete_bill_participant_x']))
 		$success = delete_bill_participant($account['id'], $bill_participant['id']);	
 		if(!$success)
 		{array_push($errArray, 'Server error: Problem while attempting to delete a participation'); 	}
+			else
+			{
+				array_push($successArray, 'Participation has been successfully deleted');
+			}
 	}
 }
 
@@ -88,6 +93,14 @@ if(isset($_POST['submit_delete_bill_participant_x']))
 if(!(empty($errArray)))
 {
 	$_SESSION['errors'] = $errArray;
+}
+if(!(empty($warnArray)))
+{
+	$_SESSION['warnings'] = $warnArray;
+}
+if(!(empty($successArray)))
+{
+	$_SESSION['success'] = $successArray;
 }
 
 if(empty($account))

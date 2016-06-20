@@ -19,6 +19,8 @@ include_once(LIBPATH.'/hashid/validate_hashid.php');
 session_start();
 
 $errArray = array(); //error messages
+$warnArray = array(); //warning messages
+$successArray = array(); //success messages
 $redirect_link ="" ;
 
 $ErrorEmptyMessage = array(
@@ -123,6 +125,10 @@ else if(isset($_POST['submit_update_bill_participant']))
 		$success = update_bill_participant($account['id'], $bill_participant['id'], $new_percent_of_use);	
 		if(!$success)
 		{array_push($errArray, 'Server error: Problem while attempting to update a participation'); 	}
+	else
+		{
+			array_push($successArray, 'Participant has been successfully updated');
+		}
 	}
 }
 	
@@ -131,6 +137,13 @@ if(!(empty($errArray)))
 {
 	$_SESSION['errors'] = $errArray;
 }
-
+if(!(empty($warnArray)))
+{
+	$_SESSION['warnings'] = $warnArray;
+}
+if(!(empty($successArray)))
+{
+	$_SESSION['success'] = $successArray;
+}
 
 header('location: '.$redirect_link);

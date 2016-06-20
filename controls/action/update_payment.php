@@ -19,7 +19,8 @@ include_once(LIBPATH.'/hashid/create_hashid.php');
 session_start();
 
 $errArray = array(); //error messages
-$warnArray = array(); //error messages
+$warnArray = array(); //warning messages
+$successArray = array(); //success messages
 $redirect_link ="" ;
 
 $ErrorEmptyMessage = array(
@@ -266,6 +267,10 @@ else if(isset($_POST['submit_update_payment']))
 		$success = update_payment($account['id'], $bill['id'], $payment['id'], $payer['id'], $cost, $receiver_id, $description, $date_of_payment);	
 		if(!$success)
 		{array_push($errArray, 'Server error: Problem while attempting to update a payment'); 	}
+	else
+		{
+			array_push($successArray, 'Payment has been successfully updated');
+		}
 	}
 	//Merge the errors
 	if(!empty($errArray))
@@ -278,8 +283,14 @@ else if(isset($_POST['submit_update_payment']))
 if(!(empty($errArray)))
 {
 	$_SESSION['errors'] = $errArray;
+}
+if(!(empty($warnArray)))
+{
 	$_SESSION['warnings'] = $warnArray;
 }
-
+if(!(empty($successArray)))
+{
+	$_SESSION['success'] = $successArray;
+}
 
 header('location: '.$redirect_link);

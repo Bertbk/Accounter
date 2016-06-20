@@ -14,6 +14,8 @@ include_once(LIBPATH.'/hashid/create_hashid.php');
 session_start();
 
 $errArray = array(); //error messages
+$warnArray = array(); //warning messages
+$successArray = array(); //success messages
 $redirect_link ="" ;
 
 if(isset($_POST['submit_new_bill']))
@@ -83,7 +85,7 @@ if(isset($_POST['submit_new_bill']))
 		$does_this_bill_exists = get_bill_by_title($account['id'], $title_of_bill);
 		if(!empty($does_this_bill_exists))
 		{array_push($errArray, 'Another bill has the same title'); 	}
-	}
+		}
 
 	//Save the bill
 	if(empty($errArray))
@@ -91,6 +93,10 @@ if(isset($_POST['submit_new_bill']))
 		$success = set_bill($account['id'], $hashid_bill, $title_of_bill, $desc);	
 		if(!$success)
 		{array_push($errArray, 'Server error: Problem while attempting to add a bill'); 	}
+		else
+			{
+				array_push($successArray, 'Bill has been successfully added');
+			}
 	}
 }
 
@@ -98,6 +104,14 @@ if(isset($_POST['submit_new_bill']))
 if(!(empty($errArray)))
 {
 	$_SESSION['errors'] = $errArray;
+}
+if(!(empty($warnArray)))
+{
+	$_SESSION['warnings'] = $warnArray;
+}
+if(!(empty($successArray)))
+{
+	$_SESSION['success'] = $successArray;
 }
 
 if(empty($account))

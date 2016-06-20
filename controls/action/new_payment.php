@@ -18,7 +18,8 @@ include_once(LIBPATH.'/hashid/create_hashid.php');
 session_start();
 
 $errArray = array(); //error messages
-$warnArray = array(); //error messages
+$warnArray = array(); //warning messages
+$successArray = array(); //success messages
 $redirect_link ="" ;
 
 if(isset($_POST['submit_new_payment']))
@@ -243,6 +244,10 @@ if(isset($_POST['submit_new_payment']))
 			$success = set_payment($account['id'], $hashid_payment, $bill['id'], $payer['id'], $cost, $receiver_id, $description, $date_of_payment);	
 			if(!$success)
 			{array_push($errArray2, 'Server error: Problem while attempting to add a payment'); 	}
+		else
+			{
+				array_push($successArray, 'Payment has been successfully added');
+			}
 		}
 		//Merge the errors
 		if(!empty($errArray2))
@@ -257,7 +262,14 @@ if(isset($_POST['submit_new_payment']))
 if(!(empty($errArray)))
 {
 	$_SESSION['errors'] = $errArray;
+}
+if(!(empty($warnArray)))
+{
 	$_SESSION['warnings'] = $warnArray;
+}
+if(!(empty($successArray)))
+{
+	$_SESSION['success'] = $successArray;
 }
 
 if(empty($account))

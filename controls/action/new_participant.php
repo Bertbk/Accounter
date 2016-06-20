@@ -14,6 +14,8 @@ include_once(LIBPATH.'/hashid/create_hashid.php');
 session_start();
 
 $errArray = array(); //error messages
+$warnArray = array(); //warning messages
+$successArray = array(); //success messages
 $redirect_link ="" ;
 
 if(isset($_POST['submit_new_participant']))
@@ -108,6 +110,10 @@ if(isset($_POST['submit_new_participant']))
 		$success = set_participant($account['id'], $hashid_participant, $name_of_participant, $nb_of_people, $email);	
 		if(!$success)
 		{array_push($errArray, 'Server error: Problem while attempting to add a participant'); 	}
+		else
+			{
+				array_push($successArray, 'Participant has been successfully added');
+			}
 	}
 }
 
@@ -115,6 +121,14 @@ if(isset($_POST['submit_new_participant']))
 if(!(empty($errArray)))
 {
 	$_SESSION['errors'] = $errArray;
+}
+if(!(empty($warnArray)))
+{
+	$_SESSION['warnings'] = $warnArray;
+}
+if(!(empty($successArray)))
+{
+	$_SESSION['success'] = $successArray;
 }
 
 if(empty($account))
