@@ -24,21 +24,12 @@
 <?php include(__DIR__.'/header/header.php'); ?>
 </header>
 
-<?php include(__DIR__.'/messages/messages.php'); ?>
-
-
 
 <?php if($admin_mode && $edit_mode !== false)
 {
 ?>
 <div><p>Edit mode activated </p><form method="post"><button type="submit" name="submit_cancel" value="Submit">Cancel</button></form></div>
 <?php } ?>
-
-<!--Menu -->
-
-<h1>Home</h1>
-
-<p><a href='<?php echo BASEURL.''?>'>Come back to the main menu</a></p>
 
 	
 <?php if (is_array($my_participants) && sizeof($my_participants) > 0 ) 
