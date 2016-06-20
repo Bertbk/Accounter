@@ -19,12 +19,13 @@
 
 <body>
 
+<div id="content">
+
 <header>
 <?php include(__DIR__.'/header/header.php'); ?>
 </header>
 
-<div id="content">
-<?php include(__DIR__.'/header/messages.php'); ?>
+<?php include(__DIR__.'/messages/messages.php'); ?>
 
 
 

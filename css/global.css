@@ -1,5 +1,29 @@
+header h2#main_subtitle{
+	font-style: italic;
+	color:#555;
+}
+
+header hr{
+	width:90%;
+	size:10px;
+  clear: both;
+	height: 5px;
+	background-color : #555;
+	border-radius:10px;
+}
+
 body{
-	
+	background-color: #eee;
+}
+
+body div#content{
+	background-color: white;
+	box-shadow: -4px 6px 9px rgba(50, 50, 50, 0.5);
+	width: 1280px;
+	overflow:hidden;
+	margin:auto;
+	padding: 10px;
+		
 }
 
 div#success{
