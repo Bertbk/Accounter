@@ -20,7 +20,6 @@
 <body>
 
 <div id="content">
-
 <header>
 <?php include(__DIR__.'/header/header.php'); ?>
 </header>
