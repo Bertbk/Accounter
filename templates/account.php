@@ -3,6 +3,7 @@
 <html>
 <head>
 <title>Account</title>
+<link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/global.css'?>">
 <link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/bill.css'?>">
 <link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/bill_participant.css'?>">
 <link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/account.css'?>">
@@ -14,11 +15,18 @@
 <script type="text/javascript" src="<?php echo BASEURL.'/js/hide_show_add_participant.jquery'?>"></script>
 
 </head>
+
+
 <body>
 
-<?php include(__DIR__.'/errors.php'); ?>
-<?php include(__DIR__.'/warnings.php'); ?>
-<?php include(__DIR__.'/success.php'); ?>
+<header>
+<?php include(__DIR__.'/header/header.php'); ?>
+</header>
+
+<div id="content">
+<?php include(__DIR__.'/header/messages.php'); ?>
+
+
 
 <?php if($admin_mode && $edit_mode !== false)
 {
@@ -32,7 +40,6 @@
 
 <p><a href='<?php echo BASEURL.''?>'>Come back to the main menu</a></p>
 
-<h1>Welcome to the account: <?php echo htmlspecialchars($my_account['title'])?></h1>
 	
 <?php if (is_array($my_participants) && sizeof($my_participants) > 0 ) 
 	{
@@ -720,5 +727,6 @@ foreach($my_bills as $bill)
 } //if there is a solution
 ?>
 
+</div> <!-- content -->
 </body>
 </html>
