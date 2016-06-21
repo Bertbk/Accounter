@@ -3,7 +3,8 @@ header h2#main_subtitle{
 	color:#555;
 }
 
-header hr{
+header hr,
+body hr{
 	width:90%;
 	size:10px;
   clear: both;

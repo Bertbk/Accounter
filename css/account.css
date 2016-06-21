@@ -10,6 +10,10 @@ img.deleteicon{
 	height: 1em;
 }
 
+img.plusminusicon{
+	height: 1em;
+}
+
 form.deleteicon{
 	display: inline-block;
 }
@@ -44,4 +48,78 @@ input.input_paymt_desc{
 
 input.input_percent{
 	width:5em;
+}
+
+div#explain_admin,
+div#edit_mode_admin{
+	width:80%;
+	margin:auto;
+	background-color: rgba(250, 50, 0, 0.25);
+	border-radius: 10px;
+	color: black;
+	overflow:hidden;
+	margin-bottom:20px;
+	margin-top:20px;
+}
+div#explain_admin h2,
+div#edit_mode_admin h2{
+  display: inline-block;
+	margin: 0;
+	width: 100%;
+	background-color: rgba(255, 0, 0, 0.5);
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+	padding: 5px;
+}
+div#explain_admin div,
+div#edit_mode_admin div{
+	padding:10px;
+}
+
+/* Solution */
+div#solution{
+	width : 80%;
+	margin:auto;
+	background-color: rgba(0, 0, 255, 0.25);
+	border-radius: 10px;
+	color: black;
+	overflow:hidden;
+	margin-bottom: 20px;
+}
+div#solution h2{
+  display: inline-block;
+	margin: 0;
+	width: 100%;
+	background-color: rgba(0, 0, 255, 0.5);
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+	padding: 5px;
+}
+div#solution div{
+	padding:10px;
+}
+
+/*Participant*/
+div#participants{
+	float:left;
+	width: 19%;
+	overflow:hidden;
+	margin-bottom: 30px;
+	border: 1px solid;
+	border-radius:10px;
+}
+
+/*Bills*/
+div#bills{
+	float:right;
+	width: 80%;
+	overflow:hidden;
+	margin-bottom: 30px;
+	border: 1px solid;
+	border-radius:10px;
+}
+
+div#bills h3 a{
+text-decoration:none;
+color:black;
 }
