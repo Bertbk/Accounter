@@ -99,27 +99,3 @@ div#solution div{
 	padding:10px;
 }
 
-/*Participant*/
-div#participants{
-	float:left;
-	width: 19%;
-	overflow:hidden;
-	margin-bottom: 30px;
-	border: 1px solid;
-	border-radius:10px;
-}
-
-/*Bills*/
-div#bills{
-	float:right;
-	width: 80%;
-	overflow:hidden;
-	margin-bottom: 30px;
-	border: 1px solid;
-	border-radius:10px;
-}
-
-div#bills h3 a{
-text-decoration:none;
-color:black;
-}

@@ -4,6 +4,7 @@
 <head>
 <title>Account</title>
 <link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/global.css'?>">
+<link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/participant.css'?>">
 <link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/bill.css'?>">
 <link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/bill_participant.css'?>">
 <link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/account.css'?>">

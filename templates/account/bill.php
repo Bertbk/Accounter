@@ -52,7 +52,7 @@ foreach($my_bills as $bill)
 	{	$this_free_bill_participants = $my_free_bill_participants[$bill['id']];}
 ?>
 <div class="bill 
-<?php echo 'bill-'.$cpt_bill?>" style="background-color:<?php echo '#'.$bill['color']?>"
+<?php echo 'bill-'.$cpt_bill?>"
 >
 	<?php 
 	//Edit the Bill (name, description, ...)
@@ -122,7 +122,7 @@ foreach($my_bills as $bill)
 	</h3>
 	<?php }//if/else admin 
 ?>
-	<div  id="<?php echo 'show_hide_bill'.$cpt_bill.'_target'?>">
+	<div  id="<?php echo 'show_hide_bill'.$cpt_bill.'_target'?>" class="content">
 	<?php if(!empty($bill['description']) && !is_null($bill['description']))
 	{
 ?>

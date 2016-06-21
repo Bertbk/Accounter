@@ -1,0 +1,14 @@
+
+/*Participant*/
+div#participants{
+	float:left;
+	width: 19%;
+	overflow:hidden;
+	margin-bottom: 30px;
+	border: 1px solid;
+	border-radius:10px;
+}
+
+div#participants h2{
+	text-align:center;
+}
