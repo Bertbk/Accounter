@@ -1,6 +1,10 @@
 
 div.bill_participant{
 	display: inline-block;
+}
+
+div.bill_participant,
+span.bill_participant{
 	color:white;
 	border-radius: 5px;
 	text-align:center;
