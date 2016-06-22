@@ -14,7 +14,10 @@
 </header>
 
 
-<nav>
+<nav id="main_menu">
+
+<img class="screenshot" src="<?php echo BASEURL.'/img/screenshot.png'?>" alt="Screenshot">
+
 <div id="create_account">
 <a href="<?php echo BASEURL.'/create.php'?>">
 <p><span>$ Create a new account</span></p>

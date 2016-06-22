@@ -1,6 +1,17 @@
+nav#main_menu{
+	text-align:center;
+	width:50%;
+	overflow:hidden;
+	margin:auto;
+	font-size: 1.5em;
+}
+
+nav#main_menu img.screenshot{
+	width:100%;
+}
 
 div#content div#create_account{
-		margin-top: 0 0 50px;
+	float:left;
 }
 
 div#content div#create_account a {
@@ -21,7 +32,7 @@ div#content div#create_account a p span{
 }
 
 div#content div#retrieve_account{
-		margin-top: 50px;
+	float:right;
 }
 
 div#content div#retrieve_account a {
