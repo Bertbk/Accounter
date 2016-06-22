@@ -21,9 +21,9 @@
 			{
 ?>
 <li>
-	<span class='bill_participant' style="background-color:<?php echo '#'.$payer['color']?>"><?php echo $payer['name']?></span> 
+	<span class='bill_participant' style="background-color:<?php echo '#'.$payer['color']?>"><?php echo htmlspecialchars($payer['name'])?></span> 
 	must refund <?php echo $refund?> &euro; to 
-	<span class='bill_participant' style="background-color:<?php echo '#'.$receiver['color']?>"><?php echo $receiver['name']?></span>
+	<span class='bill_participant' style="background-color:<?php echo '#'.$receiver['color']?>"><?php echo htmlspecialchars($receiver['name'])?></span>
 </li>
 <?php
 			}

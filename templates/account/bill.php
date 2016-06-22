@@ -377,8 +377,8 @@ foreach($my_bills as $bill)
 		?>
 			<span class='bill_participant' style="background-color:<?php echo '#'.$payment['payer_color']?>">
 			<?php echo htmlspecialchars($payment['payer_name'])?>
-			</span>
-			 paid <?php echo (float)$payment['cost']?>&euro; to 
+			</span> 
+			 &nbsp;paid <?php echo (float)$payment['cost']?>&euro; to 
 			<?php if(is_null($payment['receiver_name'])) {?>
 				<span class="bill_participant group_color">
 				Group
