@@ -387,8 +387,8 @@ foreach($my_bills as $bill)
 			<span class="bill_participant" style="background-color:<?php echo '#'.$payment['receiver_color']?>">			
 			<?php echo htmlspecialchars($payment['receiver_name'])?></span>
 			<?php }?>
-			<?php if(!empty($payment['date_creation'])){echo ', the '.str_replace('-', '/',$payment['date_creation']);}?>
 			<?php if(!empty($payment['description'])){echo 'for '.htmlspecialchars($payment['description']);}?>
+			<?php if(!empty($payment['date_of_payment'])){echo ', the '.str_replace('-', '/',$payment['date_of_payment']);}?>
 	<?php //EDIT BUTTON
 			if($admin_mode && !$edit_mode)
 				{

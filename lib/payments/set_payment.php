@@ -24,8 +24,6 @@ function set_payment($account_id_arg, $hashid_arg, $bill_id_arg, $payer_id_arg, 
 	//Change style of date to match sql
 	if(!is_null($date_of_payment))
 	{
-		$myDateTime = DateTime::createFromFormat('m/d/Y', $date_of_payment);
-		$date_of_payment = $myDateTime->format('Y-m-d');
 		$date_parsed = date_parse($date_of_payment);
 		if ($date_parsed == false || !checkdate($date_parsed['month'], $date_parsed['day'], $date_parsed['year'])) {
 			$date_of_payment = null;
