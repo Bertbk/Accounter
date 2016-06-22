@@ -1,7 +1,7 @@
 
 <!-- BILLS -->
 <div id="bills">
-<h2>The bills</h2>
+<h2>My bills</h2>
 <?php
 //Admin only
 if($admin_mode && $edit_mode == false)
@@ -115,7 +115,6 @@ foreach($my_bills as $bill)
 		<input type="image" 
 			name="submit_delete_bill"
 			src="<?php echo BASEURL.'/img/delete.png'?>" 
-			border="0" 
 			class="confirmation deleteicon"
 			alt="Delete bill">
 		</span>
@@ -143,7 +142,11 @@ foreach($my_bills as $bill)
 	foreach($this_bill_participants as $bill_participant)
 	{
 		$cpt_bill_participant++;
-		if(  $admin_mode === true
+		?>
+		<div class="bill_participant" 
+			style="background-color:<?php echo '#'.$bill_participant['color']?>">
+			<?php
+			if(  $admin_mode === true
 			&& $edit_mode === 'bill_participant' 
 			&& $edit_hashid === $bill_participant['hashid'])
 		{
@@ -166,11 +169,7 @@ foreach($my_bills as $bill)
  			</span>
 	<?php }
 		else
-		{ 
-?>
-		<div class="bill_participant" 
-			style="background-color:<?php echo '#'.$bill_participant['color']?>">
-			<?php
+		{
 			echo htmlspecialchars($bill_participant['name']).' ('.(float)$bill_participant['percent_of_usage'].'%)';
 			if($admin_mode === true
 			&& $edit_mode === false){
@@ -187,16 +186,16 @@ foreach($my_bills as $bill)
 		<input type="image" 
 			name="submit_delete_bill_participant"
 			src="<?php echo BASEURL.'/img/delete_white.png'?>" 
-			border="0" 
 			class="confirmation deleteicon"
 			alt="Delete this participation" >
 		</span>
 	</form>		
-
 		<?php	} ?>
+			<?php
+		}//else edit mode
+		?>
 			</div>
 			<?php
-		}//else admin mode
 	}//foreach participant in this bill
 	//Submit button for editing
 	if($place_submit_button)
@@ -236,9 +235,9 @@ foreach($my_bills as $bill)
 			<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
 			<input type="hidden" name="p_hashid_bill" value="<?php echo $bill['hashid']?>">
 			  <span><input name="p_participant['<?php echo $cpt?>'][p_hashid_participant]" 
-				id="<?php echo "form_available_part_".$participant['id']?>"
+				id="<?php echo 'form_available_part_'.$cpt_bill.'_'.$participant['id']?>"
 				value="<?php echo $participant['hashid']?>" type="checkbox">
-			  <label for="<?php echo "form_available_part_".$participant['id']?>">
+			  <label for="<?php echo 'form_available_part_'.$cpt_bill.'_'.$participant['id']?>">
 				<?php echo htmlspecialchars($participant['name'])?>
 			  </label>
 			  </span>
@@ -408,7 +407,6 @@ foreach($my_bills as $bill)
 		<input type="image" 
 			name="submit_delete_payment"
 			src="<?php echo BASEURL.'/img/delete.png'?>" 
-			border="0" 
 			class="confirmation deleteicon"
 			alt="Delete payment">
 		</span>

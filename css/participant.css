@@ -12,3 +12,44 @@ div#participants{
 div#participants h2{
 	text-align:center;
 }
+
+
+div.wrapper_participant{
+	text-align:center;
+}
+
+
+div.participant{
+	display: inline-block;
+	color:white;
+	border-radius: 5px;
+	text-align:center;
+	padding-top:5px;
+	padding-bottom:5px;
+	padding-left:10px;
+	padding-right:10px;
+	margin-bottom:2px;
+}
+
+div#div_add_participant{
+	padding-left: 5px;
+	padding-right: 5px;
+	margin-bottom: 10px;
+
+}
+
+.billpartColor0 {background-color: blue;}
+.billpartColor1 {background-color: red;}
+.billpartColor2 {background-color: green;}
+.billpartColor3 {background-color: #FF00FF;}
+.billpartColor4 {background-color: #C0C0C0;}
+.billpartColor5 {background-color: #00FFFF;}
+.billpartColor6 {background-color: #FFFF00;}
+.billpartColor7 {background-color: #;}
+.billpartColor8 {background-color: #;}
+.billpartColor9 {background-color: #;}
+
+.group_color
+{
+background-color: #111111 !important;
+}
