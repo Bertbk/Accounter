@@ -15,7 +15,7 @@ action="<?php echo ACTIONPATH.'/update_participant.php'?>"
 	foreach($my_participants as $participant)
 	{
 ?>
-	<span class='bill_participant' style="background-color:<?php echo '#'.$participant['color']?>">
+	<div class='bill_participant' style="background-color:<?php echo '#'.$participant['color']?>">
 <?php
 if($admin_mode && $edit_mode == 'participant' && $participant['hashid'] == $edit_hashid)
 {
@@ -55,8 +55,8 @@ if($admin_mode && !$edit_mode)
 			src="<?php echo BASEURL.'/img/delete_white.png'?>" 
 			border="0" 
 			class="confirmation deleteicon"
-			alt="Delete participant" 
-			value="Submit">
+			alt="Delete participant"
+			>
 		</span>
 	</form>
 <?php
@@ -65,7 +65,7 @@ if($admin_mode && !$edit_mode)
 <?php
 }//if/else admin
 ?>
-	</span>
+	</div>
 <?php
 } //foreach participants
 ?>

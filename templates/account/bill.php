@@ -83,8 +83,11 @@ foreach($my_bills as $bill)
 	else{
 	//Display only
 	?>
+	<div class="bill_title">
+	
 	<h3>
 	<?php echo htmlspecialchars($bill['title']) ?>
+	</h3>
 	<a href="javascript:void(0)" id="<?php echo 'show_hide_bill'.$cpt_bill?>">
 	<img class="plusminusicon" src="<?php echo BASEURL.'/img/plusminus.png'?>" alt="Reduce">
 	</a>
@@ -114,12 +117,11 @@ foreach($my_bills as $bill)
 			src="<?php echo BASEURL.'/img/delete.png'?>" 
 			border="0" 
 			class="confirmation deleteicon"
-			alt="Delete bill" 
-			value="Submit">
+			alt="Delete bill">
 		</span>
-	</form>		
+	</form>	
 <?php }	?>
-	</h3>
+</div>
 	<?php }//if/else admin 
 ?>
 	<div  id="<?php echo 'show_hide_bill'.$cpt_bill.'_target'?>" class="content">
@@ -166,7 +168,7 @@ foreach($my_bills as $bill)
 		else
 		{ 
 ?>
-		<span class="<?php echo 'bill_participant'?>" 
+		<div class="bill_participant" 
 			style="background-color:<?php echo '#'.$bill_participant['color']?>">
 			<?php
 			echo htmlspecialchars($bill_participant['name']).' ('.(float)$bill_participant['percent_of_usage'].'%)';
@@ -187,13 +189,12 @@ foreach($my_bills as $bill)
 			src="<?php echo BASEURL.'/img/delete_white.png'?>" 
 			border="0" 
 			class="confirmation deleteicon"
-			alt="Delete this participation" 
-			value="Submit">
+			alt="Delete this participation" >
 		</span>
 	</form>		
 
 		<?php	} ?>
-			</span>
+			</div>
 			<?php
 		}//else admin mode
 	}//foreach participant in this bill
@@ -409,8 +410,7 @@ foreach($my_bills as $bill)
 			src="<?php echo BASEURL.'/img/delete.png'?>" 
 			border="0" 
 			class="confirmation deleteicon"
-			alt="Delete payment" 
-			value="Submit">
+			alt="Delete payment">
 		</span>
 	</form>
 		
