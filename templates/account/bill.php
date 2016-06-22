@@ -388,7 +388,7 @@ foreach($my_bills as $bill)
 			<?php echo htmlspecialchars($payment['receiver_name'])?></span>
 			<?php }?>
 			<?php if(!empty($payment['description'])){echo 'for '.htmlspecialchars($payment['description']);}?>
-			<?php if(!empty($payment['date_of_payment'])){echo ', the '.str_replace('-', '/',$payment['date_of_payment']);}?>
+			<?php if(!empty($payment['date_of_payment'])){echo ', the '.date("d/m/Y", strtotime($payment['date_of_payment']));}?>
 	<?php //EDIT BUTTON
 			if($admin_mode && !$edit_mode)
 				{

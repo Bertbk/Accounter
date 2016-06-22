@@ -6,11 +6,12 @@ INSTALLEUR
 
 MAJOR
 ======
-0. FILTER !!!!
 1. Multiple receivers for a payment
 2. Store the solution with a check value ? Or a "refund" possible ? Or a "Bill" named "Refund"... ?
 3. Comments
-4. Send email when account is created
+4. Tableau des paiments ?
+5. Description des Bills sous forme de TextArea (et non dans la création)
+6. Pas d'email pour les participants finalement
 
 BUGS
 =====
