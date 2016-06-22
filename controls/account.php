@@ -34,6 +34,7 @@ include_once(LIBPATH.'/bill_participants/delete_bill_participant.php');
 
 include_once(LIBPATH.'/solutions/compute_bill_solutions.php');
 include_once(LIBPATH.'/solutions/compute_solution.php');
+include_once(LIBPATH.'/solutions/compute_opt_solution.php');
 
 include_once(LIBPATH.'/hashid/validate_hashid.php');
 
@@ -149,6 +150,7 @@ foreach($my_bills as $bill)
 //solution
 $bill_solutions = compute_bill_solutions($my_account_id);
 $solution = compute_solution($my_account_id);
+$solution_opt = compute_opt_solution($solution);
 
 $n_participants = 0;
 $n_people = 0;

@@ -77,27 +77,4 @@ div#edit_mode_admin div{
 	padding:10px;
 }
 
-/* Solution */
-div#solution{
-	width : 80%;
-	margin:auto;
-	background-color: rgba(0, 0, 255, 0.25);
-	border-radius: 10px;
-	color: black;
-	overflow:hidden;
-	margin-bottom: 20px;
-	box-shadow: -4px 6px 9px rgba(50, 50, 50, 0.5);
-}
-div#solution h2{
-  display: inline-block;
-	margin: 0;
-	width: 100%;
-	background-color: rgba(0, 0, 255, 0.5);
-	border-top-left-radius: 10px;
-	border-top-right-radius: 10px;
-	padding: 5px;
-}
-div#solution div{
-	padding:10px;
-}
 

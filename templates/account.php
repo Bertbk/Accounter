@@ -9,6 +9,7 @@
 <link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/bill_participant.css'?>">
 <link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/payment.css'?>">
 <link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/account.css'?>">
+<link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/solution.css'?>">
 
 <link rel="stylesheet" type="text/css" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/smoothness/jquery-ui.css" media="all">
 

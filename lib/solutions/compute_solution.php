@@ -1,13 +1,13 @@
 <?php
-include_once(__DIR__.'/../get_db.php');
-include_once(LIBPATH.'/solutions/compute_bill_solutions.php');
+include_once(__DIR__.'/compute_bill_solutions.php');
 
-/* Compute a solution for the global problem */
+
+/* Compute a solution for the global problem
+$Refunds[uid][vid] is the money U must give to V
+ */
 
 function compute_solution($account_id_arg)
-{
-	$db = get_db();
-	
+{	
 	$account_id = (int)$account_id_arg;
 	$Refunds = array(array()); //who must give money to who ?
 	$Refunds[-1]['total'] = 0;
@@ -82,7 +82,7 @@ function compute_solution($account_id_arg)
 	
 	//Usefull values
 	$Refunds[-1]['total'] = $total_payment;
-	
+		
 	//send solution	
 	return $Refunds;
 }
