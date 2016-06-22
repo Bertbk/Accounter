@@ -88,17 +88,13 @@ foreach($my_bills as $bill)
 	<h3>
 	<?php echo htmlspecialchars($bill['title']) ?>
 	</h3>
-	<a href="javascript:void(0)" id="<?php echo 'show_hide_bill'.$cpt_bill?>">
-	<img class="plusminusicon" src="<?php echo BASEURL.'/img/plusminus.png'?>" alt="Reduce">
-	</a>
+	<a href="javascript:void(0)" id="<?php echo 'show_hide_bill'.$cpt_bill?>"><img class="plusminusicon" src="<?php echo BASEURL.'/img/plusminus.png'?>" alt="Reduce"></a>
 	<?php
 	if($admin_mode && $edit_mode === false)
 	{
 		$link_tmp = $link_to_account_admin.'/edit/bill/'.$bill['hashid'];
 		?>
-		<a href='<?php echo $link_tmp?>'>
-		<img src="<?php echo BASEURL.'/img/pencil.png'?>" alt='Edit bill' class="editicon" />
-		</a>
+		<a href="<?php echo $link_tmp?>"><img src="<?php echo BASEURL.'/img/pencil.png'?>" alt='Edit bill' class="editicon"/></a>
 	<form method="post" 
 	class="deleteicon"
 	action="<?php echo ACTIONPATH.'/delete_bill.php'?>"
@@ -173,9 +169,8 @@ foreach($my_bills as $bill)
 			echo htmlspecialchars($bill_participant['name']).' ('.(float)$bill_participant['percent_of_usage'].'%)';
 			if($admin_mode === true
 			&& $edit_mode === false){
-				?><a href="<?php echo $link_to_account_admin.'/edit/bill_participant/'.$bill_participant['hashid']?>">
-				<img src="<?php echo BASEURL.'/img/pencil_white.png'?>" alt='Edit this participation' class="editicon" />
-				</a>				
+				?>
+				<a href="<?php echo $link_to_account_admin.'/edit/bill_participant/'.$bill_participant['hashid']?>"><img src="<?php echo BASEURL.'/img/pencil_white.png'?>" alt="Edit this participation" class="editicon"/></a>				
 	<form method="post" 
 	class="deleteicon"
 	action="<?php echo ACTIONPATH.'/delete_bill_participant.php'?>"

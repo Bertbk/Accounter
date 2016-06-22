@@ -41,9 +41,7 @@ if($admin_mode && !$edit_mode)
 {
 	$link_tmp = $link_to_account_admin.'/edit/participant/'.$participant['hashid'];
 ?>
-	<a href="<?php echo $link_tmp?>">
-	<img src="<?php echo BASEURL.'/img/pencil_white.png'?>" alt='Edit participant' class="editicon" >
-	</a>
+	<a href="<?php echo $link_tmp?>"><img src="<?php echo BASEURL.'/img/pencil_white.png'?>" alt='Edit participant' class="editicon"></a>
 	<form method="post" 
 	class="deleteicon"
 	action="<?php echo ACTIONPATH.'/delete_participant.php'?>"
