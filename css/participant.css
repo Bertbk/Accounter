@@ -16,10 +16,11 @@ div#participants h2{
 
 div.wrapper_participant{
 	text-align:center;
+	word-break: break-all;
 }
 
 
-div.participant{
+div.wrapper_participant div.participant{
 	display: inline-block;
 	color:white;
 	border-radius: 5px;

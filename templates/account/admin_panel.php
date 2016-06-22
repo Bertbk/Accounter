@@ -5,7 +5,7 @@
 <div id="explain_admin">
 <h2>Administration panel</h2>
 	<div>
-<p>Welcome to the admin page of the account. You should first add participants to the account and create one (or more) bill(s). The participan can then be added to the bill, with a percentage of participation. For example, a full-time participant is 100%, if the bill represents a car rental for 4 days and a participant only use it for 3 days, it should be set to 75% (=3/4).</p>
+<p>Welcome to the admin page of the account. You should first add participants to the account and create one (or more) bill(s). The participants can then be added to the bill, with a percentage of participation. For example, if the bill represents a car rental for 4 days and a participant only use it for 3 days, his/her percent should be set to 75% ( = 3/4). A zero percent participation is used when a person paid for something but didn't used it at all.</p>
 <p>Each entry can be edited using the <img src="<?php echo BASEURL.'/img/pencil.png'?>" alt='Edit icon' class="editicon" > icon or deleted using the <img src="<?php echo BASEURL.'/img/delete.png'?>" alt='Delete icon' class="deleteicon" > icon.
 </p>
 </div>
