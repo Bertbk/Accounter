@@ -43,11 +43,11 @@ foreach($errArray as $err)
 <form method="post">
   <fieldset>
     <legend>Create a new account:</legend>
-	<legend for="form_title_account">Title</legend>
+	<label for="form_title_account">Title</label>
     <input type="text" name="p_title_of_account" id="form_title_account" required /><br>
-	<legend for="form_email">Email</legend>
+	<label for="form_email">Email</label>
 	<input type="email" name="p_contact_email" id="form_email" required/><br>
-    <legend for="form_description">Detailed description</legend>
+    <label for="form_description">Detailed description</label>
 	<input type="text" name="p_description" id="form_description"/><br>
 	 <button type="submit" name="submit" value="Submit">Submit</button> 
   </fieldset>

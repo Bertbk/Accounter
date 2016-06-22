@@ -18,12 +18,13 @@
 <div id="create_account">
 <a href="<?php echo BASEURL.'/create.php'?>">
 <p><span>$ Create a new account</span></p>
+</a>
 </div>
 
 
 <div id="retrieve_account">
 <a href="<?php echo BASEURL.'/retrieve_accounts.php'?>">
-<p><span><img src="<?php echo BASEURL.'/img/loupe_white.png'?>"> Retrieve your accounts</span></p>
+<p><span><img src="<?php echo BASEURL.'/img/loupe_white.png'?>" alt="search icon"> Retrieve your accounts</span></p>
 </a>
 </div>
 
@@ -46,10 +47,10 @@ foreach ($accounts as $account)
 ?>
 	<tr>
     <td><?php echo $account['id']?></td>
-    <td> <a href="account/<?php echo $account['hashid']?>"><?php echo $account['hashid']?></</a></td>
-    <td> <a href="account/<?php echo $account['hashid_admin']?>/admin"><?php echo $account['hashid_admin']?></</a></td>
-    <td><?php echo $account['title']?></</td>
-    <td><?php echo $account['email']?></td>
+    <td> <a href="account/<?php echo $account['hashid']?>"><?php echo $account['hashid']?></a></td>
+    <td> <a href="account/<?php echo $account['hashid_admin']?>/admin"><?php echo $account['hashid_admin']?></a></td>
+    <td><?php echo htmlspecialchars($account['title'])?></td>
+    <td><?php echo htmlspecialchars($account['email'])?></td>
 	  </tr>
 <?php
 }
