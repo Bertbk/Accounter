@@ -60,6 +60,7 @@ div#edit_mode_admin{
 	overflow:hidden;
 	margin-bottom:20px;
 	margin-top:20px;
+	box-shadow: -4px 6px 9px rgba(50, 50, 50, 0.5);
 }
 div#explain_admin h2,
 div#edit_mode_admin h2{
@@ -85,6 +86,7 @@ div#solution{
 	color: black;
 	overflow:hidden;
 	margin-bottom: 20px;
+	box-shadow: -4px 6px 9px rgba(50, 50, 50, 0.5);
 }
 div#solution h2{
   display: inline-block;
