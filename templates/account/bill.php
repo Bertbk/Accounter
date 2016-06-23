@@ -262,13 +262,29 @@ foreach($my_bills as $bill)
 		$this_payment = $my_payments_per_bill[$bill['id']];
 		$cpt_paymt = -1;
 	?>
-	<ul>
+<div class="table-responsive">
+	<table>
+	  <thead>
+			<tr>
+				<th>Payer</th>
+				<th>Amount</th>
+				<th>Receiver</th>
+				<th>Designation</th>
+				<th>Date</th>
+<?php if($admin_mode && !$edit_mode){?>
+				<th>Edit</th>
+<?php }if($admin_mode && !$edit_mode){?>
+				<th>Delete</th>
+<?php }?>
+			</tr>
+		</thead>
+		<tbody>
 	<?php
 		foreach($this_payment as $payment)
 		{
 			$cpt_paymt++;
-	?><li>
-			<div id="div_payment_<?php echo $cpt_bill.'_'.$cpt_paymt?>">
+	?>
+			<tr>
 	<?php
 			if($admin_mode && $edit_mode === 'payment' 
 			&& $payment['hashid'] === $edit_hashid)
@@ -368,46 +384,73 @@ foreach($my_bills as $bill)
 			}
 			else{//Read only
 		?>
+			<td>
 			<span class='bill_participant' style="background-color:<?php echo '#'.$payment['payer_color']?>">
 			<?php echo htmlspecialchars($payment['payer_name'])?>
-			</span> 
-			 &nbsp;paid <?php echo (float)$payment['cost']?>&euro; to 
-			<?php if(is_null($payment['receiver_name'])) {?>
-				<span class="bill_participant group_color">
-				Group
-				</span>
+			</span>
+			</td>
+<!--			 &nbsp;paid -->
+ 			<td>
+			 <?php echo (float)$payment['cost']?>&euro;
+			</td>
+<!--	 to -->
+			<td>
+				<?php if(is_null($payment['receiver_name'])) {?>
+					<span class="bill_participant group_color">
+					Group
+					</span>
 			<?php }else{ ?>
-			<span class="bill_participant" style="background-color:<?php echo '#'.$payment['receiver_color']?>">			
-			<?php echo htmlspecialchars($payment['receiver_name'])?></span>
-			<?php }?>
-			<?php if(!empty($payment['description'])){echo 'for '.htmlspecialchars($payment['description']);}?>
-			<?php if(!empty($payment['date_of_payment'])){echo ', the '.date("d/m/Y", strtotime($payment['date_of_payment']));}?>
+				<span class="bill_participant" style="background-color:<?php echo '#'.$payment['receiver_color']?>">			
+				<?php echo htmlspecialchars($payment['receiver_name'])?></span>
+				<?php }?>
+				</td>
+				<td>
+			<?php if(!empty($payment['description']))
+			{
+				?>
+					<?php echo 'for '.htmlspecialchars($payment['description']);?>
+			<?php 
+			}
+			?>
+			</td>
+			<td>
+			<?php
+			if(!empty($payment['date_of_payment']))
+			{
+				?>
+				<?php echo date("d/m/Y", strtotime($payment['date_of_payment']));?>
+				<?php
+				}?>
+			</td>
 	<?php //EDIT BUTTON
 			if($admin_mode && !$edit_mode)
 				{
 	?>
-		<a href="<?php echo $link_to_account_admin.'/edit/payment/'.$payment['hashid']?>" 
-		class="btn btn-default glyphicon glyphicon-pencil"></a>
+			<td>
+				<a href="<?php echo $link_to_account_admin.'/edit/payment/'.$payment['hashid']?>" 
+				class="btn btn-default glyphicon glyphicon-pencil"></a>
+				</td>
+				<td>
 			<form method="post" 
-	class="deleteicon"
-	action="<?php echo ACTIONPATH.'/delete_payment.php'?>"
-		>
-		<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>"/>
-		<input type="hidden" name="p_hashid_payment" value="<?php echo $payment['hashid']?>" />
-		<button type="button" class="btn btn-default confirmation" name="submit_delete_participant">
-			<span class="glyphicon glyphicon-trash"></span>
-		</button>
-	</form>
-		
+				class="deleteicon"
+				action="<?php echo ACTIONPATH.'/delete_payment.php'?>"
+					>
+					<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>"/>
+					<input type="hidden" name="p_hashid_payment" value="<?php echo $payment['hashid']?>" />
+					<button type="button" class="btn btn-default confirmation" name="submit_delete_participant">
+						<span class="glyphicon glyphicon-trash"></span>
+					</button>
+				</form>
+				</td>
 		<?php
 				}
 			}//end else admin mode 
 			?>
-			</div>
-		</li>
+			</tr>
 <?php	}//foreach current payment 
 ?>
-	</ul>
+	</tbody>
+	</table></div>
 	<?php
 	}//if payment exist
 	else
