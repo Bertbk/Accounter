@@ -17,8 +17,7 @@ $warnArray = array(); //warning messages
 $successArray = array(); //success messages
 $redirect_link ="" ;
 
-// the "_x" is here because the button is an image
-if(isset($_POST['submit_delete_bill_x']))
+if(isset($_POST['submit_delete_bill']))
 {
 	$ErrorEmptyMessage = array(
 		'p_hashid_account' => 'No acount provided',

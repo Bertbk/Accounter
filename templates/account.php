@@ -37,6 +37,7 @@
 </header>
 </div>
 
+<?php include(__DIR__.'/messages/messages.php');?>
 
 <?php include(__DIR__.'/account/admin_panel.php');?>
 

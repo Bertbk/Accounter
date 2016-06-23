@@ -111,7 +111,7 @@ foreach($my_bills as $bill)
 		name="p_hashid_bill" 
 		value="<?php echo $bill['hashid']?>"
 		/>
-		<button type="button" class="btn btn-default confirmation" name="submit_delete_participant">
+		<button type="submit" class="btn btn-default confirmation" name="submit_delete_participant">
 			<span class="glyphicon glyphicon-trash"></span>
 		</button>
 	</form>
@@ -178,7 +178,7 @@ foreach($my_bills as $bill)
 		>		
 		<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>"/>
 		<input type="hidden" name="p_hashid_bill_participant" value="<?php echo $bill_participant['hashid']?>"	/>
-		<button type="button" class="btn btn-default confirmation" name="submit_delete_bill_participant">
+		<button type="submit" class="btn btn-default confirmation" name="submit_delete_bill_participant">
 			<span class="glyphicon glyphicon-trash"></span>
 		</button>
 	</form>		
@@ -437,7 +437,7 @@ foreach($my_bills as $bill)
 					>
 					<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>"/>
 					<input type="hidden" name="p_hashid_payment" value="<?php echo $payment['hashid']?>" />
-					<button type="button" class="btn btn-default confirmation" name="submit_delete_participant">
+					<button type="submit" class="btn btn-default confirmation" name="submit_delete_participant">
 						<span class="glyphicon glyphicon-trash"></span>
 					</button>
 				</form>

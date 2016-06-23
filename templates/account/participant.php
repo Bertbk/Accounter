@@ -49,11 +49,10 @@ if($admin_mode && !$edit_mode)
 		class="btn btn-default glyphicon glyphicon-pencil"></a>
 	<form method="post" 
 	class="deleteicon"
-	action="<?php echo ACTIONPATH.'/delete_participant.php'?>"
-		>
+	action="<?php echo ACTIONPATH.'/delete_participant.php'?>">
 		<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>"/>
 		<input type="hidden" name="p_hashid_participant" value="<?php echo $participant['hashid']?>"/>
-		<button type="button" class="btn btn-default confirmation" name="submit_delete_participant">
+		<button type="submit" class="btn btn-default confirmation" name="submit_delete_participant" value="Submit">
 			<span class="glyphicon glyphicon-trash"></span>
 		</button>
 	</form>
