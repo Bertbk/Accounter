@@ -141,11 +141,7 @@ foreach($my_bills as $bill)
 	foreach($this_bill_participants as $bill_participant)
 	{
 		$cpt_bill_participant++;
-		?>
-		<div class="bill_participant" 
-			style="background-color:<?php echo '#'.$bill_participant['color']?>">
-			<?php
-			if(  $admin_mode === true
+			if($admin_mode === true
 			&& $edit_mode === 'bill_participant' 
 			&& $edit_hashid === $bill_participant['hashid'])
 		{
@@ -153,8 +149,8 @@ foreach($my_bills as $bill)
 			$place_submit_button = true;
 	?>
 			<form method="post"
-			action="<?php echo ACTIONPATH.'/update_bill_participant.php'?>"
-			>
+			action="<?php echo ACTIONPATH.'/update_bill_participant.php'?>">
+			<div class="bill_participant" style="background-color:<?php echo '#'.$bill_participant['color']?>">
 			<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
 			<input type="hidden" name="p_hashid_bill_participant" value="<?php echo $bill_participant['hashid']?>">
 			<span 
@@ -166,9 +162,13 @@ foreach($my_bills as $bill)
 				class="input_percent"
 			 value="<?php echo (float)$bill_participant['percent_of_usage']?>" required />%)
  			</span>
+		</div>
 	<?php }
 		else
 		{
+			?>
+			<div class="bill_participant" style="background-color:<?php echo '#'.$bill_participant['color']?>">
+			<?php
 			echo htmlspecialchars($bill_participant['name']).' ('.(float)$bill_participant['percent_of_usage'].'%)';
 			if($admin_mode === true
 			&& $edit_mode === false){
@@ -189,10 +189,10 @@ foreach($my_bills as $bill)
 		</span>
 	</form>		
 		<?php	} ?>
+		</div>
 			<?php
 		}//else edit mode
 		?>
-			</div>
 			<?php
 	}//foreach participant in this bill
 	//Submit button for editing
@@ -202,6 +202,7 @@ foreach($my_bills as $bill)
 		<br><button type="submit" name="submit_update_bill_participant" value="Submit">Submit</button> 
 		<button type="submit" name="submit_cancel" value="Submit">Cancel</button> 
 		</form>
+		
 	<?php
 		$place_submit_button = false;
 	} //if place button
