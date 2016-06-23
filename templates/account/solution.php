@@ -7,10 +7,12 @@
 <div id="solutions" class="col-lg-8 col-lg-offset-2">
 <div class="panel panel-primary">
 
-  <div class="panel-heading">
+  <div class="panel-heading cursor_pointer" 
+data-toggle="collapse" data-target="#panel-body_solution">
 		<h2>Solution</h2>
 	</div>
 	
+	<div id="panel-body_solution" class="panel-collapse collapse in">
 	<div class="panel-body">
 		<div id="basic_solution" class="solution col-md-6">
 			<h3>Basic solution</h3>
@@ -68,6 +70,7 @@
 ?>
 			</ul>
 		</div>
+	</div>
 	</div>
 </div>
 </div>

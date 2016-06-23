@@ -7,7 +7,7 @@
 <div id="explain_admin" class="col-lg-8 col-lg-offset-2">
 <div class="panel panel-danger">
 
-<div id="admin_panel_heading" class="panel-heading" 
+<div id="admin_panel_heading" class="panel-heading cursor_pointer" 
 data-toggle="collapse" data-target="#admin_panel_body">
 <h2>Administration mode</h2>
 </div>

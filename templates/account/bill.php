@@ -87,11 +87,10 @@ foreach($my_bills as $bill)
 	else{
 	//Display only
 	?>
-	<div class="panel-heading" >
+	<div class="panel-heading cursor_pointer" data-toggle="collapse" data-target="#<?php echo 'panel-body_bill'.$cpt_bill?>">
 	<h3>
-	<a href="javascript:void(0)" id="<?php echo 'show_hide_bill'.$cpt_bill?>">
 	<?php echo ($cpt_bill+1).'. '.htmlspecialchars($bill['title']) ?>
-	</a></h3>	
+	</h3>	
 	<?php
 	if($admin_mode && $edit_mode === false)
 	{
@@ -119,7 +118,8 @@ foreach($my_bills as $bill)
 	</div>
 	<?php }//if/else admin 
 ?>
-	<div  id="<?php echo 'show_hide_bill'.$cpt_bill.'_target'?>" class="content panel-body">
+	<div id="<?php echo 'panel-body_bill'.$cpt_bill?>" class="panel-collapse collapse in">
+	<div  class="panel-body">
 	<?php if(!empty($bill['description']) && !is_null($bill['description']))
 	{
 ?>
@@ -551,6 +551,7 @@ foreach($my_bills as $bill)
 	} //if for displaying possibilities
 ?>
 
+</div> 
 </div> 
 </div> 
 </div> 
