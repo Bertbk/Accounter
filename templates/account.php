@@ -30,6 +30,7 @@
 
 <div id="content">
 <div class="container">
+
 <div class="row">
 <header>
 <?php include(__DIR__.'/header/header.php'); ?>

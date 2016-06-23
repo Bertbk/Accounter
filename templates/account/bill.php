@@ -54,9 +54,8 @@ foreach($my_bills as $bill)
 	if(!empty($my_free_bill_participants[$bill['id']]))
 	{	$this_free_bill_participants = $my_free_bill_participants[$bill['id']];}
 ?>
-<div class="bill 
-<?php echo 'bill-'.$cpt_bill?>"
->
+<div class="bill <?php echo 'bill-'.$cpt_bill?>">
+<div class="panel panel-primary">
 	<?php 
 	//Edit the Bill (name, description, ...)
 	if($admin_mode 
@@ -68,11 +67,13 @@ foreach($my_bills as $bill)
 	action="<?php echo ACTIONPATH.'/update_bill.php'?>">
 		<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>"/>
 		<input type="hidden" name="p_hashid_bill" value="<?php echo $bill['hashid']?>" />
+	<div class="panel-heading">
 		<h3>
 	<label for="form_edit_bill_name">Title: </label>
 	<input type="text" name="p_title_of_bill" id="form_edit_bill_name"
 	class="input_bill_name"	value="<?php echo htmlspecialchars($bill['title'])?>" required />
 	</h3>
+	</div>
 	<label for="form_edit_bill_description">Description: </label>
 	 <input type="text" name="p_description" id="form_edit_bill_description" 
 	 class="input_bill_desc" value="<?php echo htmlspecialchars($bill['description'])?>"/>
@@ -86,8 +87,7 @@ foreach($my_bills as $bill)
 	else{
 	//Display only
 	?>
-	<div class="bill_title">
-	
+	<div class="panel-heading">
 	<h3>
 	<?php echo htmlspecialchars($bill['title']) ?>
 	</h3>
@@ -117,12 +117,12 @@ foreach($my_bills as $bill)
 			class="confirmation deleteicon"
 			alt="Delete bill">
 		</span>
-	</form>	
+	</form>
 <?php }	?>
-</div>
+	</div>
 	<?php }//if/else admin 
 ?>
-	<div  id="<?php echo 'show_hide_bill'.$cpt_bill.'_target'?>" class="content">
+	<div  id="<?php echo 'show_hide_bill'.$cpt_bill.'_target'?>" class="content panel-body">
 	<?php if(!empty($bill['description']) && !is_null($bill['description']))
 	{
 ?>
@@ -435,10 +435,7 @@ foreach($my_bills as $bill)
 <?php
 		}
 	}//end else payment exists
-?>	
-
-
-		<?php // PAYMENTS
+ // PAYMENTS
 	if($admin_mode && !$edit_mode)
 	{?>
 	<!-- Add payment -->
@@ -522,6 +519,7 @@ foreach($my_bills as $bill)
 	} //if for displaying possibilities
 ?>
 
+</div> 
 </div> 
 </div> 
 
