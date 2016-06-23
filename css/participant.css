@@ -15,8 +15,20 @@ div.participant{
 	margin-bottom:2px;
 }
 
+div.participant a{
+color:black
+}
+
+div.participant a{
+color:black
+}
+
 div#div_add_participant{
 	margin-top: 10px;
+}
+
+div#div_add_participant a{
+	color:black;
 }
 
 .billpartColor0 {background-color: blue;}

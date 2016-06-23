@@ -87,17 +87,18 @@ foreach($my_bills as $bill)
 	else{
 	//Display only
 	?>
-	<div class="panel-heading">
+	<div class="panel-heading" >
 	<h3>
+	<a href="javascript:void(0)" id="<?php echo 'show_hide_bill'.$cpt_bill?>">
 	<?php echo ($cpt_bill+1).'. '.htmlspecialchars($bill['title']) ?>
-	</h3>
-	<a href="javascript:void(0)" id="<?php echo 'show_hide_bill'.$cpt_bill?>"><img class="plusminusicon" src="<?php echo BASEURL.'/img/plusminus.png'?>" alt="Reduce"></a>
+	</a></h3>	
 	<?php
 	if($admin_mode && $edit_mode === false)
 	{
 		$link_tmp = $link_to_account_admin.'/edit/bill/'.$bill['hashid'];
 		?>
-		<a href="<?php echo $link_tmp?>"><img src="<?php echo BASEURL.'/img/pencil.png'?>" alt='Edit bill' class="editicon"/></a>
+		<a href="<?php echo $link_tmp?>"  
+		class="btn btn-default glyphicon glyphicon-pencil"></a>
 	<form method="post" 
 	class="deleteicon"
 	action="<?php echo ACTIONPATH.'/delete_bill.php'?>"
@@ -110,13 +111,9 @@ foreach($my_bills as $bill)
 		name="p_hashid_bill" 
 		value="<?php echo $bill['hashid']?>"
 		/>
-		<span>
-		<input type="image" 
-			name="submit_delete_bill"
-			src="<?php echo BASEURL.'/img/delete.png'?>" 
-			class="confirmation deleteicon"
-			alt="Delete bill">
-		</span>
+		<button type="button" class="btn btn-default confirmation" name="submit_delete_participant">
+			<span class="glyphicon glyphicon-trash"></span>
+		</button>
 	</form>
 <?php }	?>
 	</div>
@@ -173,20 +170,17 @@ foreach($my_bills as $bill)
 			if($admin_mode === true
 			&& $edit_mode === false){
 				?>
-				<a href="<?php echo $link_to_account_admin.'/edit/bill_participant/'.$bill_participant['hashid']?>"><img src="<?php echo BASEURL.'/img/pencil_white.png'?>" alt="Edit this participation" class="editicon"/></a>				
+				<a href="<?php echo $link_to_account_admin.'/edit/bill_participant/'.$bill_participant['hashid']?>"
+				class="btn btn-default glyphicon glyphicon-pencil"></a>
 	<form method="post" 
 	class="deleteicon"
 	action="<?php echo ACTIONPATH.'/delete_bill_participant.php'?>"
-		>
+		>		
 		<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>"/>
 		<input type="hidden" name="p_hashid_bill_participant" value="<?php echo $bill_participant['hashid']?>"	/>
-		<span>
-		<input type="image" 
-			name="submit_delete_bill_participant"
-			src="<?php echo BASEURL.'/img/delete_white.png'?>" 
-			class="confirmation deleteicon"
-			alt="Delete this participation" >
-		</span>
+		<button type="button" class="btn btn-default confirmation" name="submit_delete_bill_participant">
+			<span class="glyphicon glyphicon-trash"></span>
+		</button>
 	</form>		
 		<?php	} ?>
 		</div>
@@ -392,23 +386,17 @@ foreach($my_bills as $bill)
 			if($admin_mode && !$edit_mode)
 				{
 	?>
-		<a href="<?php echo $link_to_account_admin.'/edit/payment/'.$payment['hashid']?>">
-		<img src="<?php echo BASEURL.'/img/pencil.png'?>" alt='Edit payment' class="editicon" />
-		</a>
-
+		<a href="<?php echo $link_to_account_admin.'/edit/payment/'.$payment['hashid']?>" 
+		class="btn btn-default glyphicon glyphicon-pencil"></a>
 			<form method="post" 
 	class="deleteicon"
 	action="<?php echo ACTIONPATH.'/delete_payment.php'?>"
 		>
 		<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>"/>
 		<input type="hidden" name="p_hashid_payment" value="<?php echo $payment['hashid']?>" />
-		<span>
-		<input type="image" 
-			name="submit_delete_payment"
-			src="<?php echo BASEURL.'/img/delete.png'?>" 
-			class="confirmation deleteicon"
-			alt="Delete payment">
-		</span>
+		<button type="button" class="btn btn-default confirmation" name="submit_delete_participant">
+			<span class="glyphicon glyphicon-trash"></span>
+		</button>
 	</form>
 		
 		<?php

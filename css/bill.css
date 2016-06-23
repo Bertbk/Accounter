@@ -10,6 +10,10 @@ div#bills div.panel-primary div.panel-heading img{
 	display:inline-block;
 }
 
+p#show_hide_add_bill a{
+	color:black;
+}
+
 
 /* back ground colors */
 div#bills  div.panel,
@@ -108,6 +112,10 @@ div#bills div.bill-9  div.panel-primary div.panel-heading{
 
 /* End back ground colors */
 
-[id^="show_hide"] a{
+div#bills div.panel  a{
+color:black;
+}
+
+div#bills div.panel  .bill_participant a{
 color:black;
 }
