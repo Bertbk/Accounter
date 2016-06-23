@@ -1,19 +1,5 @@
 
-/*Participant
-div#participants{
-	float:left;
-	width: 19%;
-	overflow:hidden;
-	margin-bottom: 30px;
-	border: 1px solid;
-	border-radius:10px;
-}
-
-div#participants h2{
-	text-align:center;
-}
-
-
+/*Participant*/
 div.wrapper_participant{
 	text-align:center;
 	word-break: break-all;
@@ -33,12 +19,9 @@ div.wrapper_participant div.participant{
 }
 
 div#div_add_participant{
-	padding-left: 5px;
-	padding-right: 5px;
-	margin-bottom: 10px;
-
+	margin-top: 10px;
 }
-*/
+
 .billpartColor0 {background-color: blue;}
 .billpartColor1 {background-color: red;}
 .billpartColor2 {background-color: green;}
