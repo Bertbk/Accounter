@@ -1,5 +1,5 @@
 
-/*Bills*/
+/*Bills
 div#bills{
 	float:right;
 	width: 79%;
@@ -14,8 +14,9 @@ div#bills{
 div#bills h2{
 text-align:center;
 }
+*/
 
-/*local bill*/
+/*local bill
 div#bills div.bill{
 	border-radius: 15px;
 	margin-bottom: 10px;
@@ -48,7 +49,7 @@ div#bills div.bill div.content{
 	padding-left:10px;
 	padding-bottom : 10px;
 }
-
+*/
 /* back ground colors */
 div#bills div.bill-0{
 	background-color: rgba(253,210,194, 0.75);

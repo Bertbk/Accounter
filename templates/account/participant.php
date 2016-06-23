@@ -1,8 +1,13 @@
-<div id="participants">
+
+<div id="participants" class="panel panel-primary">
 <?php if (is_array($my_participants) && sizeof($my_participants) > 0 ) 
 	{
 ?>
-<h2>Participants: <?php echo (int)$n_participants ?> (<?php echo (int)$n_people ?>)</h2>
+<div class="panel-heading">
+	<h2>Participants: <?php echo (int)$n_participants ?> (<?php echo (int)$n_people ?>)</h2>
+</div>
+<div class="panel-body">
+
 <?php
 if($admin_mode && $edit_mode === 'participant')
 { ?>
@@ -125,4 +130,5 @@ if($admin_mode && $edit_mode===false)
 </div>
 <?php } //admin mode
 ?>
+</div>
 </div>

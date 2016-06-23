@@ -1,7 +1,10 @@
 
 <!-- BILLS -->
-<div id="bills">
-<h2>My bills</h2>
+<div id="bills" class="panel panel-primary">
+<div class="panel-heading">
+	<h2>My bills</h2>
+</div>
+<div class="panel-body">
 <?php
 //Admin only
 if($admin_mode && $edit_mode == false)
@@ -526,4 +529,5 @@ foreach($my_bills as $bill)
 }//foreach bill
 }//if bills exist
 ?>
+</div>
 </div>
