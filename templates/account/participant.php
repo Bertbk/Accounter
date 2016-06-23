@@ -20,7 +20,6 @@ action="<?php echo ACTIONPATH.'/update_participant.php'?>"
 	foreach($my_participants as $participant)
 	{
 ?>
-<div class="wrapper_participant">
 	<div class='participant' style="background-color:<?php echo '#'.$participant['color']?>">
 <?php
 if($admin_mode && $edit_mode == 'participant' && $participant['hashid'] == $edit_hashid)
@@ -68,7 +67,6 @@ if($admin_mode && !$edit_mode)
 <?php
 }//if/else admin
 ?>
-	</div>
 	</div>
 
 <?php

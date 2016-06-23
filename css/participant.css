@@ -1,12 +1,9 @@
 
 /*Participant*/
-div.wrapper_participant{
-	text-align:center;
+
+
+div.participant{
 	word-break: break-all;
-}
-
-
-div.wrapper_participant div.participant{
 	display: inline-block;
 	color:white;
 	border-radius: 5px;

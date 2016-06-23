@@ -89,7 +89,7 @@ foreach($my_bills as $bill)
 	?>
 	<div class="panel-heading">
 	<h3>
-	<?php echo htmlspecialchars($bill['title']) ?>
+	<?php echo ($cpt_bill+1).'. '.htmlspecialchars($bill['title']) ?>
 	</h3>
 	<a href="javascript:void(0)" id="<?php echo 'show_hide_bill'.$cpt_bill?>"><img class="plusminusicon" src="<?php echo BASEURL.'/img/plusminus.png'?>" alt="Reduce"></a>
 	<?php
