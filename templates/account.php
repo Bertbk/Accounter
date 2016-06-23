@@ -3,6 +3,11 @@
 <html>
 <head>
 <title>Account</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="<?php echo BASEURL.'/bootstrap/css/bootstrap.min.css'?>" rel="stylesheet">
+		
 <link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/global.css'?>">
 <link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/participant.css'?>">
 <link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/bill.css'?>">
@@ -24,20 +29,27 @@
 <body>
 
 <div id="content">
+<div class="container">
+<div class="row">
 <header>
 <?php include(__DIR__.'/header/header.php'); ?>
 </header>
+</div>
+
 
 <?php include(__DIR__.'/account/admin_panel.php');?>
 
+<div class="row">
 <?php include(__DIR__.'/account/solution.php');?>
+</div>
 
 <?php include(__DIR__.'/account/participant.php');?>
+
 
 <?php include(__DIR__.'/account/bill.php');?>
 
 
-
 </div> <!-- content -->
+</div>
 </body>
 </html>

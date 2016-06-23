@@ -1,3 +1,4 @@
+<div class="col-lg-12">
 <h1 id="main_title"><a href="<?php echo BASEURL?>"><img src="<?php echo BASEURL.'/img/logo.png'?>" alt="Accounter"></a></h1>
 
 <?php if(isset($my_account['title']) && !empty($my_account['title']))
@@ -13,3 +14,4 @@
 }
 ?>
 <hr>
+</div>

@@ -1,45 +1,21 @@
 /* Solution */
 div#solutions{
-	width : 80%;
-	margin:auto;
-	background-color: rgba(0, 0, 255, 0.25);
-	border-radius: 10px;
 	color: black;
 	overflow:hidden;
-	margin-bottom: 20px;
-	box-shadow: -4px 6px 9px rgba(50, 50, 50, 0.5);
-	text-align:center;
-}
-div#solutions h2{
-  display: inline-block;
-	margin: 0;
-	width: 100%;
-	background-color: rgba(0, 0, 255, 0.5);
-	border-top-left-radius: 10px;
-	border-top-right-radius: 10px;
-	padding: 5px;
-}
-div#solutions div.solution_wrapper{
-	padding:10px;
 }
 
-div#solutions div.solution_wrapper div.solution li{
+div#solutions div.panel-body h3
+{
+	text-align:center;
+}
+
+div#solutions div.panel-body div.solution li
+{
 	margin-bottom: 10px;
 }
 
-div#solutions div.solution_wrapper {
-	display:inline-block;
-	margin:auto;
-}
-
-
 div#solutions div#basic_solution{
-	float:left;
 	padding-right: 30px;
 	border-right: 2px solid black;
-}
-
-div#solutions div#opt_solution{
-	float:left;
 }
 
