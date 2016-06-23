@@ -6,12 +6,15 @@
 <div class="row">
 <div id="explain_admin" class="col-lg-8 col-lg-offset-2">
 <div class="panel panel-danger">
-  <div class="panel-heading">
-	<h2>Administration panel</h2>
-	</div>
+
+<div id="admin_panel_heading" class="panel-heading" 
+data-toggle="collapse" data-target="#admin_panel_body">
+<h2>Administration mode</h2>
+</div>
+	<div id="admin_panel_body" class="panel-collapse collapse">
 	<div class="panel-body">
 <p>Welcome to the admin page of the account. You should first add participants to the account and create one (or more) bill(s). The participants can then be added to the bill, with a percentage of participation. For example, if the bill represents a car rental for 4 days and a participant only use it for 3 days, his/her percent should be set to 75% ( = 3/4). A zero percent participation is used when a person paid for something but didn't used it at all.</p>
-<p>Each entry can be edited using the <img src="<?php echo BASEURL.'/img/pencil.png'?>" alt='Edit icon' class="editicon" > icon or deleted using the <img src="<?php echo BASEURL.'/img/delete.png'?>" alt='Delete icon' class="deleteicon" > icon.
+<p>Each entry can be edited using the <span class="glyphicon glyphicon-pencil"></span> icon or deleted using the <span class="glyphicon glyphicon-trash"></span> icon.
 </p>
 </div>
 <?php if( $edit_mode !== false)
@@ -27,6 +30,7 @@
 </div>
 <?php } //edit ?>
 
+</div>
 </div>
 </div>
 </div>

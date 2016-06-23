@@ -50,6 +50,10 @@ input.input_percent{
 	width:5em;
 }
 
+div#admin_panel_heading{
+	cursor:pointer;
+}
+
 /*
 
 div#explain_admin,
