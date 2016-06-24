@@ -1,28 +1,7 @@
 .hidden_at_first{
 	display:none;
 }
-
-img.editicon{
-	height: 1em;
-}
-
-img.deleteicon{
-	height: 1em;
-}
-
-img.plusminusicon{
-	height: 1em;
-}
-
-form.deleteicon{
-	display: inline-block;
-}
-
-form.deleteicon input[type="image"]{
-	height: 1em;
-	font-size: inherit;
-}
-
+/*
 input.input_bill_name{
 	width:15em;
 }
@@ -49,6 +28,7 @@ input.input_paymt_desc{
 input.input_percent{
 	width:5em;
 }
+*/
 
 div.cursor_pointer{
 	cursor:pointer;

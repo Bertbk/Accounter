@@ -8,45 +8,72 @@
 </div>
 <div class="panel-body">
 
-<?php
-if($admin_mode && $edit_mode === 'participant')
-{ ?>
-<form method="post"
-action="<?php echo ACTIONPATH.'/update_participant.php'?>"
->
-<?php  } ?>
 <div id="div_participants">
 <?php
 	foreach($my_participants as $participant)
 	{
 ?>
-	<div class='participant' style="background-color:<?php echo '#'.$participant['color']?>">
+<div class="row">
+<div class="participant">
 <?php
 if($admin_mode && $edit_mode == 'participant' && $participant['hashid'] == $edit_hashid)
 {
 ?>
-			<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
-			<input type="hidden" name="p_hashid_participant" value="<?php echo $participant['hashid']?>">
-			<input type="text" name="p_name_of_participant" class="input_name"
+			<form method="post"
+			action="<?php echo ACTIONPATH.'/update_participant.php'?>"
+			class="form-horizontal" role="form">
+				<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
+				<input type="hidden" name="p_hashid_participant" value="<?php echo $participant['hashid']?>">
+<?php } ?>
+<?php 
+if($admin_mode && $edit_mode == 'participant' && $participant['hashid'] == $edit_hashid)
+{
+	?>
+	<div class="col-xs-9 name" style="background-color:<?php echo '#'.$participant['color']?>">
+				<input type="text" name="p_name_of_participant" class="form-control"
 			value="<?php echo htmlspecialchars($participant['name'])?>" required />
-			(<input type="number" name="p_nb_of_people" class="input_number"
-			min="1" step="1" value="<?php echo (int)$participant['nb_of_people']?>" required />)
-			<input type="email" name="email" class="input_email"
-			value="<?php echo htmlspecialchars($participant['email'])?>"/>
-<?php
-}//if
-else{ // READ Only
+<?php }else{
+	//Read only
+	?>
+	<div class="col-xs-7 name" style="background-color:<?php echo '#'.$participant['color']?>">
+	<?php
+			echo htmlspecialchars($participant['name']);
+	}?>
+<?php if($admin_mode && $edit_mode == 'participant' && $participant['hashid'] == $edit_hashid){ 
 ?>
-		<?php echo htmlspecialchars($participant['name'])?> 
-		(<?php echo (int)$participant['nb_of_people'];if(!empty($participant['email'])){echo ', '.htmlspecialchars($participant['email']);}?>)
+			<input type="number" name="p_nb_of_people" class="form-control"
+			min="1" step="1" value="<?php echo (int)$participant['nb_of_people']?>" required />
+<?php }else{?>
+		(<?php echo (int)$participant['nb_of_people'];?>)
+<?php }?>
+	</div>
 
-<?php //Edit link
-if($admin_mode && !$edit_mode)
+<?php  //if currently editing
+if($admin_mode && $edit_mode == 'participant' && $participant['hashid'] == $edit_hashid)
+{
+?>
+<div class="col-xs-1">
+<button type="submit" name="submit_update_participant" value="Submit"><span class="glyphicon glyphicon-ok"></span></button>
+</div>
+<div class="col-xs-1">
+<button type="submit" name="submit_cancel" value="Submit"><span class="glyphicon glyphicon-remove"></span></button> 
+</div>
+</form>
+<?php 
+}
+//Edit link
+else if($admin_mode && !$edit_mode)
 {
 	$link_tmp = $link_to_account_admin.'/edit/participant/'.$participant['hashid'];
 ?>
-	<a href="<?php echo $link_tmp?>"
-		class="btn btn-default glyphicon glyphicon-pencil"></a>
+<div class="col-xs-2">
+<form action="<?php echo $link_tmp?>">
+    <button type="submit" value="" class="btn btn-default">
+				<span class="glyphicon glyphicon-pencil"></span>
+		</button>
+</form>
+</div>
+<div class="col-xs-2">
 	<form method="post" 
 	class="deleteicon"
 	action="<?php echo ACTIONPATH.'/delete_participant.php'?>">
@@ -56,28 +83,15 @@ if($admin_mode && !$edit_mode)
 			<span class="glyphicon glyphicon-trash"></span>
 		</button>
 	</form>
-<?php
-}
-?>		
+</div>
 <?php
 }//if/else admin
 ?>
-	</div>
+</div>
+</div>
 
 <?php
 } //foreach participants
-?>
-<?php 
-if($admin_mode && $edit_mode === 'participant')
-{
-?>
-<div>
-<button type="submit" name="submit_update_participant" value="Submit">Submit change</button>
-<button type="submit" name="submit_cancel" value="Submit">Cancel</button> 
-</div>
-</form>
-<?php 
-}
 ?>
 </div>
 <?php }//if !empty(participants)
@@ -102,15 +116,12 @@ if($admin_mode && $edit_mode===false)
 		<span>
 		<label for="form_set_participant_name">Name: </label>
 		<input type="text" name="p_name_of_participant" 
-		id="form_set_participant_name" class="input_name" required />
+		id="form_set_participant_name" class="form-control" required />
 		</span><span>
 		<label for="form_set_participant_nbpeople">Nb. of people: </label>
 		 <input type="number" name="p_nb_of_people" value="1" 
-		 id="form_set_participant_nbpeople" class="input_number" required />
+		 id="form_set_participant_nbpeople" class="form-control" required />
 		</span><span>
-		<label for="form_set_participant_email">Email adress: </label>
-		 <input type="email" name="p_email" 
-		 id="form_set_participant_email" class="input_email" />
 		 <?php /*
 		<label for="form_set_participant_color">Color: </label>
 		 <input type="text" name="p_color" id="form_set_participant_color"  /><br> */?>

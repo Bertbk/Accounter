@@ -4,14 +4,20 @@
 
 div.participant{
 	word-break: break-all;
-	display: inline-block;
+	overflow:hidden;
+}
+
+div.name{
 	color:white;
 	border-radius: 5px;
+	padding-top: 5px;
+	padding-bottom: 5px;
 	text-align:center;
-	padding-top:5px;
-	padding-bottom:5px;
-	padding-left:10px;
-	padding-right:10px;
+}
+
+
+div.buttons{
+	text-align:right;
 	margin-bottom:2px;
 }
 
