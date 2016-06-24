@@ -113,19 +113,23 @@ if($admin_mode && $edit_mode===false)
 		<legend>Add a participant:</legend>
 		<input type="hidden" name="p_hashid_account" 
 		value="<?php echo $my_account['hashid_admin']?>" />
-		<span>
-		<label for="form_set_participant_name">Name: </label>
-		<input type="text" name="p_name_of_participant" 
-		id="form_set_participant_name" class="form-control" required />
-		</span><span>
-		<label for="form_set_participant_nbpeople">Nb. of people: </label>
-		 <input type="number" name="p_nb_of_people" value="1" 
-		 id="form_set_participant_nbpeople" class="form-control" required />
-		</span><span>
+		<label for="form_set_participant_name_0">Name: </label>
+		<div id="inner_participant_form">
+		<input type="text" name="p_new_participant[0][p_name]" 
+		id="form_set_participant_name_0" class="form-control" required />
+		<label for="form_set_participant_nbpeople_0">Nb. of people: </label>
+		<input type="number" name="p_new_participant[0][p_nb_of_people]" value="1" 
+		 id="form_set_participant_nbpeople_0" class="form-control" required />
+		 </div>
 		 <?php /*
 		<label for="form_set_participant_color">Color: </label>
 		 <input type="text" name="p_color" id="form_set_participant_color"  /><br> */?>
-		 </span>
+		<p>
+			<a href="#" onclick="AddParticipantLine();return false;">
+			(+) Add a row
+			</a>
+		</p>
+		
 		 <div>
 		 <button type="submit" name="submit_new_participant" value="Submit">Submit</button> 
 		 </div>

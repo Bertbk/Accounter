@@ -7,7 +7,7 @@ if(isset($_SESSION['errors']) && !empty($_SESSION['errors']))
 	?>
 	<div class="row">
 	<div class="col-lg-8 col-lg-offset-2">
-	<div class="panel panel-alert">
+	<div class="panel panel-danger">
 	<div class="panel-heading">
 	<h2>Errors</h2>
 	</div>

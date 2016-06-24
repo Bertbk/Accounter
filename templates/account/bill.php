@@ -408,7 +408,7 @@ foreach($my_bills as $bill)
 			<?php if(!empty($payment['description']))
 			{
 				?>
-					<?php echo 'for '.htmlspecialchars($payment['description']);?>
+					<?php echo htmlspecialchars($payment['description']);?>
 			<?php 
 			}
 			?>
@@ -489,7 +489,7 @@ foreach($my_bills as $bill)
 			<div class="div_set_payment_<?php echo $cpt_bill?>">
 				<span>
 					<label for="<?php echo 'form_set_payment_payer_'.$cpt_bill?>_0">Payer</label>
-						<select name="p_payment[0][p_hashid_payer]]" 
+						<select name="p_payment[0][p_hashid_payer]" 
 						id="form_set_payment_payer_<?php echo $cpt_bill?>_0" 
 						onchange="DropDownListsBetweenParticipants(this, document.getElementById('<?php echo 'form_set_payment_recv_'.$cpt_bill.'_0'?>'))"> 
 						<option disabled selected value="null"> -- select a payer -- </option>
@@ -505,22 +505,22 @@ foreach($my_bills as $bill)
 						</select>
 				</span><span>
 					<label for="<?php echo 'form_set_payment_cost_'.$cpt_bill?>_0">Cost</label>
-					<input type="number" step="0.01" min="0" name="p_payment[0][p_cost]]" 
+					<input type="number" step="0.01" min="0" name="p_payment[0][p_cost]" 
 						id="<?php echo 'form_set_payment_cost_'.$cpt_bill?>_0" required 
 						class="input_paymt_cost"/>
 				</span><span>
 					<label for="<?php echo 'form_set_payment_recv_'.$cpt_bill?>_0">Receiver</label>
-					<select name="p_payment[0][p_hashid_recv]]" id="<?php echo 'form_set_payment_recv_'.$cpt_bill?>_0"> 
+					<select name="p_payment[0][p_hashid_recv]" id="<?php echo 'form_set_payment_recv_'.$cpt_bill?>_0"> 
 					<option value="-1" selected="selected">Group</option>
 					</select>
 				</span><span>
 					<label for="<?php echo 'form_set_payment_desc_'.$cpt_bill?>_0">Description</label>
-					<input type="text" name="p_payment[0][p_description]]" 
+					<input type="text" name="p_payment[0][p_description]" 
 						id="<?php echo 'form_set_payment_desc_'.$cpt_bill?>_0" 
 						class="input_paymt_desc" />
 				</span><span>
 				<label for="<?php echo 'form_set_payment_date_'.$cpt_bill?>_0">Date of payment</label>
-				<input type="date" name="p_payment[0][p_date_of_payment]]" 
+				<input type="date" name="p_payment[0][p_date_of_payment]" 
 						id="<?php echo 'form_set_payment_date_'.$cpt_bill?>_0"
 						class="date_picker input_paymt_date"/>
 				</span>

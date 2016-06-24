@@ -103,7 +103,7 @@ if(isset($_POST['submit_new_payment']))
 		}
 	}
 	
-	// BILL_PARTICIPANT (possibly multiples !)
+	// PAYMENTS (possibly multiples !)
 	$key = 'p_payment';
 	if(empty($_POST[$key])) { //If empty
 		array_push($errArray, $ErrorEmptyMessage[$key]);
@@ -114,7 +114,7 @@ if(isset($_POST['submit_new_payment']))
 //Loop now on every payments
 	 foreach ($_POST['p_payment'] as $payment)
 	 {
-		$errArray2 = array(); // Error array for each participant
+		$errArray2 = array(); // Error array for each payment
 		//PAYER
 		$key = 'p_hashid_payer';
 		 if(empty($payment[$key])) { //If empty

@@ -74,7 +74,6 @@ function create_tables()
     account_id INT UNSIGNED NOT NULL,
     name VARCHAR(255) NOT NULL,
     nb_of_people SMALLINT UNSIGNED NOT NULL DEFAULT 1,
-    email VARCHAR(255),
     color VARCHAR(6) NOT NULL,
     PRIMARY KEY (id),
 		INDEX ind_part_account_id (account_id),
