@@ -181,8 +181,9 @@ function AddParticipantLine()
 	var input_name = document.createElement("input");
 	input_name.id = "form_set_participant_name_"+ AddParticipantLine.counter;
 	input_name.type="text";
-	input_name.setAttribute("class",	"form-control");
+	input_name.setAttribute("class",	"form-control-inline col-xs-9");
 	input_name.name = "p_new_participant["+ AddParticipantLine.counter +"][p_name]";
+	input_name.placeholder="Name";
 	
 	var input_nb_of_people = document.createElement("input");
 	input_nb_of_people.id = "form_set_participant_nbpeople_"+ AddParticipantLine.counter;
@@ -190,22 +191,28 @@ function AddParticipantLine()
 	input_nb_of_people.value="1";
 	input_nb_of_people.min="1";
 	input_nb_of_people.step="1";
-	input_nb_of_people.setAttribute("class",	"form-control");
+	input_nb_of_people.setAttribute("class",	"form-control-inline col-xs-3");
 	input_nb_of_people.name = "p_new_participant["+ AddParticipantLine.counter +"][p_nb_of_people]";
 	
 	//Set label
 	var label_name = document.createElement("Label");
 	label_name.setAttribute("for", input_name.id);
 	label_name.innerHTML="Name:";
+	label_name.setAttribute("class", "sr-only");
 	var label_nb_of_people = document.createElement("Label");
 	label_nb_of_people.setAttribute("for", input_nb_of_people.id);
 	label_nb_of_people.innerHTML="Nb. of people:";
+	label_nb_of_people.setAttribute("class", "sr-only");
+	
+	var div_row = document.createElement("div");
+	div_row.setAttribute("class", "row");
+	div_row.appendChild(label_name);
+	div_row.appendChild(input_name);
+	div_row.appendChild(label_nb_of_people);
+	div_row.appendChild(input_nb_of_people);
 	
 	var form_to_add = document.getElementById('inner_participant_form');
-	form_to_add.appendChild(label_name);
-	form_to_add.appendChild(input_name);
-	form_to_add.appendChild(label_nb_of_people);
-	form_to_add.appendChild(input_nb_of_people);
+	form_to_add.appendChild(div_row);
 	
    AddParticipantLine.counter ++;
    return false;

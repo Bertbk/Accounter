@@ -113,14 +113,27 @@ if($admin_mode && $edit_mode===false)
 		<legend>Add a participant:</legend>
 		<input type="hidden" name="p_hashid_account" 
 		value="<?php echo $my_account['hashid_admin']?>" />
-		<label for="form_set_participant_name_0">Name: </label>
+		
+				
+		<div class="row">
+			<p class="col-xs-10">
+				Name / Number of people
+			</p>
+			</div>
+		
 		<div id="inner_participant_form">
-		<input type="text" name="p_new_participant[0][p_name]" 
-		id="form_set_participant_name_0" class="form-control" required />
-		<label for="form_set_participant_nbpeople_0">Nb. of people: </label>
-		<input type="number" name="p_new_participant[0][p_nb_of_people]" value="1" 
-		 id="form_set_participant_nbpeople_0" class="form-control" required />
-		 </div>
+			<div  class="row">
+				<label for="form_set_participant_name_0" class="sr-only">
+					Name
+				</label>
+					<input type="text" name="p_new_participant[0][p_name]" 
+						id="form_set_participant_name_0" class="form-control-inline col-xs-9" placeholder="Name" required />
+
+				<label for="form_set_participant_nbpeople_0" class="sr-only">Nb. of people</label>		
+					<input type="number" name="p_new_participant[0][p_nb_of_people]" value="1" 
+					 id="form_set_participant_nbpeople_0" class="form-control-inline col-xs-3" required />
+			</div>
+		</div>
 		 <?php /*
 		<label for="form_set_participant_color">Color: </label>
 		 <input type="text" name="p_color" id="form_set_participant_color"  /><br> */?>
@@ -131,7 +144,7 @@ if($admin_mode && $edit_mode===false)
 		</p>
 		
 		 <div>
-		 <button type="submit" name="submit_new_participant" value="Submit">Submit</button> 
+		 <button type="submit" name="submit_new_participant" class="btn btn-primary" value="Submit">Submit</button> 
 		 </div>
 	  </fieldset>
 	</form>
