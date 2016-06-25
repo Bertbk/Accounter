@@ -16,9 +16,9 @@ p#show_hide_add_bill a{
 
 
 /* back ground colors */
-div#bills  div.panel,
-div#bills  div.panel div.panel-body,
-div#bills  div.panel div.panel-heading{
+div#bills  div.bill div.panel,
+div#bills  div.bill div.panel div.panel-body,
+div#bills  div.bill div.panel div.panel-heading{
     border: none;
 		color:black;
 }
