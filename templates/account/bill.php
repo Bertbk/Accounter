@@ -566,7 +566,7 @@ if($payment_to_edit !== false)
 							id="form_edit_payment_date_<?php echo $bill['id']?>"
 							value="<?php echo $payment_to_edit['date_of_payment']?>"
 							placeholder="Date of payment">
-						<span class="input-group-addon glyph glyphicon-calendar"></span>
+						<span class="input-group-addon glyphicon glyphicon-calendar"></span>
 					</div>
 				</div>
 			</div>
