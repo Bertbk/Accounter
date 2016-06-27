@@ -1,7 +1,8 @@
 
 <!-- BILLS -->
-<div id="bills">
-<div  class="panel panel-primary">
+<div class="row">
+<div class="col-xs-12">
+<div class="panel panel-primary">
 <div class="panel-heading">
 	<h2>My bills</h2>
 </div>
@@ -32,7 +33,7 @@ if($admin_mode && $edit_mode == false)
 			<div class="form-group">
 				<label for="form_set_bill_description" class="sr-only">Description: </label>
 				 <textarea name="p_description" id="form_set_bill_description" class="form-control" 
-				 placeholder="Description"/></textarea>
+				 placeholder="Description"></textarea>
 			</div>
 
 			 <button type="submit" name="submit_new_bill" value="Submit"
@@ -44,6 +45,9 @@ if($admin_mode && $edit_mode == false)
 ?>
 </div>
 </div>
+</div>
+</div>
+
 
 <!-- Loop on the bills -->
 <?php if (is_array($my_bills) && sizeof($my_bills) > 0 )
@@ -59,77 +63,99 @@ foreach($my_bills as $bill)
 	if(!empty($my_free_bill_participants[$bill['id']]))
 	{	$this_free_bill_participants = $my_free_bill_participants[$bill['id']];}
 ?>
-<div class="bill <?php echo 'bill-'.$cpt_bill?>">
-<div class="panel panel-primary">
-	<?php 
-	//Edit the Bill (name, description, ...)
-	if($admin_mode 
-					&& $edit_mode === 'bill' 
-					&& $edit_hashid === $bill['hashid'])
-					{
-	?>
-	<form method="post"
-	action="<?php echo ACTIONPATH.'/update_bill.php'?>">
-		<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>"/>
-		<input type="hidden" name="p_hashid_bill" value="<?php echo $bill['hashid']?>" />
-	<div class="panel-heading">
-		<h3>
-	<label for="form_edit_bill_name">Title: </label>
-	<input type="text" name="p_title_of_bill" id="form_edit_bill_name"
-	class="input_bill_name"	value="<?php echo htmlspecialchars($bill['title'])?>" required />
-	</h3>
-	</div>
-	<label for="form_edit_bill_description">Description: </label>
-	 <input type="text" name="p_description" id="form_edit_bill_description" 
-	 class="input_bill_desc" value="<?php echo htmlspecialchars($bill['description'])?>"/>
-	 <div>
-		<button type="submit" name="submit_update_bill" value="Submit">Submit</button> 
-		<button type="submit" name="submit_cancel" value="Submit">Cancel</button> 
-	</div>
-	</form>
-	<?php	
-	}
-	else{
-	//Display only
-	?>
-	<div class="panel-heading cursor_pointer" data-toggle="collapse" data-target="#<?php echo 'panel-body_bill'.$cpt_bill?>">
-	<h3>
-	<?php echo ($cpt_bill+1).'. '.htmlspecialchars($bill['title']) ?>
-	</h3>	
-	<?php
-	if($admin_mode && $edit_mode === false)
-	{
-		$link_tmp = $link_to_account_admin.'/edit/bill/'.$bill['hashid'];
-		?>
-		<a href="<?php echo $link_tmp?>"  
-		class="btn btn-default glyphicon glyphicon-pencil"></a>
-	<form method="post" 
-	class="deleteicon"
-	action="<?php echo ACTIONPATH.'/delete_bill.php'?>"
-		>
-		<input type="hidden" 
-		name="p_hashid_account" 
-		value="<?php echo $my_account['hashid_admin']?>"
-		/>
-		<input type="hidden"  
-		name="p_hashid_bill" 
-		value="<?php echo $bill['hashid']?>"
-		/>
-		<button type="submit" class="btn btn-default confirmation" name="submit_delete_participant">
-			<span class="glyphicon glyphicon-trash"></span>
-		</button>
-	</form>
-<?php }	?>
-	</div>
-	<?php }//if/else admin 
+<div class="row bill <?php echo 'bill-'.$cpt_bill?>">
+<div class="col-xs-12">
+	<div class="panel panel-primary">
+<?php 
+//Edit the Bill (name, description, ...)
+if($admin_mode 
+				&& $edit_mode === 'bill' 
+				&& $edit_hashid === $bill['hashid'])
+				{
+?>
+		<div class="panel-heading">
+		<div class="row">
+			<div class="col-xs-12">
+			<form method="post" id="<?php echo "form_update_bill_".$cpt_bill?>"
+				action="<?php echo ACTIONPATH.'/update_bill.php'?>">
+				<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>"/>
+				<input type="hidden" name="p_hashid_bill" value="<?php echo $bill['hashid']?>" />
+				<h3>
+					<label for="form_edit_bill_name" class="sr-only">Title: </label>
+					<input type="text" name="p_title_of_bill" id="form_edit_bill_name"
+					class="form-control"	value="<?php echo htmlspecialchars($bill['title'])?>" required />
+				</h3>
+			</form>
+			</div>
+		</div>
+		</div>
+<?php } else{
+?>
+		<div class="panel-heading cursor_pointer" data-toggle="collapse" data-target="#<?php echo 'panel-body_bill'.$cpt_bill?>">
+		<div class="row">
+			<div class="col-xs-12 col-sm-10">
+			<h3>
+				<?php echo ($cpt_bill+1).'. '.htmlspecialchars($bill['title']) ?>
+			</h3>	
+			</div>
+<?php
+			if($admin_mode && $edit_mode === false)
+			{
+				$link_tmp = $link_to_account_admin.'/edit/bill/'.$bill['hashid'];
+?>
+			<div class="col-xs-2 col-sm-1">
+			<form action="<?php echo $link_tmp?>">
+					<button type="submit" value="" class="btn btn-default">
+							<span class="glyphicon glyphicon-pencil"></span>
+					</button>
+			</form>
+			</div>
+			<div class="col-xs-2 col-md-1">
+			<form method="post" action="<?php echo ACTIONPATH.'/delete_bill.php'?>">
+				<input type="hidden" name="p_hashid_account" 
+					value="<?php echo $my_account['hashid_admin']?>">
+				<input type="hidden" name="p_hashid_bill" 
+					value="<?php echo $bill['hashid']?>">
+				<button type="submit" class="btn btn-default confirmation" name="submit_delete_participant">
+					<span class="glyphicon glyphicon-trash"></span>
+				</button>
+			</form>
+			</div>
+		</div>
+		</div>
+<?php 
+			}
+		}
 ?>
 	<div id="<?php echo 'panel-body_bill'.$cpt_bill?>" class="panel-collapse collapse in">
 	<div  class="panel-body">
-	<?php if(!empty($bill['description']) && !is_null($bill['description']))
+<?php 
+//Edit the Bill (name, description, ...)
+if($admin_mode 
+				&& $edit_mode === 'bill' 
+				&& $edit_hashid === $bill['hashid'])
+				{
+?>
+		<label for="form_edit_bill_description">Description: </label>
+		<textarea name="p_description" class="form-control"
+		 form="<?php echo "form_update_bill_".$cpt_bill?>"><?php if(!empty($bill['description'])){echo htmlspecialchars($bill['description']);}?></textarea>
+			<button type="submit" name="submit_update_bill" value="Submit"
+			form="<?php echo "form_update_bill_".$cpt_bill?>">
+				Submit
+			</button> 
+			<button type="submit" name="submit_cancel" value="Submit" 
+				form="<?php echo "form_update_bill_".$cpt_bill?>">
+				Cancel
+			</button> 
+<?php	
+	}	else{
+	//Display only
+	if(!empty($bill['description']) && !is_null($bill['description']))
 	{
 ?>
 	<p><?php echo htmlspecialchars($bill['description'])?></p>
-<?php }?>
+<?php }
+	}?>
 
 
 <?php // Display the current participant of this bill
@@ -571,9 +597,9 @@ foreach($my_bills as $bill)
 </div> 
 </div> 
 </div> 
+</div> 
 
 <?php
 }//foreach bill
 }//if bills exist
 ?>
-</div>
