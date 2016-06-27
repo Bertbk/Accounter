@@ -4,19 +4,19 @@ div.bill_participant{
 	overflow:hidden;
 }
 
-div.bill_participant_assign_name{
+div.assign_bill_participant_name{
 	width:70%;
 }
 
-div.bill_participant_percentage{
+div.assign_bill_participant_percentage{
 	width:30%;
 }
 
-div.bill_participant_percentage input{
+div.assign_bill_participant_percentage input{
 	width:100%;
 }
 
-div.bill_participant_assign_name label{
+div.assign_bill_participant_name label{
 	width:100%;
 }
 
@@ -26,7 +26,7 @@ div.bill_participant_name{
 	}
 	
 div.bill_participant_name,
-div.bill_participant_assign_name label.bill_participant_name{
+div.assign_bill_participant_name label.bill_participant_name{
 	color:white;
 	border-radius: 5px;
 	padding-top: 5px;
@@ -35,8 +35,8 @@ div.bill_participant_assign_name label.bill_participant_name{
 	}
 	
 div.bill_participant_button,
-div.bill_participant_percentage,
-div.bill_participant_assign_name{
+div.assign_bill_participant_percentage,
+div.assign_bill_participant_name{
 	float:left;
 	margin:0px;
 }

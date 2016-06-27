@@ -192,8 +192,8 @@ if($admin_mode
 				$cpt++;
 	?>
 			<div class="row">
-				<div class="col-xs-12 col-md-6 col-lg-4 bill_participant">
-					<div class="checkbox bill_participant_assign_name">
+				<div class="col-xs-12 col-md-6 col-lg-4 bill_participant form-group">
+					<div class="checkbox assign_bill_participant_name">
 						<label class="bill_participant_name" style="background-color:<?php echo '#'.$participant['color']?>">
 							<input type="checkbox" name="p_participant['<?php echo $cpt?>'][p_hashid_participant]" 
 							class="form-control-inline" value="<?php echo $participant['hashid']?>">
@@ -202,7 +202,7 @@ if($admin_mode
 							</span>
 						</label>
 					</div>
-					<div class="bill_participant_percentage">
+					<div class="assign_bill_participant_percentage">
 						<label for="<?php echo 'form_available_percent_'.$cpt_bill.'_'.$participant['id']?>" 
 							class="sr-only">
 							Percentage of use
