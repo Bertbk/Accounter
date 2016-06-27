@@ -580,9 +580,9 @@ foreach($this_payment as $payment)
 			<div id="<?php echo 'div_option_add_payment_'.$cpt_bill?>">
 				<input type="hidden" name="p_hashid_account" value ="<?php echo $my_account['hashid_admin']?>">
 				<input type="hidden" name="p_hashid_bill" value ="<?php echo $bill['hashid']?>">
-				<div class="div_set_payment_<?php echo $cpt_bill?>">
+				<div id="div_set_payment_<?php echo $cpt_bill?>">
 					<div class="row form-group">
-						<div class="col-xs-12 col-lg-3">
+						<div class="col-xs-12 col-lg-4">
 							<label for="<?php echo 'form_set_payment_payer_'.$cpt_bill?>_0">Payer</label>
 							<select name="p_payment[0][p_hashid_payer]" 
 								id="form_set_payment_payer_<?php echo $cpt_bill?>_0" 
@@ -597,7 +597,7 @@ foreach($this_payment as $payment)
 							</select>
 						</div>
 
-						<div class="col-xs-12 col-lg-2">
+						<div class="col-xs-12 col-lg-4">
 							<label for="<?php echo 'form_set_payment_cost_'.$cpt_bill?>_0">Amount</label>
 							<input type="number" step="0.01" min="0" name="p_payment[0][p_cost]" 
 								id="<?php echo 'form_set_payment_cost_'.$cpt_bill?>_0" required 

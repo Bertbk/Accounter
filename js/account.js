@@ -64,40 +64,51 @@ function AddPaymentLine(name_of_people, hashid_of_people, cpt_bill)
 	if(name_of_people.length != hashid_of_people.length)
 	{return false;}
 
-	var div_payment=document.createElement("div");
-	div_payment.setAttribute("class",	"div_set_payment_" + cpt_bill);
+	var div_row1=document.createElement("div");
+	div_row1.setAttribute("class", "row form-group");
+	var div_row2=document.createElement("div");
+	div_row2.setAttribute("class", "row form-group");
 	
-	var span_payer = document.createElement("span");
-	var span_cost = document.createElement("span");
-	var span_recv = document.createElement("span");
-	var span_desc = document.createElement("span");
-	var span_date = document.createElement("span");
-
+	var div_payer=document.createElement("div");
+	div_payer.setAttribute("class",	"col-xs-12 col-lg-4");
+	var div_amount=document.createElement("div");
+	div_amount.setAttribute("class", "col-xs-12 col-lg-4");
+	var div_receiver=document.createElement("div");
+	div_receiver.setAttribute("class", "col-xs-12 col-lg-4");
+	var div_description=document.createElement("div");
+	div_description.setAttribute("class", "col-xs-12 col-lg-6");
+	var div_date=document.createElement("div");
+	div_date.setAttribute("class", "col-xs-12 col-lg-6");
+	
 	var select_payer = document.createElement("select");
-	select_payer.id = "form_set_payment_payer_"+ cpt_bill + "_" + AddPaymentLine.counter
-	select_payer.name = "p_payment["+ AddPaymentLine.counter +"][p_hashid_payer]]";
+	select_payer.id = "form_set_payment_payer_"+ cpt_bill + "_" + AddPaymentLine.counter;
+	select_payer.name = "p_payment["+ AddPaymentLine.counter +"][p_hashid_payer]";
+	select_payer.className = "form-control";
 	var input_cost = document.createElement("input");
 	input_cost.id = "form_set_payment_cost_"+ cpt_bill + "_" + AddPaymentLine.counter;
 	input_cost.type="number";
 	input_cost.min="0";
 	input_cost.step="0.01";
-	input_cost.className += " input_paymt_cost";
-	input_cost.name = "p_payment["+ AddPaymentLine.counter +"][p_cost]]";
+	input_cost.className = "form-control";
+	input_cost.name = "p_payment["+ AddPaymentLine.counter +"][p_cost]";
 	var select_receiver = document.createElement("select");
 	select_receiver.id = "form_set_payment_recv_"+ cpt_bill + "_" + AddPaymentLine.counter;
-	select_receiver.name = "p_payment["+ AddPaymentLine.counter +"][p_hashid_recv]]";
+	select_receiver.name = "p_payment["+ AddPaymentLine.counter +"][p_hashid_recv]";
+	select_receiver.className = "form-control";
 	var input_description = document.createElement("input");
 	input_description.id = "form_set_payment_desc_"+ cpt_bill + "_" + AddPaymentLine.counter;
 	input_description.type="text";
-	input_description.className += " input_paymt_desc";
-	input_description.name = "p_payment["+ AddPaymentLine.counter +"][p_description]]";
+	input_description.name = "p_payment["+ AddPaymentLine.counter +"][p_description]";
+	input_description.className = "form-control";
+	input_description.placeholder = "Description";
 	var input_date = document.createElement("input");
 	input_date.id = "form_set_payment_date_"+ cpt_bill + "_" + AddPaymentLine.counter;
 	input_date.type="date";
-	input_date.className += " date_picker";
-	input_date.className += " input_paymt_date";
-	input_date.name = "p_payment["+ AddPaymentLine.counter +"][p_date_of_payment]]";
-	
+	input_date.name = "p_payment["+ AddPaymentLine.counter +"][p_date_of_payment]";
+	input_date.className = "form-control";
+	input_date.placeholder = "Date of payment";
+	 $(input_date).datepicker();
+
 	//Construct the list of payer
 	var opt_null = document.createElement("option");
 	opt_null.selected=true;
@@ -126,44 +137,47 @@ function AddPaymentLine(name_of_people, hashid_of_people, cpt_bill)
 	//Set label
 	var label_payer = document.createElement("Label");
 	label_payer.setAttribute("for", select_payer.id);
-	label_payer.innerHTML="Payer";
+	label_payer.innerHTML = "Payer";
 	var label_cost = document.createElement("Label");
 	label_cost.setAttribute("for", input_cost.id);
-	label_cost.innerHTML="Cost";
+	label_cost.innerHTML = "Amount";
 	var label_recv = document.createElement("Label");
 	label_recv.setAttribute("for", select_receiver.id);
 	label_recv.innerHTML="Receiver";
 	var label_desc = document.createElement("Label");
 	label_desc.setAttribute("for", input_description.id);
 	label_desc.innerHTML="Description";
+	label_desc.className="sr-only";
 	var label_date = document.createElement("Label");
 	label_date.setAttribute("for", input_date.id);
 	label_date.innerHTML="Date of payment";
-	
-	//Add to div...
-	//Payer
-	span_payer.appendChild(label_payer);
-	span_payer.appendChild(select_payer);
-	div_payment.appendChild(span_payer);
-	//Cost
-	span_cost.appendChild(label_cost);
-	span_cost.appendChild(input_cost);
-	div_payment.appendChild(span_cost);
-	//Receiver
-	span_recv.appendChild(label_recv);
-	span_recv.appendChild(select_receiver);
-	div_payment.appendChild(span_recv);
-	//Description
-	span_desc.appendChild(label_desc);
-	span_desc.appendChild(input_description);
-	div_payment.appendChild(span_desc);
-	//Date
-	span_date.appendChild(label_date);
-	span_date.appendChild(input_date);
-	div_payment.appendChild(span_date);
+	label_date.className="sr-only";
 
-	var form_to_add = document.getElementById('div_option_add_payment_' + cpt_bill);
-	form_to_add.appendChild(div_payment);
+	//Add to div...
+	div_payer.appendChild(label_payer);
+	div_payer.appendChild(select_payer);
+	div_row1.appendChild(div_payer);
+	//Amount
+	div_amount.appendChild(label_cost);
+	div_amount.appendChild(input_cost);
+	div_row1.appendChild(div_amount);
+	//Receiver
+	div_receiver.appendChild(label_recv);
+	div_receiver.appendChild(select_receiver);
+	div_row1.appendChild(div_receiver);
+	//Description
+	div_description.appendChild(label_desc);
+	div_description.appendChild(input_description);
+	div_row2.appendChild(div_description);
+	//Date
+	div_date.appendChild(label_date);
+	div_date.appendChild(input_date);
+	div_row2.appendChild(div_date);
+
+	//Parent div
+	var parent_div = document.getElementById('div_set_payment_' + cpt_bill);
+	parent_div.appendChild(div_row1);
+	parent_div.appendChild(div_row2);
 	
    AddPaymentLine.counter ++;
    return false;
