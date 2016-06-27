@@ -1,3 +1,14 @@
 div.payment_table{
 	text-align:center;
+	word-break: break-all;
+	overflow:hidden;
+}
+
+.row [class^="description_collapse_"].in,
+.row [class^="description_collapse_"].collapsing,
+.row [class*=" description_collapse_"].in,
+.row [class*=" description_collapse_"].collapsing
+{
+    display: block!important;
+		
 }

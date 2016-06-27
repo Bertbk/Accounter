@@ -331,32 +331,33 @@ if($admin_mode
 		$cpt_paymt = -1;
 	?>
 	
-	
-	<div class="row payment_table">
-		<div class="col-xs-2">
+	<div class="payment_table">
+	<div class="row">
+		<div class="col-xs-4 col-md-2">
 			<strong>Payer</strong>
 		</div>
-		<div class="col-xs-1">
-			<strong>Amount</strong>
+		<div class="col-xs-4 col-md-1">
+			// <strong>Amount</strong>
 		</div>
-		<div class="col-xs-2">
+		<div class="col-xs-4 col-md-2">
 			<strong>Receiver</strong>
 		</div>
-		<div class="col-xs-3">
+		<div class="hidden-xs hidden-sm hidden-md col-xs-3">
 			<strong>Designation</strong>
 		</div>
-		<div class="col-xs-1">
+		<div class="hidden-xs hidden-sm hidden-md col-xs-1">
 			<strong>Date</strong>
 		</div>
 <?php if($admin_mode && !$edit_mode){?>
-		<div class="col-xs-1">
+		<div class="hidden-xs hidden-sm col-xs-1">
 			<strong>Edit</strong>
 		</div>
 <?php }if($admin_mode && !$edit_mode){?>
-		<div class="col-xs-1">
+		<div class="hidden-xs hidden-sm col-xs-1">
 			<strong>Delete</strong>
 		</div>
 <?php }?>
+	</div>
 	</div>
 	
 	<?php
@@ -367,10 +368,6 @@ foreach($this_payment as $payment)
 
 	<div class="row payment_table">
 
-
-
-	
-	
 	<?php
 			if($admin_mode && $edit_mode === 'payment' 
 			&& $payment['hashid'] === $edit_hashid)
@@ -470,17 +467,17 @@ foreach($this_payment as $payment)
 			}
 			else{//Read only
 		?>
-		<div class="col-xs-2">
+		<div class="col-xs-5 col-md-2">
 			<div class="bill_participant_payer" style="background-color:<?php echo '#'.$payment['payer_color']?>">
 			<?php echo htmlspecialchars($payment['payer_name'])?>
 			</div>
 		</div>
 <!--			 &nbsp;paid -->
-		<div class="col-xs-1">
+		<div class="col-xs-2 col-md-1">
 			 <?php echo (float)$payment['cost']?>&euro;
 		</div>
 <!--	 to -->
-		<div class="col-xs-2">
+		<div class="col-xs-5 col-md-2">
 			<?php if(is_null($payment['receiver_name'])) {?>
 				<div class="class=bill_participant_payer group_color">
 				Group
@@ -491,33 +488,47 @@ foreach($this_payment as $payment)
 				</div>
 				<?php }?>
 		</div>
-		<div class="col-xs-3">
-			<?php if(!empty($payment['description']))
-			{
+			<div class="hidden-xs hidden-sm hidden-md col-lg-3 <?php echo 'description_collapse_'.$cpt_bill.'_'.$cpt_paymt?>">
+				<?php if(!empty($payment['description']))
+				{
+					?>
+						<?php echo htmlspecialchars($payment['description']);?>
+				<?php 
+				}
 				?>
-					<?php echo htmlspecialchars($payment['description']);?>
-			<?php 
-			}
-			?>
-		</div>
-		<div class="col-xs-1">
-			<?php
-			if(!empty($payment['date_of_payment']))
-			{
-				?>
-				<?php echo date("d/m/Y", strtotime($payment['date_of_payment']));?>
+			</div>
+			<div class="hidden-xs hidden-sm hidden-md col-lg-1 <?php echo 'description_collapse_'.$cpt_bill.'_'.$cpt_paymt?>">
 				<?php
-				}?>
+				if(!empty($payment['date_of_payment']))
+				{
+					?>
+					<?php echo date("d/m/Y", strtotime($payment['date_of_payment']));?>
+					<?php
+					}?>
+			</div>
+		<?php //Collapse button (for mobile>) ?>
+		<div class="visible-xs visible-sm col-xs-2">
+				<button type="submit" class="btn btn-default"
+				data-toggle="collapse" data-target=".<?php echo 'description_collapse_'.$cpt_bill.'_'.$cpt_paymt?>">
+					<span class="glyphicon glyphicon-plus"></span>
+				</button>
 		</div>
+		
 	<?php //EDIT BUTTON
 			if($admin_mode && !$edit_mode)
 				{
 	?>
-		<div class="col-xs-1">
-			<a href="<?php echo $link_to_account_admin.'/edit/payment/'.$payment['hashid']?>" 
-			class="btn btn-default glyphicon glyphicon-pencil"></a>
+		<div class="col-xs-2 col-md-1">
+		<?php 
+		$link_tmp = $link_to_account_admin.'/edit/payment/'.$payment['hashid'];
+		?>
+			<form action="<?php echo $link_tmp ?>">
+					<button type="submit" class="btn btn-default confirmation">
+						<span class="glyphicon glyphicon-pencil"></span>
+					</button>
+				</form>
 		</div>
-		<div class="col-xs-1">
+		<div class="col-xs-2 col-md-1">
 			<form method="post" 
 				class="deleteicon"
 				action="<?php echo ACTIONPATH.'/delete_payment.php'?>"
