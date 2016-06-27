@@ -330,29 +330,47 @@ if($admin_mode
 		$this_payment = $my_payments_per_bill[$bill['id']];
 		$cpt_paymt = -1;
 	?>
-<div class="table-responsive">
-	<table>
-	  <thead>
-			<tr>
-				<th>Payer</th>
-				<th>Amount</th>
-				<th>Receiver</th>
-				<th>Designation</th>
-				<th>Date</th>
+	
+	
+	<div class="row payment_table">
+		<div class="col-xs-2">
+			<strong>Payer</strong>
+		</div>
+		<div class="col-xs-1">
+			<strong>Amount</strong>
+		</div>
+		<div class="col-xs-2">
+			<strong>Receiver</strong>
+		</div>
+		<div class="col-xs-3">
+			<strong>Designation</strong>
+		</div>
+		<div class="col-xs-1">
+			<strong>Date</strong>
+		</div>
 <?php if($admin_mode && !$edit_mode){?>
-				<th>Edit</th>
+		<div class="col-xs-1">
+			<strong>Edit</strong>
+		</div>
 <?php }if($admin_mode && !$edit_mode){?>
-				<th>Delete</th>
+		<div class="col-xs-1">
+			<strong>Delete</strong>
+		</div>
 <?php }?>
-			</tr>
-		</thead>
-		<tbody>
+	</div>
+	
 	<?php
-		foreach($this_payment as $payment)
-		{
-			$cpt_paymt++;
-	?>
-			<tr>
+foreach($this_payment as $payment)
+{
+	$cpt_paymt++;
+?>
+
+	<div class="row payment_table">
+
+
+
+	
+	
 	<?php
 			if($admin_mode && $edit_mode === 'payment' 
 			&& $payment['hashid'] === $edit_hashid)
@@ -361,8 +379,8 @@ if($admin_mode
 		<form method="post" id="form_edit_payment_send"
 		action="<?php echo ACTIONPATH.'/update_payment.php'?>">
 			<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>"/>
-		<input type="hidden" name="p_hashid_payment" value="<?php echo $payment['hashid']?>" />
-		<label for="form_edit_payment_bill_<?php echo $cpt_bill?>">
+			<input type="hidden" name="p_hashid_payment" value="<?php echo $payment['hashid']?>" />
+			<label for="form_edit_payment_bill_<?php echo $cpt_bill?>">
 				Move to another bill
 			</label>
 			<select name="p_hashid_bill" id="form_edit_payment_bill_<?php echo $cpt_bill?>"
@@ -452,27 +470,28 @@ if($admin_mode
 			}
 			else{//Read only
 		?>
-			<td>
-			<span class='bill_participant' style="background-color:<?php echo '#'.$payment['payer_color']?>">
+		<div class="col-xs-2">
+			<div class="bill_participant_payer" style="background-color:<?php echo '#'.$payment['payer_color']?>">
 			<?php echo htmlspecialchars($payment['payer_name'])?>
-			</span>
-			</td>
+			</div>
+		</div>
 <!--			 &nbsp;paid -->
- 			<td>
+		<div class="col-xs-1">
 			 <?php echo (float)$payment['cost']?>&euro;
-			</td>
+		</div>
 <!--	 to -->
-			<td>
-				<?php if(is_null($payment['receiver_name'])) {?>
-					<span class="bill_participant group_color">
-					Group
-					</span>
+		<div class="col-xs-2">
+			<?php if(is_null($payment['receiver_name'])) {?>
+				<div class="class=bill_participant_payer group_color">
+				Group
+				</div>
 			<?php }else{ ?>
-				<span class="bill_participant" style="background-color:<?php echo '#'.$payment['receiver_color']?>">			
-				<?php echo htmlspecialchars($payment['receiver_name'])?></span>
+				<div class="bill_participant_receiver" style="background-color:<?php echo '#'.$payment['receiver_color']?>">			
+					<?php echo htmlspecialchars($payment['receiver_name'])?>
+				</div>
 				<?php }?>
-				</td>
-				<td>
+		</div>
+		<div class="col-xs-3">
 			<?php if(!empty($payment['description']))
 			{
 				?>
@@ -480,8 +499,8 @@ if($admin_mode
 			<?php 
 			}
 			?>
-			</td>
-			<td>
+		</div>
+		<div class="col-xs-1">
 			<?php
 			if(!empty($payment['date_of_payment']))
 			{
@@ -489,16 +508,16 @@ if($admin_mode
 				<?php echo date("d/m/Y", strtotime($payment['date_of_payment']));?>
 				<?php
 				}?>
-			</td>
+		</div>
 	<?php //EDIT BUTTON
 			if($admin_mode && !$edit_mode)
 				{
 	?>
-			<td>
-				<a href="<?php echo $link_to_account_admin.'/edit/payment/'.$payment['hashid']?>" 
-				class="btn btn-default glyphicon glyphicon-pencil"></a>
-				</td>
-				<td>
+		<div class="col-xs-1">
+			<a href="<?php echo $link_to_account_admin.'/edit/payment/'.$payment['hashid']?>" 
+			class="btn btn-default glyphicon glyphicon-pencil"></a>
+		</div>
+		<div class="col-xs-1">
 			<form method="post" 
 				class="deleteicon"
 				action="<?php echo ACTIONPATH.'/delete_payment.php'?>"
@@ -509,16 +528,14 @@ if($admin_mode
 						<span class="glyphicon glyphicon-trash"></span>
 					</button>
 				</form>
-				</td>
+		</div>
 		<?php
 				}
 			}//end else admin mode 
 			?>
-			</tr>
+	</div>
 <?php	}//foreach current payment 
 ?>
-	</tbody>
-	</table></div>
 	<?php
 	}//if payment exist
 	else

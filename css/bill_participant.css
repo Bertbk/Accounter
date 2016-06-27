@@ -26,7 +26,9 @@ div.bill_participant_name{
 	}
 	
 div.bill_participant_name,
-div.assign_bill_participant_name label.bill_participant_name{
+div.assign_bill_participant_name label.bill_participant_name,
+div.bill_participant_payer,
+div.bill_participant_receiver{
 	color:white;
 	border-radius: 5px;
 	padding-top: 5px;

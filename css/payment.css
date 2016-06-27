@@ -1,5 +1,3 @@
-/*[id^="div_payment_"]
-{
-	margin-bottom: 10px;
+div.payment_table{
+	text-align:center;
 }
-*/
