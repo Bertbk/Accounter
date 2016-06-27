@@ -77,7 +77,8 @@ if($admin_mode
 			<div class="row">
 				<div class="col-xs-12">
 				<form method="post" id="<?php echo "form_update_bill_".$cpt_bill?>"
-					action="<?php echo ACTIONPATH.'/update_bill.php'?>">
+					action="<?php echo ACTIONPATH.'/update_bill.php'?>"
+					id="<?php echo 'edit_tag_'.$edit_hashid?>">
 					<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>"/>
 					<input type="hidden" name="p_hashid_bill" value="<?php echo $bill['hashid']?>" />
 					<h3>
@@ -100,7 +101,7 @@ if($admin_mode
 		<?php
 					if($admin_mode && $edit_mode === false)
 					{
-						$link_tmp = $link_to_account_admin.'/edit/bill/'.$bill['hashid'];
+						$link_tmp = $link_to_account_admin.'/edit/bill/'.$bill['hashid'].'#edit_tag_'.$bill['hashid'];
 		?>
 				</div>
 				<div class="col-xs-2">
@@ -262,7 +263,7 @@ if($admin_mode && !$edit_mode)
 				<?php
 					if($admin_mode === true
 					&& $edit_mode === false){
-						$link_tmp = $link_to_account_admin.'/edit/bill_participant/'.$bill_participant['hashid'];
+						$link_tmp = $link_to_account_admin.'/edit/bill_participant/'.$bill_participant['hashid'].'#edit_tag_'.$bill_participant['hashid'];
 						?>
 				<div class="bill_participant_button">
 							<form action="<?php echo $link_tmp?>">
@@ -386,7 +387,8 @@ foreach($this_payment as $payment)
 			{ //!!!! Edit mode  !!!!
 ?>
 		<form method="post" id="form_edit_payment_send"
-		action="<?php echo ACTIONPATH.'/update_payment.php'?>">
+		action="<?php echo ACTIONPATH.'/update_payment.php'?>"
+		id="<?php echo 'edit_tag_'.$edit_hashid?>">
 			<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>"/>
 			<input type="hidden" name="p_hashid_payment" value="<?php echo $payment['hashid']?>" />
 			<label for="form_edit_payment_bill_<?php echo $cpt_bill?>">
@@ -532,7 +534,7 @@ foreach($this_payment as $payment)
 	?>
 		<div class="col-xs-2 col-md-1">
 		<?php 
-		$link_tmp = $link_to_account_admin.'/edit/payment/'.$payment['hashid'];
+		$link_tmp = $link_to_account_admin.'/edit/payment/'.$payment['hashid'].'#edit_tag_'.$payment['hashid'];
 		?>
 			<form action="<?php echo $link_tmp ?>">
 					<button type="submit" class="btn btn-default confirmation">

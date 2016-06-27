@@ -21,7 +21,8 @@ if($admin_mode && $edit_mode == 'participant' && $participant['hashid'] == $edit
 ?>
 			<form method="post"
 			action="<?php echo ACTIONPATH.'/update_participant.php'?>"
-			class="form-horizontal" role="form">
+			class="form-horizontal" role="form"
+			id="<?php echo 'edit_tag_'.$edit_hashid?>">
 				<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
 				<input type="hidden" name="p_hashid_participant" value="<?php echo $participant['hashid']?>">
 <?php } ?>
@@ -64,7 +65,7 @@ if($admin_mode && $edit_mode == 'participant' && $participant['hashid'] == $edit
 //Edit link
 else if($admin_mode && !$edit_mode)
 {
-	$link_tmp = $link_to_account_admin.'/edit/participant/'.$participant['hashid'];
+	$link_tmp = $link_to_account_admin.'/edit/participant/'.$participant['hashid'].'#edit_tag_'.$participant['hashid'];
 ?>
 <div class="col-xs-2">
 <form action="<?php echo $link_tmp?>">
