@@ -1,17 +1,22 @@
 
 div.bill_participant{
-	display: inline-block;
+	word-break: break-all;
+	overflow:hidden;
 }
 
-div.bill_participant,
-span.bill_participant{
+div.bill_participant_name{
 	color:white;
 	border-radius: 5px;
+	padding-top: 5px;
+	padding-bottom: 5px;
 	text-align:center;
-	padding-top:5px;
-	padding-bottom:5px;
-	padding-left:5px;
-	padding-right:5px;
+	width:60%;
+	float:left;
+	}
+
+div.bill_participant_button{
+	float:left;
+	margin:0px;
 }
 
 .billpartColor0 {background-color: blue;}

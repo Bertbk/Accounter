@@ -162,83 +162,10 @@ if($admin_mode
 	}?>
 
 
-<?php // Display the current participant of this bill
-	if(!empty($this_bill_participants))
-	{
-?>
-		<h4>Participants</h4>
-<?php
-	$place_submit_button = false; // if editing, place a button after the list
-	$cpt_bill_participant = -1;
-	foreach($this_bill_participants as $bill_participant)
-	{
-		$cpt_bill_participant++;
-			if($admin_mode === true
-			&& $edit_mode === 'bill_participant' 
-			&& $edit_hashid === $bill_participant['hashid'])
-		{
-			//Edit activated on THIS bill_participant
-			$place_submit_button = true;
-	?>
-			<form method="post"
-			action="<?php echo ACTIONPATH.'/update_bill_participant.php'?>">
-			<div class="bill_participant" style="background-color:<?php echo '#'.$bill_participant['color']?>">
-			<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
-			<input type="hidden" name="p_hashid_bill_participant" value="<?php echo $bill_participant['hashid']?>">
-			<span 
-			class="<?php echo 'bill_participant'?>" style="background-color:<?php echo '#'.$bill_participant['color']?>"
-			>
-			<?php
-			echo htmlspecialchars($bill_participant['name']);?>		
-			 (<input type="number" step="0.01" min="0" max="100" name="p_percent_of_use"
-				class="input_percent"
-			 value="<?php echo (float)$bill_participant['percent_of_usage']?>" required />%)
- 			</span>
-		</div>
-	<?php }
-		else
-		{
-			?>
-			<div class="bill_participant" style="background-color:<?php echo '#'.$bill_participant['color']?>">
-			<?php
-			echo htmlspecialchars($bill_participant['name']).' ('.(float)$bill_participant['percent_of_usage'].'%)';
-			if($admin_mode === true
-			&& $edit_mode === false){
-				?>
-				<a href="<?php echo $link_to_account_admin.'/edit/bill_participant/'.$bill_participant['hashid']?>"
-				class="btn btn-default glyphicon glyphicon-pencil"></a>
-	<form method="post" 
-	class="deleteicon"
-	action="<?php echo ACTIONPATH.'/delete_bill_participant.php'?>"
-		>		
-		<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>"/>
-		<input type="hidden" name="p_hashid_bill_participant" value="<?php echo $bill_participant['hashid']?>"	/>
-		<button type="submit" class="btn btn-default confirmation" name="submit_delete_bill_participant">
-			<span class="glyphicon glyphicon-trash"></span>
-		</button>
-	</form>		
-		<?php	} ?>
-		</div>
-			<?php
-		}//else edit mode
-		?>
-			<?php
-	}//foreach participant in this bill
-	//Submit button for editing
-	if($place_submit_button)
-	{
-	?>
-		<br><button type="submit" name="submit_update_bill_participant" value="Submit">Submit</button> 
-		<button type="submit" name="submit_cancel" value="Submit">Cancel</button> 
-		</form>
-		
-	<?php
-		$place_submit_button = false;
-	} //if place button
-	?>
-<?php }//if my_bill_participants != empty ?>
 
-<?php
+	<h4>Participants</h4>
+
+	<?php
 	if($admin_mode && !$edit_mode)
 	{ //Display possibilities
 		//Assign a participant (if there are free guys)
@@ -297,6 +224,101 @@ if($admin_mode
 		} //if empty free_participants
 	}//if admin
 ?>
+	
+	
+	
+	<?php // Display the current participant of this bill
+	if(!empty($this_bill_participants))
+	{
+?>
+		<div class="row">		
+<?php
+	$place_submit_button = false; // if editing, place a button after the list
+	$cpt_bill_participant = -1;
+	foreach($this_bill_participants as $bill_participant)
+	{
+		$cpt_bill_participant++;
+			if($admin_mode === true
+			&& $edit_mode === 'bill_participant' 
+			&& $edit_hashid === $bill_participant['hashid'])
+		{
+			//Edit activated on THIS bill_participant
+			$place_submit_button = true;
+	?>
+			<form method="post"
+			action="<?php echo ACTIONPATH.'/update_bill_participant.php'?>">
+			<div class="bill_participant" style="background-color:<?php echo '#'.$bill_participant['color']?>">
+				<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
+				<input type="hidden" name="p_hashid_bill_participant" value="<?php echo $bill_participant['hashid']?>">
+				<span 
+				class="<?php echo 'bill_participant'?>" style="background-color:<?php echo '#'.$bill_participant['color']?>"
+				>
+				<?php
+				echo htmlspecialchars($bill_participant['name']);?>		
+				 (<input type="number" step="0.01" min="0" max="100" name="p_percent_of_use"
+					class="input_percent"
+				 value="<?php echo (float)$bill_participant['percent_of_usage']?>" required />%)
+				</span>
+			</div>
+	<?php }
+		else
+		{
+			?>
+			<div class="">
+				<div class="col-xs-12 col-sm-6 col-lg-4 bill_participant">
+					<div class="bill_participant_name" style="background-color:<?php echo '#'.$bill_participant['color']?>">
+						<?php
+							echo htmlspecialchars($bill_participant['name']).' ('.(float)$bill_participant['percent_of_usage'].'%)';
+						?>
+					</div>
+					<?php
+						if($admin_mode === true
+						&& $edit_mode === false){
+							$link_tmp = $link_to_account_admin.'/edit/bill_participant/'.$bill_participant['hashid'];
+							?>
+					<div class="bill_participant_button">
+								<form action="<?php echo $link_tmp?>">
+									<button type="submit" value="" class="btn btn-default">
+											<span class="glyphicon glyphicon-pencil"></span>
+									</button>
+								</form>
+					</div>
+					<div class="bill_participant_button">
+						<form method="post" 
+						class="deleteicon"
+						action="<?php echo ACTIONPATH.'/delete_bill_participant.php'?>">		
+							<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>"/>
+							<input type="hidden" name="p_hashid_bill_participant" value="<?php echo $bill_participant['hashid']?>"	/>
+							<button type="submit" class="btn btn-default confirmation" name="submit_delete_bill_participant">
+								<span class="glyphicon glyphicon-trash"></span>
+							</button>
+						</form>
+					</div>
+				<?php	} ?>
+				</div>
+			</div>
+			<?php
+		}//else edit mode
+		?>
+			<?php
+	}//foreach participant in this bill
+	//Submit button for editing
+	if($place_submit_button)
+	{
+	?>
+		<br><button type="submit" name="submit_update_bill_participant" value="Submit">Submit</button> 
+		<button type="submit" name="submit_cancel" value="Submit">Cancel</button> 
+		</form>
+		
+	<?php
+		$place_submit_button = false;
+	} //if place button
+	?>
+			</div>
+
+<?php }//if my_bill_participants != empty ?>
+		
+
 
 
 <h4>Payments</h4>
