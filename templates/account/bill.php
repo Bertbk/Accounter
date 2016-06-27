@@ -336,16 +336,16 @@ if($admin_mode
 		<div class="col-xs-4 col-md-2">
 			<strong>Payer</strong>
 		</div>
-		<div class="col-xs-4 col-md-1">
-			// <strong>Amount</strong>
+		<div class="col-xs-4 col-md-2">
+			<strong>Amount</strong>
 		</div>
 		<div class="col-xs-4 col-md-2">
 			<strong>Receiver</strong>
 		</div>
-		<div class="hidden-xs hidden-sm hidden-md col-xs-3">
+		<div class="hidden-xs hidden-sm hidden-md col-lg-2">
 			<strong>Designation</strong>
 		</div>
-		<div class="hidden-xs hidden-sm hidden-md col-xs-1">
+		<div class="hidden-xs hidden-sm hidden-md col-lg-2">
 			<strong>Date</strong>
 		</div>
 <?php if($admin_mode && !$edit_mode){?>
@@ -473,7 +473,7 @@ foreach($this_payment as $payment)
 			</div>
 		</div>
 <!--			 &nbsp;paid -->
-		<div class="col-xs-2 col-md-1">
+		<div class="col-xs-2 col-md-2">
 			 <?php echo (float)$payment['cost']?>&euro;
 		</div>
 <!--	 to -->
@@ -488,7 +488,7 @@ foreach($this_payment as $payment)
 				</div>
 				<?php }?>
 		</div>
-			<div class="hidden-xs hidden-sm hidden-md col-lg-3 <?php echo 'description_collapse_'.$cpt_bill.'_'.$cpt_paymt?>">
+			<div class="hidden-xs hidden-sm hidden-md col-lg-2 <?php echo 'description_collapse_'.$cpt_bill.'_'.$cpt_paymt?>">
 				<?php if(!empty($payment['description']))
 				{
 					?>
@@ -497,7 +497,7 @@ foreach($this_payment as $payment)
 				}
 				?>
 			</div>
-			<div class="hidden-xs hidden-sm hidden-md col-lg-1 <?php echo 'description_collapse_'.$cpt_bill.'_'.$cpt_paymt?>">
+			<div class="hidden-xs hidden-sm hidden-md col-lg-2 <?php echo 'description_collapse_'.$cpt_bill.'_'.$cpt_paymt?>">
 				<?php
 				if(!empty($payment['date_of_payment']))
 				{
@@ -576,52 +576,63 @@ foreach($this_payment as $payment)
 		<form method="post" id="<?php echo 'show_hide_bill_add_paymt_'.$cpt_bill.'_target'?>" 
 			class="hidden_at_first" action="<?php echo ACTIONPATH.'/new_payment.php'?>">
 		  <fieldset>
-			<legend>Add a payment:</legend>
-		<div id="<?php echo 'div_option_add_payment_'.$cpt_bill?>">
-			<div>
+			<legend>Add a payment</legend>
+			<div id="<?php echo 'div_option_add_payment_'.$cpt_bill?>">
 				<input type="hidden" name="p_hashid_account" value ="<?php echo $my_account['hashid_admin']?>">
 				<input type="hidden" name="p_hashid_bill" value ="<?php echo $bill['hashid']?>">
-			</div>
-			<div class="div_set_payment_<?php echo $cpt_bill?>">
-				<span>
-					<label for="<?php echo 'form_set_payment_payer_'.$cpt_bill?>_0">Payer</label>
-						<select name="p_payment[0][p_hashid_payer]" 
-						id="form_set_payment_payer_<?php echo $cpt_bill?>_0" 
-						onchange="DropDownListsBetweenParticipants(this, document.getElementById('<?php echo 'form_set_payment_recv_'.$cpt_bill.'_0'?>'))"> 
-						<option disabled selected value="null"> -- select a payer -- </option>
-			<?php
+				<div class="div_set_payment_<?php echo $cpt_bill?>">
+					<div class="row form-group">
+						<div class="col-xs-12 col-lg-3">
+							<label for="<?php echo 'form_set_payment_payer_'.$cpt_bill?>_0">Payer</label>
+							<select name="p_payment[0][p_hashid_payer]" 
+								id="form_set_payment_payer_<?php echo $cpt_bill?>_0" 
+								onchange="DropDownListsBetweenParticipants(this, document.getElementById('<?php echo 'form_set_payment_recv_'.$cpt_bill.'_0'?>'))"
+								class="form-control"> 
+									<option disabled selected value="null"> -- select a payer -- </option>
+								<?php
+									foreach($this_bill_participants as $bill_participant)
+									{ ?>
+										<option value="<?php echo $bill_participant['hashid']?>"><?php echo htmlspecialchars($bill_participant['name'])?></option>
+					<?php	} ?>
+							</select>
+						</div>
 
-						foreach($this_bill_participants as $bill_participant)
-						{
-			?>
-							<option value="<?php echo $bill_participant['hashid']?>"><?php echo htmlspecialchars($bill_participant['name'])?></option>
-			<?php
-						}
-			?>
-						</select>
-				</span><span>
-					<label for="<?php echo 'form_set_payment_cost_'.$cpt_bill?>_0">Cost</label>
-					<input type="number" step="0.01" min="0" name="p_payment[0][p_cost]" 
-						id="<?php echo 'form_set_payment_cost_'.$cpt_bill?>_0" required 
-						class="input_paymt_cost"/>
-				</span><span>
-					<label for="<?php echo 'form_set_payment_recv_'.$cpt_bill?>_0">Receiver</label>
-					<select name="p_payment[0][p_hashid_recv]" id="<?php echo 'form_set_payment_recv_'.$cpt_bill?>_0"> 
-					<option value="-1" selected="selected">Group</option>
-					</select>
-				</span><span>
-					<label for="<?php echo 'form_set_payment_desc_'.$cpt_bill?>_0">Description</label>
-					<input type="text" name="p_payment[0][p_description]" 
-						id="<?php echo 'form_set_payment_desc_'.$cpt_bill?>_0" 
-						class="input_paymt_desc" />
-				</span><span>
-				<label for="<?php echo 'form_set_payment_date_'.$cpt_bill?>_0">Date of payment</label>
-				<input type="date" name="p_payment[0][p_date_of_payment]" 
-						id="<?php echo 'form_set_payment_date_'.$cpt_bill?>_0"
-						class="date_picker input_paymt_date"/>
-				</span>
+						<div class="col-xs-12 col-lg-2">
+							<label for="<?php echo 'form_set_payment_cost_'.$cpt_bill?>_0">Amount</label>
+							<input type="number" step="0.01" min="0" name="p_payment[0][p_cost]" 
+								id="<?php echo 'form_set_payment_cost_'.$cpt_bill?>_0" required 
+								class="form-control"/>
+						</div>
+
+						<div class="col-xs-12 col-lg-4">
+							<label for="<?php echo 'form_set_payment_recv_'.$cpt_bill?>_0">Receiver</label>
+								<select name="p_payment[0][p_hashid_recv]" id="<?php echo 'form_set_payment_recv_'.$cpt_bill?>_0"
+								class="form-control"> 
+									<option value="-1" selected="selected">Group</option>
+								</select>
+						</div>
+					</div>
+					<div class="row form-group">
+						<div class="col-xs-12 col-lg-6">
+							<label for="<?php echo 'form_set_payment_desc_'.$cpt_bill?>_0"
+							class="sr-only">
+							Description</label>
+							<input type="text" name="p_payment[0][p_description]" 
+								id="<?php echo 'form_set_payment_desc_'.$cpt_bill?>_0" 
+								class="form-control" placeholder="Description">
+						</div>
+						<div class="col-xs-12 col-lg-6">
+							<label for="<?php echo 'form_set_payment_date_'.$cpt_bill?>_0"
+							class="sr-only">
+								Date of payment
+							</label>
+							<input type="date" name="p_payment[0][p_date_of_payment]" 
+								id="<?php echo 'form_set_payment_date_'.$cpt_bill?>_0"
+								class="form-control" placeholder="Date of payment">
+						</div>
+					</div>
+				</div>
 			</div>
-		</div>
 <?php
 	$name_of_people = array_column($this_bill_participants, 'name');
 	$hashid_of_people = array_column($this_bill_participants, 'hashid');
