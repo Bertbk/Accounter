@@ -132,7 +132,8 @@ if($admin_mode
 	<?php
 		}
 ?>
-<?php //PANEL BODY OF BILL?>
+<?php //PANEL BODY OF BILL
+?>
 	<div id="<?php echo 'panel-body_bill'.$cpt_bill?>" class="panel-collapse collapse in">
 	<div  class="panel-body">
 <?php 
