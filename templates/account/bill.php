@@ -136,17 +136,21 @@ if($admin_mode
 				&& $edit_hashid === $bill['hashid'])
 				{
 ?>
+		<div class="form-group">
 		<label for="form_edit_bill_description">Description: </label>
 		<textarea name="p_description" class="form-control"
 		 form="<?php echo "form_update_bill_".$cpt_bill?>"><?php if(!empty($bill['description'])){echo htmlspecialchars($bill['description']);}?></textarea>
-			<button type="submit" name="submit_update_bill" value="Submit"
-			form="<?php echo "form_update_bill_".$cpt_bill?>">
-				Submit
-			</button> 
-			<button type="submit" name="submit_cancel" value="Submit" 
-				form="<?php echo "form_update_bill_".$cpt_bill?>">
+		 </div>
+		<button type="submit" name="submit_update_bill" value="Submit"
+		form="<?php echo "form_update_bill_".$cpt_bill?>"
+		class="btn btn-primary">
+			Submit
+		</button> 
+		<button type="submit" name="submit_cancel" value="Submit" 
+				form="<?php echo "form_update_bill_".$cpt_bill?>"
+				class="btn btn-primary">
 				Cancel
-			</button> 
+		</button> 
 <?php	
 	}	else{
 	//Display only
