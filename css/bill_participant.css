@@ -26,6 +26,7 @@ div.bill_participant_name{
 	}
 	
 div.bill_participant_name,
+div.bill_participant_name_full,
 div.assign_bill_participant_name label.bill_participant_name,
 div.bill_participant_payer,
 div.bill_participant_receiver{

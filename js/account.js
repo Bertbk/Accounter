@@ -152,6 +152,16 @@ function AddPaymentLine(name_of_people, hashid_of_people, cpt_bill)
 	label_date.setAttribute("for", input_date.id);
 	label_date.innerHTML="Date of payment";
 	label_date.className="sr-only";
+	
+	//Bootstrap add-on
+	var div_input_group_amount = document.createElement("div");
+	div_input_group_amount.className="input-group";
+	var span_glyph_amount = document.createElement("span");
+	span_glyph_amount.className="input-group-addon glyphicon glyphicon-euro";
+	var div_input_group_date = document.createElement("div");
+	div_input_group_date.className="input-group";
+	var span_glyph_date = document.createElement("span");
+	span_glyph_date.className="input-group-addon glyphicon glyphicon-calendar";
 
 	//Add to div...
 	div_payer.appendChild(label_payer);
@@ -159,7 +169,9 @@ function AddPaymentLine(name_of_people, hashid_of_people, cpt_bill)
 	div_row1.appendChild(div_payer);
 	//Amount
 	div_amount.appendChild(label_cost);
-	div_amount.appendChild(input_cost);
+	div_input_group_amount.appendChild(input_cost);
+	div_input_group_amount.appendChild(span_glyph_amount);
+	div_amount.appendChild(div_input_group_amount);
 	div_row1.appendChild(div_amount);
 	//Receiver
 	div_receiver.appendChild(label_recv);
@@ -171,7 +183,9 @@ function AddPaymentLine(name_of_people, hashid_of_people, cpt_bill)
 	div_row2.appendChild(div_description);
 	//Date
 	div_date.appendChild(label_date);
-	div_date.appendChild(input_date);
+	div_input_group_date.appendChild(input_date);
+	div_input_group_date.appendChild(span_glyph_date);
+	div_date.appendChild(div_input_group_date);
 	div_row2.appendChild(div_date);
 
 	//Parent div
