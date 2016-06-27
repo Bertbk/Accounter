@@ -93,33 +93,35 @@ if($admin_mode
 ?>
 		<div class="panel-heading cursor_pointer" data-toggle="collapse" data-target="#<?php echo 'panel-body_bill'.$cpt_bill?>">
 		<div class="row">
-			<div class="col-xs-12 col-sm-10">
-			<h3>
-				<?php echo ($cpt_bill+1).'. '.htmlspecialchars($bill['title']) ?>
-			</h3>	
+			<div class="col-xs-10">
+				<h3 class="bill_title">
+					<?php echo ($cpt_bill+1).'. '.htmlspecialchars($bill['title']) ?>
+				</h3>	
+	<?php
+				if($admin_mode && $edit_mode === false)
+				{
+					$link_tmp = $link_to_account_admin.'/edit/bill/'.$bill['hashid'];
+	?>
 			</div>
-<?php
-			if($admin_mode && $edit_mode === false)
-			{
-				$link_tmp = $link_to_account_admin.'/edit/bill/'.$bill['hashid'];
-?>
-			<div class="col-xs-2 col-sm-1">
-			<form action="<?php echo $link_tmp?>">
-					<button type="submit" value="" class="btn btn-default">
-							<span class="glyphicon glyphicon-pencil"></span>
-					</button>
-			</form>
-			</div>
-			<div class="col-xs-2 col-md-1">
-			<form method="post" action="<?php echo ACTIONPATH.'/delete_bill.php'?>">
-				<input type="hidden" name="p_hashid_account" 
-					value="<?php echo $my_account['hashid_admin']?>">
-				<input type="hidden" name="p_hashid_bill" 
-					value="<?php echo $bill['hashid']?>">
-				<button type="submit" class="btn btn-default confirmation" name="submit_delete_participant">
-					<span class="glyphicon glyphicon-trash"></span>
-				</button>
-			</form>
+			<div class="col-xs-2">
+				<div class="button_bill_title">
+					<form action="<?php echo $link_tmp?>">
+							<button type="submit" value="" class="btn btn-default">
+									<span class="glyphicon glyphicon-pencil"></span>
+							</button>
+					</form>
+				</div>
+				<div class="button_bill_title">
+					<form method="post" action="<?php echo ACTIONPATH.'/delete_bill.php'?>">
+						<input type="hidden" name="p_hashid_account" 
+							value="<?php echo $my_account['hashid_admin']?>">
+						<input type="hidden" name="p_hashid_bill" 
+							value="<?php echo $bill['hashid']?>">
+						<button type="submit" class="btn btn-default confirmation" name="submit_delete_participant">
+							<span class="glyphicon glyphicon-trash"></span>
+						</button>
+					</form>
+				</div>
 			</div>
 		</div>
 		</div>

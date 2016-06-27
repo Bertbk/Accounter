@@ -1,6 +1,11 @@
-
-{
+h3.bill_title{
+	display:inline-block;
 }
+
+div.button_bill_title{
+	float:right;
+}
+
 
 div.bill div.panel-primary div.panel-heading h3{
 	display:inline-block;
