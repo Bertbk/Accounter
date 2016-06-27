@@ -374,158 +374,58 @@ $bill_participant_tmp=null;
 	</div>
 	
 	<?php
+	
+$payment_to_edit = false; // if editing, place the payment after the other
 foreach($this_payment as $payment)
 {
 	$cpt_paymt++;
+		if($admin_mode && $edit_mode === 'payment' 
+		&& $payment['hashid'] === $edit_hashid)
+		{ 
+			$payment_to_edit = $payment;
+			continue;
+		}
 ?>
-
 	<div class="row payment_table">
-
-	<?php
-			if($admin_mode && $edit_mode === 'payment' 
-			&& $payment['hashid'] === $edit_hashid)
-			{ //!!!! Edit mode  !!!!
-?>
-		<form method="post" id="form_edit_payment_send"
-		action="<?php echo ACTIONPATH.'/update_payment.php'?>"
-		id="<?php echo 'edit_tag_'.$edit_hashid?>">
-			<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>"/>
-			<input type="hidden" name="p_hashid_payment" value="<?php echo $payment['hashid']?>" />
-			<label for="form_edit_payment_bill_<?php echo $cpt_bill?>">
-				Move to another bill
-			</label>
-			<select name="p_hashid_bill" id="form_edit_payment_bill_<?php echo $cpt_bill?>"
-			onchange="CreatePossiblePayersLists(this, document.getElementById('form_edit_payment_payer_<?php echo $cpt_bill?>'),	
-			<?php echo htmlspecialchars(json_encode($list_of_possible_payers, 3))?>)"> 
-	<?php //list of bills
-			foreach($my_bills as $sub_bill)
-				{
-	?>
-					<option value="<?php echo $sub_bill['hashid']?>"
-					<?php if($sub_bill['id']==$payment['bill_id']){echo ' selected';}?>
-					><?php echo htmlspecialchars($sub_bill['title'])?></option>
-	<?php
-				}
-	?>
-			</select>
-			
-			<label for="form_edit_payment_payer_<?php echo $cpt_bill?>">
-			Payer
-			</label>
-			<select name="p_hashid_payer" 
-			onchange="DropDownListsBetweenParticipants(this, document.getElementById('form_edit_payment_recv_<?php echo $bill['id']?>'))"
-			id="form_edit_payment_payer_<?php echo $cpt_bill?>"
-			>
-	<?php
-				foreach($this_bill_participants as $bill_participant)
-				{
-	?>
-					<option value="<?php echo $bill_participant['hashid']?>"
-					<?php if($bill_participant['id']==$payment['payer_id']){echo ' selected';}?>
-					>
-					<?php echo htmlspecialchars($bill_participant['name'])?></option>
-	<?php
-				}
-	?>
-			</select>
-			
-			<label for="form_edit_payment_cost_<?php echo $cpt_bill?>">
-			Cost
-			</label>
-			<input type="number" step="0.01" min="0" name="p_cost" 
-				class="input_paymt_cost"
-				id="form_edit_payment_cost_<?php echo $cpt_bill?>"
-				value="<?php echo (float)$payment['cost']?>" required />
-			
-			<label for="form_edit_payment_recv_<?php echo $cpt_bill?>">
-				Receiver
-			</label>
-			<select name="p_hashid_recv" 
-			id="form_edit_payment_recv_<?php echo $cpt_bill?>"
-			>
-			<option value="-1" >Group</option>
-	<?php
-			foreach($this_bill_participants as $bill_participant)
-				{
-					if($bill_participant['id'] == $payment['payer_id']){continue;}
-	?>
-					<option value="<?php echo $bill_participant['hashid']?>"
-					<?php if($bill_participant['participant_id']==$payment['receiver_id']){echo ' selected';}?>
-					>
-					<?php echo htmlspecialchars($bill_participant['name'])?></option>
-	<?php
-				}
-	?>
-			</select>
-			
-			<label for='form_edit_payment_desc_<?php echo $bill['id']?>'>
-			Description
-			</label>
-			<input type="text" name="p_description" class="input_paymt_desc"
-			id="form_edit_payment_desc_<?php echo $bill['id']?>"
-			value="<?php echo htmlspecialchars($payment['description'])?>" />
-			
-			<label for="form_edit_payment_date_<?php echo $bill['id']?>">
-			Date of payment
-			</label>
-			<input type="date" name="p_date_of_payment" 
-				class="input_paymt_date date_picker"
-				id="form_edit_payment_date_<?php echo $bill['id']?>"
-				value="<?php echo $payment['date_of_payment']?>"/>
-			<div>
-			<span><button type="submit" name="submit_update_payment" value="Submit">Submit</button> </span>
-			<span><button type="submit" name="submit_cancel" value="Submit">Cancel</button> </span>
-			</div>
-		</form>
-	<?php
-			}
-			else{//Read only
-		?>
 		<div class="col-xs-5 col-md-2">
 			<div class="bill_participant_payer" style="background-color:<?php echo '#'.$payment['payer_color']?>">
 			<?php echo htmlspecialchars($payment['payer_name'])?>
 			</div>
 		</div>
-<!--			 &nbsp;paid -->
 		<div class="col-xs-2 col-md-2">
 			 <?php echo (float)$payment['cost']?>&euro;
 		</div>
-<!--	 to -->
 		<div class="col-xs-5 col-md-2">
 			<?php if(is_null($payment['receiver_name'])) {?>
-				<div class="class=bill_participant_payer group_color">
-				Group
-				</div>
+			<div class="class=bill_participant_payer group_color">
+			Group
+			</div>
 			<?php }else{ ?>
-				<div class="bill_participant_receiver" style="background-color:<?php echo '#'.$payment['receiver_color']?>">			
-					<?php echo htmlspecialchars($payment['receiver_name'])?>
-				</div>
-				<?php }?>
+			<div class="bill_participant_receiver" style="background-color:<?php echo '#'.$payment['receiver_color']?>">			
+				<?php echo htmlspecialchars($payment['receiver_name'])?>
+			</div>
+			<?php }?>
+	</div>
+		<div class="hidden-xs hidden-sm hidden-md col-lg-2 <?php echo 'description_collapse_'.$cpt_bill.'_'.$cpt_paymt?>">
+			<?php if(!empty($payment['description']))
+			{
+					echo htmlspecialchars($payment['description']);
+			}
+			?>
 		</div>
-			<div class="hidden-xs hidden-sm hidden-md col-lg-2 <?php echo 'description_collapse_'.$cpt_bill.'_'.$cpt_paymt?>">
-				<?php if(!empty($payment['description']))
-				{
-					?>
-						<?php echo htmlspecialchars($payment['description']);?>
-				<?php 
-				}
-				?>
-			</div>
-			<div class="hidden-xs hidden-sm hidden-md col-lg-2 <?php echo 'description_collapse_'.$cpt_bill.'_'.$cpt_paymt?>">
-				<?php
-				if(!empty($payment['date_of_payment']))
-				{
-					?>
-					<?php echo date("d/m/Y", strtotime($payment['date_of_payment']));?>
-					<?php
-					}?>
-			</div>
+		<div class="hidden-xs hidden-sm hidden-md col-lg-2 <?php echo 'description_collapse_'.$cpt_bill.'_'.$cpt_paymt?>">
+			<?php
+			if(!empty($payment['date_of_payment']))
+			{
+				echo date("d/m/Y", strtotime($payment['date_of_payment']));
+			}?>
+		</div>
 		<?php //Collapse button (for mobile>) ?>
 		<div class="visible-xs visible-sm col-xs-2">
-				<button type="submit" class="btn btn-default"
+			<button type="submit" class="btn btn-default"
 				data-toggle="collapse" data-target=".<?php echo 'description_collapse_'.$cpt_bill.'_'.$cpt_paymt?>">
-					<span class="glyphicon glyphicon-plus"></span>
-				</button>
+				<span class="glyphicon glyphicon-plus"></span>
+			</button>
 		</div>
 		
 	<?php //EDIT BUTTON
@@ -537,10 +437,10 @@ foreach($this_payment as $payment)
 		$link_tmp = $link_to_account_admin.'/edit/payment/'.$payment['hashid'].'#edit_tag_'.$payment['hashid'];
 		?>
 			<form action="<?php echo $link_tmp ?>">
-					<button type="submit" class="btn btn-default confirmation">
-						<span class="glyphicon glyphicon-pencil"></span>
-					</button>
-				</form>
+				<button type="submit" class="btn btn-default">
+					<span class="glyphicon glyphicon-pencil"></span>
+				</button>
+			</form>
 		</div>
 		<div class="col-xs-2 col-md-1">
 			<form method="post" 
@@ -555,25 +455,149 @@ foreach($this_payment as $payment)
 				</form>
 		</div>
 		<?php
-				}
-			}//end else admin mode 
+			}//end if admin + non edit 
 			?>
 	</div>
 <?php	}//foreach current payment 
+
+//Display payment to edit (if exists)
+if($payment_to_edit !== false)
+{
 ?>
-	<?php
-	}//if payment exist
-	else
-	{ 
-		if(!empty($my_bill_participants[$bill['id']]))
-		{?>
+	<h4 id="<?php echo 'edit_tag_'.$edit_hashid?>">Edit payment</h4>
+		<form method="post" id="form_edit_payment_send"
+			action="<?php echo ACTIONPATH.'/update_payment.php'?>">
+			<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
+			<input type="hidden" name="p_hashid_payment" value="<?php echo $payment_to_edit['hashid']?>">
+			
+			<div class="row form-group">
+				<div class="col-xs-12">
+					<label for="form_edit_payment_bill_<?php echo $cpt_bill?>">
+						Move to another bill
+					</label>
+					<select name="p_hashid_bill" id="form_edit_payment_bill_<?php echo $cpt_bill?>"
+						onchange="CreatePossiblePayersLists(this, document.getElementById('form_edit_payment_payer_<?php echo $cpt_bill?>'),	
+						<?php echo htmlspecialchars(json_encode($list_of_possible_payers, 3))?>)"
+						class="form-control"> 
+			<?php //list of bills
+					foreach($my_bills as $sub_bill)
+						{
+			?>
+							<option value="<?php echo $sub_bill['hashid']?>"
+							<?php if($sub_bill['id']==$payment_to_edit['bill_id']){echo ' selected';}?>
+							><?php echo htmlspecialchars($sub_bill['title'])?></option>
+			<?php
+						}
+			?>
+					</select>
+				</div>
+			</div>
+			<div class="row form-group">
+				<div class="col-xs-12 col-lg-4">
+					<label for="form_edit_payment_payer_<?php echo $cpt_bill?>">
+						Payer
+					</label>
+					<select name="p_hashid_payer" 
+						onchange="DropDownListsBetweenParticipants(this, document.getElementById('form_edit_payment_recv_<?php echo $bill['id']?>'))"
+						id="form_edit_payment_payer_<?php echo $cpt_bill?>" class="form-control">
+			<?php
+						foreach($this_bill_participants as $bill_participant)
+						{
+			?>
+							<option value="<?php echo $bill_participant['hashid']?>"
+							<?php if($bill_participant['id']==$payment_to_edit['payer_id']){echo ' selected';}?>>
+							<?php echo htmlspecialchars($bill_participant['name'])?></option>
+			<?php
+						}
+			?>
+					</select>
+				</div>
+				<div class="col-xs-12 col-lg-4">
+					<label for="form_edit_payment_cost_<?php echo $cpt_bill?>">
+						Amount
+					</label>
+					<div class="input-group">
+						<input type="number" step="0.01" min="0" name="p_cost" 
+							class="form-control"
+							id="form_edit_payment_cost_<?php echo $cpt_bill?>"
+							value="<?php echo (float)$payment_to_edit['cost']?>" required />
+						<span class="input-group-addon glyph glyphicon-euro"></span>
+					</div>
+				</div>
+				<div class="col-xs-12 col-lg-4">
+					<label for="form_edit_payment_recv_<?php echo $cpt_bill?>">
+						Receiver
+					</label>
+					<select name="p_hashid_recv" 
+						id="form_edit_payment_recv_<?php echo $cpt_bill?>"
+						class="form-control">
+						<option value="-1" >Group</option>
+				<?php
+						foreach($this_bill_participants as $bill_participant)
+							{
+								if($bill_participant['id'] == $payment_to_edit['payer_id']){continue;}
+				?>
+								<option value="<?php echo $bill_participant['hashid']?>"
+								<?php if($bill_participant['id']==$payment_to_edit['receiver_id']){echo ' selected';}?>>
+								<?php echo htmlspecialchars($bill_participant['name'])?></option>
+				<?php
+							}
+				?>
+					</select>
+				</div>
+			</div>
+			<div class="row form-group">
+				<div class="col-xs-12 col-lg-6">
+					<label for="form_edit_payment_desc_<?php echo $bill['id']?>">
+						Description
+					</label>
+					<input type="text" name="p_description" class="form-control"
+						id="form_edit_payment_desc_<?php echo $bill['id']?>"
+						value="<?php echo htmlspecialchars($payment_to_edit['description'])?>"
+						placeholder="Description">
+				</div>
+				<div class="col-xs-12 col-lg-6">
+					<label for="form_edit_payment_date_<?php echo $bill['id']?>">
+						Date of payment
+					</label>
+					<div class="input-group">
+						<input type="date" name="p_date_of_payment" 
+							class="form-control"
+							id="form_edit_payment_date_<?php echo $bill['id']?>"
+							value="<?php echo $payment_to_edit['date_of_payment']?>"
+							placeholder="Date of payment">
+						<span class="input-group-addon glyph glyphicon-calendar"></span>
+					</div>
+				</div>
+			</div>
+			<div>
+				<button type="submit" name="submit_update_payment" value="Submit" class="btn btn-primary">
+					Submit
+				</button>
+				<button type="submit" name="submit_cancel" value="Submit" class="btn btn-primary">
+					Cancel
+				</button>
+			</div>
+		</form>
+<?php
+$payment_to_edit = false;
+} //edit this payment
+?>
+
+
+<?php
+}//if payment exist
+else
+{ 
+	if(!empty($my_bill_participants[$bill['id']]))
+	{?>
 		<p>No payments recorded.</p>		
 <?php
-		}
-		else
-		{
-			?>
-			<p>Please provide participations to add payments.</p>			
+	}
+	else
+	{
+	?>
+	<p>Please provide participations to add payments.</p>			
 <?php
 		}
 	}//end else payment exists
