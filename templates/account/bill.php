@@ -98,20 +98,13 @@ if($admin_mode
 					<h3 class="bill_title">
 						<?php echo ($cpt_bill+1).'. '.htmlspecialchars($bill['title']) ?>
 					</h3>	
+				</div>
 		<?php
 					if($admin_mode && $edit_mode === false)
 					{
 						$link_tmp = $link_to_account_admin.'/edit/bill/'.$bill['hashid'].'#edit_tag_'.$bill['hashid'];
 		?>
-				</div>
 				<div class="col-xs-2">
-					<div class="button_bill_title">
-						<form action="<?php echo $link_tmp?>">
-								<button type="submit" value="" class="btn btn-default">
-										<span class="glyphicon glyphicon-pencil"></span>
-								</button>
-						</form>
-					</div>
 					<div class="button_bill_title">
 						<form method="post" action="<?php echo ACTIONPATH.'/delete_bill.php'?>">
 							<input type="hidden" name="p_hashid_account" 
@@ -123,10 +116,17 @@ if($admin_mode
 							</button>
 						</form>
 					</div>
+					<div class="button_bill_title">
+						<form action="<?php echo $link_tmp?>">
+								<button type="submit" value="" class="btn btn-default">
+										<span class="glyphicon glyphicon-pencil"></span>
+								</button>
+						</form>
+					</div>
+				</div>
 <?php 
 			}
 			?>
-				</div>
 			</div>
 		</div>
 	<?php
