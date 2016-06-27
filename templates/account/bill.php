@@ -175,7 +175,7 @@ if($admin_mode
 		{
 	?>
 	<p id="<?php echo 'show_hide_bill_add_part_'.$cpt_bill?>"><a href="javascript:void(0)">(+) Assign a participant to this bill</a></p>
-		<form method="post" class="hidden_at_first" 
+		<form method="post" class="hidden_at_first form-inline" 
 		enctype="multipart/form-data"
 		id=<?php echo 'show_hide_bill_add_part_'.$cpt_bill.'_target'?>
 		action="<?php echo ACTIONPATH.'/new_bill_participant.php'?>"
@@ -191,27 +191,27 @@ if($admin_mode
 			{
 				$cpt++;
 	?>
-			<div class="row form-group">
-				<div class="col-xs-7 col-lg-3">
-					<label class="checkbox-inline" for="<?php echo 'form_available_part_'.$cpt_bill.'_'.(int)$participant['id']?>">
-						<?php echo htmlspecialchars($participant['name'])?>
-					</label>
-					<input type="checkbox" name="p_participant['<?php echo $cpt?>'][p_hashid_participant]" 
-						id="<?php echo 'form_available_part_'.$cpt_bill.'_'.(int)$participant['id']?>"
-						value="<?php echo $participant['hashid']?>"
-						class="pull-left">
-				
+			<div class="row">
+				<div class="col-xs-12 col-md-6 col-lg-4 bill_participant">
+					<div class="checkbox bill_participant_assign_name">
+						<label class="bill_participant_name" style="background-color:<?php echo '#'.$participant['color']?>">
+							<input type="checkbox" name="p_participant['<?php echo $cpt?>'][p_hashid_participant]" 
+							class="form-control-inline" value="<?php echo $participant['hashid']?>">
+							<span class=""  >
+								<?php echo htmlspecialchars($participant['name'])?>
+							</span>
+						</label>
+					</div>
+					<div class="bill_participant_percentage">
+						<label for="<?php echo 'form_available_percent_'.$cpt_bill.'_'.$participant['id']?>" 
+							class="sr-only">
+							Percentage of use
+						</label>
+						<input name="p_participant['<?php echo $cpt?>'][p_percent_of_use]" type="number"
+							class="form-control-inline" step="0.01" min="0" max="100"	value="100" 
+							id="<?php echo 'form_available_percent_'.$cpt_bill.'_'.(int)$participant['id']?>">
+					</div>
 				</div>
-				<div class="col-xs-3 col-lg-2">
-					<label for="<?php echo 'form_available_percent_'.$cpt_bill.'_'.$participant['id']?>" 
-						class="sr-only">
-						Percentage of use
-					</label>
-					<input name="p_participant['<?php echo $cpt?>'][p_percent_of_use]" type="number"
-						class="" step="0.01" min="0" max="100" size="5" 
-						value="100" id="<?php echo 'form_available_percent_'.$cpt_bill.'_'.(int)$participant['id']?>">
-				</div>
-				
 			</div>
 	<?php
 			}//for each participant
@@ -266,38 +266,36 @@ if($admin_mode
 		else
 		{
 			?>
-			<div class="">
-				<div class="col-xs-12 col-sm-6 col-lg-4 bill_participant">
-					<div class="bill_participant_name" style="background-color:<?php echo '#'.$bill_participant['color']?>">
-						<?php
-							echo htmlspecialchars($bill_participant['name']).' ('.(float)$bill_participant['percent_of_usage'].'%)';
-						?>
-					</div>
+			<div class="col-xs-12 col-sm-6 col-lg-4 bill_participant">
+				<div class="bill_participant_name" style="background-color:<?php echo '#'.$bill_participant['color']?>">
 					<?php
-						if($admin_mode === true
-						&& $edit_mode === false){
-							$link_tmp = $link_to_account_admin.'/edit/bill_participant/'.$bill_participant['hashid'];
-							?>
-					<div class="bill_participant_button">
-								<form action="<?php echo $link_tmp?>">
-									<button type="submit" value="" class="btn btn-default">
-											<span class="glyphicon glyphicon-pencil"></span>
-									</button>
-								</form>
-					</div>
-					<div class="bill_participant_button">
-						<form method="post" 
-						class="deleteicon"
-						action="<?php echo ACTIONPATH.'/delete_bill_participant.php'?>">		
-							<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>"/>
-							<input type="hidden" name="p_hashid_bill_participant" value="<?php echo $bill_participant['hashid']?>"	/>
-							<button type="submit" class="btn btn-default confirmation" name="submit_delete_bill_participant">
-								<span class="glyphicon glyphicon-trash"></span>
-							</button>
-						</form>
-					</div>
-				<?php	} ?>
+						echo htmlspecialchars($bill_participant['name']).' ('.(float)$bill_participant['percent_of_usage'].'%)';
+					?>
 				</div>
+				<?php
+					if($admin_mode === true
+					&& $edit_mode === false){
+						$link_tmp = $link_to_account_admin.'/edit/bill_participant/'.$bill_participant['hashid'];
+						?>
+				<div class="bill_participant_button">
+							<form action="<?php echo $link_tmp?>">
+								<button type="submit" value="" class="btn btn-default">
+										<span class="glyphicon glyphicon-pencil"></span>
+								</button>
+							</form>
+				</div>
+				<div class="bill_participant_button">
+					<form method="post" 
+					class="deleteicon"
+					action="<?php echo ACTIONPATH.'/delete_bill_participant.php'?>">		
+						<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>"/>
+						<input type="hidden" name="p_hashid_bill_participant" value="<?php echo $bill_participant['hashid']?>"	/>
+						<button type="submit" class="btn btn-default confirmation" name="submit_delete_bill_participant">
+							<span class="glyphicon glyphicon-trash"></span>
+						</button>
+					</form>
+				</div>
+			<?php	} ?>
 			</div>
 			<?php
 		}//else edit mode
