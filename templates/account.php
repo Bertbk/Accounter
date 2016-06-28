@@ -24,41 +24,34 @@
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="<?php echo BASEURL.'/js/hide_show_add_participant.jquery'?>"></script>
 
-
-
-
 </head>
 
-
 <body>
+	<div id="content">
+		<div class="container">
+			<div class="row">
+				<header>
+					<?php include(__DIR__.'/header/header.php'); ?>
+				</header>
+			</div>
+	<?php include(__DIR__.'/messages/messages.php');?>
 
-<div id="content">
-<div class="container">
+	<?php include(__DIR__.'/account/admin_panel.php');?>
 
-<div class="row">
-<header>
-<?php include(__DIR__.'/header/header.php'); ?>
-</header>
-</div>
+			<div class="row">
+				<?php include(__DIR__.'/account/solution.php');?>
+			</div>
 
-<?php include(__DIR__.'/messages/messages.php');?>
+			<div class="row">
+				<div class="col-md-3">
+					<?php include(__DIR__.'/account/participant.php');?>
+				</div>
+				<div class="col-md-9">
+					<?php include(__DIR__.'/account/bill.php');?>
+				</div>
+			</div>
 
-<?php include(__DIR__.'/account/admin_panel.php');?>
-
-<div class="row">
-<?php include(__DIR__.'/account/solution.php');?>
-</div>
-
-<div class="row">
-	<div class="col-md-3">
-		<?php include(__DIR__.'/account/participant.php');?>
+		</div> <!-- content -->
 	</div>
-	<div class="col-md-9">
-		<?php include(__DIR__.'/account/bill.php');?>
-	</div>
-</div>
-
-</div> <!-- content -->
-</div>
 </body>
 </html>

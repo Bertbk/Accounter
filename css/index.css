@@ -1,3 +1,38 @@
+nav#main_menu img.screenshot{
+	width:100%;
+}
+
+div#content div#create_account{
+	background-color: OrangeRed;
+}
+
+div#content div#retrieve_account{
+	background-color: #6c5788;
+}
+
+
+div#content div.main-menu{
+	font-size: 1.5em;
+	text-align:center;
+	color: white;
+	padding: 10px;
+	border-radius:10px;
+	overflow:hidden;
+	margin-top:10px;
+}
+
+
+
+div#content div.main-menu p a{
+	text-decoration:none;
+}
+
+div#content div.main-menu p a:hover{
+	text-decoration:none;
+}
+
+
+/*
 nav#main_menu{
 	text-align:center;
 	width:50%;
@@ -6,9 +41,6 @@ nav#main_menu{
 	font-size: 1.5em;
 }
 
-nav#main_menu img.screenshot{
-	width:100%;
-}
 
 div#content div#create_account{
 	float:left;
@@ -22,14 +54,7 @@ div#content div#create_account a p{
 	text-align:center;
 }
 
-div#content div#create_account a p span{
-	margin:auto;
-	text-align:center;
-	background-color: OrangeRed;
-	color: white;
-	padding: 10px;
-	border-radius:10px;
-}
+
 
 div#content div#retrieve_account{
 	float:right;
@@ -55,3 +80,4 @@ div#content div#retrieve_account a p span{
 	padding: 10px;
 	border-radius:10px;
 }
+*/
