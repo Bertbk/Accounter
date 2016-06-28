@@ -310,20 +310,19 @@ if($admin_mode && !$edit_mode)
 		$bill_participant_tmp = $this_bill_participants[$participation_to_edit];
 	//Edit activated on a bill_participant of THIS bill :
 	?>
-	<h3>Edit</h3>
-		<form method="post" action="<?php echo ACTIONPATH.'/update_bill_participant.php'?>" 
-			id="<?php echo 'edit_tag_'.$edit_hashid?>">
+	<h3 id="<?php echo 'edit_tag_'.$edit_hashid?>">Edit participation</h3>
+		<form method="post" action="<?php echo ACTIONPATH.'/update_bill_participant.php'?>">
 
 			<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
 			<input type="hidden" name="p_hashid_bill_participant" value="<?php echo $bill_participant_tmp['hashid']?>">
 
-			<div class="row form-group">
-				<div class="col-xs-6 col-sm-4 col-lg-2">
-					<div class="bill_participant_name_full" style="background-color:<?php echo '#'.$bill_participant_tmp['color']?>">
+			<div class="row form-group row-no-padding">
+				<div class="col-xs-6 col-sm-5 col-md-4">
+					<div class="fullwidth padding_bill_participant display_bill_participant" style="background-color:<?php echo '#'.$bill_participant_tmp['color']?>">
 						<?php echo htmlspecialchars($bill_participant_tmp['name']);?>
 					</div>
 				</div>
-				<div class="col-xs-6 col-sm-4 col-lg-2">
+				<div class="col-xs-6 col-sm-5 col-md-4">
 					<div class="input-group">
 						<input type="number" step="0.01" min="0" max="100" name="p_percent_of_use"
 								class="form-control" value="<?php echo (float)$bill_participant_tmp['percent_of_usage']?>" required>

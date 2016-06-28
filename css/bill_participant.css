@@ -44,8 +44,8 @@ div.display_bill_participant{
 }
 
 div.padding_bill_participant{
-	padding-top: 5px;
-	padding-bottom: 5px;
+	padding-top: 6px;
+	padding-bottom: 6px;
 	text-align:center;
 	word-break: break-all;
 	overflow:hidden;
