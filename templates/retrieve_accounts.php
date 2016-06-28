@@ -9,7 +9,6 @@
 
 <link href="<?php echo BASEURL.'/bootstrap/css/bootstrap.min.css'?>" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/global.css'?>">
-<link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/index.css'?>">
 </head>
 <body>
 
