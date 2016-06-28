@@ -26,7 +26,7 @@
 
 			<form method="post">
 				<fieldset>
-					<legend class="sr-only">Create a new account:</legend>
+					<legend class="sr-only">Create a new account</legend>
 					<div class="form-group">
 						<label for="form_title_account">Title*</label>
 						<input type="text" name="p_title_of_account" id="form_title_account" required
