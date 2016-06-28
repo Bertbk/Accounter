@@ -107,7 +107,7 @@ function AddPaymentLine(name_of_people, hashid_of_people, cpt_bill)
 	input_date.name = "p_payment["+ AddPaymentLine.counter +"][p_date_of_payment]";
 	input_date.className = "form-control";
 	input_date.placeholder = "Date of payment";
-	 $(input_date).datepicker();
+	 $(input_date).datepicker({ dateFormat: 'dd/mm/yy'});
 
 	//Construct the list of payer
 	var opt_null = document.createElement("option");

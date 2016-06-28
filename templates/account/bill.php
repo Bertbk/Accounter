@@ -567,19 +567,30 @@ if($payment_to_edit !== false)
 						value="<?php echo htmlspecialchars($payment_to_edit['description'])?>"
 						placeholder="Description">
 				</div>
+				<?php
+					$tmp_date_parsed = date_parse($payment_to_edit['date_of_payment']);
+					if ($tmp_date_parsed == false 
+					|| !checkdate($tmp_date_parsed['month'], $tmp_date_parsed['day'], $tmp_date_parsed['year'])) 
+					{
+						$tmp_date_parsed = null;
+					}else{
+						$tmp_date_parsed=$tmp_date_parsed['day'].'/'.$tmp_date_parsed['month'].'/'.$tmp_date_parsed['year'];
+					}
+				?>
 				<div class="col-xs-12 col-lg-6">
 					<label for="form_edit_payment_date_<?php echo $bill['id']?>">
-						Date of payment
+						Date of payment (dd/mm/yyyy)
 					</label>
 					<div class="input-group">
 						<input type="date" name="p_date_of_payment" 
 							class="form-control"
 							id="form_edit_payment_date_<?php echo $bill['id']?>"
-							value="<?php echo $payment_to_edit['date_of_payment']?>"
-							placeholder="Date of payment">
+							value="<?php echo $tmp_date_parsed?>"
+							placeholder="Date of payment (dd/mm/yyyy)">
 						<span class="input-group-addon glyphicon glyphicon-calendar"></span>
 					</div>
 				</div>
+				<?php $tmp_date_parsed = null;?>
 			</div>
 			<div>
 				<button type="submit" name="submit_update_payment" value="Submit" class="btn btn-primary">
@@ -666,22 +677,20 @@ else
 					</div>
 					<div class="row form-group">
 						<div class="col-xs-12 col-lg-6">
-							<label for="<?php echo 'form_set_payment_desc_'.$cpt_bill?>_0"
-							class="sr-only">
+							<label for="<?php echo 'form_set_payment_desc_'.$cpt_bill?>_0">
 							Description</label>
 							<input type="text" name="p_payment[0][p_description]" 
 								id="<?php echo 'form_set_payment_desc_'.$cpt_bill?>_0" 
 								class="form-control" placeholder="Description">
 						</div>
 						<div class="col-xs-12 col-lg-6">
-							<label for="<?php echo 'form_set_payment_date_'.$cpt_bill?>_0"
-							class="sr-only">
-								Date of payment
+							<label for="<?php echo 'form_set_payment_date_'.$cpt_bill?>_0">
+								Date of payment (dd/mm/yyyy)
 							</label>
 							<div class="input-group">
 								<input type="date" name="p_payment[0][p_date_of_payment]" 
-									id="<?php echo 'form_set_payment_date_'.$cpt_bill?>_0"
-									class="form-control" placeholder="Date of payment">
+									id="<?php echo 'form_set_payment_date_'.$cpt_bill?>_0" 
+									class="form-control" placeholder="Date of payment (dd/mm/yyyy)">
 								<span class="input-group-addon glyphicon glyphicon-calendar"></span>
 							</div>
 						</div>

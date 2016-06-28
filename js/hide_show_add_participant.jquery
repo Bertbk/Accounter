@@ -15,10 +15,10 @@ $(document).ready(function() {
 
 $(document).ready(function(){
 		$("[id^=form_set_payment_date_]").each(function(){
-				$(this).datepicker();
+				$(this).datepicker({ dateFormat: 'dd/mm/yy'});
 		});
 		$("[id^=form_edit_payment_date_]").each(function(){
-				$(this).datepicker();
+				$(this).datepicker({ dateFormat: 'dd/mm/yy'});
 		});		
 });
 

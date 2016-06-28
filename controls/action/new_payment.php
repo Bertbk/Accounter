@@ -195,7 +195,7 @@ if(isset($_POST['submit_new_payment']))
 		}
 		else{
 			$date_of_payment = $payment[$key];
-			$myDateTime = DateTime::createFromFormat('m/d/Y', $date_of_payment);
+			$myDateTime = DateTime::createFromFormat('d/m/Y', $date_of_payment);
 			$date_of_payment = $myDateTime->format('Y-m-d');
 			$date_parsed = date_parse($date_of_payment);
 			if ($date_parsed == false || !checkdate($date_parsed['month'], $date_parsed['day'], $date_parsed['year'])) {
