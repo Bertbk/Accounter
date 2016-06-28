@@ -1,55 +1,9 @@
 
 /*Participant*/
 
-/*
-div.participant{
+div#participants a{
+	color:black;
 	word-break: break-all;
 	overflow:hidden;
 }
 
-div.name{
-	color:white;
-	border-radius: 5px;
-	padding-top: 5px;
-	padding-bottom: 5px;
-	text-align:center;
-}
-
-
-div.buttons{
-	text-align:right;
-	margin-bottom:2px;
-}
-
-div.participant a{
-color:black
-}
-
-div.participant a{
-color:black
-}
-
-div#div_add_participant{
-	margin-top: 10px;
-}
-
-div#div_add_participant a{
-	color:black;
-}
-
-.billpartColor0 {background-color: blue;}
-.billpartColor1 {background-color: red;}
-.billpartColor2 {background-color: green;}
-.billpartColor3 {background-color: #FF00FF;}
-.billpartColor4 {background-color: #C0C0C0;}
-.billpartColor5 {background-color: #00FFFF;}
-.billpartColor6 {background-color: #FFFF00;}
-.billpartColor7 {background-color: #;}
-.billpartColor8 {background-color: #;}
-.billpartColor9 {background-color: #;}
-
-.group_color
-{
-background-color: #111111 !important;
-}
-*/
