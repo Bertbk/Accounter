@@ -1,5 +1,6 @@
 nav#main_menu img.screenshot{
 	width:100%;
+	border: 1px solid;
 }
 
 div#content div#create_account{
