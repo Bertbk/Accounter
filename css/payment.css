@@ -10,5 +10,5 @@ div.payment_table{
 .row [class*=" description_collapse_"].collapsing
 {
     display: block!important;
-		
 }
+

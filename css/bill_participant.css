@@ -1,43 +1,49 @@
+/* Form to assign a participant */
 
-/*div.assign_bill_participant_name{
-	width:70%;
+.assign_bill_participant input[type="checkbox"] {
+    display: none;
 }
 
-div.assign_bill_participant_percentage{
-	width:30%;
+.assign_bill_participant input[type="checkbox"] + .btn-group > label span {
+    width: 20px;
 }
 
-div.assign_bill_participant_percentage input{
-	width:100%;
+.assign_bill_participant input[type="checkbox"] + .btn-group > label span:first-child {
+    display: none;
+}
+.assign_bill_participant input[type="checkbox"] + .btn-group > label span:last-child {
+    display: inline-block;   
 }
 
-div.assign_bill_participant_name label{
-	width:100%;
+.assign_bill_participant input[type="checkbox"]:checked + .btn-group > label span:first-child {
+    display: inline-block;
+}
+.assign_bill_participant input[type="checkbox"]:checked + .btn-group > label span:last-child {
+    display: none;   
 }
 
-div.bill_participant_name{
-	width:60%;
-	float:left;
-	}
-	
-div.bill_participant_name,
-div.bill_participant_name_full,
-div.assign_bill_participant_name label.bill_participant_name,
-div.bill_participant_payer,
-div.bill_participant_receiver{
-	color:white;
-	border-radius: 5px;
-	padding-top: 5px;
-	padding-bottom: 5px;
-	text-align:center;
-	}
-*/
+.assign_bill_participant  label.btn-assign_bill_participant1{
+float:left!important;
+}
+
+.assign_bill_participant  span.span-assign_bill_participant{
+display: block;
+overflow: hidden;
+}
+
+.assign_bill_participant  label.btn-assign_bill_participant2{
+width:100%!important;
+color:white;
+}
+
+/* Displaying the (bill-) participant */
+
 div.display_bill_participant{
 	color:white;
+	border-radius: 5px;
 }
 
 div.padding_bill_participant{
-	border-radius: 5px;
 	padding-top: 5px;
 	padding-bottom: 5px;
 	text-align:center;
@@ -46,13 +52,6 @@ div.padding_bill_participant{
 }
 
 	
-/*	
-div.bill_participant_button,
-div.assign_bill_participant_percentage,
-div.assign_bill_participant_name{
-	float:left;
-	margin:0px;
-}*/
 
 .billpartColor0 {background-color: blue;}
 .billpartColor1 {background-color: red;}

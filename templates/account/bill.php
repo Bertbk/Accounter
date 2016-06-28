@@ -180,53 +180,65 @@ if($admin_mode && !$edit_mode)
 	{
 	?>
 		<p id="<?php echo 'show_hide_bill_add_part_'.$cpt_bill?>"><a href="javascript:void(0)">(+) Assign a participant to this bill</a></p>
-		<form method="post" class="hidden_at_first form-inline" 
+		<form method="post" class="hidden_at_first" 
 			enctype="multipart/form-data"
 			id=<?php echo 'show_hide_bill_add_part_'.$cpt_bill.'_target'?>
 			action="<?php echo ACTIONPATH.'/new_bill_participant.php'?>">
 				<fieldset>
-				<legend>Assign a participant to this bill:</legend>
-				<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
-				<input type="hidden" name="p_hashid_bill" value="<?php echo $bill['hashid']?>">
-				<input type="hidden" name="p_bill_hashid" value="<?php echo $bill['hashid']?>">
+					<legend>Assign a participant to this bill:</legend>
+					<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
+					<input type="hidden" name="p_hashid_bill" value="<?php echo $bill['hashid']?>">
+					<input type="hidden" name="p_bill_hashid" value="<?php echo $bill['hashid']?>">
 <?php
 			$cpt = -1;
 			foreach($this_free_bill_participants as $participant)
 			{
 				$cpt++;
 		?>
-				<div class="row">
-					<div class="col-xs-12 col-md-6 col-lg-4 bill_participant form-group">
-						<div class="checkbox assign_bill_participant_name">
-							<label class="bill_participant_name" style="background-color:<?php echo '#'.$participant['color']?>">
+					<div class="row row-no-padding form-group assign_bill_participant">
+						<div class="col-xs-12 col-md-6 col-lg-4 lg-offset-2">
+							<div>
 								<input type="checkbox" name="p_participant['<?php echo $cpt?>'][p_hashid_participant]" 
-								class="form-control-inline" value="<?php echo $participant['hashid']?>">
-								<span class=""  >
-									<?php echo htmlspecialchars($participant['name'])?>
-								</span>
-							</label>
+									value="<?php echo $participant['hashid']?>"
+									id="<?php echo'assign_participant_'.$cpt_bill.'_'.$cpt?>" >
+								<div class="[ btn-group ] fullwidth" style="overflow:hidden">
+									<label for="<?php echo 'assign_participant_'.$cpt_bill.'_'.$cpt?>"
+										class="[ btn btn-default ] btn-assign_bill_participant">
+                    <span class="[ glyphicon glyphicon-ok ]"></span>
+                    <span> </span>
+									</label>
+									<span class="span-assign_bill_participant" >
+										<label for="<?php echo 'assign_participant_'.$cpt_bill.'_'.$cpt?>" 
+											class="[ btn btn-default active ] btn-assign_bill_participant2"
+											style="background-color:<?php echo '#'.$participant['color']?>">
+												<?php echo htmlspecialchars($participant['name'])?>
+										</label>
+									</span>
+								</div>
+							</div>
 						</div>
-						<div class="assign_bill_participant_percentage">
-							<label for="<?php echo 'form_available_percent_'.$cpt_bill.'_'.$participant['id']?>" 
-								class="sr-only">
-								Percentage of use
-							</label>
-							<div class="input-group">
-								<input name="p_participant['<?php echo $cpt?>'][p_percent_of_use]" type="number"
-											class="form-control-inline" step="0.01" min="0" max="100"	value="100" 
-											id="<?php echo 'form_available_percent_'.$cpt_bill.'_'.(int)$participant['id']?>">
-									<span class="input-group-addon">%</span>
+						<div class="col-xs-12 col-md-6 col-lg-4">
+							<div class="">
+								<label for="<?php echo 'form_available_percent_'.$cpt_bill.'_'.$participant['id']?>" 
+									class="sr-only">
+									Percentage of use
+								</label>
+								<div class="input-group">
+									<input name="p_participant['<?php echo $cpt?>'][p_percent_of_use]" type="number"
+												class="form-control" step="0.01" min="0" max="100"	value="100" 
+												id="<?php echo 'form_available_percent_'.$cpt_bill.'_'.(int)$participant['id']?>">
+										<span class="input-group-addon">%</span>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
 		<?php
 				}//for each participant
 		?>
-				<button type="submit" name="submit_new_bill_participant" 
-					value="Submit" class="btn btn-primary">
-					Submit
-				</button>
+					<button type="submit" name="submit_new_bill_participant" 
+						value="Submit" class="btn btn-primary">
+						Submit
+					</button>
 				</fieldset>
 			</form>
 <?php
