@@ -8,14 +8,22 @@
 		<div class="panel panel-primary">
 			<div class="panel-heading cursor_pointer" 
 				data-toggle="collapse" data-target="#panel-body_solution">
-				<h2>Solution</h2>
+				<h2>Solutions</h2>
 			</div>
 	
 			<div id="panel-body_solution" class="panel-collapse collapse in">
 				<div class="panel-body">
 					<div class="row">
 						<div id="basic_solution" class="solution col-md-6">
-							<h3>Basic solution</h3>
+							<h3>&ldquo;Standard&rdquo; solution</h3>
+								<div class="row list_solution">
+									<div class="col-xs-offset-1 col-xs-5 col-md-offset-2 col-md-4 text-center">
+										...must pay...
+									</div>
+									<div class="col-xs-5 col-md-4 text-center">
+										...to...
+									</div>
+								</div>
 <?php	foreach($my_participants as $payer)
 					{
 						$uid = $payer['id'];
@@ -34,7 +42,7 @@
 								</div>
 								<div class="col-xs-4 col-md-4 col-lg-4">
 									<div class="padding_bill_participant fullwidth">
-										<?php echo $refund?>&euro; to 
+										<?php echo $refund?>&euro;
 									</div>
 								</div>
 								<div class="col-xs-4 col-md-4 col-lg-4">
@@ -46,7 +54,15 @@
 					} ?>
 						</div>
 						<div id="opt_solution" class="solution col-md-6">
-							<h3>&ldquo;Optimal&rdquo; solution</h3>
+							<h3>&ldquo;Optimized&rdquo; solution</h3>
+								<div class="row list_solution">
+									<div class="col-xs-offset-1 col-xs-5 col-md-offset-2 col-md-4 text-center">
+										...must pay...
+									</div>
+									<div class="col-xs-5 col-md-4 text-center">
+										...to...
+									</div>
+								</div>
 <?php
 	foreach($my_participants as $payer)
 					{
@@ -66,7 +82,7 @@
 								</div>
 								<div class="col-xs-4 col-md-4 col-lg-4">
 									<div class="padding_bill_participant fullwidth">
-										<?php echo $refund?>&euro; to 
+										<?php echo $refund?>&euro;
 									</div>
 								</div>
 								<div class="col-xs-4 col-md-4 col-lg-4">
