@@ -408,8 +408,8 @@ foreach($this_payment as $payment)
 		</div>
 		<div class="col-xs-5 col-md-2">
 			<?php if(is_null($payment['receiver_name'])) {?>
-			<div class="class=bill_participant_payer group_color">
-			Group
+			<div class="padding_bill_participant display_bill_participant group_color">
+				Group
 			</div>
 			<?php }else{ ?>
 			<div class="fullwidth display_bill_participant padding_bill_participant" style="background-color:<?php echo '#'.$payment['receiver_color']?>">			
