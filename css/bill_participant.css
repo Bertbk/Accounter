@@ -36,6 +36,19 @@ div.bill_participant_receiver{
 	padding-bottom: 5px;
 	text-align:center;
 	}
+
+div.display_bill_participant{
+	color:white;
+}
+
+div.padding_bill_participant{
+	border-radius: 5px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	text-align:center;
+}
+
+	
 	
 div.bill_participant_button,
 div.assign_bill_participant_percentage,
