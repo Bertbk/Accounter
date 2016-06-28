@@ -1,10 +1,5 @@
 
-div.bill_participant{
-	word-break: break-all;
-	overflow:hidden;
-}
-
-div.assign_bill_participant_name{
+/*div.assign_bill_participant_name{
 	width:70%;
 }
 
@@ -36,7 +31,7 @@ div.bill_participant_receiver{
 	padding-bottom: 5px;
 	text-align:center;
 	}
-
+*/
 div.display_bill_participant{
 	color:white;
 }
@@ -46,16 +41,18 @@ div.padding_bill_participant{
 	padding-top: 5px;
 	padding-bottom: 5px;
 	text-align:center;
+	word-break: break-all;
+	overflow:hidden;
 }
 
 	
-	
+/*	
 div.bill_participant_button,
 div.assign_bill_participant_percentage,
 div.assign_bill_participant_name{
 	float:left;
 	margin:0px;
-}
+}*/
 
 .billpartColor0 {background-color: blue;}
 .billpartColor1 {background-color: red;}
