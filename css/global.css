@@ -35,6 +35,21 @@ body div.container{
 	width:100%;
 }
 
+.width60{
+	width:60%;
+}
 .inlineblock{
 	display:inline-block;
+}
+
+.floatleft{
+	float:left;
+}
+
+.zeromargin{
+	margin:0px;
+}
+
+.text-center{
+	text-align:center;
 }

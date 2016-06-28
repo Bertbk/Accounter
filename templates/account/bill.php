@@ -81,11 +81,11 @@ if($admin_mode
 					id="<?php echo 'edit_tag_'.$edit_hashid?>">
 					<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>"/>
 					<input type="hidden" name="p_hashid_bill" value="<?php echo $bill['hashid']?>" />
-					<h3>
+					<h2>
 						<label for="form_edit_bill_name" class="sr-only">Title: </label>
 						<input type="text" name="p_title_of_bill" id="form_edit_bill_name"
 						class="form-control"	value="<?php echo htmlspecialchars($bill['title'])?>" required />
-					</h3>
+					</h2>
 				</form>
 				</div>
 			</div>
@@ -95,9 +95,9 @@ if($admin_mode
 		<div class="panel-heading cursor_pointer" data-toggle="collapse" data-target="#<?php echo 'panel-body_bill'.$cpt_bill?>">
 			<div class="row">
 				<div class="col-xs-10">
-					<h3 class="bill_title">
+					<h2 class="bill_title">
 						<?php echo ($cpt_bill+1).'. '.htmlspecialchars($bill['title']) ?>
-					</h3>	
+					</h2>	
 				</div>
 		<?php
 					if($admin_mode && $edit_mode === false)
@@ -164,12 +164,13 @@ if($admin_mode
 	if(!empty($bill['description']) && !is_null($bill['description']))
 	{
 ?>
+	<h3>Description</h3>
 	<p><?php echo htmlspecialchars($bill['description'])?></p>
 <?php }
 	}?>
 
 	<?php // PARTICIPANTS ?>
-	<h4>Participants</h4>
+	<h3>Participants</h3>
 
 	<?php
 if($admin_mode && !$edit_mode)
@@ -256,7 +257,7 @@ if($admin_mode && !$edit_mode)
 		}
 		?>
 			<div class="col-xs-12 col-sm-6 col-lg-4 bill_participant">
-				<div class="bill_participant_name" style="background-color:<?php echo '#'.$bill_participant['color']?>">
+				<div class="floatleft width60 padding_bill_participant display_bill_participant" style="background-color:<?php echo '#'.$bill_participant['color']?>">
 					<?php
 						echo htmlspecialchars($bill_participant['name']).' ('.(float)$bill_participant['percent_of_usage'].'%)';
 					?>
@@ -266,7 +267,7 @@ if($admin_mode && !$edit_mode)
 					&& $edit_mode === false){
 						$link_tmp = $link_to_account_admin.'/edit/bill_participant/'.$bill_participant['hashid'].'#edit_tag_'.$bill_participant['hashid'];
 						?>
-				<div class="bill_participant_button">
+				<div class="zeromargin floatleft">
 							<form action="<?php echo $link_tmp?>">
 								<button type="submit" value="" class="btn btn-default">
 										<span class="glyphicon glyphicon-pencil"></span>
@@ -297,7 +298,7 @@ if($admin_mode && !$edit_mode)
 		$bill_participant_tmp = $this_bill_participants[$participation_to_edit];
 	//Edit activated on a bill_participant of THIS bill :
 	?>
-	<h4>Edit</h4>
+	<h3>Edit</h3>
 		<form method="post" action="<?php echo ACTIONPATH.'/update_bill_participant.php'?>" 
 			id="<?php echo 'edit_tag_'.$edit_hashid?>">
 
@@ -335,7 +336,7 @@ $bill_participant_tmp=null;
 
 <?php }//if my_bill_participants != empty ?>
 
-<h4>Payments</h4>
+<h3>Payments</h3>
 
 <?php // List of the payments
 	if(isset($my_payments_per_bill[$bill['id']]) && is_array($my_payments_per_bill[$bill['id']])
@@ -345,8 +346,7 @@ $bill_participant_tmp=null;
 		$cpt_paymt = -1;
 	?>
 	
-	<div class="payment_table">
-	<div class="row">
+	<div class="row text-center">
 		<div class="col-xs-4 col-md-2">
 			<strong>Payer</strong>
 		</div>
@@ -372,7 +372,6 @@ $bill_participant_tmp=null;
 		</div>
 <?php }?>
 	</div>
-	</div>
 	
 	<?php
 	
@@ -389,7 +388,7 @@ foreach($this_payment as $payment)
 ?>
 	<div class="row payment_table">
 		<div class="col-xs-5 col-md-2">
-			<div class="bill_participant_payer" style="background-color:<?php echo '#'.$payment['payer_color']?>">
+			<div class="fullwidth display_bill_participant padding_bill_participant" style="background-color:<?php echo '#'.$payment['payer_color']?>">
 			<?php echo htmlspecialchars($payment['payer_name'])?>
 			</div>
 		</div>
@@ -402,7 +401,7 @@ foreach($this_payment as $payment)
 			Group
 			</div>
 			<?php }else{ ?>
-			<div class="bill_participant_receiver" style="background-color:<?php echo '#'.$payment['receiver_color']?>">			
+			<div class="fullwidth display_bill_participant padding_bill_participant" style="background-color:<?php echo '#'.$payment['receiver_color']?>">			
 				<?php echo htmlspecialchars($payment['receiver_name'])?>
 			</div>
 			<?php }?>
@@ -465,7 +464,7 @@ foreach($this_payment as $payment)
 if($payment_to_edit !== false)
 {
 ?>
-	<h4 id="<?php echo 'edit_tag_'.$edit_hashid?>">Edit payment</h4>
+	<h3 id="<?php echo 'edit_tag_'.$edit_hashid?>">Edit payment</h3>
 		<form method="post" id="form_edit_payment_send"
 			action="<?php echo ACTIONPATH.'/update_payment.php'?>">
 			<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
