@@ -25,14 +25,18 @@
 				//Check if the name takes all the width or not (edit/delete button ?)
 				if(!($admin_mode && !$edit_mode))
 				{	?>
-				<div class="col-xs-12 name" style="background-color:<?php echo '#'.$participant['color']?>">
-		<?php	echo htmlspecialchars($participant['name']).' ('.(int)$participant['nb_of_people'].')';?>
+				<div class="col-xs-12">
+					<div class="fullwidth padding_bill_participant display_bill_participant" style="background-color:<?php echo '#'.$participant['color']?>">
+			<?php	echo htmlspecialchars($participant['name']).' ('.(int)$participant['nb_of_people'].')';?>
+					</div>
 				</div>
 <?php		}else{	
 				$link_tmp = $link_to_account_admin.'/edit/participant/'.$participant['hashid'].'#edit_tag_'.$participant['hashid'];
 ?>
-				<div class="col-xs-8 name" style="background-color:<?php echo '#'.$participant['color']?>">	
-<?php 		echo htmlspecialchars($participant['name']).' ('.(int)$participant['nb_of_people'].')';	?>
+				<div class="col-xs-7">
+					<div class="fullwidth padding_bill_participant display_bill_participant" style="background-color:<?php echo '#'.$participant['color']?>">	
+	<?php 		echo htmlspecialchars($participant['name']).' ('.(int)$participant['nb_of_people'].')';	?>
+					</div>
 				</div>
 				<div class="col-xs-2">
 					<form action="<?php echo $link_tmp?>">
