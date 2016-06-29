@@ -4,7 +4,7 @@ header h2#main_subtitle{
 }
 
 header hr,
-body hr{
+body hr.separator-header{
 	width:90%;
 	size:10px;
   clear: both;
@@ -59,4 +59,8 @@ body div.container{
     padding-left: 0 !important;
     padding-right: 0 !important;
   }
+}
+
+.red{
+	color:red;
 }

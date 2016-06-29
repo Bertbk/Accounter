@@ -26,8 +26,9 @@
 			<form method="post" action="<?php echo BASEURL.'/controls/search_accounts.php'?>">
 				<fieldset>
 					<legend class="sr-only">Retrieve your accounts</legend>
+					<p><em>Fields with asterisk <span class="glyphicon glyphicon-asterisk red"></span> are required</em></p>
 					<div class="form-group">
-						<label for="form_retrieve_accounts_email">Email address*</label>
+						<label for="form_retrieve_accounts_email">Email address<span class="glyphicon glyphicon-asterisk red"></span></label>
 						<input type="email" name="p_email" id="form_email" required class="form-control"
 							placeholder="Email address">
 					</div>

@@ -12,3 +12,10 @@ div.payment_table{
     display: block!important;
 }
 
+hr.separator_payments{
+	width:50%;
+	margin:auto;
+	margin-bottom:10px;
+	margin-top:5px;
+	border-top: dotted 1px;
+}

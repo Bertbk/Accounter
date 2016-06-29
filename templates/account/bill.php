@@ -22,16 +22,17 @@ if($admin_mode && $edit_mode == false)
 	>
 	  <fieldset>
 			<legend>Add a bill</legend>
+			<p><em>Fields with asterisk <span class="glyphicon glyphicon-asterisk red"></span> are required</em></p>
 			<input type="hidden" name="p_hashid_account" 
 			value="<?php echo $my_account['hashid_admin']?>" />
 			<div class="form-group">
-				<label for="form_set_bill_name" class="sr-only">Title: </label>
+				<label for="form_set_bill_name">Title<span class="glyphicon glyphicon-asterisk red"></span></label>
 				<input type="text" name="p_title_of_bill" 
 				id="form_set_bill_name" class="form-control" required 
 				placeholder="Title"/>
 			</div>
 			<div class="form-group">
-				<label for="form_set_bill_description" class="sr-only">Description: </label>
+				<label for="form_set_bill_description">Description</label>
 				 <textarea name="p_description" id="form_set_bill_description" class="form-control" 
 				 placeholder="Description"></textarea>
 			</div>
@@ -638,12 +639,13 @@ else
 		  <fieldset>
 			<legend>Add a payment</legend>
 			<div id="<?php echo 'div_option_add_payment_'.$cpt_bill?>">
+				<p><em>Fields with asterisk <span class="glyphicon glyphicon-asterisk red"></span> are required</em></p>
 				<input type="hidden" name="p_hashid_account" value ="<?php echo $my_account['hashid_admin']?>">
 				<input type="hidden" name="p_hashid_bill" value ="<?php echo $bill['hashid']?>">
 				<div id="div_set_payment_<?php echo $cpt_bill?>">
 					<div class="row form-group">
 						<div class="col-xs-12 col-lg-4">
-							<label for="<?php echo 'form_set_payment_payer_'.$cpt_bill?>_0">Payer</label>
+							<label for="<?php echo 'form_set_payment_payer_'.$cpt_bill?>_0">Payer<span class="glyphicon glyphicon-asterisk red"></span></label>
 							<select name="p_payment[0][p_hashid_payer]" 
 								id="form_set_payment_payer_<?php echo $cpt_bill?>_0" 
 								onchange="DropDownListsBetweenParticipants(this, document.getElementById('<?php echo 'form_set_payment_recv_'.$cpt_bill.'_0'?>'))"
@@ -658,7 +660,7 @@ else
 						</div>
 
 						<div class="col-xs-12 col-lg-4">
-							<label for="<?php echo 'form_set_payment_cost_'.$cpt_bill?>_0">Amount</label>
+							<label for="<?php echo 'form_set_payment_cost_'.$cpt_bill?>_0">Amount<span class="glyphicon glyphicon-asterisk red"></span></label>
 							<div class="input-group">
 								<input type="number" step="0.01" min="0" name="p_payment[0][p_cost]" 
 									id="<?php echo 'form_set_payment_cost_'.$cpt_bill?>_0" required 
@@ -668,7 +670,7 @@ else
 						</div>
 
 						<div class="col-xs-12 col-lg-4">
-							<label for="<?php echo 'form_set_payment_recv_'.$cpt_bill?>_0">Receiver</label>
+							<label for="<?php echo 'form_set_payment_recv_'.$cpt_bill?>_0">Receiver<span class="glyphicon glyphicon-asterisk red"></span></label>
 								<select name="p_payment[0][p_hashid_recv]" id="<?php echo 'form_set_payment_recv_'.$cpt_bill?>_0"
 								class="form-control"> 
 									<option value="-1" selected="selected">Group</option>

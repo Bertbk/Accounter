@@ -1,66 +1,22 @@
 .hidden_at_first{
 	display:none;
 }
-/*
-input.input_bill_name{
-	width:15em;
-}
-input.input_bill_desc{
-	width:15em;
-}
-input.input_name{
-	width:10em;
-}
-input.input_number{
-	width:3em;
-}
-input.input_email{
-	width:10em;
-}
 
-input.input_paymt_cost{
-	width:5em;
-}
-input.input_paymt_desc{
-	width:10em;
-}
-
-input.input_percent{
-	width:5em;
-}
-*/
 
 div.cursor_pointer{
 	cursor:pointer;
 }
 
-/*
 
-div#explain_admin,
-div#edit_mode_admin{
-	width:80%;
-	margin:auto;
-	background-color: rgba(250, 50, 0, 0.25);
-	border-radius: 10px;
-	color: black;
-	overflow:hidden;
-	margin-bottom:20px;
-	margin-top:20px;
-	box-shadow: -4px 6px 9px rgba(50, 50, 50, 0.5);
+h2.account_title{
+	display:inline-block;
 }
-div#explain_admin h2,
-div#edit_mode_admin h2{
-  display: inline-block;
-	margin: 0;
-	width: 100%;
-	background-color: rgba(255, 0, 0, 0.5);
-	border-top-left-radius: 10px;
-	border-top-right-radius: 10px;
-	padding: 5px;
-}
-div#explain_admin div,
-div#edit_mode_admin div{
-	padding:10px;
-}
-*/
 
+div.button_account_title{
+	float:right;
+}
+
+div#description_panel a{
+	color:black;
+	
+}

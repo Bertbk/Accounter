@@ -23,6 +23,7 @@ function create_tables()
     hashid VARCHAR(16) NOT NULL UNIQUE,
     hashid_admin VARCHAR(32) NOT NULL UNIQUE,
     title VARCHAR(255) NOT NULL,
+    author VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL,
     description TEXT,
     PRIMARY KEY (id)

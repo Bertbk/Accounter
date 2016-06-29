@@ -32,22 +32,14 @@
 							<p>Your account <?php htmlspecialchars($my_account['title'])?> has been created!</p>
 							<div class="row">
 								<div class="col-xs-12 col-md-6 form-group">
-									<div class="row">
-										<div class="col-xs-12">
-											<p class="form-group"><a href="<?php echo $link_contrib?>">Public link to the account <span class="btn-link glyphicon glyphicon-link"></span></p> 
-											<input class="form-control" readonly="readonly" value="<?php echo $link_contrib?>" onclick="select();"
-												type="text">
-										</div>
-									</div>
+									<p class="form-group"><a href="<?php echo $link_contrib?>">Public link to the account <span class="btn-link glyphicon glyphicon-link"></span></p> 
+									<input class="form-control" readonly="readonly" value="<?php echo $link_contrib?>" onclick="select();"
+										type="text">
 								</div>
 								<div class="col-xs-12 col-md-6 form-group">
-									<div class="row">
-										<div class="col-xs-12">
-											<p class="form-group"><a href="<?php echo $link_admin?>">Administrator link to the account <span class="btn-link glyphicon glyphicon-link"></span></p> 
-											<input class="form-control" readonly="readonly" value="<?php echo $link_admin?>" onclick="select();"
-												type="text">							
-										</div>
-									</div>
+									<p class="form-group"><a href="<?php echo $link_admin?>">Administrator link to the account <span class="btn-link glyphicon glyphicon-link"></span></p> 
+									<input class="form-control" readonly="readonly" value="<?php echo $link_admin?>" onclick="select();"
+										type="text">							
 								</div>
 							</div>
 						</div>

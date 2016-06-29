@@ -137,13 +137,13 @@ function AddPaymentLine(name_of_people, hashid_of_people, cpt_bill)
 	//Set label
 	var label_payer = document.createElement("Label");
 	label_payer.setAttribute("for", select_payer.id);
-	label_payer.innerHTML = "Payer";
+	label_payer.innerHTML = "Payer<span class='glyphicon glyphicon-asterisk red'></span>";
 	var label_cost = document.createElement("Label");
 	label_cost.setAttribute("for", input_cost.id);
-	label_cost.innerHTML = "Amount";
+	label_cost.innerHTML = "Amount<span class='glyphicon glyphicon-asterisk red'></span>";
 	var label_recv = document.createElement("Label");
 	label_recv.setAttribute("for", select_receiver.id);
-	label_recv.innerHTML="Receiver";
+	label_recv.innerHTML="Receiver<span class='glyphicon glyphicon-asterisk red'></span>";
 	var label_desc = document.createElement("Label");
 	label_desc.setAttribute("for", input_description.id);
 	label_desc.innerHTML="Description";
@@ -188,8 +188,12 @@ function AddPaymentLine(name_of_people, hashid_of_people, cpt_bill)
 	div_date.appendChild(div_input_group_date);
 	div_row2.appendChild(div_date);
 
+	var hr = document.createElement("hr");
+	hr.className="separator_payments";
+	
 	//Parent div
 	var parent_div = document.getElementById('div_set_payment_' + cpt_bill);
+	parent_div.appendChild(hr);
 	parent_div.appendChild(div_row1);
 	parent_div.appendChild(div_row2);
 	
@@ -233,7 +237,7 @@ function AddParticipantLine()
 	label_nb_of_people.setAttribute("class", "sr-only");
 	
 	var div_row = document.createElement("div");
-	div_row.setAttribute("class", "row");
+	div_row.setAttribute("class", "row form-group");
 	div_row.appendChild(label_name);
 	div_row.appendChild(input_name);
 	div_row.appendChild(label_nb_of_people);

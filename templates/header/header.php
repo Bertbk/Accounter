@@ -13,5 +13,5 @@
 <?php	
 }
 ?>
-<hr>
+<hr class="separator-header">
 </div>

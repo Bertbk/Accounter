@@ -112,7 +112,8 @@ if($admin_mode && !empty($_GET['edit']) && !empty($_GET['edit_hashid']))
 	
 	if(validate_hashid($edit_hashid) == false
 	||
-	($edit_mode !== "participant"
+	($edit_mode !== "account"
+	&& $edit_mode !== "participant"
 	&& $edit_mode !== "bill"
 	&& $edit_mode !== "bill_participant"
 	&& $edit_mode !== "payment"
@@ -160,7 +161,12 @@ foreach($my_participants  as $participant)
 	$n_people += (int)$participant['nb_of_people'] ;
 }
 
-
+if(empty($my_account['description'])
+	||is_null($my_account['description']))
+	{ $description_account = "";
+	}else{
+		$description_account = $my_account['description'];
+	}
 
 
 include_once(ABSPATH.'/templates/account.php');

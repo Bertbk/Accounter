@@ -40,8 +40,10 @@ function send_email_new_account($account_hashid_arg)
 		}
 		
 	$html_array['title'] = htmlspecialchars($account['title']);			
+	$html_array['author'] = htmlspecialchars($account['author']);			
+
 	$txt_array['title'] = $account['title'];
-	
+	$txt_array['author'] = $account['author'];
 	//send email
 	//filter according to some servers
 	if (!preg_match("#^[a-z0-9._-]+@(hotmail|live|msn).[a-z]{2,4}$#", $dest_email))
@@ -57,11 +59,13 @@ function send_email_new_account($account_hashid_arg)
 	$part_link  = BASEURL.'/account/'.$account['hashid'];
 	$admin_link = BASEURL.'/account/'.$account['hashid_admin'].'/admin';
 	//txt
-	$message_txt = "Your Account ".$txt_array['title']." has been created:".$br;
+	$message_txt = "Dear ".$txt_array['author'].",".$br;
+	$message_txt = $message_txt."Your Account ".$txt_array['title']." has been created:".$br;
 	$message_txt = $message_txt."  Participant link         : ".$part_link.$br;
 	$message_txt = $message_txt."  Admin link (DO NOT SHARE): ".$admin_link.$br;
 	//html
 	$message_html = '<html><head></head><body>';
+	$message_html = $message_html.'<p>Dear '.$html_array['author'].',</p>';
 	$message_html = $message_html.'<p>Your Account '.$html_array['title'].' has been created:</p>';
 	$message_html = $message_html.'<ul>';
 	$message_html = $message_html."<li>Participant link         : <a href='".$part_link."'>".$part_link."</a></li>";

@@ -13,7 +13,8 @@ data-toggle="collapse" data-target="#admin_panel_body">
 </div>
 	<div id="admin_panel_body" class="panel-collapse collapse">
 	<div class="panel-body">
-<p>Welcome to the admin page of the account. You should first add participants to the account and create one (or more) bill(s). The participants can then be added to the bill, with a percentage of participation. For example, if the bill represents a car rental for 4 days and a participant only use it for 3 days, his/her percent should be set to 75% ( = 3/4). A zero percent participation is used when a person paid for something but didn't used it at all.</p>
+<p>Welcome to the admin page of the account!</p>
+<p>You should first add participants to the account and create one (or more) bill(s). Participants can then be added to the bills with a percentage of financial participation. For example, if the bill represents a car rental for 4 days and a participant only use it for 3 days, his/her percent should be set to 75% ( = 3/4). A zero percent participation is used when a person paid for something but didn't used it at all.</p>
 <p>Each entry can be edited using the <span class="glyphicon glyphicon-pencil"></span> icon or deleted using the <span class="glyphicon glyphicon-trash"></span> icon.
 </p>
 </div>

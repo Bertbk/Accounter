@@ -105,17 +105,18 @@ if($admin_mode && $edit_mode === false)
 				class="hidden_at_first">
 				<fieldset>
 					<legend>Add a participant:</legend>
+					<p><em>Fields with asterisk <span class="glyphicon glyphicon-asterisk red"></span> are required</em></p>
 					<input type="hidden" name="p_hashid_account" 
 						value="<?php echo $my_account['hashid_admin']?>">
 					<div class="row">
 						<p class="col-xs-10 xs-offset-1">
-							Name / Number of people
+							Name<span class="glyphicon glyphicon-asterisk red"></span> / Number of people<span class="glyphicon glyphicon-asterisk red"></span>
 						</p>
 					</div>
 					<?php //the "inner_participant_form" is used to add row with JS
 					?>
 					<div id="inner_participant_form">
-						<div class="row">
+						<div class="row form-group">
 							<label for="form_set_participant_name_0" class="sr-only">
 								Name
 							</label>

@@ -23,26 +23,32 @@
 
 			<h1>Create a new account</h1>
 
-			<form method="post">
+			<form method="post" action="<?php echo ACTIONPATH.'/new_account.php'?>">
 				<fieldset>
 					<legend class="sr-only">Create a new account</legend>
+					<p><em>Fields with asterisk <span class="glyphicon glyphicon-asterisk red"></span> are required</em></p>
 					<div class="form-group">
-						<label for="form_title_account">Title*</label>
+						<label for="form_title_account">Title<span class="glyphicon glyphicon-asterisk red"></span></label>
 						<input type="text" name="p_title_of_account" id="form_title_account" required
 							class="form-control" placeholder="Title">
 					</div>
 					<div class="form-group">
-						<label for="form_email">Email address*</label>
+						<label for="form_author">Author<span class="glyphicon glyphicon-asterisk red"></span></label>
+						<input type="text" name="p_author" id="form_author" required class="form-control"
+							placeholder="Author">
+					</div>
+					<div class="form-group">
+						<label for="form_email">Email address<span class="glyphicon glyphicon-asterisk red"></span></label>
 						<input type="email" name="p_contact_email" id="form_email" required class="form-control"
 							placeholder="Email address">
 					</div>
 					<div class="form-group">
-						<label for="form_description">Description: </label>
+						<label for="form_description">Description</label>
 						 <textarea name="p_description" id="form_description" class="form-control" 
 						 placeholder="Description"></textarea>
 					</div>
 
-					<button type="submit" name="submit" value="Submit"
+					<button type="submit" name="submit_new_account" value="Submit"
 						class="btn btn-primary">
 						Submit
 					</button> 
