@@ -64,8 +64,7 @@
 								&& $edit_mode === "account" 
 								&& $edit_hashid === $my_account['hashid']){?>
 							<label class="control-label" for="form_edit_account_author">Author</label> 
-							<input class="form-control" id="form_edit_account_author" value="<?php echo htmlspecialchars($my_account['author'])?>"
-									name="p_author" required form="form_edit_account">
+							<input class="form-control" id="form_edit_account_author" value="<?php echo htmlspecialchars($my_account['author'])?>" placeholder="Author" name="p_author" required form="form_edit_account">
 						<?php }else{?>
 							<label class="control-label">Author</label> 
 							<p class="form-control-static"><?php echo htmlspecialchars($my_account['author'])?></p>
@@ -75,8 +74,8 @@
 					<?php if($edit_mode === "account" 
 									&& $edit_hashid === $my_account['hashid']){?>
 							<label class="control-label" for="form_edit_account_email">Email</label> 
-							<input class="form-control" id="form_edit_account_email" value="<?php echo htmlspecialchars($my_account['email'])?>"
-										name="p_contact_email" required form="form_edit_account"> 
+							<input class="form-control" id="form_edit_account_email" value="<?php echo htmlspecialchars($my_account['email'])?>" name="p_contact_email" required form="form_edit_account"
+							placeholder="Email"> 
 						<?php }else{?>
 						<p class="form-control-static"><?php echo htmlspecialchars($my_account['email'])?></p>
 						<?php }?>
@@ -89,7 +88,7 @@
 							&& $edit_hashid === $my_account['hashid'])
 							{?>
 							<label class="control-label" for="form_edit_account_description">Description</label> 
-							<input class="form-control" id="form_edit_account_description" value="<?php echo htmlspecialchars($description_account)?>"
+							<input class="form-control" id="form_edit_account_description" value="<?php echo htmlspecialchars($description_account)?>" placeholder="Description"
 							form="form_edit_account" name="p_description">
 						<?php }else {?>
 						<label class="control-label">Description</label> 

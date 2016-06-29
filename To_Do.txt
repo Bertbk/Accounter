@@ -9,21 +9,13 @@ MAJOR
 1. Multiple receivers for a payment
 2. Store the solution with a check value ? Or a "refund" possible ? Or a "Bill" named "Refund"... ?
 3. Comments
-4. Tableau des paiments ?
-5. Description des Bills sous forme de TextArea (et non dans la création)
-6. Pas d'email pour les participants finalement
+4. Cancel button not working if field requiered are not filled
 
 BUGS
 =====
-1. Participant email (What bug ?!)
 
 MINOR
 =====
-
-DESIGN
-======
-
-1. Label sous l'input
 
 
 ----
