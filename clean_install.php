@@ -12,3 +12,4 @@ if(is_dir(__DIR__.'/install'))
 	rmdir (__DIR__.'/install');
 }
 header('location: index.php');
+exit;

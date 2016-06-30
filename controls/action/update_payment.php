@@ -83,6 +83,7 @@ else{
 if(isset($_POST['submit_cancel']))
 {
 	header('location: '.$redirect_link);
+	exit;
 }
 else if(isset($_POST['submit_update_payment']))
 {
@@ -295,3 +296,4 @@ if(!(empty($successArray)))
 }
 
 header('location: '.$redirect_link);
+exit;

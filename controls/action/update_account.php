@@ -47,6 +47,7 @@ else{
 if(isset($_POST['submit_cancel']))
 {
 	header('location:'.$redirect_link);
+	exit;
 }
 if(isset($_POST['submit_update_account']))
 {
@@ -123,3 +124,4 @@ if(!(empty($successArray)))
 }
 
 header('location: '.$redirect_link);
+exit;

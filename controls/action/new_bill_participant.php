@@ -217,3 +217,4 @@ else{
 	$redirect_link = BASEURL.'/account/'.$account['hashid_admin'].'/admin';
 }
 header('location: '.$redirect_link);
+exit;

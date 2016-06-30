@@ -53,6 +53,7 @@ empty($_GET['hash']) ? $hashid_url = "" : $hashid_url = $_GET['hash'];
 if($hashid_url== "")
 {
 	header ('location: '.BASEURL);
+	exit;
 }
 
 //If no or bad hashid then go back home
@@ -71,6 +72,7 @@ else if(validate_hashid_admin($hashid_url))
 	{
 		//Strange : good hashid but not admin mode enable.
 		header ('location: '.BASEURL);
+		exit;
 	}
 	//Admin mode enable
 	if(!empty($my_account) && $admin_mode_url == true)
@@ -78,12 +80,14 @@ else if(validate_hashid_admin($hashid_url))
 }
 else{
 	header ('location: '.BASEURL);
+	exit;
 	}
 
 //Go back home if it's a failure
 if(empty($my_account))
 {
-	//header ('location: '.BASEURL);
+	header ('location: '.BASEURL);
+	exit;
 }
 
 $my_account_id = $my_account['id'];
@@ -98,6 +102,7 @@ if($admin_mode)
 	if(isset($_POST['submit_cancel']))
 	{
 		header('location:'.$link_to_account_admin);
+		exit;
 	}
 }
 
@@ -120,6 +125,7 @@ if($admin_mode && !empty($_GET['edit']) && !empty($_GET['edit_hashid']))
 	))
 	{		//Wrong id or action
 		header('location:'.$link_to_account_admin);
+		exit;
 	}
 }
 

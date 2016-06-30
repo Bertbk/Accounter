@@ -81,3 +81,4 @@ else{
 }
 
 header('location: '.$redirect_link);
+exit;

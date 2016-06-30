@@ -21,6 +21,7 @@ if(!validate_hashid($hashid)
 	)
 {
 	header ('location:'.BASEURL);
+	exit;
 }
 
 //check if the hashids link to the right account (same and existant)
@@ -34,6 +35,7 @@ if(empty($my_account)
   || $my_account['id'] !== $my_account_admin['id'])
 {
 	header ('location:'.BASEURL);
+	exit;
 }
 
 $link_contrib = BASEURL.'/account/'.$hashid;

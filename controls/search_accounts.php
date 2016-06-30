@@ -42,6 +42,7 @@ if(isset($_POST['submit_email']))
 		{
 			array_push($successArray, 'Accounts have been sent!');
 			header('location: '.BASEURL.'/accounts_sent.php');
+			exit;
 		}
 		else
 		{
@@ -73,3 +74,4 @@ if(!(empty($successArray)))
 }
 
 header('location: retrieve_accounts.php');
+exit;

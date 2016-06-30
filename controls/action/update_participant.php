@@ -68,6 +68,7 @@ else{
 if(isset($_POST['submit_cancel']))
 {
 	header('location:'.$link_to_account_admin);
+	exit;
 }
 else if(isset($_POST['submit_update_participant']))
 {
@@ -170,3 +171,4 @@ if(!(empty($successArray)))
 }
 
 header('location: '.$redirect_link);
+exit;

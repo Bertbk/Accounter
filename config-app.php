@@ -4,6 +4,7 @@ $config_exists = file_exists(__DIR__.'/site/config.php');
 if(!$config_exists)
 {
 	header('location: error.php');
+	exit;
 }
 else
 {
