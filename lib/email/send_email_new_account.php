@@ -83,7 +83,7 @@ function send_email_new_account($account_hashid_arg)
 	 
 	//=====Header of the email
 	$header = "From: \"Accounter\"".$configs['email'].$br;
-	$header.= "Reply-to: \"Accounter\"".$configs['email'].br;
+	$header.= "Reply-to: \"Accounter\"".$configs['email'].$br;
 	$header.= "MIME-Version: 1.0".$br;
 	$header.= "Content-Type: multipart/alternative;".$br." boundary=\"$boundary\"".$br;
 	//==========

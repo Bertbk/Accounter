@@ -39,7 +39,7 @@ if(isset($_POST['submit_new_account']))
 		array_push($errArray, $ErrorEmptyMessage[$key]);
 	}
 	else{
-		$account_author = $_POST[$key]
+		$account_author = $_POST[$key];
 	}
 	
 	//CONTACT EMAIL
@@ -48,7 +48,7 @@ if(isset($_POST['submit_new_account']))
 		array_push($errArray, $ErrorEmptyMessage[$key]);
 	}
 	else{
-		$account_email_tmp = filter_input(INPUT_POST, $key, FILTER_SANITIZE_EMAIL)
+		$account_email_tmp = filter_input(INPUT_POST, $key, FILTER_SANITIZE_EMAIL);
 		$account_email = filter_var($account_email_tmp, FILTER_VALIDATE_EMAIL);
 		if($account_email  == false)
 		{
@@ -93,11 +93,12 @@ if(isset($_POST['submit_new_account']))
 			$email_sent = send_email_new_account($hashid);
 			if($email_sent == false)
 			{
-				array_push($warnArray, 'Problem while sending email. Account has been created, though.');
+				array_push($warnArray, 'Problem while sending email. Account has been created though.');
 			}
 		}
 	}
 }
+
 if(!(empty($errArray)))
 {
 	$_SESSION['errors'] = $errArray;
@@ -118,3 +119,6 @@ if(empty($errArray))
 else{
 	$redirect_link = BASEURL.'/create.php';
 }
+
+header('location: '.$redirect_link);
+exit;

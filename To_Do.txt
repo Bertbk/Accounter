@@ -8,8 +8,10 @@ MAJOR
 ======
 1. Multiple receivers for a payment
 2. exit after header:location !!!
-3. Admin page !!
+3. Admin page: Password and user !
 4. Comments
+5. Account: date of creation
+
 
 BUGS
 =====
