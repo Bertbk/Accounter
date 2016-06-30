@@ -1,8 +1,4 @@
 <?php 
-include_once(__DIR__.'/create_config_file.php');
-include_once(__DIR__.'/test_db.php');
-include_once(__DIR__.'/create_tables.php');
-
 $current_url = "http://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
 $base_url = substr($current_url , 0, strlen($current_url) - strlen('/install/install.php'));
 
@@ -87,20 +83,36 @@ if(isset($_POST['submit_install']))
 			array_push($errArray, $ErrorMessage[$key]);
 		}			
 	}
-	
+
 	//TEST DB
 	if(empty($errArray))
 	{
+		include_once(__DIR__.'/test_db.php');
 		$db_ok = test_db($host, $username, $passwd, $dbname);
 		if($db_ok == false)
 		{
 			array_push($errArray, 'Cannot connect to Database.');
 		}
 	}
+	
+	//Create config file
+	if(empty($errArray))
+	{
+		include_once(__DIR__.'/create_config_file.php');
+		$config_created = create_config_file($host, $username, $passwd, $dbname, $prefix, $base_url, $email);
+		if($config_created == false)
+		{
+			array_push($errArray, 'Cannot create config file');
+		}
+		else{
+			array_push($successArray, 'Config file created');
+		}
+	}
 
 	//Create tables
 	if(empty($errArray))
 	{
+		include_once(__DIR__.'/create_tables.php');
 		$table_created = create_tables();
 		if(empty($table_created))
 		{
@@ -112,41 +124,29 @@ if(isset($_POST['submit_install']))
 		}
 	}
 	
-	//Create config file
+	if(!(empty($errArray)))
+	{
+		$_SESSION['errors'] = $errArray;
+	}
+	if(!(empty($warnArray)))
+	{
+		$_SESSION['warnings'] = $warnArray;
+	}
+	if(!(empty($successArray)))
+	{
+		$_SESSION['success'] = $successArray;
+	}
+
+
+	//Clean
 	if(empty($errArray))
 	{
-		$config_created = create_config_file($host, $username, $passwd, $dbname, $prefix, $base_url, $email);
-		if($config_created == false)
-		{
-			array_push($errArray, 'Cannot create config file');
-		}
-		else{
-			array_push($successArray, 'Config file created');
-		}
+		include_once(__DIR__.'/clean.php');
 	}
 }
-
-if(!(empty($errArray)))
-{
-	$_SESSION['errors'] = $errArray;
-}
-if(!(empty($warnArray)))
-{
-	$_SESSION['warnings'] = $warnArray;
-}
-if(!(empty($successArray)))
-{
-	$_SESSION['success'] = $successArray;
-}
-
-
-//Clean
-if(empty($errArray))
-{
-	include_once(__DIR__.'/clean.php');
-}
-
 ?>
+
+
 <!DOCTYPE html>
 
 <html>
