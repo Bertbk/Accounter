@@ -3,18 +3,13 @@
 function create_config_file($host_arg, $username_arg, $password_arg, $dbname_arg,
 														$prefix_arg, $baseurl_arg, $email_arg)
 {
-	$host = htmlspecialchars($host_arg);
-	$username = htmlspecialchars($username_arg);
-	$password = htmlspecialchars($password_arg);
-	$dbname = htmlspecialchars($dbname_arg);
-	$prefix = htmlspecialchars($prefix_arg);
-	$baseurl = htmlspecialchars($baseurl_arg);
-	$email = filter_var(htmlspecialchars($email_arg), FILTER_SANITIZE_EMAIL);
-	
-	if(!$email)
-	{
-		return false;
-	}
+	$host = $host_arg;
+	$username = $username_arg;
+	$password = $password_arg;
+	$dbname = $dbname_arg;
+	$prefix = $prefix_arg;
+	$baseurl = $baseurl_arg;
+	$email = $email_arg;
 		
 	try
 	{
@@ -23,12 +18,12 @@ function create_config_file($host_arg, $username_arg, $password_arg, $dbname_arg
 	}
 	catch (Exception $e)
 	{
-			die('Fail to connect : ' . $e->getMessage());
+			die();
 			return false;
 	}
 	
 	
-	$myfile = fopen("../site/config.php", "w") or die("Unable to open config file!");
+	$myfile = fopen(__DIR__."/../site/config.php", "w") or die();
 	$txt = "<?php \nreturn array(\n";
 	fwrite($myfile, $txt);
 	$txt = "'host' => '".$host."',\n";
@@ -50,7 +45,7 @@ function create_config_file($host_arg, $username_arg, $password_arg, $dbname_arg
 	fclose($myfile);
 	
 	//Empty file
-	$myfile = fopen("../site/index.html", "w") or die("Unable to open config file!");
+	$myfile = fopen(__DIR__."/../site/index.html", "w") or die();
 	$txt = "";
 	fwrite($myfile, $txt);
 	fclose($myfile);

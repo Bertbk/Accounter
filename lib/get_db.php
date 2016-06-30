@@ -13,8 +13,9 @@ function get_db()
 	}
 	catch (Exception $e)
 	{
-			die('Fail to connect : ' . $e->getMessage());
+//			die('Fail to connect : ' . $e->getMessage());
+			die();
 	}
-	$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+//	$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	return $db;
 }

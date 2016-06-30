@@ -3,7 +3,7 @@ include_once(__DIR__.'/create_config_file.php');
 include_once(__DIR__.'/test_db.php');
 include_once(__DIR__.'/create_tables.php');
 
-$current_url =  "http://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
+$current_url = "http://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
 $base_url = substr($current_url , 0, strlen($current_url) - strlen('/install/install.php'));
 
 //Session is used to send back errors to account.php (if any)
@@ -54,13 +54,7 @@ if(isset($_POST['submit_install']))
 	}
 		
 	//PASSWORD
-	$key = 'p_password';
-	if(empty($_POST[$key])) { //If empty
-		array_push($errArray, $ErrorEmptyMessage[$key]);
-	}
-	else{
-		$passwd = $_POST[$key];
-	}	
+	$passwd = $_POST[$key];
 	
 	//DBNAME
 	$key = 'p_dbname';
@@ -124,7 +118,7 @@ if(isset($_POST['submit_install']))
 		$config_created = create_config_file($host, $username, $passwd, $dbname, $prefix, $base_url, $email);
 		if($config_created == false)
 		{
-			array_push($errArray, 'Cannot create config file.');
+			array_push($errArray, 'Cannot create config file');
 		}
 		else{
 			array_push($successArray, 'Config file created');
@@ -195,9 +189,9 @@ if(empty($errArray))
 							placeholder="Username">
 					</div>
 					<div class="form-group">
-						<label for="input_password">Password<span class="glyphicon glyphicon-asterisk red"></span></label>
+						<label for="input_password">Password (can be empty)<span class="glyphicon glyphicon-asterisk red"></span></label>
 						<input type="password" name="p_password" id="input_password" required class="form-control"
-							placeholder="Password">
+							placeholder="Password" value="">
 					</div>
 					<div class="form-group">
 						<label for="input_dbname">Database name<span class="glyphicon glyphicon-asterisk red"></span></label>
