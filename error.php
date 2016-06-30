@@ -1,14 +1,4 @@
-<!DOCTYPE html>
-
-<html>
-<head>
-</head>
-<body>
-
-
-
-<h1>Problem</h1>
-<p>Config file has not been found. Accounter might not have been installed first.</p>
-
-</body>
-</html>
+<?php 
+include_once(__DIR__.'/config-app.php');
+include_once(__DIR__.'/controls/error.php')
+?>
