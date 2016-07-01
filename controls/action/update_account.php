@@ -55,7 +55,8 @@ if(isset($_POST['submit_update_account']))
 		'p_title_of_account' => 'Title is not valid',
 		'p_author' => 'Author is not valid',
 		'p_contact_email' => 'Email address is not valid',
-		'p_description' => 'Description is not valid'
+		'p_description' => 'Description is not valid',
+		"p_date_of_expiration" => 'Date of expiration not valid'
    );
 	 	
 	//TITLE
@@ -98,11 +99,38 @@ if(isset($_POST['submit_update_account']))
 	else{
 		$new_account_description = $_POST[$key];
 	}
+	
+	//DATE OF EXPIRATIOn
+	$key='p_date_of_expiration';
+	if(empty($_POST[$key])) { //If empty
+		if(empty($account['date_of_expiration']))
+		{
+			$date_of_expiration_tmp = new DateTime();
+			$date_of_expiration_tmp->modify('+6 months');
+			$new_date_of_expiration = date_format($date_of_expiration_tmp, 'Y-m-d');
+		}
+		else{
+			$new_date_of_expiration = $account['date_of_expiration'];
+		}
+	}
+	else{
+		$new_date_of_expiration = $_POST[$key];
+		$myDateTime = DateTime::createFromFormat('d/m/Y', $new_date_of_expiration);
+		$new_date_of_expiration = $myDateTime->format('Y-m-d');
+		$date_parsed = date_parse($new_date_of_expiration);
+		if ($date_parsed == false || !checkdate($date_parsed['month'], $date_parsed['day'], $date_parsed['year']))
+		{
+			array_push($warnArray, $WarningMessage[$key]);
+			$date_of_expiration_tmp = new DateTime();
+			$date_of_expiration_tmp->modify('+6 months');
+			$new_date_of_expiration = date_format($date_of_expiration_tmp, 'Y-m-d');
+		}
+	}
 		
 	//Send to SQL
 	if(empty($errArray))
 	{
-		$update_success = update_account($account['id'], $new_account_title, $new_account_author, $new_account_email, $new_account_description);
+		$update_success = update_account($account['id'], $new_account_title, $new_account_author, $new_account_email, $new_account_description, $new_date_of_expiration);
 		if(!$update_success)
 		{
 			array_push($errArray, 'Problem while updating account');

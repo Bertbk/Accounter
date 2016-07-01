@@ -64,22 +64,11 @@
 								&& $edit_mode === "account" 
 								&& $edit_hashid === $my_account['hashid']){?>
 							<label class="control-label" for="form_edit_account_author">Author</label> 
-							<input class="form-control" id="form_edit_account_author" value="<?php echo htmlspecialchars($my_account['author'])?>" placeholder="Author" name="p_author" required form="form_edit_account">
+							<input class="form-control" id="form_edit_account_author" value="<?php echo htmlspecialchars($my_account['author'])?>" placeholder="Author" name="p_author" required form="form_edit_account"  type="text">
 						<?php }else{?>
-							<label class="control-label">Author</label> 
-							<p class="form-control-static"><?php echo htmlspecialchars($my_account['author'])?></p>
+							<label class="control-label">Author</label>
+							<pre class="form-control-static"><?php echo htmlspecialchars($my_account['author'])?></pre>												
 						<?php }?>
-
-				<?php if($admin_mode){?>
-					<?php if($edit_mode === "account" 
-									&& $edit_hashid === $my_account['hashid']){?>
-							<label class="control-label" for="form_edit_account_email">Email</label> 
-							<input class="form-control" id="form_edit_account_email" value="<?php echo htmlspecialchars($my_account['email'])?>" name="p_contact_email" required form="form_edit_account"
-							placeholder="Email"> 
-						<?php }else{?>
-						<p class="form-control-static"><?php echo htmlspecialchars($my_account['email'])?></p>
-						<?php }?>
-				<?php } ?>
 					</div>
 					
 					<div class="col-xs-12 col-md-8 form-group">
@@ -88,7 +77,7 @@
 							&& $edit_hashid === $my_account['hashid'])
 							{?>
 							<label class="control-label" for="form_edit_account_description">Description</label> 
-							<input class="form-control" id="form_edit_account_description" value="<?php echo htmlspecialchars($description_account)?>" placeholder="Description"
+							<input class="form-control" id="form_edit_account_description" value="<?php echo htmlspecialchars($description_account)?>" placeholder="Description" type="text"
 							form="form_edit_account" name="p_description">
 						<?php }else {?>
 						<label class="control-label">Description</label> 
@@ -96,7 +85,39 @@
 						<?php }?>
 					</div>
 				</div>
-				
+				<div class="row">
+					<div class="col-xs-12 col-md-4 form-group">
+						<?php if($admin_mode){?>
+								<label class="control-label" for="form_edit_account_email">Author's email</label> 
+							<?php if($edit_mode === "account" 
+										&& $edit_hashid === $my_account['hashid']){?>
+								<input class="form-control" id="form_edit_account_email" value="<?php echo htmlspecialchars($my_account['email'])?>" 
+								name="p_contact_email" required form="form_edit_account"  type="email" placeholder="Email"> 
+							<?php }else{?>
+								<pre class="form-control-static"><?php echo htmlspecialchars($my_account['email'])?></pre>												
+							<?php }?>
+						<?php } ?>
+					</div>
+					<div class="col-xs-12 col-md-4 form-group">
+						<label class="control-label">Date of creation</label> 
+						<pre class="form-control-static"><?php echo htmlspecialchars($account_date_of_creation)?></pre>												
+					</div>
+					<div class="col-xs-12 col-md-4 form-group">
+						<?php if($admin_mode == true
+							&& $edit_mode === "account" 
+							&& $edit_hashid === $my_account['hashid'])
+							{?>
+							<label class="control-label" for="form_edit_account_date_of_expiration">Date of expiration</label> 
+							<input class="form-control" id="form_edit_account_date_of_expiration" 
+							value="<?php echo htmlspecialchars($account_date_of_expiration)?>" 
+							form="form_edit_account" name="p_date_of_expiration" type="date" required>
+						<?php }else {?>
+						<label class="control-label">Date of expiration</label> 
+						<pre class="form-control-static"><?php echo htmlspecialchars($account_date_of_expiration)?></pre>												
+						<?php }?>
+					</div>
+				</div>
+			
 				<div class="row">
 					<div class="col-xs-12 col-md-6 form-group">
 						<label for="account_public_link"><a href="<?php echo $link_to_account?>">Public link to the account <span class="btn-link glyphicon glyphicon-link"></span></a></label> 

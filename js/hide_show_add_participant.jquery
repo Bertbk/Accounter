@@ -19,7 +19,10 @@ $(document).ready(function(){
 		});
 		$("[id^=form_edit_payment_date_]").each(function(){
 				$(this).datepicker({ dateFormat: 'dd/mm/yy'});
-		});		
+		});
+		$("[id=form_edit_account_date_of_expiration]").each(function(){
+				$(this).datepicker({ dateFormat: 'dd/mm/yy'});
+		});
 });
 
 /* Dummy for test

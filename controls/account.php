@@ -172,7 +172,24 @@ if(empty($my_account['description'])
 	{ $description_account = "";
 	}else{
 		$description_account = $my_account['description'];
-	}
+}
+
+
+if(!empty($my_account['date_of_creation']))
+{
+	$account_date_of_creation = date("d/m/Y", strtotime($my_account['date_of_creation']));
+}
+else{
+	$account_date_of_creation = "";
+}
+
+if(!empty($my_account['date_of_expiration']))
+{
+	$account_date_of_expiration = date("d/m/Y", strtotime($my_account['date_of_expiration']));
+}
+else{
+	$account_date_of_expiration = "";
+}
 
 
 include_once(ABSPATH.'/templates/account.php');

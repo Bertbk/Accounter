@@ -25,6 +25,8 @@ function create_tables()
     title VARCHAR(255) NOT NULL,
     author VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL,
+		date_of_creation DATE,
+		date_of_expiration DATE,
     description TEXT,
     PRIMARY KEY (id)
 		)

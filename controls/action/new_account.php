@@ -66,7 +66,7 @@ if(isset($_POST['submit_new_account']))
 	}
 	
 	
-	//Data have been filtered.
+	//Hash id
 	if(empty($errArray))
 	{
 		$hashid = create_hashid();
@@ -81,10 +81,15 @@ if(isset($_POST['submit_new_account']))
 		}
 	}
 	
+	//Create date
+	$date_of_creation = new DateTime();
+	$date_of_expiration = new DateTime();
+	$date_of_expiration->modify('+6 months');
+
 	//Send to SQL
 	if(empty($errArray))
 	{
-		$create_success = create_new_account($hashid, $hashid_admin, $account_title, $account_author, $account_email, $account_description);
+		$create_success = create_new_account($hashid, $hashid_admin, $account_title, $account_author, $account_email, $account_description, date_format($date_of_creation, 'Y-m-d'), date_format($date_of_expiration, 'Y-m-d'));
 		if(!$create_success)
 		{
 			array_push($errArray, 'Problem while creating account. Please try again');
