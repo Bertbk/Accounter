@@ -76,14 +76,13 @@ if($admin_mode
 ?>
 		<div class="panel-heading">
 			<div class="row">
-				<div class="col-xs-12">
+				<div class="col-xs-12" id="<?php echo 'edit_tag_'.$edit_hashid?>">
 				<form method="post" id="<?php echo "form_update_bill_".$cpt_bill?>"
-					action="<?php echo ACTIONPATH.'/update_bill.php'?>"
-					id="<?php echo 'edit_tag_'.$edit_hashid?>">
+					action="<?php echo ACTIONPATH.'/update_bill.php'?>">
 					<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>"/>
 					<input type="hidden" name="p_hashid_bill" value="<?php echo $bill['hashid']?>" />
 					<h2>
-						<label for="form_edit_bill_name" class="sr-only">Title: </label>
+						<label for="form_edit_bill_name">Title:</label>
 						<input type="text" name="p_title_of_bill" id="form_edit_bill_name"
 						class="form-control"	value="<?php echo htmlspecialchars($bill['title'])?>" required />
 					</h2>
