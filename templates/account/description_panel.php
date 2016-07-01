@@ -107,12 +107,13 @@
 				<div class="row">
 					<div class="col-xs-12 col-md-4 form-group">
 						<?php if($admin_mode){?>
-								<label class="control-label" for="form_edit_account_email">Author's email</label> 
 							<?php if($edit_mode === "account" 
 										&& $edit_hashid === $my_account['hashid']){?>
+								<label class="control-label" for="form_edit_account_email">Author's email</label> 
 								<input class="form-control" id="form_edit_account_email" value="<?php echo htmlspecialchars($my_account['email'])?>" 
 								name="p_contact_email" required form="form_edit_account"  type="email" placeholder="Email"> 
 							<?php }else{?>
+								<label class="control-label">Author's email</label> 
 								<pre class="form-control-static"><?php echo htmlspecialchars($my_account['email'])?></pre>												
 							<?php }?>
 						<?php } ?>

@@ -585,8 +585,7 @@ if($payment_to_edit !== false)
 						<input type="date" name="p_date_of_payment" 
 							class="form-control"
 							id="form_edit_payment_date_<?php echo $bill['id']?>"
-							value="<?php echo $tmp_date_parsed?>"
-							placeholder="Date of payment (dd/mm/yyyy)">
+							value="<?php echo $tmp_date_parsed?>">
 						<span class="input-group-addon glyphicon glyphicon-calendar"></span>
 					</div>
 				</div>
@@ -691,7 +690,7 @@ else
 							<div class="input-group">
 								<input type="date" name="p_payment[0][p_date_of_payment]" 
 									id="<?php echo 'form_set_payment_date_'.$cpt_bill?>_0" 
-									class="form-control" placeholder="Date of payment (dd/mm/yyyy)">
+									class="form-control">
 								<span class="input-group-addon glyphicon glyphicon-calendar"></span>
 							</div>
 						</div>
