@@ -2,6 +2,7 @@ div.payment_table{
 	text-align:center;
 	word-break: break-all;
 	overflow:hidden;
+	margin-bottom:5px;
 }
 
 .row [class^="description_collapse_"].in,

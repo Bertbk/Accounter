@@ -57,8 +57,7 @@
 											Remove all bills
 										</button>
 									</li>
-									<hr>
-									<li>
+									<li class="li_margin_top">
 										<button type="submit" class="btn btn-link confirmation" name="submit_delete_account">
 											Delete the entire account
 										</button>

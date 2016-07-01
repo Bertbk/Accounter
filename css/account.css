@@ -18,5 +18,8 @@ div.button_account_title{
 
 div#description_panel a{
 	color:black;
-	
+}
+
+li.li_margin_top{
+	margin-top:5px;
 }
