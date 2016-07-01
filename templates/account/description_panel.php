@@ -41,9 +41,29 @@
 							<form method="post" action="<?php echo ACTIONPATH.'/delete_account.php'?>">
 								<input type="hidden" name="p_hashid_account" 
 									value="<?php echo $my_account['hashid_admin']?>">
-								<button type="submit" class="btn btn-default confirmation" name="submit_delete_account">
+								<button type="submit" class="btn btn-danger dropdown-toggle" data-toggle="dropdown">
 									<span class="glyphicon glyphicon-trash"></span>
+									<span class="sr-only">Remove</span>
+									<span class="caret"></span>
 								</button>
+								<ul class="dropdown-menu" role="menu">
+									<li>
+										<button type="submit" class="btn btn-link confirmation" name="submit_remove_all_participants">
+											Remove all participants
+										</button>
+									</li>
+									<li>
+										<button type="submit" class="btn btn-link confirmation" name="submit_remove_all_bills">
+											Remove all bills
+										</button>
+									</li>
+									<hr>
+									<li>
+										<button type="submit" class="btn btn-link confirmation" name="submit_delete_account">
+											Delete the entire account
+										</button>
+									</li>
+								</ul>
 							</form>
 						</div>
 						<div class="button_account_title">
