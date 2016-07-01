@@ -17,7 +17,7 @@
 	<?php }?>
 			<div class="panel-heading">
 				<div class="row">
-					<div class="col-xs-10">
+					<div class="col-md-10">
 						<h2 class="account_title">
 						<?php if($admin_mode == true
 								&& $edit_mode === "account" 
@@ -36,7 +36,7 @@
 					{
 						$link_tmp = $link_to_account_admin.'/edit/account/'.$my_account['hashid'].'#edit_tag_'.$my_account['hashid'];
 		?>
-					<div class="col-xs-2">
+					<div class="col-md-2">
 						<div class="button_account_title">
 							<form method="post" action="<?php echo ACTIONPATH.'/delete_account.php'?>">
 								<input type="hidden" name="p_hashid_account" 
