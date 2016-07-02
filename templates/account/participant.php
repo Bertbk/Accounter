@@ -82,7 +82,10 @@
 						<button type="submit" name="submit_update_participant" value="Submit"><span class="glyphicon glyphicon-ok"></span></button>
 					</div>
 					<div class="col-xs-1">
-						<button type="submit" name="submit_cancel" value="Submit"><span class="glyphicon glyphicon-remove"></span></button> 
+						<button type="submit" name="submit_cancel" value="Submit"
+						form="form_cancel">
+							<span class="glyphicon glyphicon-remove"></span>
+						</button> 
 					</div>
 				</div>
 			</form>

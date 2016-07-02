@@ -154,7 +154,7 @@ if($admin_mode
 				Submit
 		</button> 
 		<button type="submit" name="submit_cancel" value="Submit" 
-			form="<?php echo "form_update_bill_".$cpt_bill?>"
+			form="form_cancel"
 			class="btn btn-primary">
 			Cancel
 		</button> 
@@ -334,7 +334,8 @@ if($admin_mode && !$edit_mode)
 			 class="btn btn-primary">
 				Submit
 			</button> 
-			<button type="submit" name="submit_cancel" value="Submit" class="btn btn-primary">
+			<button type="submit" name="submit_cancel" value="Submit" 
+				form="form_cancel" class="btn btn-primary">
 			 Cancel
 			</button>
 		</form>
@@ -595,7 +596,9 @@ if($payment_to_edit !== false)
 				<button type="submit" name="submit_update_payment" value="Submit" class="btn btn-primary">
 					Submit
 				</button>
-				<button type="submit" name="submit_cancel" value="Submit" class="btn btn-primary">
+				<button type="submit" name="submit_cancel" 
+					value="Submit" class="btn btn-primary"
+					form="form_cancel">
 					Cancel
 				</button>
 			</div>

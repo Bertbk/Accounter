@@ -42,7 +42,6 @@ function set_bill_participant($account_id_arg, $hashid_arg, $bill_id_arg, $parti
 	
 
 	$percent_of_use = is_null($percent_of_use)?100:$percent_of_use;
-	$percent_of_use = empty($percent_of_use)?100:$percent_of_use;
 	
 	if($percent_of_use > 100 || $percent_of_use < 0)
 	{

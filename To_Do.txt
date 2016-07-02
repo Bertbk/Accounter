@@ -7,9 +7,10 @@ INSTALLEUR
 MAJOR
 ======
 1. Multiple receivers for a payment
-2. Admin page: Password and user !
-3. Comments
-4. Menu to clean account
+2. Clean a bill from its payments/participants
+3. Admin page: user/Password !
+4. Comments
+5. Date of expiration : must be used! 
 
 DUNNO
 =====

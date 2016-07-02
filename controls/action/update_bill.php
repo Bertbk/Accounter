@@ -20,9 +20,9 @@ $redirect_link ="" ;
 
 
 $ErrorEmptyMessage = array(
-		'p_hashid_account' => 'Please provide an acount',
-		'p_hashid_bill' => 'Please provide a bill',
-		'p_title_of_bill' => 'Please provide a title',
+	'p_hashid_account' => 'Please provide an acount',
+	'p_hashid_bill' => 'Please provide a bill',
+	'p_title_of_bill' => 'Please provide a title',
  );
  
 $ErrorMessage = array(

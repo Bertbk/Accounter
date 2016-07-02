@@ -128,14 +128,15 @@ if(isset($_POST['submit_new_bill_participant']))
 		
 		// PERCENT OF USE
 		$key = 'p_percent_of_use';
-		if(empty($particip[$key])) { //If empty
+		if(!isset($particip[$key])) { //If empty
 			array_push($errArray2, $ErrorEmptyMessage[$key]);
 		}
 		else{
 			$percent_of_use = (float)$particip[$key];
-			if($percent_of_use < 0 ||$percent_of_use > 100)
+			if($percent_of_use < 0 
+				|| $percent_of_use > 100)
 			{
-				array_push($errArray2, $ErrorMessage['p_percent_of_use']);
+				array_push($errArray2, $ErrorMessage[$key].': '.$percent_of_use);
 			}
 		}
 		

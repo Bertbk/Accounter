@@ -162,14 +162,15 @@
 					Submit
 				</button> 
 				<button type="submit" name="submit_cancel" value="Submit" class="btn btn-primary"
-				form="form_edit_account">
+				form="form_cancel">
 				 Cancel
 				</button>
 			<?php } elseif($edit_mode == true){?>
 					<p>An entry is currently being under edition. It can be canceled :</p>
 					<form method="post">
 						<button type="submit" name="submit_cancel" 
-						class="btn btn-default" value="Submit">Cancel edit mode</button>
+						class="btn btn-default" value="Submit"
+						form="form_cancel">Cancel edit mode</button>
 					</form>
 	<?php }else{ ?>
 			<p>Welcome to the admin page of the account!</p>
