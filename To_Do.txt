@@ -21,7 +21,7 @@ BUGS
 
 MINOR
 =====
-1. Cancel button not working if field requiered are not filled
+1. Anchor when adding/updating/deleting participants/bill participants/Payments/Bills
 
 
 ----
