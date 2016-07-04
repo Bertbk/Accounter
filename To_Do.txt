@@ -21,8 +21,8 @@ BUGS
 
 MINOR
 =====
-1. Anchor when adding/updating/deleting participants/bill participants/Payments/Bills
-
+1. To verify: Anchor when adding/updating/deleting participants/bill participants/Payments/Bills
+2. If no solution then do not show it
 
 ----
 NOTES d'INSTALL
