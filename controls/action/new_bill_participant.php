@@ -37,7 +37,8 @@ if(isset($_POST['submit_new_bill_participant']))
 		'p_hashid_bill' => 'Bill is not valid',
 		'p_participant' => 'Participant is not valid',
 		'p_hashid_participant' => 'Participant is not valid',
-		'p_percent_of_use' => 'Percent is not valid'
+		'p_percent_of_use' => 'Percent is not valid',
+		'p_cpt_bill' => 'Counter of bill not valid'
    );
 
 	//Manual treatments of arguments
@@ -107,7 +108,8 @@ if(isset($_POST['submit_new_bill_participant']))
 		$errArray2 = array(); // Error array for each participant
 		$key = 'p_hashid_participant';
 		 if(empty($particip[$key])) { //If empty
-			array_push($errArray2, $ErrorEmptyMessage[$key]);
+			continue;
+			//array_push($errArray2, $ErrorEmptyMessage[$key]);
 		}
 		else{
 			if(validate_hashid($particip[$key])== false)
@@ -175,7 +177,7 @@ if(isset($_POST['submit_new_bill_participant']))
 					}
 			}
 		}
-
+	
 		//Save the bill_participant
 		if(empty($errArray2))
 		{
@@ -193,7 +195,8 @@ if(isset($_POST['submit_new_bill_participant']))
 			$errArray = array_merge($errArray, $errArray2);
 		}
 	 }//Loop on participant
-	}//If statement
+
+ }//If statement
 }
 
 		
@@ -210,12 +213,21 @@ if(!(empty($successArray)))
 	$_SESSION['success'] = $successArray;
 }
 
-if(empty($account))
+if(!isset($account) ||empty($account))
 {
 	$redirect_link = BASEURL;
 }
 else{
 	$redirect_link = BASEURL.'/account/'.$account['hashid_admin'].'/admin';
+	//Anchor
+	if(empty($errArray))
+	{		
+		$key = 'p_cpt_bill';
+		if(!empty($_POST[$key])) {
+			$cpt_bill = (int) $_POST[$key];
+			$redirect_link = $redirect_link.'#bill-'.$cpt_bill ;
+		}
+	}
 }
 header('location: '.$redirect_link);
 exit;

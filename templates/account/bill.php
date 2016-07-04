@@ -18,18 +18,17 @@ if($admin_mode && $edit_mode == false)
 	<form method="post" 
 		id="show_hide_add_bill_target" 
 		class="hidden_at_first"
-		action="<?php echo ACTIONPATH.'/new_bill.php'?>"
-	>
+		action="<?php echo ACTIONPATH.'/new_bill.php'?>">
 	  <fieldset>
 			<legend>Add a bill</legend>
 			<p><em>Fields with asterisk <span class="glyphicon glyphicon-asterisk red"></span> are required</em></p>
-			<input type="hidden" name="p_hashid_account" 
-			value="<?php echo $my_account['hashid_admin']?>" />
+			<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>" >
+			<input type="hidden" name="p_cpt_bill" value="<?php echo $n_bills?>" >
 			<div class="form-group">
 				<label for="form_set_bill_name">Title<span class="glyphicon glyphicon-asterisk red"></span></label>
 				<input type="text" name="p_title_of_bill" 
 				id="form_set_bill_name" class="form-control" required 
-				placeholder="Title"/>
+				placeholder="Title">
 			</div>
 			<div class="form-group">
 				<label for="form_set_bill_description">Description</label>
@@ -64,9 +63,10 @@ foreach($my_bills as $bill)
 	if(!empty($my_free_bill_participants[$bill['id']]))
 	{	$this_free_bill_participants = $my_free_bill_participants[$bill['id']];}
 ?>
-<div class="row bill <?php echo 'bill-'.$cpt_bill?>">
-<div class="col-xs-12">
-	<div class="panel panel-primary">
+<div class="row bill <?php echo 'bill-'.$cpt_bill?>" 
+	id="<?php echo 'bill-'.$cpt_bill?>">
+	<div class="col-xs-12">
+		<div class="panel panel-primary">
 <?php 
 //Edit the Bill (name, description, ...)
 if($admin_mode 
@@ -74,68 +74,69 @@ if($admin_mode
 				&& $edit_hashid === $bill['hashid'])
 				{
 ?>
-		<div class="panel-heading">
-			<div class="row">
-				<div class="col-xs-12" id="<?php echo 'edit_tag_'.$edit_hashid?>">
-				<form method="post" id="<?php echo "form_update_bill_".$cpt_bill?>"
-					action="<?php echo ACTIONPATH.'/update_bill.php'?>">
-					<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>"/>
-					<input type="hidden" name="p_hashid_bill" value="<?php echo $bill['hashid']?>" />
-					<h2>
-						<label for="form_edit_bill_name">Title:</label>
-						<input type="text" name="p_title_of_bill" id="form_edit_bill_name"
-						class="form-control"	value="<?php echo htmlspecialchars($bill['title'])?>" required />
-					</h2>
-				</form>
+			<div class="panel-heading">
+				<div class="row">
+					<div class="col-xs-12" id="<?php echo 'edit_tag_'.$edit_hashid?>">
+					<form method="post" id="<?php echo "form_update_bill_".$cpt_bill?>"
+						action="<?php echo ACTIONPATH.'/update_bill.php'?>">
+						<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
+						<input type="hidden" name="p_hashid_bill" value="<?php echo $bill['hashid']?>">
+						<input type="hidden" name="p_cpt_bill" value="<?php echo $cpt_bill?>">
+						<h2>
+							<label for="form_edit_bill_name">Title:</label>
+							<input type="text" name="p_title_of_bill" id="form_edit_bill_name"
+							class="form-control"	value="<?php echo htmlspecialchars($bill['title'])?>" required >
+						</h2>
+					</form>
+					</div>
 				</div>
 			</div>
-		</div>
 <?php } else{
 ?>
-		<div class="panel-heading cursor_pointer" data-toggle="collapse" data-target="#<?php echo 'panel-body_bill'.$cpt_bill?>">
-			<div class="row">
-				<div class="col-md-10">
-					<h2 class="bill_title">
-						<?php echo ($cpt_bill+1).'. '.htmlspecialchars($bill['title']) ?>
-					</h2>	
-				</div>
+			<div class="panel-heading cursor_pointer" data-toggle="collapse" data-target="#<?php echo 'panel-body_bill'.$cpt_bill?>">
+				<div class="row">
+					<div class="col-md-10">
+						<h2 class="bill_title">
+							<?php echo ($cpt_bill+1).'. '.htmlspecialchars($bill['title']) ?>
+						</h2>	
+					</div>
 		<?php
 					if($admin_mode && $edit_mode === false)
 					{
 						$link_tmp = $link_to_account_admin.'/edit/bill/'.$bill['hashid'].'#edit_tag_'.$bill['hashid'];
 		?>
-				<div class="col-md-2">
-					<div class="button_bill_title">
-						<form method="post" action="<?php echo ACTIONPATH.'/delete_bill.php'?>">
-							<input type="hidden" name="p_hashid_account" 
-								value="<?php echo $my_account['hashid_admin']?>">
-							<input type="hidden" name="p_hashid_bill" 
-								value="<?php echo $bill['hashid']?>">
-							<button type="submit" class="btn btn-default confirmation" name="submit_delete_participant">
-								<span class="glyphicon glyphicon-trash"></span>
-							</button>
-						</form>
-					</div>
-					<div class="button_bill_title">
-						<form action="<?php echo $link_tmp?>">
-								<button type="submit" value="" class="btn btn-default">
-										<span class="glyphicon glyphicon-pencil"></span>
+					<div class="col-md-2">
+						<div class="button_bill_title">
+							<form method="post" action="<?php echo ACTIONPATH.'/delete_bill.php'?>">
+								<input type="hidden" name="p_hashid_account" 
+									value="<?php echo $my_account['hashid_admin']?>">
+								<input type="hidden" name="p_hashid_bill" 
+									value="<?php echo $bill['hashid']?>">
+								<button type="submit" class="btn btn-default confirmation" name="submit_delete_participant">
+									<span class="glyphicon glyphicon-trash"></span>
 								</button>
-						</form>
+							</form>
+						</div>
+						<div class="button_bill_title">
+							<form action="<?php echo $link_tmp?>">
+									<button type="submit" value="" class="btn btn-default">
+											<span class="glyphicon glyphicon-pencil"></span>
+									</button>
+							</form>
+						</div>
 					</div>
-				</div>
 <?php 
 			}
 			?>
+				</div>
 			</div>
-		</div>
 	<?php
 		}
 ?>
 <?php //PANEL BODY OF BILL
 ?>
-	<div id="<?php echo 'panel-body_bill'.$cpt_bill?>" class="panel-collapse collapse in">
-	<div  class="panel-body">
+		<div id="<?php echo 'panel-body_bill'.$cpt_bill?>" class="panel-collapse collapse in">
+			<div  class="panel-body">
 <?php 
 //Edit the Bill (name, description, ...)
 if($admin_mode 
@@ -143,34 +144,34 @@ if($admin_mode
 				&& $edit_hashid === $bill['hashid'])
 				{
 ?>
-		<div class="form-group">
-			<label for="form_edit_bill_description">Description: </label>
-			<textarea name="p_description" class="form-control"
-			 form="<?php echo "form_update_bill_".$cpt_bill?>"><?php if(!empty($bill['description'])){echo htmlspecialchars($bill['description']);}?></textarea>
-		 </div>
-		<button type="submit" name="submit_update_bill" value="Submit"
-			form="<?php echo "form_update_bill_".$cpt_bill?>"
-			class="btn btn-primary">
-				Submit
-		</button> 
-		<button type="submit" name="submit_cancel" value="Submit" 
-			form="form_cancel"
-			class="btn btn-primary">
-			Cancel
-		</button> 
+			<div class="form-group">
+				<label for="form_edit_bill_description">Description: </label>
+				<textarea name="p_description" class="form-control"
+				 form="<?php echo "form_update_bill_".$cpt_bill?>"><?php if(!empty($bill['description'])){echo htmlspecialchars($bill['description']);}?></textarea>
+			 </div>
+			<button type="submit" name="submit_update_bill" value="Submit"
+				form="<?php echo "form_update_bill_".$cpt_bill?>"
+				class="btn btn-primary">
+					Submit
+			</button> 
+			<button type="submit" name="submit_cancel" value="Submit" 
+				form="form_cancel"
+				class="btn btn-primary">
+				Cancel
+			</button> 
 <?php	
 	}	else{
 	//Display only
 	if(!empty($bill['description']) && !is_null($bill['description']))
 	{
 ?>
-	<h3>Description</h3>
-	<p><?php echo htmlspecialchars($bill['description'])?></p>
+			<h3>Description</h3>
+			<p><?php echo htmlspecialchars($bill['description'])?></p>
 <?php }
 	}?>
 
 	<?php // PARTICIPANTS ?>
-	<h3>Participants</h3>
+			<h3>Participants</h3>
 
 	<?php
 if($admin_mode && !$edit_mode)
@@ -179,16 +180,17 @@ if($admin_mode && !$edit_mode)
 	if(!empty($this_free_bill_participants))
 	{
 	?>
-		<p id="<?php echo 'show_hide_bill_add_part_'.$cpt_bill?>"><a href="javascript:void(0)">(+) Assign a participant to this bill</a></p>
-		<form method="post" class="hidden_at_first" 
-			enctype="multipart/form-data"
-			id=<?php echo 'show_hide_bill_add_part_'.$cpt_bill.'_target'?>
-			action="<?php echo ACTIONPATH.'/new_bill_participant.php'?>">
-				<fieldset>
-					<legend>Assign a participant to this bill:</legend>
-					<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
-					<input type="hidden" name="p_hashid_bill" value="<?php echo $bill['hashid']?>">
-					<input type="hidden" name="p_bill_hashid" value="<?php echo $bill['hashid']?>">
+			<p id="<?php echo 'show_hide_bill_add_part_'.$cpt_bill?>"><a href="javascript:void(0)">(+) Assign a participant to this bill</a></p>
+			<form method="post" class="hidden_at_first" 
+				enctype="multipart/form-data"
+				id=<?php echo 'show_hide_bill_add_part_'.$cpt_bill.'_target'?>
+				action="<?php echo ACTIONPATH.'/new_bill_participant.php'?>">
+					<fieldset>
+						<legend>Assign a participant to this bill:</legend>
+						<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
+						<input type="hidden" name="p_hashid_bill" value="<?php echo $bill['hashid']?>">
+						<input type="hidden" name="p_bill_hashid" value="<?php echo $bill['hashid']?>">
+						<input type="hidden" name="p_cpt_bill" value="<?php echo $cpt_bill?>">
 <?php
 			$cpt = -1;
 			foreach($this_free_bill_participants as $participant)
@@ -290,8 +292,9 @@ if($admin_mode && !$edit_mode)
 					<form method="post" 
 					class="deleteicon"
 					action="<?php echo ACTIONPATH.'/delete_bill_participant.php'?>">		
-						<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>"/>
-						<input type="hidden" name="p_hashid_bill_participant" value="<?php echo $bill_participant['hashid']?>"	/>
+						<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
+						<input type="hidden" name="p_hashid_bill_participant" value="<?php echo $bill_participant['hashid']?>">
+						<input type="hidden" name="p_cpt_bill" value="<?php echo $cpt_bill?>">
 						<button type="submit" class="btn btn-default confirmation" name="submit_delete_bill_participant">
 							<span class="glyphicon glyphicon-trash"></span>
 						</button>
@@ -315,6 +318,7 @@ if($admin_mode && !$edit_mode)
 
 			<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
 			<input type="hidden" name="p_hashid_bill_participant" value="<?php echo $bill_participant_tmp['hashid']?>">
+			<input type="hidden" name="p_cpt_bill" value="<?php echo $cpt_bill?>">
 
 			<div class="row form-group row-no-padding">
 				<div class="col-xs-6 col-sm-5 col-md-4">
@@ -459,8 +463,8 @@ foreach($this_payment as $payment)
 				class="deleteicon"
 				action="<?php echo ACTIONPATH.'/delete_payment.php'?>"
 					>
-					<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>"/>
-					<input type="hidden" name="p_hashid_payment" value="<?php echo $payment['hashid']?>" />
+					<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
+					<input type="hidden" name="p_hashid_payment" value="<?php echo $payment['hashid']?>">
 					<button type="submit" class="btn btn-default confirmation" name="submit_delete_participant">
 						<span class="glyphicon glyphicon-trash"></span>
 					</button>
@@ -532,7 +536,7 @@ if($payment_to_edit !== false)
 						<input type="number" step="0.01" min="0" name="p_cost" 
 							class="form-control"
 							id="form_edit_payment_cost_<?php echo $cpt_bill?>"
-							value="<?php echo (float)$payment_to_edit['cost']?>" required />
+							value="<?php echo (float)$payment_to_edit['cost']?>" required>
 						<span class="input-group-addon glyph glyphicon-euro"></span>
 					</div>
 				</div>
@@ -665,7 +669,7 @@ else
 							<div class="input-group">
 								<input type="number" step="0.01" min="0" name="p_payment[0][p_cost]" 
 									id="<?php echo 'form_set_payment_cost_'.$cpt_bill?>_0" required 
-									class="form-control"/>
+									class="form-control">
 									<span class="input-group-addon glyph glyphicon-euro"></span>
 							</div>
 						</div>

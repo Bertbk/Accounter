@@ -26,7 +26,8 @@ if(isset($_POST['submit_delete_bill_participant']))
 	 
 	$ErrorMessage = array(
 		'p_hashid_account' => 'Account not valid',
-		'p_hashid_bill_participant' => 'Participation not valid'
+		'p_hashid_bill_participant' => 'Participation not valid',
+		'p_cpt_bill' => 'Counter of bill not valid'
    );
 
 	//ACCOUNT
@@ -75,17 +76,17 @@ if(isset($_POST['submit_delete_bill_participant']))
 		if($bill_participant['account_id'] !== $account['id'])
 		{	array_push($errArray, $ErrorMessage['Accounts mismatch']); }
 	}
-	
+			
 	//Delete the bill participant
 	if(empty($errArray))
 	{
 		$success = delete_bill_participant($account['id'], $bill_participant['id']);	
 		if(!$success)
 		{array_push($errArray, 'Server error: Problem while attempting to delete a participation'); 	}
-			else
-			{
-				array_push($successArray, 'Participation has been successfully deleted');
-			}
+		else
+		{
+			array_push($successArray, 'Participation has been successfully deleted');
+		}
 	}
 }
 
@@ -103,12 +104,22 @@ if(!(empty($successArray)))
 	$_SESSION['success'] = $successArray;
 }
 
-if(empty($account))
+if(!isset($account) ||empty($account))
 {
 	$redirect_link = BASEURL;
 }
 else{
 	$redirect_link = BASEURL.'/account/'.$account['hashid_admin'].'/admin';
+	//Anchor
+	if(empty($errArray))
+	{		
+		$key = 'p_cpt_bill';
+		if(!empty($_POST[$key])) {
+			$cpt_bill = (int) $_POST[$key];
+			$redirect_link = $redirect_link.'#bill-'.$cpt_bill ;
+		}
+	}
 }
+
 header('location: '.$redirect_link);
 exit;

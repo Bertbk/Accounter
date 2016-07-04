@@ -26,7 +26,8 @@ if(isset($_POST['submit_delete_payment']))
 	 
 	$ErrorMessage = array(
 		'p_hashid_account' => 'Account not valid',
-		'p_hashid_payment' => 'payment not valid'
+		'p_hashid_payment' => 'Payment not valid',
+		'p_cpt_bill' => 'Counter of bill not valid'
    );
 
 	//ACCOUNT
@@ -103,12 +104,21 @@ if(!(empty($successArray)))
 	$_SESSION['success'] = $successArray;
 }
 
-if(empty($account))
+if(!isset($account) ||empty($account))
 {
 	$redirect_link = BASEURL;
 }
 else{
 	$redirect_link = BASEURL.'/account/'.$account['hashid_admin'].'/admin';
+	//Anchor
+	if(empty($errArray))
+	{		
+		$key = 'p_cpt_bill';
+		if(!empty($_POST[$key])) {
+			$cpt_bill = (int) $_POST[$key];
+			$redirect_link = $redirect_link.'#bill-'.$cpt_bill ;
+		}
+	}
 }
 header('location: '.$redirect_link);
 exit;

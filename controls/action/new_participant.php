@@ -74,7 +74,7 @@ if(isset($_POST['submit_new_participant']))
 			//Name
 			$key = 'p_name';
 			if(empty($participant[$key])) { //If empty
-				array_push($errArray2, $ErrorEmptyMessage[$key]);
+				continue;
 			}
 			else{
 				$name_of_participant = $participant[$key];
@@ -150,7 +150,7 @@ if(empty($account))
 	$redirect_link = BASEURL;
 }
 else{
-	$redirect_link = BASEURL.'/account/'.$account['hashid_admin'].'/admin';
+	$redirect_link = BASEURL.'/account/'.$account['hashid_admin'].'/admin#participants';
 }
 header('location: '.$redirect_link);
 exit;

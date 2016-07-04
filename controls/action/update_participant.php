@@ -62,7 +62,7 @@ if(empty($account))
 	$redirect_link = BASEURL;
 }
 else{
-	$redirect_link = BASEURL.'/account/'.$account['hashid_admin'].'/admin';
+	$redirect_link = BASEURL.'/account/'.$account['hashid_admin'].'/admin#participants';
 }
 
 if(isset($_POST['submit_cancel']))

@@ -29,7 +29,8 @@ $ErrorMessage = array(
 	'p_hashid_account' => 'Account is not valid',
 	'p_hashid_bill' => 'Participant is not valid',
 	'p_title_of_bill' => 'Title is not valid',
-	'p_description' => 'Description is not valid'
+	'p_description' => 'Description is not valid',
+	'p_cpt_bill' => 'Counter of bill not valid'
  );
 
 //ACCOUNT
@@ -122,6 +123,14 @@ else if(isset($_POST['submit_update_bill']))
 		$does_this_bill__exists = get_bill_by_title($account['id'], $new_title_of_bill);
 		if(!empty($does_this_guy_exists))
 		{array_push($errArray, 'Another bill has the same title'); 	}
+	}
+	
+	//Anchor
+	$key='p_cpt_bill';
+	if(empty($errArray) && !empty($_POST[$key]))
+	{
+		$cpt_bill = (int)$_POST[$key];
+		$redirect_link = $redirect_link.'#bill-'.$cpt_bill;		
 	}
 	
 	//Save the bill

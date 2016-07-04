@@ -43,7 +43,8 @@ if(isset($_POST['submit_new_payment']))
 		'p_hashid_recv' => 'Receiver is not valid',
 		'p_cost' => 'Cost is not valid',
 		'p_description' => 'Description is not valid',
-		'p_date_of_payment' => 'Date of payment is not valid'
+		'p_date_of_payment' => 'Date of payment is not valid',
+		'p_cpt_bill' => 'Counter of bill not valid'
    );
 	 
 	$WaningMessage = array(
@@ -273,12 +274,22 @@ if(!(empty($successArray)))
 	$_SESSION['success'] = $successArray;
 }
 
-if(empty($account))
+if(!isset($account) ||empty($account))
 {
 	$redirect_link = BASEURL;
 }
 else{
 	$redirect_link = BASEURL.'/account/'.$account['hashid_admin'].'/admin';
+	//Anchor
+	if(empty($errArray))
+	{		
+		$key = 'p_cpt_bill';
+		if(!empty($_POST[$key])) {
+			$cpt_bill = (int) $_POST[$key];
+			$redirect_link = $redirect_link.'#bill-'.$cpt_bill ;
+		}
+	}
 }
+
 header('location: '.$redirect_link);
 exit;

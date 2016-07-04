@@ -34,7 +34,8 @@ $ErrorMessage = array(
 	'p_hashid_account' => 'Account is not valid',
 	'p_hashid_bill_participant' => 'Participation is not valid',
 	'p_participant' => 'Participant is not valid',
-	'p_percent_of_use' => 'Percent is not valid'
+	'p_percent_of_use' => 'Percent is not valid',
+	'p_cpt_bill' => 'Counter of bill not valid'
  );
 
 
@@ -61,12 +62,21 @@ if(empty($errArray))
 }
 
 //REDIRECTION LINK
-if(empty($account))
+if(!isset($account) ||empty($account))
 {
 	$redirect_link = BASEURL;
 }
 else{
 	$redirect_link = BASEURL.'/account/'.$account['hashid_admin'].'/admin';
+	//Anchor
+	if(empty($errArray))
+	{		
+		$key = 'p_cpt_bill';
+		if(!empty($_POST[$key])) {
+			$cpt_bill = (int) $_POST[$key];
+			$redirect_link = $redirect_link.'#bill-'.$cpt_bill ;
+		}
+	}
 }
 
 if(isset($_POST['submit_cancel']))
@@ -119,7 +129,7 @@ else if(isset($_POST['submit_update_bill_participant']))
 			array_push($errArray, $ErrorMessage['p_percent_of_use']);
 		}
 	}
-
+	
 	//Update the bill_participant
 	if(empty($errArray))
 	{

@@ -135,6 +135,9 @@ $my_participants = get_participants($my_account_id); //All person
 $my_bill_participants = get_bill_participants($my_account_id); // Person that added to a bill
 $my_free_bill_participants = get_free_bill_participants($my_account_id); // Person that can be added to a bill
 
+//Number of bills
+$n_bills = count($my_bills);
+
 //Payments
 $my_payments_per_bill = get_payments_by_bills($my_account_id); //All payments
 

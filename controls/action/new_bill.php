@@ -23,12 +23,13 @@ if(isset($_POST['submit_new_bill']))
 	$ErrorEmptyMessage = array(
 		'p_hashid_account' => 'No acount provided',
 		'p_title_of_bill' => 'Please provide a title'
-   );
+		);
 	 
 	$ErrorMessage = array(
 		'p_hashid_account' => 'Account is not valid',
 		'p_title_of_bill' => 'Title is not valid',
-		'p_description' => 'Description is not valid'
+		'p_description' => 'Description is not valid',
+		'p_cpt_bill' => 'Counter of bill not valid'
    );
 
 	//Manual treatments of arguments
@@ -68,7 +69,6 @@ if(isset($_POST['submit_new_bill']))
 		$desc = $_POST[$key];
 	}
 	else{$desc = null;}
-
 	
 	//Hash id for the new bill
 	$hashid_bill = "";
@@ -114,12 +114,22 @@ if(!(empty($successArray)))
 	$_SESSION['success'] = $successArray;
 }
 
-if(empty($account))
+if(!isset($account) ||empty($account))
 {
 	$redirect_link = BASEURL;
 }
 else{
 	$redirect_link = BASEURL.'/account/'.$account['hashid_admin'].'/admin';
+	//Anchor
+	if(empty($errArray))
+	{		
+		$key = 'p_cpt_bill';
+		if(!empty($_POST[$key])) {
+			$cpt_bill = (int) $_POST[$key];
+			$redirect_link = $redirect_link.'#bill-'.$cpt_bill ;
+		}
+	}
 }
+
 header('location: '.$redirect_link);
 exit;

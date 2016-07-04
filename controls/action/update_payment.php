@@ -31,7 +31,8 @@ $ErrorEmptyMessage = array(
 	'p_hashid_recv' => 'Please provide a receiver',
 	'p_cost' => 'Please provide a cost',
 	'p_description' => 'Please provide a description',
-	'p_date_of_payment' => 'Please provide a date of payment'
+	'p_date_of_payment' => 'Please provide a date of payment',
+	'p_cpt_bill' => 'Counter of bill not valid'
  );
  
 $ErrorMessage = array(
@@ -71,13 +72,22 @@ if(empty($errArray))
 	{	array_push($errArray, $ErrorMessage[$key]); }
 }
  
-if(empty($account))
+if(!isset($account) ||empty($account))
 {
 	$redirect_link = BASEURL;
 }
 else{
 	$redirect_link = BASEURL.'/account/'.$account['hashid_admin'].'/admin';
-} 
+	//Anchor
+	if(empty($errArray))
+	{		
+		$key = 'p_cpt_bill';
+		if(!empty($_POST[$key])) {
+			$cpt_bill = (int) $_POST[$key];
+			$redirect_link = $redirect_link.'#bill-'.$cpt_bill ;
+		}
+	}
+}
  
 
 if(isset($_POST['submit_cancel']))
