@@ -112,7 +112,7 @@ if($admin_mode
 									value="<?php echo $my_account['hashid_admin']?>">
 								<input type="hidden" name="p_hashid_bill" 
 									value="<?php echo $bill['hashid']?>">
-								<button type="submit" class="btn btn-default confirmation" name="submit_delete_participant">
+								<button type="submit" class="btn btn-default confirmation" name="submit_delete_bill">
 									<span class="glyphicon glyphicon-trash"></span>
 								</button>
 							</form>
