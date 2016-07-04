@@ -157,11 +157,28 @@ foreach($my_bills as $bill)
 	}
 }
 
-//solution
-$bill_solutions = compute_bill_solutions($my_account_id);
+// SOLUTION
 $solution = compute_solution($my_account_id);
 $solution_opt = compute_opt_solution($solution);
+//nb. of money transfert
+$n_transfer = 0;
+$n_transfer_opt = 0;
+foreach($my_participants as $payer)
+{
+	$uid = $payer['id'];
+	foreach($my_participants as $receiver)
+	{
+		$vid = $receiver['id'];
+		if(isset($solution[$uid][$vid])
+			&& $solution[$uid][$vid] !== 0)
+			{$n_transfer++;}
+		if(isset($solution_opt[$uid][$vid])
+			&& $solution_opt[$uid][$vid] !== 0)
+			{$n_transfer_opt++;}
+	}
+}
 
+							
 $n_participants = 0;
 $n_people = 0;
 foreach($my_participants  as $participant)

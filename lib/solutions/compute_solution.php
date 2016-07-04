@@ -79,7 +79,6 @@ function compute_solution($account_id_arg)
 		}
 	}
 	
-	
 	//Usefull values
 	$Refunds[-1]['total'] = $total_payment;
 		

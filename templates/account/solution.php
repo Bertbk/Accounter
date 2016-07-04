@@ -11,30 +11,40 @@
 				<h2>Solutions</h2>
 			</div>
 	
+	<?php
+if($n_transfer == 0 
+	|| $n_transfer_opt==0)
+	{
+	?>
 			<div id="panel-body_solution" class="panel-collapse collapse in">
 				<div class="panel-body">
 					<div class="row">
 						<div id="basic_solution" class="solution col-md-6">
 							<h3>&ldquo;Standard&rdquo; solution</h3>
-								<div class="row list_solution">
-									<div class="col-xs-offset-1 col-xs-5 col-md-offset-2 col-md-4 text-center">
-										...must pay...
-									</div>
-									<div class="col-xs-5 col-md-4 text-center">
-										...to...
-									</div>
+		<?php if($n_transfer == 0)
+			{?>
+							<p>No transfer</p>
+<?php }
+	else{?>
+							<div class="row list_solution">
+								<div class="col-xs-offset-1 col-xs-5 col-md-offset-2 col-md-4 text-center">
+									...must pay...
 								</div>
+								<div class="col-xs-5 col-md-4 text-center">
+									...to...
+								</div>
+							</div>
 <?php	foreach($my_participants as $payer)
+				{
+					$uid = $payer['id'];
+					if(!isset($solution[$uid])){continue;}
+					foreach($my_participants as $receiver)
 					{
-						$uid = $payer['id'];
-						if(!isset($solution[$uid])){continue;}
-						foreach($my_participants as $receiver)
+						$vid = $receiver['id'];
+						if(!isset($solution[$uid][$vid])){continue;}
+										$refund = number_format((float)$solution[$uid][$vid], 2, '.', '');
+						if($refund > 0)
 						{
-							$vid = $receiver['id'];
-							if(!isset($solution[$uid][$vid])){continue;}
-											$refund = number_format((float)$solution[$uid][$vid], 2, '.', '');
-							if($refund > 0)
-							{
 ?>
 							<div class="row list_solution">
 								<div class="col-xs-4 col-md-4 col-lg-4">
@@ -52,17 +62,23 @@
 <?php					}
 						}
 					} ?>
+	<?php }?>
 						</div>
 						<div id="opt_solution" class="solution col-md-6">
 							<h3>&ldquo;Optimized&rdquo; solution</h3>
-								<div class="row list_solution">
-									<div class="col-xs-offset-1 col-xs-5 col-md-offset-2 col-md-4 text-center">
-										...must pay...
-									</div>
-									<div class="col-xs-5 col-md-4 text-center">
-										...to...
-									</div>
+			<?php if($n_transfer_opt == 0)
+			{?>
+							<p>No transfer</p>
+<?php }
+	else{?>
+							<div class="row list_solution">
+								<div class="col-xs-offset-1 col-xs-5 col-md-offset-2 col-md-4 text-center">
+									...must pay...
 								</div>
+								<div class="col-xs-5 col-md-4 text-center">
+									...to...
+								</div>
+							</div>
 <?php
 	foreach($my_participants as $payer)
 					{
@@ -93,11 +109,13 @@
 							}
 						}
 					}
+				}
 ?>
 						</div>
 					</div>
 				</div>
 			</div>
+	<?php } ?>
 		</div>
 	</div>
 </div>
