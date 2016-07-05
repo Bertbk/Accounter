@@ -144,7 +144,7 @@ if($admin_mode
 					}
 					?>
 						<div class="button_bill_title">
-							<button type="submit" value="" class="btn btn-default" title="Collapse/Display"
+							<button type="submit" value="" class="btn btn-default" title="Collapse/Expand"
 							data-toggle="collapse" data-target="#<?php echo 'panel-body_bill'.$cpt_bill?>">
 								<span class="glyphicon glyphicon-plus"></span>
 							</button>							
@@ -456,7 +456,7 @@ foreach($this_payment as $payment)
 		</div>
 		<?php //Collapse button (for mobile>) ?>
 		<div class="visible-xs visible-sm col-xs-2">
-			<button type="submit" class="btn btn-default" title="Collapse/Display"
+			<button type="submit" class="btn btn-default" title="Collapse/Expand"
 				data-toggle="collapse" data-target=".<?php echo 'description_collapse_'.$cpt_bill.'_'.$cpt_paymt?>">
 				<span class="glyphicon glyphicon-plus"></span>
 			</button>

@@ -55,7 +55,8 @@ When the admin mode is engaged, the panel is red.
 							<form method="post" action="<?php echo ACTIONPATH.'/delete_account.php'?>">
 								<input type="hidden" name="p_hashid_account" 
 									value="<?php echo $my_account['hashid_admin']?>">
-								<button type="submit" class="btn btn-danger dropdown-toggle" data-toggle="dropdown">
+								<button type="submit" class="btn btn-danger dropdown-toggle" 
+									data-toggle="dropdown" title="Delete...">
 									<span class="glyphicon glyphicon-trash"></span>
 									<span class="sr-only">Remove</span>
 									<span class="caret"></span>
@@ -81,7 +82,7 @@ When the admin mode is engaged, the panel is red.
 						</div>
 						<div class="button_account_title">
 							<form action="<?php echo $link_tmp?>">
-									<button type="submit" value="" class="btn btn-default">
+									<button type="submit" value="" class="btn btn-default" title="Edit the account">
 											<span class="glyphicon glyphicon-pencil"></span>
 									</button>
 							</form>
@@ -97,7 +98,7 @@ When the admin mode is engaged, the panel is red.
 								&& $edit_mode === "account" 
 								&& $edit_hashid === $my_account['hashid']){?>
 							<label class="control-label" for="form_edit_account_author">Author</label> 
-							<input class="form-control" id="form_edit_account_author" value="<?php echo htmlspecialchars($my_account['author'])?>" placeholder="Author" name="p_author" required form="form_edit_account"  type="text">
+							<input class="form-control" id="form_edit_account_author" value="<?php echo htmlspecialchars($my_account['author'])?>" placeholder="Author" name="p_author" required form="form_edit_account" type="text" title="Author">
 						<?php }else{?>
 							<label class="control-label">Author</label>
 							<pre class="form-control-static"><?php echo htmlspecialchars($my_account['author'])?></pre>												
@@ -110,8 +111,7 @@ When the admin mode is engaged, the panel is red.
 							&& $edit_hashid === $my_account['hashid'])
 							{?>
 							<label class="control-label" for="form_edit_account_description">Description</label> 
-							<input class="form-control" id="form_edit_account_description" value="<?php echo htmlspecialchars($description_account)?>" placeholder="Description" type="text"
-							form="form_edit_account" name="p_description">
+							<input class="form-control" id="form_edit_account_description" value="<?php echo htmlspecialchars($description_account)?>" placeholder="Description" type="text" form="form_edit_account" name="p_description" title="Description">
 						<?php }else {?>
 						<label class="control-label">Description</label> 
 						<pre class="form-control-static"><?php echo htmlspecialchars($description_account)?></pre>												
@@ -125,7 +125,7 @@ When the admin mode is engaged, the panel is red.
 										&& $edit_hashid === $my_account['hashid']){?>
 								<label class="control-label" for="form_edit_account_email">Author's email</label> 
 								<input class="form-control" id="form_edit_account_email" value="<?php echo htmlspecialchars($my_account['email'])?>" 
-								name="p_contact_email" required form="form_edit_account"  type="email" placeholder="Email"> 
+								name="p_contact_email" required form="form_edit_account"  type="email" placeholder="Email address" title="Email address"> 
 							<?php }else{?>
 								<label class="control-label">Author's email</label> 
 								<pre class="form-control-static"><?php echo htmlspecialchars($my_account['email'])?></pre>												
@@ -134,7 +134,7 @@ When the admin mode is engaged, the panel is red.
 					</div>
 					<div class="col-xs-12 col-md-4 form-group">
 						<label class="control-label">Date of creation</label> 
-						<pre class="form-control-static"><?php echo htmlspecialchars($account_date_of_creation)?></pre>												
+						<pre class="form-control-static"><?php echo htmlspecialchars($account_date_of_creation)?></pre>								
 					</div>
 					<div class="col-xs-12 col-md-4 form-group">
 						<?php if($admin_mode == true
@@ -144,7 +144,8 @@ When the admin mode is engaged, the panel is red.
 							<label class="control-label" for="form_edit_account_date_of_expiration">Date of expiration</label> 
 							<input class="form-control" id="form_edit_account_date_of_expiration" 
 							value="<?php echo htmlspecialchars($account_date_of_expiration)?>" 
-							form="form_edit_account" name="p_date_of_expiration" type="date" required>
+							form="form_edit_account" name="p_date_of_expiration" type="date" required
+							title="Date of expiration">
 						<?php }else {?>
 						<label class="control-label">Date of expiration</label> 
 						<pre class="form-control-static"><?php echo htmlspecialchars($account_date_of_expiration)?></pre>												
@@ -156,13 +157,13 @@ When the admin mode is engaged, the panel is red.
 					<div class="col-xs-12 col-md-6 form-group">
 						<label for="account_public_link"><a href="<?php echo $link_to_account?>">Public link to the account <span class="btn-link glyphicon glyphicon-link"></span></a></label> 
 						<input class="form-control" readonly="readonly" value="<?php echo $link_to_account?>" onclick="select();"
-							type="text" id="account_public_link">							
+							type="text" id="account_public_link" title="Public link">
 					</div>
 				<?php if($admin_mode){?>
 					<div class="col-xs-12 col-md-6 form-group">
 						<label for="account_admin_link"><a href="<?php echo $link_to_account_admin?>">Administrator link to the account <span class="btn-link glyphicon glyphicon-link"></span></a></label> 
 						<input class="form-control" readonly="readonly" value="<?php echo $link_to_account_admin?>" onclick="select();"
-							type="text" id="account_admin_link">							
+							type="text" id="account_admin_link"  title="Administrator link">							
 					</div>
 						<?php } ?>
 				</div>
@@ -172,11 +173,11 @@ When the admin mode is engaged, the panel is red.
 			<?php if($edit_mode === "account" 
 			&& $edit_hashid === $my_account['hashid']){?>
 				<button type="submit" name="submit_update_account" value="Submit"
-				 class="btn btn-primary" form="form_edit_account">
-					Submit
+				 class="btn btn-primary" form="form_edit_account" title="Submit changes">
+					Submit changes
 				</button> 
-				<button type="submit" name="submit_cancel" value="Submit" class="btn btn-primary"
-				form="form_cancel">
+				<button type="submit" name="submit_cancel" value="Submit" 
+					class="btn btn-primary" form="form_cancel" title="Cancel">
 				 Cancel
 				</button>
 			<?php } elseif($edit_mode == true){?>
@@ -184,7 +185,9 @@ When the admin mode is engaged, the panel is red.
 					<form method="post">
 						<button type="submit" name="submit_cancel" 
 						class="btn btn-default" value="Submit"
-						form="form_cancel">Cancel edit mode</button>
+						form="form_cancel" title="Cancel">
+							Cancel edit mode
+						</button>
 					</form>
 	<?php }else{ ?>
 			<p>Welcome to the admin page of the account!</p>

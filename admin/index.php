@@ -111,7 +111,8 @@ $accounts = get_accounts();
 							<?php echo htmlspecialchars($account['date_of_expiration'])?>	
 						</div>
 						<div class="col-xs-2 col-md-1">
-							<a class="btn btn-default" href="<?php echo BASEURL.'/account/'.$account['hashid_admin'].'/admin'?>"><span class="glyphicon glyphicon-link"></span></a>	
+							<a class="btn btn-default" href="<?php echo BASEURL.'/account/'.$account['hashid_admin'].'/admin'?>"
+							title="Link to the account"><span class="glyphicon glyphicon-link"></span></a>	
 						</div>
 						<div class="col-xs-2 col-md-1">
 							<form method="post" action="<?php echo ACTIONPATH.'/delete_account.php'?>">
@@ -119,7 +120,8 @@ $accounts = get_accounts();
 									value="<?php echo $account['hashid_admin']?>">
 								<input type="hidden" name="p_redirect" 
 									value="admin_page">
-								<button type="submit" class="btn btn-default confirmation" name="submit_delete_account">
+								<button type="submit" class="btn btn-default confirmation" name="submit_delete_account"
+									title="Delete account">
 									<span class="glyphicon glyphicon-trash"></span>
 								</button>
 							</form>
@@ -129,7 +131,8 @@ $accounts = get_accounts();
 				<?php //Collapse button (for mobile>) ?>
 						<div class="visible-xs visible-sm col-xs-2">
 							<button type="submit" class="btn btn-default"
-								data-toggle="collapse" data-target=".<?php echo 'admin_table_collapse_'.$cpt_account?>">
+								data-toggle="collapse" data-target=".<?php echo 'admin_table_collapse_'.$cpt_account?>"
+								title="Expand/Collapse">
 								<span class="glyphicon glyphicon-plus"></span>
 							</button>
 						</div>
