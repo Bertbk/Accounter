@@ -45,10 +45,10 @@ Template of the retrieve accounts page.
 					<div class="form-group">
 						<label for="form_retrieve_accounts_email">Email address<span class="glyphicon glyphicon-asterisk red"></span></label>
 						<input type="email" name="p_email" id="form_email" required class="form-control"
-							placeholder="Email address">
+							placeholder="Email address" title="Email address">
 					</div>
 					<button type="submit" name="submit_email" value="Submit"
-						class="btn btn-primary">
+						class="btn btn-primary" title="Retrive your accounts">
 						Submit
 					</button> 
 				</fieldset>

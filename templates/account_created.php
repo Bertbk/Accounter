@@ -48,12 +48,12 @@ Template launched when a new account has been successfully created
 								<div class="col-xs-12 col-md-6 form-group">
 									<p class="form-group"><a href="<?php echo $link_contrib?>">Public link to the account <span class="btn-link glyphicon glyphicon-link"></span></p> 
 									<input class="form-control" readonly="readonly" value="<?php echo $link_contrib?>" onclick="select();"
-										type="text">
+										type="text" title="Public link">
 								</div>
 								<div class="col-xs-12 col-md-6 form-group">
 									<p class="form-group"><a href="<?php echo $link_admin?>">Administrator link to the account <span class="btn-link glyphicon glyphicon-link"></span></p> 
 									<input class="form-control" readonly="readonly" value="<?php echo $link_admin?>" onclick="select();"
-										type="text">							
+										type="text"  title="Administrator link">							
 								</div>
 							</div>
 						</div>
