@@ -10,7 +10,10 @@ MAJOR
 2. Clean a bill from its payments/participants
 3. Admin page: user/Password !
 4. Comments
-5. Date of expiration : must be used! 
+5. Date of expiration : must be used!
+6. How to deal with unexpected access to eg. /controls/account.php or lib/ ?
+7. Protect some forms again csrf (session token)
+https://openclassrooms.com/courses/securisation-des-failles-csrf
 
 DUNNO
 =====
