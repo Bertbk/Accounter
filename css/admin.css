@@ -15,3 +15,21 @@
 {
     display: block!important;
 }
+
+div.row_even{
+	padding-top:3px;
+	padding-bottom:3px;
+}
+
+div.row_uneven{
+	padding-top:3px;
+	padding-bottom:3px;
+	background-color:lightgrey;
+}
+
+div#table_of_accounts{
+	width:98%;
+	overflow:hidden;
+	text-align:center;
+	margin:auto;
+}
