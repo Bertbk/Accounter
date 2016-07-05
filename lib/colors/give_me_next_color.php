@@ -1,5 +1,20 @@
 <?php
-
+/**
+ * This software is governed by the CeCILL-B license. If a copy of this license
+ * is not distributed with this file, you can obtain one at
+ * http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
+ *
+ * Author of Accounter: Bertrand THIERRY (bertrand.thierry1@gmail.com)
+ *
+ */
+ 
+/*
+Return the next color of participant. 
+It just loop on a hard-coded $colorArray for the color that is next to $prev_color_arg.
+This is used to find the next "free" color of a participant or a bill.
+The $type_arg can be either "participant" of "bill"
+(see get_colorArray.php)
+*/
 include_once(__DIR__.'/get_colorArray.php');
 
 function give_me_next_color($prev_color_arg, $type_arg)

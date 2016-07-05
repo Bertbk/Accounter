@@ -1,4 +1,21 @@
 <?php
+/**
+ * This software is governed by the CeCILL-B license. If a copy of this license
+ * is not distributed with this file, you can obtain one at
+ * http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
+ *
+ * Author of Accounter: Bertrand THIERRY (bertrand.thierry1@gmail.com)
+ *
+ */
+ 
+/*
+Return every payments associated to the account of id $account_id_arg.
+A participant is here a row in the paymentss SQL table 
+JOINED WITH: payer name and color, and receiver name/color (participants SQL table).
+
+Warning: a payment points to a bill_participant, not to a participant.
+*/
+
 include_once(__DIR__.'/../get_db.php');
 
 include_once(LIBPATH.'/bills/get_bills.php');
