@@ -1,4 +1,17 @@
 <?php
+/**
+ * This software is governed by the CeCILL-B license. If a copy of this license
+ * is not distributed with this file, you can obtain one at
+ * http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
+ *
+ * Author of Accounter: Bertrand THIERRY (bertrand.thierry1@gmail.com)
+ *
+ */
+ 
+/*
+Return every participants of the account of id account_id_arg.
+A participant is a row in the participants SQL table.
+*/
 include_once(__DIR__.'/../get_db.php');
 
 function get_participants($account_id_arg)
