@@ -93,6 +93,7 @@ function AddPaymentLine(name_of_people, hashid_of_people, cpt_bill)
 	select_payer.id = "form_set_payment_payer_"+ cpt_bill + "_" + AddPaymentLine.counter;
 	select_payer.name = "p_payment["+ AddPaymentLine.counter +"][p_hashid_payer]";
 	select_payer.className = "form-control";
+	select_payer.title = "Payer";
 	var input_cost = document.createElement("input");
 	input_cost.id = "form_set_payment_cost_"+ cpt_bill + "_" + AddPaymentLine.counter;
 	input_cost.type="number";
@@ -100,23 +101,27 @@ function AddPaymentLine(name_of_people, hashid_of_people, cpt_bill)
 	input_cost.step="0.01";
 	input_cost.className = "form-control";
 	input_cost.name = "p_payment["+ AddPaymentLine.counter +"][p_cost]";
+	input_cost.title = "Amount";
 	var select_receiver = document.createElement("select");
 	select_receiver.id = "form_set_payment_recv_"+ cpt_bill + "_" + AddPaymentLine.counter;
 	select_receiver.name = "p_payment["+ AddPaymentLine.counter +"][p_hashid_recv]";
 	select_receiver.className = "form-control";
+	select_receiver.title = "Receiver";
 	var input_description = document.createElement("input");
 	input_description.id = "form_set_payment_desc_"+ cpt_bill + "_" + AddPaymentLine.counter;
 	input_description.type="text";
 	input_description.name = "p_payment["+ AddPaymentLine.counter +"][p_description]";
 	input_description.className = "form-control";
 	input_description.placeholder = "Description";
+	input_description.title = "Description";
 	var input_date = document.createElement("input");
 	input_date.id = "form_set_payment_date_"+ cpt_bill + "_" + AddPaymentLine.counter;
 	input_date.type="date";
 	input_date.name = "p_payment["+ AddPaymentLine.counter +"][p_date_of_payment]";
 	input_date.className = "form-control";
 	input_date.placeholder = "Date of payment";
-	 $(input_date).datepicker({ dateFormat: 'dd/mm/yy'});
+	input_date.title = "Date of payment";
+ $(input_date).datepicker({ dateFormat: 'dd/mm/yy'});
 
 	//Construct the list of payer
 	var opt_null = document.createElement("option");
@@ -225,6 +230,7 @@ function AddParticipantLine()
 	input_name.setAttribute("class",	"form-control-inline col-xs-9");
 	input_name.name = "p_new_participant["+ AddParticipantLine.counter +"][p_name]";
 	input_name.placeholder="Name";
+	input_name.title="Name";
 	
 	var input_nb_of_people = document.createElement("input");
 	input_nb_of_people.id = "form_set_participant_nbpeople_"+ AddParticipantLine.counter;
@@ -234,6 +240,7 @@ function AddParticipantLine()
 	input_nb_of_people.step="1";
 	input_nb_of_people.setAttribute("class",	"form-control-inline col-xs-3");
 	input_nb_of_people.name = "p_new_participant["+ AddParticipantLine.counter +"][p_nb_of_people]";
+	input_nb_of_people.title = "Number of people";
 	
 	//Set label
 	var label_name = document.createElement("Label");

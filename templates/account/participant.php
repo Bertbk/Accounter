@@ -53,7 +53,7 @@ Template to display the participants
 				</div>
 				<div class="col-xs-2">
 					<form action="<?php echo $link_tmp?>">
-							<button type="submit" value="" class="btn btn-default">
+							<button type="submit" value="" class="btn btn-default" title="Edit participant">
 									<span class="glyphicon glyphicon-pencil"></span>
 							</button>
 					</form>
@@ -64,7 +64,8 @@ Template to display the participants
 						action="<?php echo ACTIONPATH.'/delete_participant.php'?>">
 						<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>"/>
 						<input type="hidden" name="p_hashid_participant" value="<?php echo $participant['hashid']?>"/>
-						<button type="submit" class="btn btn-default confirmation" name="submit_delete_participant" value="Submit">
+						<button type="submit" class="btn btn-default confirmation" 
+							name="submit_delete_participant" value="Submit" title="Delete participant">
 							<span class="glyphicon glyphicon-trash"></span>
 						</button>
 					</form>
@@ -86,17 +87,22 @@ Template to display the participants
 				<input type="hidden" name="p_hashid_participant" value="<?php echo $participant['hashid']?>">
 				<div class="row">
 					<input type="text" name="p_name_of_participant" class="form-control-inline col-xs-9"
-						value="<?php echo htmlspecialchars($participant['name'])?>" required>
+						value="<?php echo htmlspecialchars($participant['name'])?>" required
+						title="Name of participant">
 					<input type="number" name="p_nb_of_people" class="form-control-inline col-xs-3"
-						min="1" step="1" value="<?php echo (int)$participant['nb_of_people']?>" required>
+						min="1" step="1" value="<?php echo (int)$participant['nb_of_people']?>" required
+						title="Number of people">
 				</div>
 				<div class="row">
 					<div class="col-xs-1">
-						<button type="submit" name="submit_update_participant" value="Submit"><span class="glyphicon glyphicon-ok"></span></button>
+						<button type="submit" name="submit_update_participant" value="Submit"
+							title="Submit changes">
+							<span class="glyphicon glyphicon-ok"></span>
+						</button>
 					</div>
 					<div class="col-xs-1">
 						<button type="submit" name="submit_cancel" value="Submit"
-						form="form_cancel">
+						form="form_cancel" title="Cancel">
 							<span class="glyphicon glyphicon-remove"></span>
 						</button> 
 					</div>
@@ -137,16 +143,19 @@ if($admin_mode && $edit_mode === false)
 								Name
 							</label>
 							<input type="text" name="p_new_participant[0][p_name]" 
-								id="form_set_participant_name_0" class="form-control-inline col-xs-9" placeholder="Name" required>
+								id="form_set_participant_name_0" class="form-control-inline col-xs-9" 
+								placeholder="Name" title="Name" required>
 							<label for="form_set_participant_nbpeople_0" class="sr-only">
 								Nb. of people
 							</label>		
 							<input type="number" name="p_new_participant[0][p_nb_of_people]" value="1" 
-								id="form_set_participant_nbpeople_0" class="form-control-inline col-xs-3" required>
+								id="form_set_participant_nbpeople_0" class="form-control-inline col-xs-3"
+								title="Number of people" required>
 						</div>
 					</div>
 					<p><a href="#" onclick="AddParticipantLine();return false;">(+) Add a row</a></p>		
-					<button type="submit" name="submit_new_participant" class="btn btn-primary" value="Submit">
+					<button type="submit" name="submit_new_participant" class="btn btn-primary" 
+						value="Submit" title="Submit new participant">
 						Submit
 					</button> 
 				</fieldset>

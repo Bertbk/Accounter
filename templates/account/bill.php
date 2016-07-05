@@ -42,16 +42,18 @@ if($admin_mode && $edit_mode == false)
 				<label for="form_set_bill_name">Title<span class="glyphicon glyphicon-asterisk red"></span></label>
 				<input type="text" name="p_title_of_bill" 
 				id="form_set_bill_name" class="form-control" required 
-				placeholder="Title">
+				placeholder="Title" title="Title">
 			</div>
 			<div class="form-group">
 				<label for="form_set_bill_description">Description</label>
 				 <textarea name="p_description" id="form_set_bill_description" class="form-control" 
-				 placeholder="Description"></textarea>
+				 placeholder="Description" title="Description"></textarea>
 			</div>
 
 			 <button type="submit" name="submit_new_bill" value="Submit"
-			 class="btn btn-primary">Submit</button> 
+				class="btn btn-primary" title="Submit new bill">
+				Submit
+			</button> 
 	  </fieldset>
 	</form>
 </div>
@@ -99,7 +101,8 @@ if($admin_mode
 						<h2>
 							<label for="form_edit_bill_name">Title:</label>
 							<input type="text" name="p_title_of_bill" id="form_edit_bill_name"
-							class="form-control"	value="<?php echo htmlspecialchars($bill['title'])?>" required >
+							class="form-control"	value="<?php echo htmlspecialchars($bill['title'])?>" required 
+							title="Title">
 						</h2>
 					</form>
 					</div>
@@ -122,18 +125,17 @@ if($admin_mode
 		?>
 						<div class="button_bill_title">
 							<form method="post" action="<?php echo ACTIONPATH.'/delete_bill.php'?>">
-								<input type="hidden" name="p_hashid_account" 
-									value="<?php echo $my_account['hashid_admin']?>">
-								<input type="hidden" name="p_hashid_bill" 
-									value="<?php echo $bill['hashid']?>">
-								<button type="submit" class="btn btn-default confirmation" name="submit_delete_bill">
+								<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
+								<input type="hidden" name="p_hashid_bill" value="<?php echo $bill['hashid']?>">
+								<button type="submit" class="btn btn-default confirmation" 
+									name="submit_delete_bill" title="Delete bill">
 									<span class="glyphicon glyphicon-trash"></span>
 								</button>
 							</form>
 						</div>
 						<div class="button_bill_title">
 							<form action="<?php echo $link_tmp?>">
-									<button type="submit" value="" class="btn btn-default">
+									<button type="submit" value="" class="btn btn-default" title="Edit bill">
 											<span class="glyphicon glyphicon-pencil"></span>
 									</button>
 							</form>
@@ -142,7 +144,7 @@ if($admin_mode
 					}
 					?>
 						<div class="button_bill_title">
-							<button type="submit" value="" class="btn btn-default"
+							<button type="submit" value="" class="btn btn-default" title="Collapse/Display"
 							data-toggle="collapse" data-target="#<?php echo 'panel-body_bill'.$cpt_bill?>">
 								<span class="glyphicon glyphicon-plus"></span>
 							</button>							
@@ -171,12 +173,11 @@ if($admin_mode
 			 </div>
 			<button type="submit" name="submit_update_bill" value="Submit"
 				form="<?php echo "form_update_bill_".$cpt_bill?>"
-				class="btn btn-primary">
-					Submit
+				class="btn btn-primary" title="Submit changes">
+					Submit changes
 			</button> 
 			<button type="submit" name="submit_cancel" value="Submit" 
-				form="form_cancel"
-				class="btn btn-primary">
+				form="form_cancel" class="btn btn-primary" title="Cancel">
 				Cancel
 			</button> 
 <?php	
@@ -192,83 +193,6 @@ if($admin_mode
 
 	<?php // PARTICIPANTS ?>
 			<h3 id="<?php echo 'bill_participants_'.$cpt_bill?>">Participants</h3>
-
-	<?php
-if($admin_mode && !$edit_mode)
-{ //Display possibilities
-	//Assign a participant (if there are free guys)
-	if(!empty($this_free_bill_participants))
-	{
-	?>
-			<p id="<?php echo 'show_hide_bill_add_part_'.$cpt_bill?>"><a href="javascript:void(0)">(+) Assign a participant to this bill</a></p>
-			<form method="post" class="hidden_at_first" 
-				enctype="multipart/form-data"
-				id=<?php echo 'show_hide_bill_add_part_'.$cpt_bill.'_target'?>
-				action="<?php echo ACTIONPATH.'/new_bill_participant.php'?>">
-					<fieldset>
-						<legend>Assign a participant to this bill:</legend>
-						<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
-						<input type="hidden" name="p_hashid_bill" value="<?php echo $bill['hashid']?>">
-						<input type="hidden" name="p_cpt_bill" value="<?php echo $cpt_bill?>">
-<?php
-			$cpt = -1;
-			foreach($this_free_bill_participants as $participant)
-			{
-				$cpt++;
-		?>
-					<div class="row row-no-padding form-group assign_bill_participant">
-						<div class="col-xs-12 col-md-6 col-lg-4 lg-offset-2">
-							<div>
-								<input type="checkbox" name="p_participant['<?php echo $cpt?>'][p_hashid_participant]" 
-									value="<?php echo $participant['hashid']?>"
-									id="<?php echo'assign_participant_'.$cpt_bill.'_'.$cpt?>" >
-								<div class="[ btn-group ] fullwidth" style="overflow:hidden">
-									<label for="<?php echo 'assign_participant_'.$cpt_bill.'_'.$cpt?>"
-										class="[ btn btn-default ] btn-assign_bill_participant">
-                    <span class="[ glyphicon glyphicon-ok ]"></span>
-                    <span> </span>
-									</label>
-									<span class="span-assign_bill_participant" >
-										<label for="<?php echo 'assign_participant_'.$cpt_bill.'_'.$cpt?>" 
-											class="[ btn btn-default active ] btn-assign_bill_participant2"
-											style="background-color:<?php echo '#'.$participant['color']?>">
-												<?php echo htmlspecialchars($participant['name'])?>
-										</label>
-									</span>
-								</div>
-							</div>
-						</div>
-						<div class="col-xs-12 col-md-6 col-lg-4">
-							<div class="">
-								<label for="<?php echo 'form_available_percent_'.$cpt_bill.'_'.$participant['id']?>" 
-									class="sr-only">
-									Percentage of use
-								</label>
-								<div class="input-group">
-									<input name="p_participant['<?php echo $cpt?>'][p_percent_of_use]" type="number"
-												class="form-control" step="0.01" min="0" max="100"	value="100" 
-												id="<?php echo 'form_available_percent_'.$cpt_bill.'_'.(int)$participant['id']?>">
-										<span class="input-group-addon">%</span>
-								</div>
-							</div>
-						</div>
-					</div>
-		<?php
-				}//for each participant
-		?>
-					<button type="submit" name="submit_new_bill_participant" 
-						value="Submit" class="btn btn-primary">
-						Submit
-					</button>
-				</fieldset>
-			</form>
-<?php
-		} //if empty free_participants
-	}//if admin
-?>
-	
-
-	
 	<?php // Display the current participant of this bill
 	if(!empty($this_bill_participants))
 	{
@@ -302,7 +226,7 @@ if($admin_mode && !$edit_mode)
 						?>
 				<div class="zeromargin floatleft">
 							<form action="<?php echo $link_tmp?>">
-								<button type="submit" value="" class="btn btn-default">
+								<button type="submit" value="" class="btn btn-default" title="Edit participation">
 										<span class="glyphicon glyphicon-pencil"></span>
 								</button>
 							</form>
@@ -314,7 +238,8 @@ if($admin_mode && !$edit_mode)
 						<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
 						<input type="hidden" name="p_hashid_bill_participant" value="<?php echo $bill_participant['hashid']?>">
 						<input type="hidden" name="p_cpt_bill" value="<?php echo $cpt_bill?>">
-						<button type="submit" class="btn btn-default confirmation" name="submit_delete_bill_participant">
+						<button type="submit" class="btn btn-default confirmation" 
+							name="submit_delete_bill_participant" title="Delete participation">
 							<span class="glyphicon glyphicon-trash"></span>
 						</button>
 					</form>
@@ -353,12 +278,12 @@ if($admin_mode && !$edit_mode)
 					</div>
 				</div>
 			</div>
-			<button type="submit" name="submit_update_bill_participant" value="Submit"
-			 class="btn btn-primary">
-				Submit
+			<button type="submit" name="submit_update_bill_participant" 
+				value="Submit" class="btn btn-primary" title="Submit changes">
+				Submit changes
 			</button> 
 			<button type="submit" name="submit_cancel" value="Submit" 
-				form="form_cancel" class="btn btn-primary">
+				form="form_cancel" class="btn btn-primary" title="Cancel">
 			 Cancel
 			</button>
 		</form>
@@ -368,8 +293,82 @@ $participation_to_edit=false;
 $bill_participant_tmp=null;
 	}
 	?>
-
 <?php }//if my_bill_participants != empty ?>
+
+	<?php
+if($admin_mode && !$edit_mode)
+{ //Display possibilities
+	//Assign a participant (if there are free guys)
+	if(!empty($this_free_bill_participants))
+	{
+	?>
+			<p id="<?php echo 'show_hide_bill_add_part_'.$cpt_bill?>"><a href="javascript:void(0)">(+) Assign a participant to this bill</a></p>
+			<form method="post" class="hidden_at_first" 
+				enctype="multipart/form-data"
+				id=<?php echo 'show_hide_bill_add_part_'.$cpt_bill.'_target'?>
+				action="<?php echo ACTIONPATH.'/new_bill_participant.php'?>">
+					<fieldset>
+						<legend>Assign a participant to this bill:</legend>
+						<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
+						<input type="hidden" name="p_hashid_bill" value="<?php echo $bill['hashid']?>">
+						<input type="hidden" name="p_cpt_bill" value="<?php echo $cpt_bill?>">
+<?php
+			$cpt = -1;
+			foreach($this_free_bill_participants as $participant)
+			{
+				$cpt++;
+		?>
+					<div class="row row-no-padding form-group assign_bill_participant">
+						<div class="col-xs-12 col-md-6 col-lg-4 lg-offset-2">
+							<div>
+								<input type="checkbox" name="p_participant['<?php echo $cpt?>'][p_hashid_participant]" 
+									value="<?php echo $participant['hashid']?>" title="Participant"
+									id="<?php echo'assign_participant_'.$cpt_bill.'_'.$cpt?>" >
+								<div class="[ btn-group ] fullwidth" style="overflow:hidden">
+									<label for="<?php echo 'assign_participant_'.$cpt_bill.'_'.$cpt?>"
+										class="[ btn btn-default ] btn-assign_bill_participant">
+                    <span class="[ glyphicon glyphicon-ok ]"></span>
+                    <span> </span>
+									</label>
+									<span class="span-assign_bill_participant" >
+										<label for="<?php echo 'assign_participant_'.$cpt_bill.'_'.$cpt?>" 
+											class="[ btn btn-default active ] btn-assign_bill_participant2"
+											style="background-color:<?php echo '#'.$participant['color']?>">
+												<?php echo htmlspecialchars($participant['name'])?>
+										</label>
+									</span>
+								</div>
+							</div>
+						</div>
+						<div class="col-xs-12 col-md-6 col-lg-4">
+							<div class="">
+								<label for="<?php echo 'form_available_percent_'.$cpt_bill.'_'.$participant['id']?>" 
+									class="sr-only">
+									Percentage of use
+								</label>
+								<div class="input-group">
+									<input name="p_participant['<?php echo $cpt?>'][p_percent_of_use]" type="number"
+												class="form-control" step="0.01" min="0" max="100"	value="100" 
+												id="<?php echo 'form_available_percent_'.$cpt_bill.'_'.(int)$participant['id']?>"
+												title="Percentage of usage">
+										<span class="input-group-addon">%</span>
+								</div>
+							</div>
+						</div>
+					</div>
+		<?php
+				}//for each participant
+		?>
+					<button type="submit" name="submit_new_bill_participant" 
+						value="Submit" class="btn btn-primary" title="Submit new participation">
+						Submit
+					</button>
+				</fieldset>
+			</form>
+<?php
+		} //if empty free_participants
+	}//if admin
+?>
 
 <h3>Payments</h3>
 
@@ -457,7 +456,7 @@ foreach($this_payment as $payment)
 		</div>
 		<?php //Collapse button (for mobile>) ?>
 		<div class="visible-xs visible-sm col-xs-2">
-			<button type="submit" class="btn btn-default"
+			<button type="submit" class="btn btn-default" title="Collapse/Display"
 				data-toggle="collapse" data-target=".<?php echo 'description_collapse_'.$cpt_bill.'_'.$cpt_paymt?>">
 				<span class="glyphicon glyphicon-plus"></span>
 			</button>
@@ -472,7 +471,7 @@ foreach($this_payment as $payment)
 		$link_tmp = $link_to_account_admin.'/edit/payment/'.$payment['hashid'].'#edit_tag_'.$payment['hashid'];
 		?>
 			<form action="<?php echo $link_tmp ?>">
-				<button type="submit" class="btn btn-default">
+				<button type="submit" class="btn btn-default" title="Edit payment">
 					<span class="glyphicon glyphicon-pencil"></span>
 				</button>
 			</form>
@@ -484,7 +483,8 @@ foreach($this_payment as $payment)
 					>
 					<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
 					<input type="hidden" name="p_hashid_payment" value="<?php echo $payment['hashid']?>">
-					<button type="submit" class="btn btn-default confirmation" name="submit_delete_participant">
+					<button type="submit" class="btn btn-default confirmation" 
+						name="submit_delete_participant" title="Delete participation">
 						<span class="glyphicon glyphicon-trash"></span>
 					</button>
 				</form>
@@ -616,12 +616,13 @@ if($payment_to_edit !== false)
 				<?php $tmp_date_parsed = null;?>
 			</div>
 			<div>
-				<button type="submit" name="submit_update_payment" value="Submit" class="btn btn-primary">
-					Submit
+				<button type="submit" name="submit_update_payment" value="Submit" 
+					class="btn btn-primary" title="Update payment">
+					Submit changes
 				</button>
 				<button type="submit" name="submit_cancel" 
 					value="Submit" class="btn btn-primary"
-					form="form_cancel">
+					form="form_cancel" title="Cancel">
 					Cancel
 				</button>
 			</div>
@@ -673,7 +674,7 @@ else
 							<select name="p_payment[0][p_hashid_payer]" 
 								id="form_set_payment_payer_<?php echo $cpt_bill?>_0" 
 								onchange="DropDownListsBetweenParticipants(this, document.getElementById('<?php echo 'form_set_payment_recv_'.$cpt_bill.'_0'?>'))"
-								class="form-control"> 
+								class="form-control" title="Payer"> 
 									<option disabled selected value="null"> -- select a payer -- </option>
 								<?php
 									foreach($this_bill_participants as $bill_participant)
@@ -688,7 +689,7 @@ else
 							<div class="input-group">
 								<input type="number" step="0.01" min="0" name="p_payment[0][p_cost]" 
 									id="<?php echo 'form_set_payment_cost_'.$cpt_bill?>_0" required 
-									class="form-control">
+									class="form-control" title="Amount">
 									<span class="input-group-addon glyph glyphicon-euro"></span>
 							</div>
 						</div>
@@ -696,7 +697,7 @@ else
 						<div class="col-xs-12 col-lg-4">
 							<label for="<?php echo 'form_set_payment_recv_'.$cpt_bill?>_0">Receiver<span class="glyphicon glyphicon-asterisk red"></span></label>
 								<select name="p_payment[0][p_hashid_recv]" id="<?php echo 'form_set_payment_recv_'.$cpt_bill?>_0"
-								class="form-control"> 
+								class="form-control" title="Receiver"> 
 									<option value="-1" selected="selected">Group</option>
 								</select>
 						</div>
@@ -707,7 +708,7 @@ else
 							Description</label>
 							<input type="text" name="p_payment[0][p_description]" 
 								id="<?php echo 'form_set_payment_desc_'.$cpt_bill?>_0" 
-								class="form-control" placeholder="Description">
+								class="form-control" placeholder="Description" title="Description">
 						</div>
 						<div class="col-xs-12 col-lg-6">
 							<label for="<?php echo 'form_set_payment_date_'.$cpt_bill?>_0">
@@ -716,7 +717,7 @@ else
 							<div class="input-group">
 								<input type="date" name="p_payment[0][p_date_of_payment]" 
 									id="<?php echo 'form_set_payment_date_'.$cpt_bill?>_0" 
-									class="form-control">
+									class="form-control" title="Date of payment">
 								<span class="input-group-addon glyphicon glyphicon-calendar"></span>
 							</div>
 						</div>
@@ -737,7 +738,10 @@ else
 		</p>
 		
 			<div>
-				<button type="submit" name="submit_new_payment" value="Submit">Submit</button>
+				<button type="submit" name="submit_new_payment" value="Submit" 
+					title="Submit new payment">
+					Submit
+				</button>
 			</div>
 			</fieldset>
 		</form>

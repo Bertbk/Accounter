@@ -14,6 +14,7 @@ MAJOR
 6. How to deal with unexpected access to eg. /controls/account.php or lib/ ?
 7. Protect some forms again csrf (session token)
 https://openclassrooms.com/courses/securisation-des-failles-csrf
+8. Title of button/input
 
 DUNNO
 =====
