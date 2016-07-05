@@ -1,5 +1,18 @@
-<?php
+<?php 
+/**
+ * This software is governed by the CeCILL-B license. If a copy of this license
+ * is not distributed with this file, you can obtain one at
+ * http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
+ *
+ * Author of Accounter: Bertrand THIERRY (bertrand.thierry1@gmail.com)
+ *
+ */
+ 
+ /*
+Lib: check if the config file exists and is "working" (ie: SQL database reachable)
+ */
 
+ 
 function check_config()
 {
 	$config_exists = file_exists(__DIR__.'../site/config.php');
@@ -16,9 +29,9 @@ function check_config()
 	}
 	catch (Exception $e)
 	{
-			die('Fail to connect : ' . $e->getMessage());
+			return $e->getMessage();
 	}
-	$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	return $db;
+
+	return true;
 }
 

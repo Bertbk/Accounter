@@ -1,4 +1,19 @@
-<?php
+<?php 
+/**
+ * This software is governed by the CeCILL-B license. If a copy of this license
+ * is not distributed with this file, you can obtain one at
+ * http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
+ *
+ * Author of Accounter: Bertrand THIERRY (bertrand.thierry1@gmail.com)
+ *
+ */
+ 
+ /*
+Lib: Update an account (a row in accounts Table).
+return true if everything went fine
+return error message otherwise
+ */
+ 
 include_once(__DIR__.'/../get_db.php');
 include_once(LIBPATH.'/accounts/get_account_by_id.php');
 
@@ -55,7 +70,7 @@ function update_account($account_id_arg, $title_of_account_arg, $author_arg, $co
 	}
 	catch (Exception $e)
 	{
-//		echo 'Fail to connect: ' . $e->getMessage();
+		return $e->getMessage();
 	}
 	
 	return $isgood;

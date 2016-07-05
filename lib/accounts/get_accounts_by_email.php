@@ -1,5 +1,19 @@
 <?php
-include_once(__DIR__.'/../get_db.php');
+/**
+ * This software is governed by the CeCILL-B license. If a copy of this license
+ * is not distributed with this file, you can obtain one at
+ * http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
+ *
+ * Author of Accounter: Bertrand THIERRY (bertrand.thierry1@gmail.com)
+ *
+ */
+ 
+ /*
+Lib: Return an array of the accounts associated with the email parameter.
+An account is here all the values contained in accounts SQL table
+ */
+ 
+ include_once(__DIR__.'/../get_db.php');
 
 function get_accounts_by_email($email_arg)
 {
