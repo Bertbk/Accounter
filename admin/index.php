@@ -93,7 +93,7 @@ $accounts = get_accounts();
 						<?php echo htmlspecialchars($account['date_of_expiration'])?>	
 					</div>
 					<div class="col-md-2 col-lg-1">
-						<a href="account/<?php echo $account['hashid_admin']?>/admin"><span class="glyphicon glyphicon-link"></span></a>	
+						<a href="<?php echo BASEURL.'/account/'.$account['hashid_admin'].'/admin'?>"><span class="glyphicon glyphicon-link"></span></a>	
 					</div>
 					<div class="col-md-2 col-lg-1">
 						<span class="glyphicon glyphicon-trash"></span>
