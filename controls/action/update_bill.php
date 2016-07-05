@@ -141,7 +141,7 @@ else if(isset($_POST['submit_update_bill']))
 	
 	//Anchor
 	$key='p_cpt_bill';
-	if(empty($errArray) && !empty($_POST[$key]))
+	if(empty($errArray) && isset($_POST[$key]))
 	{
 		$cpt_bill = (int)$_POST[$key];
 		$redirect_link = $redirect_link.'#bill-'.$cpt_bill;		

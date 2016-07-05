@@ -185,7 +185,7 @@ if($admin_mode
 	}?>
 
 	<?php // PARTICIPANTS ?>
-			<h3>Participants</h3>
+			<h3 id="<?php echo 'bill_participants_'.$cpt_bill?>">Participants</h3>
 
 	<?php
 if($admin_mode && !$edit_mode)
@@ -203,7 +203,6 @@ if($admin_mode && !$edit_mode)
 						<legend>Assign a participant to this bill:</legend>
 						<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
 						<input type="hidden" name="p_hashid_bill" value="<?php echo $bill['hashid']?>">
-						<input type="hidden" name="p_bill_hashid" value="<?php echo $bill['hashid']?>">
 						<input type="hidden" name="p_cpt_bill" value="<?php echo $cpt_bill?>">
 <?php
 			$cpt = -1;
