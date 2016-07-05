@@ -56,31 +56,6 @@ Template of the home page
 					</a>
 				</div>
 			</nav>
-			<h1>Table of the accounts</h1>
-
-			<table style="width:100%" border="1">
-			 <tr>
-			<td> ID </td>
-			<td> hashid </td> 
-			<td> hashid_admin </td>
-			<td> Title </td> 
-			<td> Email </td>
-				</tr>
-			<?php 
-			foreach ($accounts as $account)
-			{
-			?>
-				<tr>
-					<td><?php echo $account['id']?></td>
-					<td> <a href="account/<?php echo $account['hashid']?>"><?php echo $account['hashid']?></a></td>
-					<td> <a href="account/<?php echo $account['hashid_admin']?>/admin"><?php echo $account['hashid_admin']?></a></td>
-					<td><?php echo htmlspecialchars($account['title'])?></td>
-					<td><?php echo htmlspecialchars($account['email'])?></td>
-					</tr>
-			<?php
-			}
-			?>
-			</table>
 		</div>
 	</div> <!-- content -->
 </body>
