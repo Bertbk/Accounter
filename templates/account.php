@@ -40,14 +40,20 @@ Template of a particular account page, that is :
 <link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/solution.css'?>">
 
 <script type="text/javascript" src="<?php echo BASEURL.'/js/account.js'?>"></script>
-<!--<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
-<script src="https://code.jquery.com/jquery-migrate-1.2.1.js"></script>
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
-<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>-->
+
+<!--<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>-->
 <script type="text/javascript" src="<?php echo BASEURL.'/jquery/jquery.min.js'?>"></script>
+
+<!--<script src="https://code.jquery.com/jquery-migrate-1.2.1.js"></script>-->
 <script src="<?php echo BASEURL.'/jquery/jquery-migrate-1.2.1.js'?>"></script>
+
+<!--<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>-->
 <script type="text/javascript" src="<?php echo BASEURL.'/jquery/jquery-ui.min.js'?>"></script>
-<script src="<?php echo BASEURL.'/jquery/bootstrap.min.js'?>"></script>
+
+<!--<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>-->
+<script src="<?php echo BASEURL.'/bootstrap/js/bootstrap.min.js'?>"></script>
+
+
 <script type="text/javascript" src="<?php echo BASEURL.'/js/hide_show_add_participant.jquery'?>"></script>
 
 </head>

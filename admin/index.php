@@ -29,8 +29,25 @@ $accounts = get_accounts();
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<link href="<?php echo BASEURL.'/bootstrap/css/bootstrap.min.css'?>" rel="stylesheet">
-	<link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/global.css'?>">
-	<link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/index.css'?>">
+	<!--<link rel="stylesheet" type="text/css" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/smoothness/jquery-ui.css" media="all">-->
+	<link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/jquery/jquery-ui.css'?>" media="all">
+	
+	
+<!--<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>-->
+<script type="text/javascript" src="<?php echo BASEURL.'/jquery/jquery.min.js'?>"></script>
+
+<!--<script src="https://code.jquery.com/jquery-migrate-1.2.1.js"></script>-->
+<script src="<?php echo BASEURL.'/jquery/jquery-migrate-1.2.1.js'?>"></script>
+
+<!--<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>-->
+<script type="text/javascript" src="<?php echo BASEURL.'/jquery/jquery-ui.min.js'?>"></script>
+
+<!--<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>-->
+<script src="<?php echo BASEURL.'/bootstrap/js/bootstrap.min.js'?>"></script>	
+
+<link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/global.css'?>">
+<link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/admin.css'?>">
+
 </head>
 <body>
 
@@ -77,7 +94,7 @@ $accounts = get_accounts();
 		?>
 			<div class="<?php 'account_'.$cpt_account?>">
 				<div class="row <?php echo 'row_'.$evenly?>">
-					<div class="col-lg-2">
+					<div class="col-xs-12 col-lg-2">
 						<?php echo htmlspecialchars($account['title'])?>	
 					</div>
 					<div class="hidden-xs hidden-sm hidden-md col-lg-1 <?php echo 'admin_table_collapse_'.$cpt_account?>">
@@ -92,12 +109,21 @@ $accounts = get_accounts();
 					<div class="hidden-xs hidden-sm hidden-md col-lg-1 <?php echo 'admin_table_collapse_'.$cpt_account?>">
 						<?php echo htmlspecialchars($account['date_of_expiration'])?>	
 					</div>
-					<div class="col-md-2 col-lg-1">
-						<a href="<?php echo BASEURL.'/account/'.$account['hashid_admin'].'/admin'?>"><span class="glyphicon glyphicon-link"></span></a>	
+					<div class="col-xs-2 col-lg-1">
+						<a class="btn btn-default" href="<?php echo BASEURL.'/account/'.$account['hashid_admin'].'/admin'?>"><span class="glyphicon glyphicon-link"></span></a>	
 					</div>
-					<div class="col-md-2 col-lg-1">
-						<span class="glyphicon glyphicon-trash"></span>
+					<div class="col-xs-2 col-lg-1">
+						<form method="post" action="<?php echo ACTIONPATH.'/delete_account.php'?>">
+							<input type="hidden" name="p_hashid_account" 
+								value="<?php echo $account['hashid_admin']?>">
+							<input type="hidden" name="p_redirect" 
+								value="admin_page">
+							<button type="submit" class="btn btn-default confirmation" name="submit_delete_account">
+								<span class="glyphicon glyphicon-trash"></span>
+							</button>
+						</form>
 					</div>
+					
 					
 			<?php //Collapse button (for mobile>) ?>
 					<div class="visible-xs visible-sm col-xs-2">

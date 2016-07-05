@@ -14,9 +14,6 @@ Template to display the solutions
 ?>
 
 <!-- SOLUTION -->
-<?php if (isset($solution) && is_array($solution) && sizeof($solution) > 0 )
-{
-?>
 <div class="row">
 	<div id="solutions" class="col-lg-8 col-lg-offset-2">
 		<div class="panel panel-primary">
@@ -24,12 +21,6 @@ Template to display the solutions
 				data-toggle="collapse" data-target="#panel-body_solution">
 				<h2>Solutions</h2>
 			</div>
-	
-	<?php
-if($n_transfer == 0 
-	|| $n_transfer_opt==0)
-	{
-	?>
 			<div id="panel-body_solution" class="panel-collapse collapse in">
 				<div class="panel-body">
 					<div class="row">
@@ -129,10 +120,6 @@ if($n_transfer == 0
 					</div>
 				</div>
 			</div>
-	<?php } ?>
 		</div>
 	</div>
 </div>
-<?php
-} //if there is a solution
-?>
