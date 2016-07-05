@@ -1,4 +1,18 @@
 <?php 
+/**
+ * This software is governed by the CeCILL-B license. If a copy of this license
+ * is not distributed with this file, you can obtain one at
+ * http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
+ *
+ * Author of Accounter: Bertrand THIERRY (bertrand.thierry1@gmail.com)
+ *
+ */
+ 
+ /*
+Action launched when the form "Cancel" has been called (when editing).
+Redirect to the admin page of an account.
+ */
+ 
 require_once __DIR__.'/../../config-app.php';
 
 include_once(LIBPATH.'/accounts/get_account_admin.php');

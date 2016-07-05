@@ -1,10 +1,19 @@
 <?php
+/**
+ * This software is governed by the CeCILL-B license. If a copy of this license
+ * is not distributed with this file, you can obtain one at
+ * http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
+ *
+ * Author of Accounter: Bertrand THIERRY (bertrand.thierry1@gmail.com)
+ *
+ */
+ 
 
-/* Compute a second solution for the global problem 
-Possibly with less transfers
-
-This function uses the returned parameter from compute_solution !
-*/
+/* Compute a second solution for the global problem
+This function takes in argument the returned solution from compute_solution !
+- $Refunds[$uid][$vid] = money U must give to V
+- $uid (resp. $vid) is the id in Participant Table
+ */
 
 function compute_opt_solution($Refunds)
 {

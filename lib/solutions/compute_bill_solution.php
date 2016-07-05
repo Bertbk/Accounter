@@ -1,4 +1,22 @@
 <?php
+/**
+ * This software is governed by the CeCILL-B license. If a copy of this license
+ * is not distributed with this file, you can obtain one at
+ * http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
+ *
+ * Author of Accounter: Bertrand THIERRY (bertrand.thierry1@gmail.com)
+ *
+ */
+ 
+
+/* compute a (refund) solution for a particular bill
+
+	$Refunds is the returned value providing a refund solution between the participants:
+- Refunds[$uid][$vid] is the amount participants of id $uid must give back to participants of id $vid
+- $uid and $vid belong to the SQL table participants
+- Refunds[-1][...] stores some usefull values. -1 cannot be an index, so there shouldn't be overlap
+*/
+ 
 include_once(__DIR__.'/../get_db.php');
 
 include_once(LIBPATH.'/bills/get_bill_by_id.php');
@@ -6,12 +24,6 @@ include_once(LIBPATH.'/bill_participants/get_bill_participants_by_bill_id.php');
 include_once(LIBPATH.'/payments/get_payments_by_bill_id.php');
 
 
-/* compute a (refund) solution for a particular bill
-
-	$Refunds is the returned value providing a refund solution between the participants:
-	Refunds['uid'][$vid] is the amount participants of id 'uid' must give back to participants of id 'vid' (id of table participants).
-	Refunds[-1][...] stores some usefull values. -1 cannot be an index, so there shouldn't be overlap.
-*/
 
 function compute_bill_solution($account_id_arg, $bill_id_arg)
 {

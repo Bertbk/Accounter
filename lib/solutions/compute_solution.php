@@ -1,10 +1,20 @@
 <?php
-include_once(__DIR__.'/compute_bill_solutions.php');
-
+/**
+ * This software is governed by the CeCILL-B license. If a copy of this license
+ * is not distributed with this file, you can obtain one at
+ * http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
+ *
+ * Author of Accounter: Bertrand THIERRY (bertrand.thierry1@gmail.com)
+ *
+ */
+ 
 
 /* Compute a solution for the global problem
-$Refunds[uid][vid] is the money U must give to V
+- $Refunds[$uid][$vid] = money U must give to V
+- $uid and $vid belong are the id in Participant Table
  */
+
+ include_once(__DIR__.'/compute_bill_solutions.php');
 
 function compute_solution($account_id_arg)
 {	
