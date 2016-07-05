@@ -107,9 +107,9 @@ if($admin_mode
 			</div>
 <?php } else{
 ?>
-			<div class="panel-heading cursor_pointer" data-toggle="collapse" data-target="#<?php echo 'panel-body_bill'.$cpt_bill?>">
+			<div class="panel-heading">
 				<div class="row">
-					<div class="col-md-10">
+					<div class="col-md-10 cursor_pointer" data-toggle="collapse" data-target="#<?php echo 'panel-body_bill'.$cpt_bill?>">
 						<h2 class="bill_title">
 							<?php echo ($cpt_bill+1).'. '.htmlspecialchars($bill['title']) ?>
 						</h2>	
@@ -119,7 +119,7 @@ if($admin_mode
 					{
 						$link_tmp = $link_to_account_admin.'/edit/bill/'.$bill['hashid'].'#edit_tag_'.$bill['hashid'];
 		?>
-					<div class="col-md-2">
+					<div class="col-md-2 pull-left">
 						<div class="button_bill_title">
 							<form method="post" action="<?php echo ACTIONPATH.'/delete_bill.php'?>">
 								<input type="hidden" name="p_hashid_account" 
