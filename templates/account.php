@@ -81,6 +81,7 @@ Template of a particular account page, that is :
 			<div class="row">
 				<div class="col-md-3">
 					<?php include(__DIR__.'/account/participant.php');?>
+					<?php include(__DIR__.'/account/add_bill_panel.php');?>
 				</div>
 				<div class="col-md-9">
 					<?php include(__DIR__.'/account/bill.php');?>

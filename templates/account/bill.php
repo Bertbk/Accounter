@@ -14,57 +14,6 @@ Template to display all the bills with their participants and payments
  ?>
  
 <!-- BILLS -->
-<div class="row">
-<div class="col-xs-12">
-<div class="panel panel-primary">
-<div class="panel-heading">
-	<h2>My bills</h2>
-</div>
-<div class="panel-body">
-<?php
-//Admin only
-if($admin_mode && $edit_mode == false)
-{
-?>
-<!-- Add bill-->
-<p  id="show_hide_add_bill"><a href="javascript:void(0)" >(+) Add a bill</a></p>
-<div id="div_add_bill">
-	<form method="post" 
-		id="show_hide_add_bill_target" 
-		class="hidden_at_first"
-		action="<?php echo ACTIONPATH.'/new_bill.php'?>">
-	  <fieldset>
-			<legend>Add a bill</legend>
-			<p><em>Fields with asterisk <span class="glyphicon glyphicon-asterisk red"></span> are required</em></p>
-			<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>" >
-			<input type="hidden" name="p_cpt_bill" value="<?php echo $n_bills?>" >
-			<div class="form-group">
-				<label for="form_set_bill_name">Title<span class="glyphicon glyphicon-asterisk red"></span></label>
-				<input type="text" name="p_title_of_bill" 
-				id="form_set_bill_name" class="form-control" required 
-				placeholder="Title" title="Title">
-			</div>
-			<div class="form-group">
-				<label for="form_set_bill_description">Description</label>
-				 <textarea name="p_description" id="form_set_bill_description" class="form-control" 
-				 placeholder="Description" title="Description"></textarea>
-			</div>
-
-			 <button type="submit" name="submit_new_bill" value="Submit"
-				class="btn btn-primary" title="Submit new bill">
-				Submit
-			</button> 
-	  </fieldset>
-	</form>
-</div>
-<?php } //admin mode
-?>
-</div>
-</div>
-</div>
-</div>
-
-
 <!-- Loop on the bills -->
 <?php if (is_array($my_bills) && sizeof($my_bills) > 0 )
 {
