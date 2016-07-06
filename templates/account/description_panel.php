@@ -198,7 +198,7 @@ else{
 					</div>
 				</div>
 			<?php if($admin_mode == true){ ?>
-				<div class="panel-footer">
+				<div class="panel-footer <?php if($edit_mode == true){echo 'highlight';}?>">
 				<?php if($edit_mode === "account" 
 				&& $edit_hashid === $my_account['hashid']){?>
 					<button type="submit" name="submit_update_account" value="Submit"

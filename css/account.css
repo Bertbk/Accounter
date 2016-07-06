@@ -29,6 +29,12 @@ div#description_panel a{
 	color:black;
 }
 
+div#description_panel .highlight{
+	position:relative;
+	overflow:hidden;
+	box-shadow: -4px 6px 9px rgba(50, 50, 50, 0.5);
+}
+
 li.li_margin_top{
 	margin-top:5px;
 }
