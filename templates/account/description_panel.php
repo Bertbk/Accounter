@@ -52,36 +52,45 @@ When the admin mode is engaged, the panel is red.
 						$link_tmp = $link_to_account_admin.'/edit/account/'.$my_account['hashid'].'#edit_tag_'.$my_account['hashid'];
 		?>
 						<div class="button_account_title">
-							<form method="post" action="<?php echo ACTIONPATH.'/delete_account.php'?>">
-								<input type="hidden" name="p_hashid_account" 
-									value="<?php echo $my_account['hashid_admin']?>">
-								<button type="submit" class="btn btn-danger dropdown-toggle" 
-									data-toggle="dropdown" title="Delete...">
-									<span class="glyphicon glyphicon-trash"></span>
-									<span class="sr-only">Remove</span>
-									<span class="caret"></span>
-								</button>
-								<ul class="dropdown-menu" role="menu">
-									<li>
+						
+							<button type="submit" class="btn btn-danger dropdown-toggle" 
+								data-toggle="dropdown" title="Delete...">
+								<span class="glyphicon glyphicon-trash"></span>
+								<span class="sr-only">Remove</span>
+								<span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu" role="menu">
+								<li>
+									<form method="post" action="<?php echo ACTIONPATH.'/remove_participants.php'?>">
+										<input type="hidden" name="p_hashid_account" 
+											value="<?php echo $my_account['hashid_admin']?>">
 										<button type="submit" class="btn btn-link confirmation" 
 											name="submit_remove_all_participants" onclick="event.stopPropagation();">
 											Remove all participants
 										</button>
-									</li>
-									<li>
+									</form>
+								</li>
+								<li>
+									<form method="post" action="<?php echo ACTIONPATH.'/remove_bills.php'?>">
+										<input type="hidden" name="p_hashid_account" 
+											value="<?php echo $my_account['hashid_admin']?>">
 										<button type="submit" class="btn btn-link confirmation" 
 											name="submit_remove_all_bills" onclick="event.stopPropagation();">
 											Remove all bills
 										</button>
-									</li>
-									<li class="li_margin_top">
+									</form>
+								</li>
+								<li class="li_margin_top">
+									<form method="post" action="<?php echo ACTIONPATH.'/delete_account.php'?>">
+										<input type="hidden" name="p_hashid_account" 
+											value="<?php echo $my_account['hashid_admin']?>">
 										<button type="submit" class="btn btn-link confirmation" 
 											name="submit_delete_account" onclick="event.stopPropagation();">
 											Delete the entire account
 										</button>
-									</li>
-								</ul>
-							</form>
+									</form>
+								</li>
+							</ul>
 						</div>
 						<div class="button_account_title">
 							<form action="<?php echo $link_tmp?>">
