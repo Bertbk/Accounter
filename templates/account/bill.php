@@ -281,13 +281,14 @@ if($admin_mode && !$edit_mode)
 	if(!empty($this_free_bill_participants))
 	{
 	?>
-					<p id="<?php echo 'show_hide_bill_add_part_'.$cpt_bill?>"><a href="javascript:void(0)">(+) Assign a participant to this bill</a></p>
-					<form method="post" class="hidden_at_first" 
-						enctype="multipart/form-data"
-						id=<?php echo 'show_hide_bill_add_part_'.$cpt_bill.'_target'?>
+					<form method="post"	enctype="multipart/form-data"
 						action="<?php echo ACTIONPATH.'/new_bill_participant.php'?>">
-						<fieldset>
-							<legend>Assign a participant to this bill:</legend>
+						<legend id="<?php echo 'show_hide_bill_add_part_'.$cpt_bill?>"
+							class="cursorpointer">
+							(+) Assign a participant to this bill
+						</legend>
+						<fieldset class="hidden_at_first"
+							id=<?php echo 'show_hide_bill_add_part_'.$cpt_bill.'_target'?>>
 							<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
 							<input type="hidden" name="p_hashid_bill" value="<?php echo $bill['hashid']?>">
 							<input type="hidden" name="p_anchor" value="<?php echo '#bill-'.$cpt_bill?>">
@@ -637,12 +638,13 @@ else
 		if(!empty($my_bill_participants[$bill['id']]))
 		{
 ?>
-					<p id="<?php echo 'show_hide_bill_add_paymt_'.$cpt_bill?>"><a href="javascript:void(0)">
-					(+) Add a payment</a></p>
-					<form method="post" id="<?php echo 'show_hide_bill_add_paymt_'.$cpt_bill.'_target'?>" 
-						class="hidden_at_first" action="<?php echo ACTIONPATH.'/new_payment.php'?>">
-						<fieldset>
-							<legend>Add a payment</legend>
+					<form method="post" action="<?php echo ACTIONPATH.'/new_payment.php'?>">
+						<legend id="<?php echo 'show_hide_bill_add_paymt_'.$cpt_bill?>"
+							class="cursorpointer">
+							(+) Add a payment
+						</legend>
+						<fieldset class="hidden_at_first"
+							id="<?php echo 'show_hide_bill_add_paymt_'.$cpt_bill.'_target'?>">
 							<div id="<?php echo 'div_option_add_payment_'.$cpt_bill?>">
 								<p><em>Fields with asterisk <span class="glyphicon glyphicon-asterisk red"></span> are required</em></p>
 								<input type="hidden" name="p_hashid_account" value ="<?php echo $my_account['hashid_admin']?>">
