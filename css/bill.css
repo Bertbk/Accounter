@@ -60,6 +60,8 @@ div.bill div.highlight{
 	padding-top:10px;
 	padding-bottom:10px;
 	box-shadow: -4px 6px 9px rgba(50, 50, 50, 0.5);
+	margin-top: 10px;
+	margin-bottom: 10px;	
 }
 
 div.bill-0 div.panel-primary div.panel-body,

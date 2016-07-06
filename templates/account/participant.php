@@ -96,7 +96,7 @@ else{
 <?php if($participant_to_edit !== false){ 
 					//EDIT A PARTICIPANT
 ?>
-			<h3 id="<?php echo 'edit_tag_'.$edit_hashid?>">Edit</h3>
+			<h3 id="<?php echo 'edit_tag_'.$edit_hashid?>">Edit <?php echo htmlspecialchars($participant['name'])?></h3>
 			<form method="post"
 				action="<?php echo ACTIONPATH.'/update_participant.php'?>"
 				class="form-horizontal" role="form">

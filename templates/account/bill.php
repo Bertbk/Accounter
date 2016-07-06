@@ -249,8 +249,8 @@ if($admin_mode
 		$bill_participant_tmp = $this_bill_participants[$participation_to_edit];
 	//Edit activated on a bill_participant of THIS bill :
 	?>
-				<div class="highlight">
-					<h3 id="<?php echo 'edit_tag_'.$edit_hashid?>">Edit participation</h3>
+				<div class="highlight"  id="<?php echo 'edit_tag_'.$edit_hashid?>">
+					<h3>Edit participation of <?php echo htmlspecialchars($bill_participant_tmp['name']);?></h3>
 					<form method="post" action="<?php echo ACTIONPATH.'/update_bill_participant.php'?>">
 
 						<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
@@ -497,8 +497,8 @@ foreach($this_payment as $payment)
 if($payment_to_edit !== false)
 {
 ?>
-					<div class="highlight">
-						<h3 id="<?php echo 'edit_tag_'.$edit_hashid?>">Edit payment</h3>
+					<div class="highlight" id="<?php echo 'edit_tag_'.$edit_hashid?>">
+						<h3>Edit payment</h3>
 						<form method="post" id="form_edit_payment_send"
 							action="<?php echo ACTIONPATH.'/update_payment.php'?>">
 							<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
