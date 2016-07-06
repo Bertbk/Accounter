@@ -662,7 +662,9 @@ else
 														id="form_set_payment_payer_<?php echo $cpt_bill?>_0" 
 														onchange="DropDownListsBetweenParticipants(this, document.getElementById('<?php echo 'form_set_payment_recv_'.$cpt_bill.'_0'?>'))"
 														class="form-control selectpicker" title="Payer"> 
-															<option disabled selected value="null"> -- select a payer -- </option>
+															<option disabled selected value="null" data-hidden="true">
+																Select a payer
+															</option>
 														<?php
 															foreach($this_bill_participants as $bill_participant)
 															{ ?>

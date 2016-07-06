@@ -131,7 +131,8 @@ function AddPaymentLine(name_of_people, hashid_of_people, cpt_bill)
 	opt_null.selected=true;
 	opt_null.disabled=true;
 	opt_null.value = null;
-	opt_null.text = " -- select a payer -- ";
+	opt_null.text = "Select a payer";
+	opt_null.setAttribute("data-hidden", "true");
 	select_payer.appendChild(opt_null);
 	for (var i =0; i < name_of_people.length; i ++)
 	{
