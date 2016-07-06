@@ -38,21 +38,28 @@ Template of the retrieve accounts page.
 
 			<h1>Retrieve your accounts</h1>
 			
-			<form method="post" action="<?php echo BASEURL.'/controls/search_accounts.php'?>">
-				<fieldset>
-					<legend class="sr-only">Retrieve your accounts</legend>
-					<p><em>Fields with asterisk <span class="glyphicon glyphicon-asterisk red"></span> are required</em></p>
-					<div class="form-group">
-						<label for="form_retrieve_accounts_email">Email address<span class="glyphicon glyphicon-asterisk red"></span></label>
-						<input type="email" name="p_email" id="form_email" required class="form-control"
-							placeholder="Email address" title="Email address">
-					</div>
-					<button type="submit" name="submit_email" value="Submit"
-						class="btn btn-primary" title="Retrive your accounts">
-						Submit
-					</button> 
-				</fieldset>
-			</form>
+			<div class="row">
+				<div class="col-md-6 col-lg-4">
+					<form method="post" action="<?php echo BASEURL.'/controls/search_accounts.php'?>">
+						<fieldset>
+							<legend class="sr-only">Retrieve your accounts</legend>
+							<p><em>Fields with asterisk <span class="glyphicon glyphicon-asterisk red"></span> are required</em></p>
+							<div class="form-group">
+								<label for="form_retrieve_accounts_email">Email address<span class="glyphicon glyphicon-asterisk red"></span></label>
+								<div class="input-group">
+									<input type="email" name="p_email" id="form_email" required class="form-control"
+										placeholder="Email address" title="Email address">
+									<span class="input-group-addon glyphicon glyphicon-envelope"></span>
+								</div>
+							</div>
+							<button type="submit" name="submit_email" value="Submit"
+								class="btn btn-primary" title="Retrive your accounts">
+								Submit
+							</button> 
+						</fieldset>
+					</form>
+				</div>
+			</div>
 		</div>
 	</div> <!-- content -->
 </body>

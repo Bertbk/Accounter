@@ -42,31 +42,56 @@ Template of the create an account page.
 				<fieldset>
 					<legend class="sr-only">Create a new account</legend>
 					<p><em>Fields with asterisk <span class="glyphicon glyphicon-asterisk red"></span> are required</em></p>
-					<div class="form-group">
-						<label for="form_title_account">Title<span class="glyphicon glyphicon-asterisk red"></span></label>
-						<input type="text" name="p_title_of_account" id="form_title_account" required
-							class="form-control" placeholder="Title" title="Title">
+					<div class="row">
+						<div class="col-xs-12 col-sm-6 col-lg-4">
+							<div class="form-group">
+								<label for="form_title_account">Title<span class="glyphicon glyphicon-asterisk red"></span></label>
+								<div class="input-group">
+									<input type="text" name="p_title_of_account" id="form_title_account" required
+										class="form-control" placeholder="Title" title="Title">
+									<span class="input-group-addon glyphicon glyphicon-bookmark"></span>
+								</div>
+							</div>
+						</div>
+						<div class="col-xs-12 col-sm-6 col-lg-4">
+							<div class="form-group">
+								<label for="form_author">Author<span class="glyphicon glyphicon-asterisk red"></span></label>
+								<div class="input-group">
+									<input type="text" name="p_author" id="form_author" required class="form-control"
+										placeholder="Author" title="Author">
+									<span class="input-group-addon glyphicon glyphicon-user"></span>
+								</div>
+							</div>
+						</div>
+						<div class="col-xs-12 col-sm-6 col-lg-4">
+							<div class="form-group">
+								<label for="form_email">Email address<span class="glyphicon glyphicon-asterisk red"></span></label>
+								<div class="input-group">
+									<input type="email" name="p_contact_email" id="form_email" required class="form-control"
+										placeholder="Email address" title="Email address">
+									<span class="input-group-addon glyphicon glyphicon-envelope"></span>
+								</div>
+							</div>
+						</div>
+						<div class="col-xs-12 col-sm-6">
+							<div class="form-group">
+								<label for="form_description">Description</label>
+								<div class="input-group">
+									 <textarea name="p_description" id="form_description" class="form-control" 
+									 placeholder="Description" title="Description"></textarea>
+									<span class="input-group-addon glyphicon glyphicon-tag"></span>
+								</div>
+							</div>
+						</div>
 					</div>
-					<div class="form-group">
-						<label for="form_author">Author<span class="glyphicon glyphicon-asterisk red"></span></label>
-						<input type="text" name="p_author" id="form_author" required class="form-control"
-							placeholder="Author" title="Author">
+					<div class="row">
+						<div class="col-xs-12">
+							<button type="submit" name="submit_new_account" value="Submit"
+								class="btn btn-primary" title="Submit new account">
+								Submit
+							</button> 
+						</div>
 					</div>
-					<div class="form-group">
-						<label for="form_email">Email address<span class="glyphicon glyphicon-asterisk red"></span></label>
-						<input type="email" name="p_contact_email" id="form_email" required class="form-control"
-							placeholder="Email address" title="Email address">
-					</div>
-					<div class="form-group">
-						<label for="form_description">Description</label>
-						 <textarea name="p_description" id="form_description" class="form-control" 
-						 placeholder="Description" title="Description"></textarea>
-					</div>
-
-					<button type="submit" name="submit_new_account" value="Submit"
-						class="btn btn-primary" title="Submit new account">
-						Submit
-					</button> 
 				</fieldset>
 			</form>
 		</div>
