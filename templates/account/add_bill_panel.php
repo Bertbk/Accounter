@@ -26,8 +26,8 @@ if($admin_mode && $edit_mode == false)
 </form>
 
 <div id="add_bill">
-	<div class="panel panel-primary cursorpointer" data-toggle="collapse" data-target="#form_add_bill_panel_body">
-		<div class="panel-heading">
+	<div class="panel panel-primary">
+		<div class="panel-heading cursorpointer" data-toggle="collapse" data-target="#form_add_bill_panel_body">
 			<h2>Add a bill</h2>
 			<button class="btn btn-default floatright" title="Collapse/Expand"
 				data-toggle="collapse" data-target="#form_add_bill_panel_body">

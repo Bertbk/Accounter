@@ -69,15 +69,45 @@ if($admin_mode
 					{
 						$link_tmp = $link_to_account_admin.'/edit/bill/'.$bill['hashid'].'#edit_tag_'.$bill['hashid'];
 		?>
-						<div class="button_bill_title">
-							<form method="post" action="<?php echo ACTIONPATH.'/delete_bill.php'?>">
-								<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
-								<input type="hidden" name="p_hashid_bill" value="<?php echo $bill['hashid']?>">
-								<button type="submit" class="btn btn-default confirmation" 
-									name="submit_delete_bill" title="Delete bill"  onclick="event.stopPropagation();">
-									<span class="glyphicon glyphicon-trash"></span>
-								</button>
-							</form>
+						<div class="button_account_title">
+							<button type="submit" class="btn btn-danger dropdown-toggle" 
+								data-toggle="dropdown" title="Delete...">
+								<span class="glyphicon glyphicon-trash"></span>
+								<span class="sr-only">Delete...</span>
+								<span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu" role="menu">
+								<li>
+									<form method="post" action="<?php echo ACTIONPATH.'/remove_bill_participants.php'?>">
+										<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
+										<input type="hidden" name="p_hashid_bill" value="<?php echo $bill['hashid']?>">
+										<button type="submit" class="btn btn-link confirmation" 
+											name="submit_remove_all_participations" onclick="event.stopPropagation();">
+											Remove all participations
+										</button>
+									</form>
+								</li>
+								<li>
+									<form method="post" action="<?php echo ACTIONPATH.'/remove_payments.php'?>">
+										<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
+										<input type="hidden" name="p_hashid_bill" value="<?php echo $bill['hashid']?>">
+										<button type="submit" class="btn btn-link confirmation" 
+											name="submit_remove_all_payments" onclick="event.stopPropagation();">
+											Remove all payments
+										</button>
+									</form>
+								</li>
+								<li class="li_margin_top">
+									<form method="post" action="<?php echo ACTIONPATH.'/delete_bill.php'?>">
+											<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
+											<input type="hidden" name="p_hashid_bill" value="<?php echo $bill['hashid']?>">
+											<button type="submit" class="btn btn-link confirmation" 
+												name="submit_delete_bill" onclick="event.stopPropagation();">
+												Delete the bill
+											</button>
+									</form>
+								</li>
+							</ul>
 						</div>
 						<div class="button_bill_title">
 							<form action="<?php echo $link_tmp?>">

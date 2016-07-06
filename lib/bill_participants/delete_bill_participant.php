@@ -33,9 +33,8 @@ function delete_bill_participant($account_id_arg, $bill_part_id_arg)
 	}
 	catch (Exception $e)
 	{
-	//	echo 'Fail to connect: ' . $e->getMessage();
+	 return 'Fail to connect: ' . $e->getMessage();
 	}
 	return $isgood;
 	
-	return $isgood;
 }
