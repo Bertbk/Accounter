@@ -45,7 +45,8 @@ else{
 	id="<?php echo 'bill-'.$cpt_bill?>">
 	<div class="col-xs-12">
 		<div class="panel panel-primary">
-			<div class="panel-heading cursorpointer" data-toggle="collapse" data-target="#<?php echo 'panel-body_bill'.$cpt_bill?>">
+			<div class="panel-heading <?php if($overlay==""){echo 'cursorpointer';}?>"
+				<?php if($overlay==""){echo 'data-toggle="collapse" data-target="#panel-body_bill'.$cpt_bill.'"';}?>>
 				<div class="row">
 	<?php 
 //Edit the Bill (name, description, ...)

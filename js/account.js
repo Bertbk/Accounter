@@ -241,6 +241,7 @@ function AddPaymentLine(name_of_people, hashid_of_people, cpt_bill)
 }
 
 
+
 //Add a row to add a participant (multiple submit) 
 function AddParticipantLine()
 {
@@ -249,21 +250,31 @@ function AddParticipantLine()
 		AddParticipantLine.counter = 1;
 	}
 	
+
+	var div_col_name = document.createElement("div");
+	div_col_name.className="col-xs-9";	
+	var div_col_nb = document.createElement("div");
+	div_col_nb.className="col-xs-3";
+	var div_spinner = document.createElement("div");
+	div_spinner.className="input-group spinner";
+	var div_buttons = document.createElement("div");
+	div_buttons.className="input-group-btn-vertical";
+	
 	var input_name = document.createElement("input");
 	input_name.id = "form_set_participant_name_"+ AddParticipantLine.counter;
 	input_name.type="text";
-	input_name.setAttribute("class",	"form-control-inline col-xs-9");
+	input_name.setAttribute("class",	"form-control");
 	input_name.name = "p_new_participant["+ AddParticipantLine.counter +"][p_name]";
 	input_name.placeholder="Name";
 	input_name.title="Name";
 	
 	var input_nb_of_people = document.createElement("input");
 	input_nb_of_people.id = "form_set_participant_nbpeople_"+ AddParticipantLine.counter;
-	input_nb_of_people.type="number";
+	input_nb_of_people.type="text";
 	input_nb_of_people.value="1";
 	input_nb_of_people.min="1";
 	input_nb_of_people.step="1";
-	input_nb_of_people.setAttribute("class",	"form-control-inline col-xs-3");
+	input_nb_of_people.setAttribute("class",	"form-control");
 	input_nb_of_people.name = "p_new_participant["+ AddParticipantLine.counter +"][p_nb_of_people]";
 	input_nb_of_people.title = "Number of people";
 	
@@ -277,12 +288,36 @@ function AddParticipantLine()
 	label_nb_of_people.innerHTML="Nb. of people:";
 	label_nb_of_people.setAttribute("class", "sr-only");
 	
+	
+	var button_up = document.createElement("button");
+	button_up.className="btn btn-default";
+	button_up.type="button";
+	var button_down = document.createElement("button");
+	button_down.className="btn btn-default";
+	button_down.type="button";
+	
+	var i_up = document.createElement("i");
+	i_up.className="fa fa-caret-up"
+	var i_down = document.createElement("i");
+	i_down.className="fa fa-caret-down"
+	
+	//Assemble everything
+	div_col_name.appendChild(label_name);
+	div_col_name.appendChild(input_name);
+	
+	button_up.appendChild(i_up);
+	button_down.appendChild(i_down);
+	div_buttons.appendChild(button_up);
+	div_buttons.appendChild(button_down);
+	div_spinner.appendChild(input_nb_of_people);
+	div_spinner.appendChild(div_buttons);
+	div_col_nb.appendChild(label_nb_of_people);
+	div_col_nb.appendChild(div_spinner);
+
 	var div_row = document.createElement("div");
-	div_row.setAttribute("class", "row form-group");
-	div_row.appendChild(label_name);
-	div_row.appendChild(input_name);
-	div_row.appendChild(label_nb_of_people);
-	div_row.appendChild(input_nb_of_people);
+	div_row.setAttribute("class", "row form-group row-no-padding");
+	div_row.appendChild(div_col_name);
+	div_row.appendChild(div_col_nb);
 	
 	var form_to_add = document.getElementById('inner_participant_form');
 	form_to_add.appendChild(div_row);

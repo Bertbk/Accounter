@@ -99,16 +99,26 @@ else{
 			<h3 id="<?php echo 'edit_tag_'.$edit_hashid?>">Edit <?php echo htmlspecialchars($participant['name'])?></h3>
 			<form method="post"
 				action="<?php echo ACTIONPATH.'/update_participant.php'?>"
-				class="form-horizontal" role="form">
+				role="form">
 				<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
 				<input type="hidden" name="p_hashid_participant" value="<?php echo $participant['hashid']?>">
-				<div class="row form-group">
-					<input type="text" name="p_name_of_participant" class="form-control-inline col-xs-9"
-						value="<?php echo htmlspecialchars($participant['name'])?>" required
-						title="Name of participant">
-					<input type="number" name="p_nb_of_people" class="form-control-inline col-xs-3"
-						min="1" step="1" value="<?php echo (int)$participant['nb_of_people']?>" required
-						title="Number of people">
+				<div class="row form-group row-no-padding">
+					<div class="col-xs-9">
+						<input type="text" name="p_name_of_participant" class="form-control"
+							value="<?php echo htmlspecialchars($participant['name'])?>" required
+							title="Name of participant">
+					</div>
+					<div class="col-xs-3">
+						<div class="input-group spinner">
+							<input type="text" name="p_nb_of_people" class="form-control"
+								min="1" step="1" value="<?php echo (int)$participant['nb_of_people']?>" required
+								title="Number of people">
+							<div class="input-group-btn-vertical">
+								<button class="btn btn-default" type="button"><i class="fa fa-caret-up"></i></button>
+								<button class="btn btn-default" type="button"><i class="fa fa-caret-down"></i></button>
+							</div>
+						</div>
+					</div>
 				</div>
 				<div class="row form-group">
 					<div class="col-xs-6">
@@ -169,10 +179,17 @@ if($admin_mode && $edit_mode === false)
 								<div class="col-xs-3">
 									<label for="form_set_participant_nbpeople_0" class="sr-only">
 										Nb. of people
-									</label>		
-									<input type="number" name="p_new_participant[0][p_nb_of_people]" value="1" 
+									</label>
+									<div class="input-group spinner">
+										<input type="text" name="p_new_participant[0][p_nb_of_people]" value="1" 
 										id="form_set_participant_nbpeople_0" class="form-control"
+										step="1" min="1"
 										title="Number of people" required>
+										<div class="input-group-btn-vertical">
+											<button class="btn btn-default" type="button"><i class="fa fa-caret-up"></i></button>
+											<button class="btn btn-default" type="button"><i class="fa fa-caret-down"></i></button>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
