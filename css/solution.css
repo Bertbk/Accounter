@@ -13,6 +13,10 @@ div#solutions{
 	overflow:hidden;
 }
 
+div#solutions h2{
+	display:inline-block;
+}
+
 div#solutions div.panel-body h3
 {
 	text-align:center;

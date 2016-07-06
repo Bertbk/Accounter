@@ -7,6 +7,14 @@
  *
 */
 
+div#add_bill{
+	overflow:hidden;
+}
+
+div#add_bill h2{
+	display:inline-block;
+}
+
 h3.bill_title{
 	display:inline-block;
 }

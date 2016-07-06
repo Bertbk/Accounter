@@ -57,6 +57,14 @@ body div.container{
 	float:left;
 }
 
+.floatright{
+	float:right;
+}
+
+.cursorpointer{
+	cursor:pointer;
+}
+
 .zeromargin{
 	margin:0px;
 }

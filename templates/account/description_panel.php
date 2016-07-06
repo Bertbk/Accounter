@@ -56,7 +56,7 @@ When the admin mode is engaged, the panel is red.
 								<input type="hidden" name="p_hashid_account" 
 									value="<?php echo $my_account['hashid_admin']?>">
 								<button type="submit" class="btn btn-danger dropdown-toggle" 
-									data-toggle="dropdown" title="Delete..." onclick="event.stopPropagation();">
+									data-toggle="dropdown" title="Delete...">
 									<span class="glyphicon glyphicon-trash"></span>
 									<span class="sr-only">Remove</span>
 									<span class="caret"></span>
