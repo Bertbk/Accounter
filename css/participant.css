@@ -17,11 +17,6 @@ div#participants div.panel-heading{
 	overflow:hidden;
 }
 
-div#participants a{
-	color:black;
-	word-break: break-all;
-	overflow:hidden;
-}
 
 div#participants h2{
 	display:inline-block;

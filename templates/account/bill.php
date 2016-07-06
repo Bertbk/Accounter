@@ -681,7 +681,7 @@ else
 													<input type="number" step="0.01" min="0" name="p_payment[0][p_cost]" 
 														id="<?php echo 'form_set_payment_cost_'.$cpt_bill?>_0" required 
 														class="form-control" title="Amount">
-														<span class="input-group-addon glyph glyphicon-euro"></span>
+														<span class="input-group-addon glyphicon glyphicon-euro"></span>
 												</div>
 											</div>
 

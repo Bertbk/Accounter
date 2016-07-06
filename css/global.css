@@ -83,3 +83,7 @@ body div.container{
 .red{
 	color:red;
 }
+
+div.input-group span.input-group-addon.glyphicon{
+	top:0px !important;
+}
