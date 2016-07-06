@@ -657,17 +657,20 @@ else
 										<div class="row form-group">
 											<div class="col-xs-12 col-lg-4">
 												<label for="<?php echo 'form_set_payment_payer_'.$cpt_bill?>_0">Payer<span class="glyphicon glyphicon-asterisk red"></span></label>
-												<select name="p_payment[0][p_hashid_payer]" 
-													id="form_set_payment_payer_<?php echo $cpt_bill?>_0" 
-													onchange="DropDownListsBetweenParticipants(this, document.getElementById('<?php echo 'form_set_payment_recv_'.$cpt_bill.'_0'?>'))"
-													class="form-control selectpicker" title="Payer"> 
-														<option disabled selected value="null"> -- select a payer -- </option>
-													<?php
-														foreach($this_bill_participants as $bill_participant)
-														{ ?>
-															<option value="<?php echo $bill_participant['hashid']?>"><?php echo htmlspecialchars($bill_participant['name'])?></option>
-										<?php	} ?>
-												</select>
+												<div class="input-group">
+													<select name="p_payment[0][p_hashid_payer]" 
+														id="form_set_payment_payer_<?php echo $cpt_bill?>_0" 
+														onchange="DropDownListsBetweenParticipants(this, document.getElementById('<?php echo 'form_set_payment_recv_'.$cpt_bill.'_0'?>'))"
+														class="form-control selectpicker" title="Payer"> 
+															<option disabled selected value="null"> -- select a payer -- </option>
+														<?php
+															foreach($this_bill_participants as $bill_participant)
+															{ ?>
+																<option value="<?php echo $bill_participant['hashid']?>"><?php echo htmlspecialchars($bill_participant['name'])?></option>
+											<?php	} ?>
+													</select>
+													<span class="input-group-addon glyphicon glyphicon-user"></span>
+												</div>
 											</div>
 
 											<div class="col-xs-12 col-lg-4">
@@ -681,11 +684,16 @@ else
 											</div>
 
 											<div class="col-xs-12 col-lg-4">
-												<label for="<?php echo 'form_set_payment_recv_'.$cpt_bill?>_0">Receiver<span class="glyphicon glyphicon-asterisk red"></span></label>
+												<label for="<?php echo 'form_set_payment_recv_'.$cpt_bill?>_0">
+													Receiver<span class="glyphicon glyphicon-asterisk red"></span>
+												</label>
+												<div class="input-group">
 													<select name="p_payment[0][p_hashid_recv]" id="<?php echo 'form_set_payment_recv_'.$cpt_bill?>_0"
 													class="form-control selectpicker" title="Receiver"> 
 														<option value="-1" selected="selected">Group</option>
 													</select>
+													<span class="input-group-addon glyphicon glyphicon-user"></span>
+												</div>
 											</div>
 										</div>
 										<div class="row form-group">
