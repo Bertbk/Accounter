@@ -683,7 +683,7 @@ else
 											<div class="col-xs-12 col-lg-4">
 												<label for="<?php echo 'form_set_payment_recv_'.$cpt_bill?>_0">Receiver<span class="glyphicon glyphicon-asterisk red"></span></label>
 													<select name="p_payment[0][p_hashid_recv]" id="<?php echo 'form_set_payment_recv_'.$cpt_bill?>_0"
-													class="form-control" title="Receiver"> 
+													class="form-control selectpicker" title="Receiver"> 
 														<option value="-1" selected="selected">Group</option>
 													</select>
 											</div>
@@ -691,10 +691,14 @@ else
 										<div class="row form-group">
 											<div class="col-xs-12 col-lg-6">
 												<label for="<?php echo 'form_set_payment_desc_'.$cpt_bill?>_0">
-												Description</label>
-												<input type="text" name="p_payment[0][p_description]" 
-													id="<?php echo 'form_set_payment_desc_'.$cpt_bill?>_0" 
-													class="form-control" placeholder="Description" title="Description">
+													Description
+												</label>
+												<div class="input-group">
+													<input type="text" name="p_payment[0][p_description]" 
+														id="<?php echo 'form_set_payment_desc_'.$cpt_bill?>_0" 
+														class="form-control" placeholder="Description" title="Description">
+													<span class="input-group-addon glyphicon glyphicon-tag"></span>
+												</div>
 											</div>
 											<div class="col-xs-12 col-lg-6">
 												<label for="<?php echo 'form_set_payment_date_'.$cpt_bill?>_0">

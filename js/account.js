@@ -92,7 +92,7 @@ function AddPaymentLine(name_of_people, hashid_of_people, cpt_bill)
 	var select_payer = document.createElement("select");
 	select_payer.id = "form_set_payment_payer_"+ cpt_bill + "_" + AddPaymentLine.counter;
 	select_payer.name = "p_payment["+ AddPaymentLine.counter +"][p_hashid_payer]";
-	select_payer.className = "form-control";
+	select_payer.className = "form-control selectpicker";
 	select_payer.title = "Payer";
 	var input_cost = document.createElement("input");
 	input_cost.id = "form_set_payment_cost_"+ cpt_bill + "_" + AddPaymentLine.counter;
@@ -105,7 +105,7 @@ function AddPaymentLine(name_of_people, hashid_of_people, cpt_bill)
 	var select_receiver = document.createElement("select");
 	select_receiver.id = "form_set_payment_recv_"+ cpt_bill + "_" + AddPaymentLine.counter;
 	select_receiver.name = "p_payment["+ AddPaymentLine.counter +"][p_hashid_recv]";
-	select_receiver.className = "form-control";
+	select_receiver.className = "form-control selectpicker";
 	select_receiver.title = "Receiver";
 	var input_description = document.createElement("input");
 	input_description.id = "form_set_payment_desc_"+ cpt_bill + "_" + AddPaymentLine.counter;
@@ -172,6 +172,10 @@ function AddPaymentLine(name_of_people, hashid_of_people, cpt_bill)
 	div_input_group_amount.className="input-group";
 	var span_glyph_amount = document.createElement("span");
 	span_glyph_amount.className="input-group-addon glyphicon glyphicon-euro";
+	var div_input_group_description = document.createElement("div");
+	div_input_group_description.className="input-group";
+	var span_glyph_description = document.createElement("span");
+	span_glyph_description.className="input-group-addon glyphicon glyphicon-tag";
 	var div_input_group_date = document.createElement("div");
 	div_input_group_date.className="input-group";
 	var span_glyph_date = document.createElement("span");
@@ -193,7 +197,9 @@ function AddPaymentLine(name_of_people, hashid_of_people, cpt_bill)
 	div_row1.appendChild(div_receiver);
 	//Description
 	div_description.appendChild(label_desc);
-	div_description.appendChild(input_description);
+	div_input_group_description.appendChild(input_description);
+	div_input_group_description.appendChild(span_glyph_description);	
+	div_description.appendChild(div_input_group_description);
 	div_row2.appendChild(div_description);
 	//Date
 	div_date.appendChild(label_date);
@@ -211,8 +217,11 @@ function AddPaymentLine(name_of_people, hashid_of_people, cpt_bill)
 	parent_div.appendChild(div_row1);
 	parent_div.appendChild(div_row2);
 	
-   AddPaymentLine.counter ++;
-   return false;
+     
+
+  $('.selectpicker').selectpicker('refresh');
+  AddPaymentLine.counter ++;
+  return false;
 }
 
 
