@@ -28,7 +28,20 @@ foreach($my_bills as $bill)
 	if(!empty($my_free_bill_participants[$bill['id']]))
 	{	$this_free_bill_participants = $my_free_bill_participants[$bill['id']];}
 ?>
-<div class="row bill <?php echo 'bill-'.$cpt_bill?>" 
+
+<?php //Overlay setting
+if($admin_mode 
+&& $edit_mode == 'bill'
+&& $edit_hashid === $bill['hashid'])
+{
+	$overlay="highlight";
+}
+else{
+	$overlay = "";
+}
+?>
+
+<div class="row bill <?php echo 'bill-'.$cpt_bill?> <?php echo $overlay?>" 
 	id="<?php echo 'bill-'.$cpt_bill?>">
 	<div class="col-xs-12">
 		<div class="panel panel-primary">
@@ -236,7 +249,8 @@ if($admin_mode
 		$bill_participant_tmp = $this_bill_participants[$participation_to_edit];
 	//Edit activated on a bill_participant of THIS bill :
 	?>
-				<h3 id="<?php echo 'edit_tag_'.$edit_hashid?>">Edit participation</h3>
+				<div class="highlight">
+					<h3 id="<?php echo 'edit_tag_'.$edit_hashid?>">Edit participation</h3>
 					<form method="post" action="<?php echo ACTIONPATH.'/update_bill_participant.php'?>">
 
 						<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
@@ -266,6 +280,7 @@ if($admin_mode
 						 Cancel
 						</button>
 					</form>
+				</div>
 <?php	
 //reset temporary variables
 $participation_to_edit=false;
@@ -482,134 +497,136 @@ foreach($this_payment as $payment)
 if($payment_to_edit !== false)
 {
 ?>
-					<h3 id="<?php echo 'edit_tag_'.$edit_hashid?>">Edit payment</h3>
-					<form method="post" id="form_edit_payment_send"
-						action="<?php echo ACTIONPATH.'/update_payment.php'?>">
-						<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
-						<input type="hidden" name="p_hashid_payment" value="<?php echo $payment_to_edit['hashid']?>">
-						
-						<div class="row form-group">
-							<div class="col-xs-12">
-								<label for="form_edit_payment_bill_<?php echo $cpt_bill?>">
-									Move to another bill
-								</label>
-								<select name="p_hashid_bill" id="form_edit_payment_bill_<?php echo $cpt_bill?>"
-									onchange="CreatePossiblePayersLists(this, document.getElementById('form_edit_payment_payer_<?php echo $cpt_bill?>'),	
-									<?php echo htmlspecialchars(json_encode($list_of_possible_payers, 3))?>)"
-									class="form-control"> 
-						<?php //list of bills
-								foreach($my_bills as $sub_bill)
-									{
-						?>
-										<option value="<?php echo $sub_bill['hashid']?>"
-										<?php if($sub_bill['id']==$payment_to_edit['bill_id']){echo ' selected';}?>
-										><?php echo htmlspecialchars($sub_bill['title'])?></option>
-						<?php
-									}
-						?>
-								</select>
-							</div>
-						</div>
-						<div class="row form-group">
-							<div class="col-xs-12 col-lg-4">
-								<label for="form_edit_payment_payer_<?php echo $cpt_bill?>">
-									Payer
-								</label>
-								<select name="p_hashid_payer" 
-									onchange="DropDownListsBetweenParticipants(this, document.getElementById('form_edit_payment_recv_<?php echo $bill['id']?>'))"
-									id="form_edit_payment_payer_<?php echo $cpt_bill?>" class="form-control">
-						<?php
-									foreach($this_bill_participants as $bill_participant)
-									{
-						?>
-										<option value="<?php echo $bill_participant['hashid']?>"
-										<?php if($bill_participant['id']==$payment_to_edit['payer_id']){echo ' selected';}?>>
-										<?php echo htmlspecialchars($bill_participant['name'])?></option>
-						<?php
-									}
-						?>
-								</select>
-							</div>
-							<div class="col-xs-12 col-lg-4">
-								<label for="form_edit_payment_cost_<?php echo $cpt_bill?>">
-									Amount
-								</label>
-								<div class="input-group">
-									<input type="number" step="0.01" min="0" name="p_cost" 
-										class="form-control"
-										id="form_edit_payment_cost_<?php echo $cpt_bill?>"
-										value="<?php echo (float)$payment_to_edit['cost']?>" required>
-									<span class="input-group-addon glyph glyphicon-euro"></span>
+					<div class="highlight">
+						<h3 id="<?php echo 'edit_tag_'.$edit_hashid?>">Edit payment</h3>
+						<form method="post" id="form_edit_payment_send"
+							action="<?php echo ACTIONPATH.'/update_payment.php'?>">
+							<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
+							<input type="hidden" name="p_hashid_payment" value="<?php echo $payment_to_edit['hashid']?>">
+							
+							<div class="row form-group">
+								<div class="col-xs-12">
+									<label for="form_edit_payment_bill_<?php echo $cpt_bill?>">
+										Move to another bill
+									</label>
+									<select name="p_hashid_bill" id="form_edit_payment_bill_<?php echo $cpt_bill?>"
+										onchange="CreatePossiblePayersLists(this, document.getElementById('form_edit_payment_payer_<?php echo $cpt_bill?>'),	
+										<?php echo htmlspecialchars(json_encode($list_of_possible_payers, 3))?>)"
+										class="form-control"> 
+							<?php //list of bills
+									foreach($my_bills as $sub_bill)
+										{
+							?>
+											<option value="<?php echo $sub_bill['hashid']?>"
+											<?php if($sub_bill['id']==$payment_to_edit['bill_id']){echo ' selected';}?>
+											><?php echo htmlspecialchars($sub_bill['title'])?></option>
+							<?php
+										}
+							?>
+									</select>
 								</div>
 							</div>
-							<div class="col-xs-12 col-lg-4">
-								<label for="form_edit_payment_recv_<?php echo $cpt_bill?>">
-									Receiver
-								</label>
-								<select name="p_hashid_recv" 
-									id="form_edit_payment_recv_<?php echo $cpt_bill?>"
-									class="form-control">
-									<option value="-1" >Group</option>
+							<div class="row form-group">
+								<div class="col-xs-12 col-lg-4">
+									<label for="form_edit_payment_payer_<?php echo $cpt_bill?>">
+										Payer
+									</label>
+									<select name="p_hashid_payer" 
+										onchange="DropDownListsBetweenParticipants(this, document.getElementById('form_edit_payment_recv_<?php echo $bill['id']?>'))"
+										id="form_edit_payment_payer_<?php echo $cpt_bill?>" class="form-control">
 							<?php
-									foreach($this_bill_participants as $bill_participant)
+										foreach($this_bill_participants as $bill_participant)
 										{
-											if($bill_participant['id'] == $payment_to_edit['payer_id']){continue;}
 							?>
 											<option value="<?php echo $bill_participant['hashid']?>"
-											<?php if($bill_participant['id']==$payment_to_edit['receiver_id']){echo ' selected';}?>>
+											<?php if($bill_participant['id']==$payment_to_edit['payer_id']){echo ' selected';}?>>
 											<?php echo htmlspecialchars($bill_participant['name'])?></option>
 							<?php
 										}
 							?>
-								</select>
-							</div>
-						</div>
-						<div class="row form-group">
-							<div class="col-xs-12 col-lg-6">
-								<label for="form_edit_payment_desc_<?php echo $bill['id']?>">
-									Description
-								</label>
-								<input type="text" name="p_description" class="form-control"
-									id="form_edit_payment_desc_<?php echo $bill['id']?>"
-									value="<?php echo htmlspecialchars($payment_to_edit['description'])?>"
-									placeholder="Description">
-							</div>
-							<?php
-								$tmp_date_parsed = date_parse($payment_to_edit['date_of_payment']);
-								if ($tmp_date_parsed == false 
-								|| !checkdate($tmp_date_parsed['month'], $tmp_date_parsed['day'], $tmp_date_parsed['year'])) 
-								{
-									$tmp_date_parsed = null;
-								}else{
-									$tmp_date_parsed=$tmp_date_parsed['day'].'/'.$tmp_date_parsed['month'].'/'.$tmp_date_parsed['year'];
-								}
-							?>
-							<div class="col-xs-12 col-lg-6">
-								<label for="form_edit_payment_date_<?php echo $bill['id']?>">
-									Date of payment (dd/mm/yyyy)
-								</label>
-								<div class="input-group">
-									<input type="date" name="p_date_of_payment" 
-										class="form-control"
-										id="form_edit_payment_date_<?php echo $bill['id']?>"
-										value="<?php echo $tmp_date_parsed?>">
-									<span class="input-group-addon glyphicon glyphicon-calendar"></span>
+									</select>
+								</div>
+								<div class="col-xs-12 col-lg-4">
+									<label for="form_edit_payment_cost_<?php echo $cpt_bill?>">
+										Amount
+									</label>
+									<div class="input-group">
+										<input type="number" step="0.01" min="0" name="p_cost" 
+											class="form-control"
+											id="form_edit_payment_cost_<?php echo $cpt_bill?>"
+											value="<?php echo (float)$payment_to_edit['cost']?>" required>
+										<span class="input-group-addon glyph glyphicon-euro"></span>
+									</div>
+								</div>
+								<div class="col-xs-12 col-lg-4">
+									<label for="form_edit_payment_recv_<?php echo $cpt_bill?>">
+										Receiver
+									</label>
+									<select name="p_hashid_recv" 
+										id="form_edit_payment_recv_<?php echo $cpt_bill?>"
+										class="form-control">
+										<option value="-1" >Group</option>
+								<?php
+										foreach($this_bill_participants as $bill_participant)
+											{
+												if($bill_participant['id'] == $payment_to_edit['payer_id']){continue;}
+								?>
+												<option value="<?php echo $bill_participant['hashid']?>"
+												<?php if($bill_participant['id']==$payment_to_edit['receiver_id']){echo ' selected';}?>>
+												<?php echo htmlspecialchars($bill_participant['name'])?></option>
+								<?php
+											}
+								?>
+									</select>
 								</div>
 							</div>
-							<?php $tmp_date_parsed = null;?>
-						</div>
-						<div>
-							<button type="submit" name="submit_update_payment" value="Submit" 
-								class="btn btn-primary" title="Update payment">
-								Submit changes
-							</button>
-							<button type="submit" name="submit_cancel" 
-								value="<?php echo '#bill-'.$cpt_bill?>" class="btn btn-primary"
-								form="form_cancel" title="Cancel">
-								Cancel
-							</button>
-						</div>
-					</form>
+							<div class="row form-group">
+								<div class="col-xs-12 col-lg-6">
+									<label for="form_edit_payment_desc_<?php echo $bill['id']?>">
+										Description
+									</label>
+									<input type="text" name="p_description" class="form-control"
+										id="form_edit_payment_desc_<?php echo $bill['id']?>"
+										value="<?php echo htmlspecialchars($payment_to_edit['description'])?>"
+										placeholder="Description">
+								</div>
+								<?php
+									$tmp_date_parsed = date_parse($payment_to_edit['date_of_payment']);
+									if ($tmp_date_parsed == false 
+									|| !checkdate($tmp_date_parsed['month'], $tmp_date_parsed['day'], $tmp_date_parsed['year'])) 
+									{
+										$tmp_date_parsed = null;
+									}else{
+										$tmp_date_parsed=$tmp_date_parsed['day'].'/'.$tmp_date_parsed['month'].'/'.$tmp_date_parsed['year'];
+									}
+								?>
+								<div class="col-xs-12 col-lg-6">
+									<label for="form_edit_payment_date_<?php echo $bill['id']?>">
+										Date of payment (dd/mm/yyyy)
+									</label>
+									<div class="input-group">
+										<input type="date" name="p_date_of_payment" 
+											class="form-control"
+											id="form_edit_payment_date_<?php echo $bill['id']?>"
+											value="<?php echo $tmp_date_parsed?>">
+										<span class="input-group-addon glyphicon glyphicon-calendar"></span>
+									</div>
+								</div>
+								<?php $tmp_date_parsed = null;?>
+							</div>
+							<div>
+								<button type="submit" name="submit_update_payment" value="Submit" 
+									class="btn btn-primary" title="Update payment">
+									Submit changes
+								</button>
+								<button type="submit" name="submit_cancel" 
+									value="<?php echo '#bill-'.$cpt_bill?>" class="btn btn-primary"
+									form="form_cancel" title="Cancel">
+									Cancel
+								</button>
+							</div>
+						</form>
+					</div>
 <?php
 $payment_to_edit = false;
 } //edit this payment

@@ -14,7 +14,18 @@ When the admin mode is engaged, the panel is red.
  */
 ?>
 
-<div class="row" id="description_panel">
+<?php //Overlay setting
+if($admin_mode 
+&& $edit_mode == 'account')
+{
+	$overlay="highlight";
+}
+else{
+	$overlay = "";
+}
+?>
+
+<div class="row <?php echo $overlay?>" id="description_panel">
 	<div class="col-xs-12">
 	<?php if($admin_mode == true){	?>
 		<div class="panel panel-danger">
@@ -194,7 +205,7 @@ When the admin mode is engaged, the panel is red.
 					 class="btn btn-primary" form="form_edit_account" title="Submit changes">
 						Submit changes
 					</button> 
-					<button type="submit" name="submit_cancel" value="Submit" 
+					<button type="submit" name="submit_cancel" value="" 
 						class="btn btn-primary" form="form_cancel" title="Cancel">
 					 Cancel
 					</button>
@@ -202,8 +213,8 @@ When the admin mode is engaged, the panel is red.
 						<p>An entry is currently being under edition. It can be canceled :</p>
 						<form method="post">
 							<button type="submit" name="submit_cancel" 
-							class="btn btn-default" value="Submit"
-							form="form_cancel" title="Cancel">
+								class="btn btn-default" value=""
+								form="form_cancel" title="Cancel">
 								Cancel edit mode
 							</button>
 						</form>

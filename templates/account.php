@@ -67,8 +67,17 @@ Template of a particular account page, that is :
 
 <body>
 	<div id="content">
+	
 		<div class="container">
-			<div class="row">
+		
+			<?php
+			if($admin_mode == true
+			&&$edit_mode !== false){
+			?>
+			<div id="overlay"></div>
+			<?php } ?>
+			
+	<div class="row">
 				<header>
 					<?php include(__DIR__.'/header/header.php'); ?>
 				</header>
@@ -94,8 +103,9 @@ Template of a particular account page, that is :
 					<?php include(__DIR__.'/account/bill.php');?>
 				</div>
 			</div>
+			
+		</div>
 
-		</div> <!-- content -->
-	</div>
+	</div> <!-- content -->
 </body>
 </html>

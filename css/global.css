@@ -40,6 +40,26 @@ body div.container{
 	padding: 10px;
 	margin-top:20px;
 	margin-bottom:20px;
+	position: relative;
+}
+
+div#overlay{
+	position:absolute;
+	background-color: rgba(255,255,255,0.5);
+	z-index: 10;
+	top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.highlight{
+	position:relative;
+	z-index:11;
+	top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
 }
 
 .fullwidth{

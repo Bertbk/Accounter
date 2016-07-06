@@ -12,7 +12,19 @@
 Template to display the participants
  */
 ?>
-<div id="participants" class="panel panel-primary">
+
+<?php //Overlay setting
+if($admin_mode 
+&& $edit_mode == 'participant')
+{
+	$overlay="highlight";
+}
+else{
+	$overlay = "";
+}
+?>
+
+<div id="participants" class="panel panel-primary <?php echo $overlay?>">
 	<div class="panel-heading cursor_pointer"
 		data-toggle="collapse" data-target="#panel-body_participants">
 		<h2>Participants: <br><?php echo (int)$n_participants ?> (<?php echo (int)$n_people ?>)</h2>
