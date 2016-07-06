@@ -50,7 +50,7 @@ else{
 								<label for="form_edit_account_name" class="sr-only">Title: </label>							
 								<input type="text" name="p_title_of_account" id="form_edit_account_name"
 								class="form-control"	value="<?php echo htmlspecialchars($my_account['title'])?>" required
-								form="form_edit_account" name="p_title_of_account" >
+								form="form_edit_account">
 								<?php } else{?>
 								<?php echo htmlspecialchars($my_account['title'])?>
 								<?php }?>
@@ -198,7 +198,7 @@ else{
 					</div>
 				</div>
 			<?php if($admin_mode == true){ ?>
-				<div class="panel-footer <?php if($edit_mode == true){echo 'highlight';}?>">
+				<div class="panel-footer <?php if($edit_mode == true && $overlay == ""){echo 'highlight';}?>">
 				<?php if($edit_mode === "account" 
 				&& $edit_hashid === $my_account['hashid']){?>
 					<button type="submit" name="submit_update_account" value="Submit"
