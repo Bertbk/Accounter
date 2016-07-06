@@ -43,7 +43,7 @@ if(isset($_POST['submit_remove_all_participations']))
 	$ErrorMessage = array(
 		'p_hashid_account' => 'Account not valid',
 		'p_hashid_bill' => 'Bill not valid',
-		'p_cpt_bill' => 'Bill counter not valid'
+		'p_anchor' => 'Anchor not valid'
    );
 
 	//ACCOUNT
@@ -130,11 +130,13 @@ if(!isset($account) || empty($account))
 else{
 	$redirect_link = BASEURL.'/account/'.$account['hashid_admin'].'/admin';
 	//Anchor
-	$key='p_cpt_bill';
-	if(empty($errArray) && isset($_POST[$key]))
-	{
-		$cpt_bill = (int)$_POST[$key];
-		$redirect_link = $redirect_link.'#bill-'.$cpt_bill;		
+	if(empty($errArray))
+	{		
+		$key = 'p_anchor';
+		if(isset($_POST[$key])) {
+			$anchor = htmlspecialchars($_POST[$key]);
+			$redirect_link = $redirect_link.$anchor ;
+		}
 	}
 }
 

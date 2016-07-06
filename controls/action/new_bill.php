@@ -43,7 +43,7 @@ if(isset($_POST['submit_new_bill']))
 		'p_hashid_account' => 'Account is not valid',
 		'p_title_of_bill' => 'Title is not valid',
 		'p_description' => 'Description is not valid',
-		'p_cpt_bill' => 'Counter of bill not valid'
+		'p_anchor' => 'Anchor not valid'
    );
 
 	//Manual treatments of arguments
@@ -135,13 +135,10 @@ if(!isset($account) ||empty($account))
 else{
 	$redirect_link = BASEURL.'/account/'.$account['hashid_admin'].'/admin';
 	//Anchor
-	if(empty($errArray))
-	{		
-		$key = 'p_cpt_bill';
-		if(isset($_POST[$key])) {
-			$cpt_bill = (int) $_POST[$key];
-			$redirect_link = $redirect_link.'#bill-'.$cpt_bill ;
-		}
+	$key = 'p_anchor';
+	if(isset($_POST[$key])) {
+		$anchor = htmlspecialchars($_POST[$key]);
+		$redirect_link = $redirect_link.$anchor ;
 	}
 }
 

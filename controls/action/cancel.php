@@ -64,6 +64,12 @@ if(!isset($account) || empty($account))
 else{
 	$redirect_link = BASEURL.'/account/'.$account['hashid_admin'].'/admin';
 }
+
+if(isset($_POST['submit_cancel']))
+{
+	$anchor = htmlspecialchars($_POST['submit_cancel']);
+	$redirect_link = $redirect_link.$anchor;
+}
 		
 if(!(empty($errArray)))
 {

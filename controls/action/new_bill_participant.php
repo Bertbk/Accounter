@@ -51,7 +51,7 @@ if(isset($_POST['submit_new_bill_participant']))
 		'p_participant' => 'Participant is not valid',
 		'p_hashid_participant' => 'Participant is not valid',
 		'p_percent_of_use' => 'Percent is not valid',
-		'p_cpt_bill' => 'Counter of bill not valid'
+		'p_anchor' => 'Anchor not valid'
    );
 
 	//Manual treatments of arguments
@@ -235,10 +235,10 @@ else{
 	//Anchor
 	if(empty($errArray))
 	{		
-		$key = 'p_cpt_bill';
+		$key = 'p_anchor';
 		if(isset($_POST[$key])) {
-			$cpt_bill = (int) $_POST[$key];
-			$redirect_link = $redirect_link.'#bill-'.$cpt_bill ;
+			$anchor = htmlspecialchars($_POST[$key]);
+			$redirect_link = $redirect_link.$anchor ;
 		}
 	}
 }

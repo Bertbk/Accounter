@@ -127,10 +127,10 @@ else{
 	//Anchor
 	if(empty($errArray))
 	{		
-		$key = 'p_cpt_bill';
+		$key = 'p_anchor';
 		if(isset($_POST[$key])) {
-			$cpt_bill = (int) $_POST[$key];
-			$redirect_link = $redirect_link.'#bill-'.$cpt_bill ;
+			$anchor = htmlspecialchars($_POST[$key]);
+			$redirect_link = $redirect_link.$anchor;
 		}
 	}
 }

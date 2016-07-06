@@ -46,7 +46,7 @@ if($admin_mode
 							action="<?php echo ACTIONPATH.'/update_bill.php'?>">
 							<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
 							<input type="hidden" name="p_hashid_bill" value="<?php echo $bill['hashid']?>">
-							<input type="hidden" name="p_cpt_bill" value="<?php echo $cpt_bill?>">
+							<input type="hidden" name="p_anchor" value="<?php echo '#bill-'.$cpt_bill?>">
 							<h2>
 								<label for="form_edit_bill_name">Title:</label>
 								<input type="text" name="p_title_of_bill" id="form_edit_bill_name"
@@ -81,7 +81,7 @@ if($admin_mode
 									<form method="post" action="<?php echo ACTIONPATH.'/remove_bill_participants.php'?>">
 										<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
 										<input type="hidden" name="p_hashid_bill" value="<?php echo $bill['hashid']?>">
-										<input type="hidden" name="p_cpt_bill" value="<?php echo $cpt_bill?>">
+										<input type="hidden" name="p_anchor" value="<?php echo '#bill-'.$cpt_bill?>">
 										<button type="submit" class="btn btn-link confirmation" 
 											name="submit_remove_all_participations" onclick="event.stopPropagation();">
 											Remove all participations
@@ -92,7 +92,7 @@ if($admin_mode
 									<form method="post" action="<?php echo ACTIONPATH.'/remove_payments.php'?>">
 										<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
 										<input type="hidden" name="p_hashid_bill" value="<?php echo $bill['hashid']?>">
-										<input type="hidden" name="p_cpt_bill" value="<?php echo $cpt_bill?>">
+										<input type="hidden" name="p_anchor" value="<?php echo '#bill-'.$cpt_bill?>">
 										<button type="submit" class="btn btn-link confirmation" 
 											name="submit_remove_all_payments" onclick="event.stopPropagation();">
 											Remove all payments
@@ -155,7 +155,7 @@ if($admin_mode
 				class="btn btn-primary" title="Submit changes">
 					Submit changes
 			</button> 
-			<button type="submit" name="submit_cancel" value="Submit" 
+			<button type="submit" name="submit_cancel" value="<?php echo '#bill-'.$cpt_bill?>" 
 				form="form_cancel" class="btn btn-primary" title="Cancel">
 				Cancel
 			</button> 
@@ -216,7 +216,7 @@ if($admin_mode
 					action="<?php echo ACTIONPATH.'/delete_bill_participant.php'?>">		
 						<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
 						<input type="hidden" name="p_hashid_bill_participant" value="<?php echo $bill_participant['hashid']?>">
-						<input type="hidden" name="p_cpt_bill" value="<?php echo $cpt_bill?>">
+						<input type="hidden" name="p_anchor" value="<?php echo '#bill-'.$cpt_bill?>">
 						<button type="submit" class="btn btn-default confirmation" 
 							name="submit_delete_bill_participant" title="Delete participation">
 							<span class="glyphicon glyphicon-trash"></span>
@@ -241,7 +241,7 @@ if($admin_mode
 
 			<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
 			<input type="hidden" name="p_hashid_bill_participant" value="<?php echo $bill_participant_tmp['hashid']?>">
-			<input type="hidden" name="p_cpt_bill" value="<?php echo $cpt_bill?>">
+			<input type="hidden" name="p_anchor" value="<?php echo '#bill-'.$cpt_bill?>">
 
 			<div class="row form-group row-no-padding">
 				<div class="col-xs-6 col-sm-5 col-md-4">
@@ -261,7 +261,7 @@ if($admin_mode
 				value="Submit" class="btn btn-primary" title="Submit changes">
 				Submit changes
 			</button> 
-			<button type="submit" name="submit_cancel" value="Submit" 
+			<button type="submit" name="submit_cancel" value="<?php echo '#bill-'.$cpt_bill?>" 
 				form="form_cancel" class="btn btn-primary" title="Cancel">
 			 Cancel
 			</button>
@@ -290,7 +290,7 @@ if($admin_mode && !$edit_mode)
 						<legend>Assign a participant to this bill:</legend>
 						<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
 						<input type="hidden" name="p_hashid_bill" value="<?php echo $bill['hashid']?>">
-						<input type="hidden" name="p_cpt_bill" value="<?php echo $cpt_bill?>">
+						<input type="hidden" name="p_anchor" value="<?php echo '#bill-'.$cpt_bill?>">
 <?php
 			$cpt = -1;
 			foreach($this_free_bill_participants as $participant)
@@ -462,7 +462,7 @@ foreach($this_payment as $payment)
 					>
 					<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
 					<input type="hidden" name="p_hashid_payment" value="<?php echo $payment['hashid']?>">
-					<input type="hidden" name="p_cpt_bill" value="<?php echo $cpt_bill?>">
+					<input type="hidden" name="p_anchor" value="<?php echo '#bill-'.$cpt_bill?>">
 					<button type="submit" class="btn btn-default confirmation" 
 						name="submit_delete_payment" title="Delete payment">
 						<span class="glyphicon glyphicon-trash"></span>
@@ -601,7 +601,7 @@ if($payment_to_edit !== false)
 					Submit changes
 				</button>
 				<button type="submit" name="submit_cancel" 
-					value="Submit" class="btn btn-primary"
+					value="<?php echo '#bill-'.$cpt_bill?>" class="btn btn-primary"
 					form="form_cancel" title="Cancel">
 					Cancel
 				</button>
@@ -647,7 +647,7 @@ else
 				<p><em>Fields with asterisk <span class="glyphicon glyphicon-asterisk red"></span> are required</em></p>
 				<input type="hidden" name="p_hashid_account" value ="<?php echo $my_account['hashid_admin']?>">
 				<input type="hidden" name="p_hashid_bill" value ="<?php echo $bill['hashid']?>">
-				<input type="hidden" name="p_cpt_bill" value ="<?php echo $cpt_bill?>">
+				<input type="hidden" name="p_anchor" value="<?php echo '#bill-'.$cpt_bill?>">
 				<div id="div_set_payment_<?php echo $cpt_bill?>">
 					<div class="row form-group">
 						<div class="col-xs-12 col-lg-4">
@@ -720,7 +720,7 @@ else
 		
 			<div>
 				<button type="submit" name="submit_new_payment" value="Submit" 
-					title="Submit new payment">
+					title="Submit new payment" class="btn btn-primary">
 					Submit
 				</button>
 			</div>

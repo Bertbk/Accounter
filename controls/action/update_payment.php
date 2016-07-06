@@ -46,7 +46,7 @@ $ErrorEmptyMessage = array(
 	'p_cost' => 'Please provide a cost',
 	'p_description' => 'Please provide a description',
 	'p_date_of_payment' => 'Please provide a date of payment',
-	'p_cpt_bill' => 'Counter of bill not valid'
+	'p_anchor' => 'Anchor not valid'
  );
  
 $ErrorMessage = array(
@@ -95,10 +95,10 @@ else{
 	//Anchor
 	if(empty($errArray))
 	{		
-		$key = 'p_cpt_bill';
+		$key = 'p_anchor';
 		if(isset($_POST[$key])) {
-			$cpt_bill = (int) $_POST[$key];
-			$redirect_link = $redirect_link.'#bill-'.$cpt_bill ;
+			$anchor = htmlspecialchars($_POST[$key]);
+			$redirect_link = $redirect_link.$anchor ;
 		}
 	}
 }

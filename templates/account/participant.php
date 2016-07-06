@@ -85,7 +85,7 @@ Template to display the participants
 				class="form-horizontal" role="form">
 				<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
 				<input type="hidden" name="p_hashid_participant" value="<?php echo $participant['hashid']?>">
-				<div class="row">
+				<div class="row form-group">
 					<input type="text" name="p_name_of_participant" class="form-control-inline col-xs-9"
 						value="<?php echo htmlspecialchars($participant['name'])?>" required
 						title="Name of participant">
@@ -93,17 +93,17 @@ Template to display the participants
 						min="1" step="1" value="<?php echo (int)$participant['nb_of_people']?>" required
 						title="Number of people">
 				</div>
-				<div class="row">
-					<div class="col-xs-1">
+				<div class="row form-group">
+					<div class="col-xs-6">
 						<button type="submit" name="submit_update_participant" value="Submit"
-							title="Submit changes">
-							<span class="glyphicon glyphicon-ok"></span>
+							title="Submit changes" class="btn btn-primary">
+							Submit changes
 						</button>
 					</div>
-					<div class="col-xs-1">
-						<button type="submit" name="submit_cancel" value="Submit"
-						form="form_cancel" title="Cancel">
-							<span class="glyphicon glyphicon-remove"></span>
+					<div class="col-xs-6">
+						<button type="submit" name="submit_cancel" value="#participants"
+						form="form_cancel" title="Cancel" class="btn btn-primary">
+							Cancel
 						</button> 
 					</div>
 				</div>
