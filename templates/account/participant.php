@@ -183,7 +183,7 @@ if($admin_mode && $edit_mode === false)
 									<div class="input-group spinner">
 										<input type="text" name="p_new_participant[0][p_nb_of_people]" value="1" 
 										id="form_set_participant_nbpeople_0" class="form-control"
-										step="1" min="1"
+										step="1" min="1" number_type="int"
 										title="Number of people" required>
 										<div class="input-group-btn-vertical">
 											<button class="btn btn-default" type="button"><i class="fa fa-caret-up"></i></button>

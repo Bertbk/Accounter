@@ -99,12 +99,14 @@ function AddPaymentLine(name_of_people, hashid_of_people, cpt_bill)
 	select_payer.title = "Payer";
 	var input_cost = document.createElement("input");
 	input_cost.id = "form_set_payment_cost_"+ cpt_bill + "_" + AddPaymentLine.counter;
-	input_cost.type="number";
+	input_cost.type="text";
 	input_cost.min="0";
 	input_cost.step="0.01";
 	input_cost.className = "form-control";
 	input_cost.name = "p_payment["+ AddPaymentLine.counter +"][p_cost]";
 	input_cost.title = "Amount";
+	input_cost.placeholder = "Amount";
+	input_cost.setAttribute("number_type", "float");
 	var select_receiver = document.createElement("select");
 	select_receiver.id = "form_set_payment_recv_"+ cpt_bill + "_" + AddPaymentLine.counter;
 	select_receiver.name = "p_payment["+ AddPaymentLine.counter +"][p_hashid_recv]";
@@ -177,7 +179,7 @@ function AddPaymentLine(name_of_people, hashid_of_people, cpt_bill)
 	var span_glyph_payer = document.createElement("span");
 	span_glyph_payer.className="input-group-addon glyphicon glyphicon-user";
 	var div_input_group_amount = document.createElement("div");
-	div_input_group_amount.className="input-group";
+	div_input_group_amount.className="input-group spinner";
 	var span_glyph_amount = document.createElement("span");
 	span_glyph_amount.className="input-group-addon glyphicon glyphicon-euro";
 	var div_input_group_receiver = document.createElement("div");
@@ -193,6 +195,20 @@ function AddPaymentLine(name_of_people, hashid_of_people, cpt_bill)
 	var span_glyph_date = document.createElement("span");
 	span_glyph_date.className="input-group-addon glyphicon glyphicon-calendar";
 
+	//For the amount
+	var div_buttons = document.createElement("div");
+	div_buttons.className="input-group-btn-vertical";
+	var button_up = document.createElement("button");
+	button_up.className="btn btn-default";
+	button_up.type="button";
+	var button_down = document.createElement("button");
+	button_down.className="btn btn-default";
+	button_down.type="button";	
+	var i_up = document.createElement("i");
+	i_up.className="fa fa-caret-up"
+	var i_down = document.createElement("i");
+	i_down.className="fa fa-caret-down"
+	
 	//Add to div...
 	div_payer.appendChild(label_payer);
 	div_input_group_payer.appendChild(select_payer);
@@ -200,9 +216,14 @@ function AddPaymentLine(name_of_people, hashid_of_people, cpt_bill)
 	div_payer.appendChild(div_input_group_payer);
 	div_row1.appendChild(div_payer);
 	//Amount
-	div_amount.appendChild(label_cost);
+	button_up.appendChild(i_up);
+	button_down.appendChild(i_down);
+	div_buttons.appendChild(button_up);
+	div_buttons.appendChild(button_down);
 	div_input_group_amount.appendChild(input_cost);
+	div_input_group_amount.appendChild(div_buttons);
 	div_input_group_amount.appendChild(span_glyph_amount);
+	div_amount.appendChild(label_cost);
 	div_amount.appendChild(div_input_group_amount);
 	div_row1.appendChild(div_amount);
 	//Receiver

@@ -20,7 +20,7 @@ $(document).ready(function() {
 	});
 });
 
-/* Credit: from Bootsnipp.com */
+
 $(document).ready(function(){
 		$("[id^=form_set_payment_date_]").each(function(){
 				$(this).datepicker({ dateFormat: 'dd/mm/yy'});
@@ -34,23 +34,117 @@ $(document).ready(function(){
 });
 
 
+/* Credit: from Bootsnipp.com*/
 $(document).ready(function(){
-    $('.spinner .btn:first-of-type').on('click', function() {
+$(document.body).on('click', '.spinner .btn:first-of-type', function(){
       var btn = $(this);
       var input = btn.closest('.spinner').find('input');
-      if (input.attr('max') == undefined || parseInt(input.val()) < parseInt(input.attr('max'))) {    
-        input.val(parseInt(input.val(), 10) + 1);
+			
+			if(input.attr('number_type') !== undefined
+				&& input.attr('number_type') === "float")
+			{ var typeOfNumb = "float";}
+			else{			
+				var typeOfNumb = "int";
+			}
+				
+			if(input.attr('step') != undefined  && input.attr('step') != ""){
+				if(typeOfNumb == "int")
+				{var step = parseInt(input.attr('step'), 10);}
+			else if(typeOfNumb=="float")
+				{var step = parseFloat(input.attr('step').replace(",", ".")).toFixed(2);}
+			}
+			else{
+				var step = parseInt(1, 10);
+			}
+
+			if(input.val() != undefined && input.val() != ""){
+				if(typeOfNumb == "int")
+				{var current_val = parseInt(input.val(), 10);}
+			else if(typeOfNumb=="float")
+				{var current_val = parseFloat(input.val().replace(",", ".")).toFixed(2);}
+			}
+			else{
+				var current_val = parseInt(0, 10);
+			}
+
+			if(input.attr('max')!=undefined  && input.attr('max') != ""){
+				if(typeOfNumb == "int")
+				{var max_val = parseInt(input.attr('max'), 10);}
+			else if(typeOfNumb=="float")
+				{var max_val = parseFloat(input.attr('max').replace(",", ".")).toFixed(2);}
+			}
+			else{
+				var max_val = parseInt(current_val) + parseInt(1, 10);
+			}
+			
+			if(typeOfNumb =="float")
+			{
+				var next_val = parseFloat(current_val) + parseFloat(step);
+				next_val = next_val.toFixed(2);
+				}
+			else{
+				var next_val = parseInt(current_val,10) + parseInt(step,10);
+			}
+			
+      if (parseFloat(current_val) < parseFloat(max_val)) {
+        input.val(next_val);
       } else {
         btn.next("disabled", true);
       }
-    });
-    $('.spinner .btn:last-of-type').on('click', function() {
-      var btn = $(this);
-      var input = btn.closest('.spinner').find('input');
-      if (input.attr('min') == undefined || parseInt(input.val()) > parseInt(input.attr('min'))) {    
-        input.val(parseInt(input.val(), 10) - 1);
-      } else {
-        btn.prev("disabled", true);
-      }
-    });
+})
+});
+$(document).ready(function(){
+$(document.body).on('click', '.spinner .btn:last-of-type' ,function(){
+	var btn = $(this);
+	var input = btn.closest('.spinner').find('input');
+	
+	if(input.attr('number_type') !== undefined
+		&& input.attr('number_type') === "float")
+	{ var typeOfNumb = "float";}
+	else{
+		var typeOfNumb = "int";
+	}
+				
+	if(input.attr('step') != undefined  && input.attr('step') != ""){
+		if(typeOfNumb == "int")
+		{var step = parseInt(input.attr('step'), 10);}
+	else if(typeOfNumb=="float")
+		{var step = parseFloat(input.attr('step').replace(",", ".")).toFixed(2);}
+	}
+	else{
+		var step = parseInt(1, 10);
+	}
+
+	if(input.val() != undefined && input.val() != ""){
+		if(typeOfNumb == "int")
+		{var current_val = parseInt(input.val(), 10);}
+	else if(typeOfNumb=="float")
+		{var current_val = parseFloat(input.val().replace(",", ".")).toFixed(2);}
+	}
+	else{
+		var current_val = parseInt(0, 10);
+	}
+
+	if(input.attr('min')!=undefined  && input.attr('min') != ""){
+		if(typeOfNumb == "int")
+		{var min_val = parseInt(input.attr('min'), 10);}
+	else if(typeOfNumb=="float")
+		{var min_val = parseFloat(input.attr('min').replace(",", ".")).toFixed(2);}
+	}
+	else{
+		var min_val = current_val - parseInt(1, 10);
+	}
+	
+	if(typeOfNumb=="float")
+	{var next_val = (parseFloat(current_val) - parseFloat(step)).toFixed(2);}
+	else{
+		var next_val = parseInt(current_val,10) - parseInt(step,10);
+	}
+
+if (parseFloat(current_val) > parseFloat(min_val)) {    
+		input.val(next_val);
+	} else {
+		btn.prev("disabled", true);
+	}
+})
 });
