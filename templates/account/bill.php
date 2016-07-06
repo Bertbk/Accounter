@@ -306,7 +306,7 @@ if($admin_mode && !$edit_mode)
 						<fieldset>
 							<legend id="<?php echo 'show_hide_bill_add_part_'.$cpt_bill?>"
 								class="cursorpointer">
-								(+) Assign a participant to this bill
+								(+) Add a participation
 							</legend>
 							<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
 							<input type="hidden" name="p_hashid_bill" value="<?php echo $bill['hashid']?>">
@@ -319,8 +319,8 @@ if($admin_mode && !$edit_mode)
 			{
 				$cpt++;
 		?>
-								<div class="row row-no-padding form-group assign_bill_participant">
-									<div class="col-xs-12 col-md-6 col-lg-4 lg-offset-2">
+								<div class="row form-group assign_bill_participant">
+									<div class="col-xs-12 col-md-6 col-lg-4 ">
 										<div>
 											<input type="checkbox" name="p_participant['<?php echo $cpt?>'][p_hashid_participant]" 
 												value="<?php echo $participant['hashid']?>" title="Participant"
