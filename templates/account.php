@@ -34,9 +34,6 @@ Template of a particular account page, that is :
 
 <!-- Selectpicker: Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css">
-
-
-
 <link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/global.css'?>">
 <link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/participant.css'?>">
 <link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/bill.css'?>">
@@ -65,12 +62,9 @@ Template of a particular account page, that is :
 <script type="text/javascript" src="<?php echo BASEURL.'/js/jquery_accounter.jquery'?>"></script>
 
 </head>
-
 <body>
 	<div id="content">
-	
-		<div class="container">
-		
+		<div class="container">		
 			<?php
 			if($admin_mode == true
 			&&$edit_mode !== false){
@@ -78,23 +72,17 @@ Template of a particular account page, that is :
 			<div id="overlay"></div>
 			<?php } ?>
 			
-	<div class="row">
+			<div class="row">
 				<header>
 					<?php include(__DIR__.'/header/header.php'); ?>
 				</header>
 			</div>
 	<?php include(__DIR__.'/messages/messages.php');?>
-
 	<?php include(__DIR__.'/account/cancel_form.php');?>
-	
 	<?php include(__DIR__.'/account/description_panel.php');?>
-
-		
-
 			<div class="row">
 				<?php include(__DIR__.'/account/solution.php');?>
 			</div>
-
 			<div class="row">
 				<div class="col-md-3">
 					<?php include(__DIR__.'/account/participant.php');?>
@@ -104,9 +92,7 @@ Template of a particular account page, that is :
 					<?php include(__DIR__.'/account/bill.php');?>
 				</div>
 			</div>
-			
 		</div>
-
 	</div> <!-- content -->
 </body>
 </html>
