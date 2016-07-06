@@ -516,21 +516,24 @@ if($payment_to_edit !== false)
 									<label for="form_edit_payment_bill_<?php echo $cpt_bill?>">
 										Move to another bill
 									</label>
-									<select name="p_hashid_bill" id="form_edit_payment_bill_<?php echo $cpt_bill?>"
-										onchange="CreatePossiblePayersLists(this, document.getElementById('form_edit_payment_payer_<?php echo $cpt_bill?>'),	
-										<?php echo htmlspecialchars(json_encode($list_of_possible_payers, 3))?>)"
-										class="form-control"> 
-							<?php //list of bills
-									foreach($my_bills as $sub_bill)
-										{
-							?>
-											<option value="<?php echo $sub_bill['hashid']?>"
-											<?php if($sub_bill['id']==$payment_to_edit['bill_id']){echo ' selected';}?>
-											><?php echo htmlspecialchars($sub_bill['title'])?></option>
-							<?php
-										}
-							?>
-									</select>
+									<div class="input-group">
+										<select name="p_hashid_bill" id="form_edit_payment_bill_<?php echo $cpt_bill?>"
+											onchange="CreatePossiblePayersLists(this, document.getElementById('form_edit_payment_payer_<?php echo $cpt_bill?>'),	
+											<?php echo htmlspecialchars(json_encode($list_of_possible_payers, 3))?>)"
+											class="form-control selectpicker"> 
+								<?php //list of bills
+										foreach($my_bills as $sub_bill)
+											{
+								?>
+												<option value="<?php echo $sub_bill['hashid']?>"
+												<?php if($sub_bill['id']==$payment_to_edit['bill_id']){echo ' selected';}?>
+												><?php echo htmlspecialchars($sub_bill['title'])?></option>
+								<?php
+											}
+								?>
+										</select>
+										<span class="input-group-addon glyphicon glyphicon-list"></span>
+									</div>
 								</div>
 							</div>
 							<div class="row form-group">
@@ -538,20 +541,23 @@ if($payment_to_edit !== false)
 									<label for="form_edit_payment_payer_<?php echo $cpt_bill?>">
 										Payer
 									</label>
-									<select name="p_hashid_payer" 
-										onchange="DropDownListsBetweenParticipants(this, document.getElementById('form_edit_payment_recv_<?php echo $bill['id']?>'))"
-										id="form_edit_payment_payer_<?php echo $cpt_bill?>" class="form-control">
-							<?php
-										foreach($this_bill_participants as $bill_participant)
-										{
-							?>
-											<option value="<?php echo $bill_participant['hashid']?>"
-											<?php if($bill_participant['id']==$payment_to_edit['payer_id']){echo ' selected';}?>>
-											<?php echo htmlspecialchars($bill_participant['name'])?></option>
-							<?php
-										}
-							?>
-									</select>
+									<div class="input-group">
+										<select name="p_hashid_payer" 
+											onchange="DropDownListsBetweenParticipants(this, document.getElementById('form_edit_payment_recv_<?php echo $bill['id']?>'))"
+											id="form_edit_payment_payer_<?php echo $cpt_bill?>" class="form-control selectpicker">
+								<?php
+											foreach($this_bill_participants as $bill_participant)
+											{
+								?>
+												<option value="<?php echo $bill_participant['hashid']?>"
+												<?php if($bill_participant['id']==$payment_to_edit['payer_id']){echo ' selected';}?>>
+												<?php echo htmlspecialchars($bill_participant['name'])?></option>
+								<?php
+											}
+								?>
+										</select>
+										<span class="input-group-addon glyphicon glyphicon-user"></span>
+									</div>
 								</div>
 								<div class="col-xs-12 col-lg-4">
 									<label for="form_edit_payment_cost_<?php echo $cpt_bill?>">
@@ -562,29 +568,32 @@ if($payment_to_edit !== false)
 											class="form-control"
 											id="form_edit_payment_cost_<?php echo $cpt_bill?>"
 											value="<?php echo (float)$payment_to_edit['cost']?>" required>
-										<span class="input-group-addon glyph glyphicon-euro"></span>
+										<span class="input-group-addon glyphicon glyphicon-euro"></span>
 									</div>
 								</div>
 								<div class="col-xs-12 col-lg-4">
 									<label for="form_edit_payment_recv_<?php echo $cpt_bill?>">
 										Receiver
 									</label>
-									<select name="p_hashid_recv" 
-										id="form_edit_payment_recv_<?php echo $cpt_bill?>"
-										class="form-control">
-										<option value="-1" >Group</option>
-								<?php
-										foreach($this_bill_participants as $bill_participant)
-											{
-												if($bill_participant['id'] == $payment_to_edit['payer_id']){continue;}
-								?>
-												<option value="<?php echo $bill_participant['hashid']?>"
-												<?php if($bill_participant['id']==$payment_to_edit['receiver_id']){echo ' selected';}?>>
-												<?php echo htmlspecialchars($bill_participant['name'])?></option>
-								<?php
-											}
-								?>
-									</select>
+									<div class="input-group">
+										<select name="p_hashid_recv" 
+											id="form_edit_payment_recv_<?php echo $cpt_bill?>"
+											class="form-control selectpicker">
+											<option value="-1" >Group</option>
+									<?php
+											foreach($this_bill_participants as $bill_participant)
+												{
+													if($bill_participant['id'] == $payment_to_edit['payer_id']){continue;}
+									?>
+													<option value="<?php echo $bill_participant['hashid']?>"
+													<?php if($bill_participant['id']==$payment_to_edit['receiver_id']){echo ' selected';}?>>
+													<?php echo htmlspecialchars($bill_participant['name'])?></option>
+									<?php
+												}
+									?>
+										</select>
+										<span class="input-group-addon glyphicon glyphicon-user"></span>
+									</div>
 								</div>
 							</div>
 							<div class="row form-group">
@@ -592,10 +601,13 @@ if($payment_to_edit !== false)
 									<label for="form_edit_payment_desc_<?php echo $bill['id']?>">
 										Description
 									</label>
-									<input type="text" name="p_description" class="form-control"
-										id="form_edit_payment_desc_<?php echo $bill['id']?>"
-										value="<?php echo htmlspecialchars($payment_to_edit['description'])?>"
-										placeholder="Description">
+									<div class="input-group">
+										<input type="text" name="p_description" class="form-control"
+											id="form_edit_payment_desc_<?php echo $bill['id']?>"
+											value="<?php echo htmlspecialchars($payment_to_edit['description'])?>"
+											placeholder="Description">
+										<span class="input-group-addon glyphicon glyphicon-tag"></span>
+									</div>
 								</div>
 								<?php
 									$tmp_date_parsed = date_parse($payment_to_edit['date_of_payment']);
