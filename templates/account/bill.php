@@ -81,6 +81,7 @@ if($admin_mode
 									<form method="post" action="<?php echo ACTIONPATH.'/remove_bill_participants.php'?>">
 										<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
 										<input type="hidden" name="p_hashid_bill" value="<?php echo $bill['hashid']?>">
+										<input type="hidden" name="p_cpt_bill" value="<?php echo $cpt_bill?>">
 										<button type="submit" class="btn btn-link confirmation" 
 											name="submit_remove_all_participations" onclick="event.stopPropagation();">
 											Remove all participations
@@ -91,6 +92,7 @@ if($admin_mode
 									<form method="post" action="<?php echo ACTIONPATH.'/remove_payments.php'?>">
 										<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
 										<input type="hidden" name="p_hashid_bill" value="<?php echo $bill['hashid']?>">
+										<input type="hidden" name="p_cpt_bill" value="<?php echo $cpt_bill?>">
 										<button type="submit" class="btn btn-link confirmation" 
 											name="submit_remove_all_payments" onclick="event.stopPropagation();">
 											Remove all payments

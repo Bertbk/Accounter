@@ -42,7 +42,8 @@ if(isset($_POST['submit_remove_all_participations']))
 	 
 	$ErrorMessage = array(
 		'p_hashid_account' => 'Account not valid',
-		'p_hashid_bill' => 'Bill not valid'
+		'p_hashid_bill' => 'Bill not valid',
+		'p_cpt_bill' => 'Bill counter not valid'
    );
 
 	//ACCOUNT
@@ -93,7 +94,7 @@ if(isset($_POST['submit_remove_all_participations']))
 			array_push($errArray, "This bill does not belong to this account!");
 		}		
 	}
-	
+		
 	if(empty($errArray))
 	{
 		$bill_participants = get_bill_participants_by_bill_id($account['id'], $bill['id']);
@@ -128,6 +129,13 @@ if(!isset($account) || empty($account))
 }
 else{
 	$redirect_link = BASEURL.'/account/'.$account['hashid_admin'].'/admin';
+	//Anchor
+	$key='p_cpt_bill';
+	if(empty($errArray) && isset($_POST[$key]))
+	{
+		$cpt_bill = (int)$_POST[$key];
+		$redirect_link = $redirect_link.'#bill-'.$cpt_bill;		
+	}
 }
 
 header('location: '.$redirect_link);
