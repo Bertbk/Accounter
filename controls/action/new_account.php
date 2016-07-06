@@ -21,6 +21,16 @@ include_once(LIBPATH.'/hashid/create_hashid.php');
 //Session is used to send back errors to account.php (if any)
 session_start();
 
+//Check token (avoid CSRF)
+$token = $_SESSION['token'];
+if ($_POST['p_token'] !== $_SESSION['token'])
+{
+	header('location: '.BASEURL);
+	exit();
+}	
+unset($_SESSION['token']);
+unset($_SESSION['token_time']);
+
 $errArray = array(); //error messages
 $warnArray = array(); //warning messages
 $successArray = array(); //success messages

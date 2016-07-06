@@ -42,6 +42,7 @@ Template of the create an account page.
 				<fieldset>
 					<legend class="sr-only">Create a new account</legend>
 					<p><em>Fields with asterisk <span class="glyphicon glyphicon-asterisk red"></span> are required</em></p>
+					<input type="hidden" name="p_token" value="<?php echo $token?>">
 					<div class="row">
 						<div class="col-xs-12 col-sm-6 col-lg-4">
 							<div class="form-group">

@@ -12,10 +12,23 @@
 Control page: search for accounts in the SQL providing an email address
  */
 
-require_once __DIR__.'/../config-app.php';
+//Session is used to send back errors to account.php (if any)
+session_start();
 
+require_once __DIR__.'/../config-app.php';
 require_once LIBPATH.'/accounts/get_accounts_by_email.php';
 require_once LIBPATH.'/email/send_email_with_accounts.php';
+
+//Check token (avoid CSRF)
+$token = $_SESSION['token'];
+if ($_POST['p_token'] !== $_SESSION['token'])
+{
+	header('location: '.BASEURL);
+	exit();
+}	
+unset($_SESSION['token']);
+unset($_SESSION['token_time']);
+
 
 if (session_status() == PHP_SESSION_NONE) {
     session_start();

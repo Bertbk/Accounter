@@ -42,6 +42,7 @@ Template of the retrieve accounts page.
 				<div class="col-md-6 col-lg-4">
 					<form method="post" action="<?php echo BASEURL.'/controls/search_accounts.php'?>">
 						<fieldset>
+							<input type="hidden" name="p_token" value="<?php echo $token?>">
 							<legend class="sr-only">Retrieve your accounts</legend>
 							<p><em>Fields with asterisk <span class="glyphicon glyphicon-asterisk red"></span> are required</em></p>
 							<div class="form-group">
@@ -53,7 +54,7 @@ Template of the retrieve accounts page.
 								</div>
 							</div>
 							<button type="submit" name="submit_email" value="Submit"
-								class="btn btn-primary" title="Retrive your accounts">
+								class="btn btn-primary" title="Retrieve your accounts">
 								Submit
 							</button> 
 						</fieldset>

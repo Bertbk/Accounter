@@ -6,15 +6,14 @@ INSTALLEUR
 
 MAJOR
 ======
-1. Multiple receivers for a payment
-2. Clean a bill from its payments/participants
-3. Admin page: user/Password !
-4. Comments
-5. Date of expiration : must be used!
-6. How to deal with unexpected access to eg. /controls/account.php or lib/ ?
-7. Protect some forms again csrf (session token)
+1. Multiple receivers for a payment : POSSIBLE TO DO !! JS !!
+2. Admin page: user/Password !
+3. Comments
+4. Date of expiration : must be used! CRON ?!
+5. How to deal with unexpected access to eg. /controls/account.php or lib/ ?
+6. Protect some forms again csrf (session token)
 https://openclassrooms.com/courses/securisation-des-failles-csrf
-8. INPUT TYPE NUMBER use bootstrap nice arrows
+7. Internationalisation : Framework...
 
 DUNNO
 =====
@@ -25,8 +24,7 @@ BUGS
 
 MINOR
 =====
-1. To verify: Anchor when adding/updating/deleting participants/bill participants/Payments/Bills
-2. 
+
 
 ----
 NOTES d'INSTALL

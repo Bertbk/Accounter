@@ -12,6 +12,12 @@
 Control page of the create an account page
  */
 
+session_start();
+
 require_once __DIR__.'/../config-app.php';
+
+$token = md5(uniqid(rand(), TRUE));
+$_SESSION['token'] = $token;
+$_SESSION['token_time'] = time();
 
 include_once(ABSPATH.'/templates/create.php');
