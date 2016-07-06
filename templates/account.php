@@ -52,6 +52,7 @@ Template of a particular account page, that is :
 
 <!--<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>-->
 <script src="<?php echo BASEURL.'/bootstrap/js/bootstrap.min.js'?>"></script>
+<script src="/bootstrap/js/Select/bootstrap-select.js"></script>
 
 
 <script type="text/javascript" src="<?php echo BASEURL.'/js/jquery_accounter.jquery'?>"></script>

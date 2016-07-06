@@ -283,66 +283,68 @@ if($admin_mode && !$edit_mode)
 	?>
 					<form method="post"	enctype="multipart/form-data"
 						action="<?php echo ACTIONPATH.'/new_bill_participant.php'?>">
-						<legend id="<?php echo 'show_hide_bill_add_part_'.$cpt_bill?>"
-							class="cursorpointer">
-							(+) Assign a participant to this bill
-						</legend>
-						<fieldset class="hidden_at_first"
-							id=<?php echo 'show_hide_bill_add_part_'.$cpt_bill.'_target'?>>
+						<fieldset>
+							<legend id="<?php echo 'show_hide_bill_add_part_'.$cpt_bill?>"
+								class="cursorpointer">
+								(+) Assign a participant to this bill
+							</legend>
 							<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
 							<input type="hidden" name="p_hashid_bill" value="<?php echo $bill['hashid']?>">
 							<input type="hidden" name="p_anchor" value="<?php echo '#bill-'.$cpt_bill?>">
+							<div class="hidden_at_first"
+							id=<?php echo 'show_hide_bill_add_part_'.$cpt_bill.'_target'?>>
 <?php
 			$cpt = -1;
 			foreach($this_free_bill_participants as $participant)
 			{
 				$cpt++;
 		?>
-							<div class="row row-no-padding form-group assign_bill_participant">
-								<div class="col-xs-12 col-md-6 col-lg-4 lg-offset-2">
-									<div>
-										<input type="checkbox" name="p_participant['<?php echo $cpt?>'][p_hashid_participant]" 
-											value="<?php echo $participant['hashid']?>" title="Participant"
-											id="<?php echo'assign_participant_'.$cpt_bill.'_'.$cpt?>" >
-										<div class="[ btn-group ] fullwidth" style="overflow:hidden">
-											<label for="<?php echo 'assign_participant_'.$cpt_bill.'_'.$cpt?>"
-												class="[ btn btn-default ] btn-assign_bill_participant">
-												<span class="[ glyphicon glyphicon-ok ]"></span>
-												<span> </span>
-											</label>
-											<span class="span-assign_bill_participant" >
-												<label for="<?php echo 'assign_participant_'.$cpt_bill.'_'.$cpt?>" 
-													class="[ btn btn-default active ] btn-assign_bill_participant2"
-													style="background-color:<?php echo '#'.$participant['color']?>">
-														<?php echo htmlspecialchars($participant['name'])?>
+								<div class="row row-no-padding form-group assign_bill_participant">
+									<div class="col-xs-12 col-md-6 col-lg-4 lg-offset-2">
+										<div>
+											<input type="checkbox" name="p_participant['<?php echo $cpt?>'][p_hashid_participant]" 
+												value="<?php echo $participant['hashid']?>" title="Participant"
+												id="<?php echo'assign_participant_'.$cpt_bill.'_'.$cpt?>" >
+											<div class="[ btn-group ] fullwidth" style="overflow:hidden">
+												<label for="<?php echo 'assign_participant_'.$cpt_bill.'_'.$cpt?>"
+													class="[ btn btn-default ] btn-assign_bill_participant">
+													<span class="[ glyphicon glyphicon-ok ]"></span>
+													<span> </span>
 												</label>
-											</span>
+												<span class="span-assign_bill_participant" >
+													<label for="<?php echo 'assign_participant_'.$cpt_bill.'_'.$cpt?>" 
+														class="[ btn btn-default active ] btn-assign_bill_participant2"
+														style="background-color:<?php echo '#'.$participant['color']?>">
+															<?php echo htmlspecialchars($participant['name'])?>
+													</label>
+												</span>
+											</div>
+										</div>
+									</div>
+									<div class="col-xs-12 col-md-6 col-lg-4">
+										<div class="">
+											<label for="<?php echo 'form_available_percent_'.$cpt_bill.'_'.$participant['id']?>" 
+												class="sr-only">
+												Percentage of use
+											</label>
+											<div class="input-group">
+												<input name="p_participant['<?php echo $cpt?>'][p_percent_of_use]" type="number"
+															class="form-control" step="0.01" min="0" max="100"	value="100" 
+															id="<?php echo 'form_available_percent_'.$cpt_bill.'_'.(int)$participant['id']?>"
+															title="Percentage of usage">
+													<span class="input-group-addon">%</span>
+											</div>
 										</div>
 									</div>
 								</div>
-								<div class="col-xs-12 col-md-6 col-lg-4">
-									<div class="">
-										<label for="<?php echo 'form_available_percent_'.$cpt_bill.'_'.$participant['id']?>" 
-											class="sr-only">
-											Percentage of use
-										</label>
-										<div class="input-group">
-											<input name="p_participant['<?php echo $cpt?>'][p_percent_of_use]" type="number"
-														class="form-control" step="0.01" min="0" max="100"	value="100" 
-														id="<?php echo 'form_available_percent_'.$cpt_bill.'_'.(int)$participant['id']?>"
-														title="Percentage of usage">
-												<span class="input-group-addon">%</span>
-										</div>
-									</div>
-								</div>
-							</div>
 		<?php
 				}//for each participant
 		?>
-							<button type="submit" name="submit_new_bill_participant" 
-								value="Submit" class="btn btn-primary" title="Submit new participation">
-								Submit
-							</button>
+								<button type="submit" name="submit_new_bill_participant" 
+									value="Submit" class="btn btn-primary" title="Submit new participation">
+									Submit
+								</button>
+							</div>
 						</fieldset>
 					</form>
 <?php
@@ -638,93 +640,95 @@ else
 		if(!empty($my_bill_participants[$bill['id']]))
 		{
 ?>
-					<form method="post" action="<?php echo ACTIONPATH.'/new_payment.php'?>">
-						<legend id="<?php echo 'show_hide_bill_add_paymt_'.$cpt_bill?>"
-							class="cursorpointer">
-							(+) Add a payment
-						</legend>
-						<fieldset class="hidden_at_first"
-							id="<?php echo 'show_hide_bill_add_paymt_'.$cpt_bill.'_target'?>">
-							<div id="<?php echo 'div_option_add_payment_'.$cpt_bill?>">
-								<p><em>Fields with asterisk <span class="glyphicon glyphicon-asterisk red"></span> are required</em></p>
-								<input type="hidden" name="p_hashid_account" value ="<?php echo $my_account['hashid_admin']?>">
-								<input type="hidden" name="p_hashid_bill" value ="<?php echo $bill['hashid']?>">
-								<input type="hidden" name="p_anchor" value="<?php echo '#bill-'.$cpt_bill?>">
-								<div id="div_set_payment_<?php echo $cpt_bill?>">
-									<div class="row form-group">
-										<div class="col-xs-12 col-lg-4">
-											<label for="<?php echo 'form_set_payment_payer_'.$cpt_bill?>_0">Payer<span class="glyphicon glyphicon-asterisk red"></span></label>
-											<select name="p_payment[0][p_hashid_payer]" 
-												id="form_set_payment_payer_<?php echo $cpt_bill?>_0" 
-												onchange="DropDownListsBetweenParticipants(this, document.getElementById('<?php echo 'form_set_payment_recv_'.$cpt_bill.'_0'?>'))"
-												class="form-control" title="Payer"> 
-													<option disabled selected value="null"> -- select a payer -- </option>
-												<?php
-													foreach($this_bill_participants as $bill_participant)
-													{ ?>
-														<option value="<?php echo $bill_participant['hashid']?>"><?php echo htmlspecialchars($bill_participant['name'])?></option>
-									<?php	} ?>
-											</select>
-										</div>
+					<form method="post" action="<?php echo ACTIONPATH.'/new_payment.php'?>"
+						role="form">
+						<fieldset>								
+							<legend id="<?php echo 'show_hide_bill_add_paymt_'.$cpt_bill?>"
+								class="cursorpointer">
+								(+) Add a payment
+							</legend>
+							<div  class="hidden_at_first"	id="<?php echo 'show_hide_bill_add_paymt_'.$cpt_bill.'_target'?>">
+								<div id="<?php echo 'div_option_add_payment_'.$cpt_bill?>">
+									<p><em>Fields with asterisk <span class="glyphicon glyphicon-asterisk red"></span> are required</em></p>
+									<input type="hidden" name="p_hashid_account" value ="<?php echo $my_account['hashid_admin']?>">
+									<input type="hidden" name="p_hashid_bill" value ="<?php echo $bill['hashid']?>">
+									<input type="hidden" name="p_anchor" value="<?php echo '#bill-'.$cpt_bill?>">
+									<div id="div_set_payment_<?php echo $cpt_bill?>">
+										<div class="row form-group">
+											<div class="col-xs-12 col-lg-4">
+												<label for="<?php echo 'form_set_payment_payer_'.$cpt_bill?>_0">Payer<span class="glyphicon glyphicon-asterisk red"></span></label>
+												<select name="p_payment[0][p_hashid_payer]" 
+													id="form_set_payment_payer_<?php echo $cpt_bill?>_0" 
+													onchange="DropDownListsBetweenParticipants(this, document.getElementById('<?php echo 'form_set_payment_recv_'.$cpt_bill.'_0'?>'))"
+													class="form-control selectpicker" title="Payer"> 
+														<option disabled selected value="null"> -- select a payer -- </option>
+													<?php
+														foreach($this_bill_participants as $bill_participant)
+														{ ?>
+															<option value="<?php echo $bill_participant['hashid']?>"><?php echo htmlspecialchars($bill_participant['name'])?></option>
+										<?php	} ?>
+												</select>
+											</div>
 
-										<div class="col-xs-12 col-lg-4">
-											<label for="<?php echo 'form_set_payment_cost_'.$cpt_bill?>_0">Amount<span class="glyphicon glyphicon-asterisk red"></span></label>
-											<div class="input-group">
-												<input type="number" step="0.01" min="0" name="p_payment[0][p_cost]" 
-													id="<?php echo 'form_set_payment_cost_'.$cpt_bill?>_0" required 
-													class="form-control" title="Amount">
-													<span class="input-group-addon glyph glyphicon-euro"></span>
+											<div class="col-xs-12 col-lg-4">
+												<label for="<?php echo 'form_set_payment_cost_'.$cpt_bill?>_0">Amount<span class="glyphicon glyphicon-asterisk red"></span></label>
+												<div class="input-group">
+													<input type="number" step="0.01" min="0" name="p_payment[0][p_cost]" 
+														id="<?php echo 'form_set_payment_cost_'.$cpt_bill?>_0" required 
+														class="form-control" title="Amount">
+														<span class="input-group-addon glyph glyphicon-euro"></span>
+												</div>
+											</div>
+
+											<div class="col-xs-12 col-lg-4">
+												<label for="<?php echo 'form_set_payment_recv_'.$cpt_bill?>_0">Receiver<span class="glyphicon glyphicon-asterisk red"></span></label>
+													<select name="p_payment[0][p_hashid_recv]" id="<?php echo 'form_set_payment_recv_'.$cpt_bill?>_0"
+													class="form-control" title="Receiver"> 
+														<option value="-1" selected="selected">Group</option>
+													</select>
 											</div>
 										</div>
-
-										<div class="col-xs-12 col-lg-4">
-											<label for="<?php echo 'form_set_payment_recv_'.$cpt_bill?>_0">Receiver<span class="glyphicon glyphicon-asterisk red"></span></label>
-												<select name="p_payment[0][p_hashid_recv]" id="<?php echo 'form_set_payment_recv_'.$cpt_bill?>_0"
-												class="form-control" title="Receiver"> 
-													<option value="-1" selected="selected">Group</option>
-												</select>
-										</div>
-									</div>
-									<div class="row form-group">
-										<div class="col-xs-12 col-lg-6">
-											<label for="<?php echo 'form_set_payment_desc_'.$cpt_bill?>_0">
-											Description</label>
-											<input type="text" name="p_payment[0][p_description]" 
-												id="<?php echo 'form_set_payment_desc_'.$cpt_bill?>_0" 
-												class="form-control" placeholder="Description" title="Description">
-										</div>
-										<div class="col-xs-12 col-lg-6">
-											<label for="<?php echo 'form_set_payment_date_'.$cpt_bill?>_0">
-												Date of payment (dd/mm/yyyy)
-											</label>
-											<div class="input-group">
-												<input type="date" name="p_payment[0][p_date_of_payment]" 
-													id="<?php echo 'form_set_payment_date_'.$cpt_bill?>_0" 
-													class="form-control" title="Date of payment">
-												<span class="input-group-addon glyphicon glyphicon-calendar"></span>
+										<div class="row form-group">
+											<div class="col-xs-12 col-lg-6">
+												<label for="<?php echo 'form_set_payment_desc_'.$cpt_bill?>_0">
+												Description</label>
+												<input type="text" name="p_payment[0][p_description]" 
+													id="<?php echo 'form_set_payment_desc_'.$cpt_bill?>_0" 
+													class="form-control" placeholder="Description" title="Description">
+											</div>
+											<div class="col-xs-12 col-lg-6">
+												<label for="<?php echo 'form_set_payment_date_'.$cpt_bill?>_0">
+													Date of payment (dd/mm/yyyy)
+												</label>
+												<div class="input-group">
+													<input type="date" name="p_payment[0][p_date_of_payment]" 
+														id="<?php echo 'form_set_payment_date_'.$cpt_bill?>_0" 
+														class="form-control" title="Date of payment">
+													<span class="input-group-addon glyphicon glyphicon-calendar"></span>
+												</div>
 											</div>
 										</div>
 									</div>
 								</div>
-							</div>
 	<?php
 		$name_of_people = array_column($this_bill_participants, 'name');
 		$hashid_of_people = array_column($this_bill_participants, 'hashid');
 	?>
-							<p>
-								<a href="#" onclick="AddPaymentLine(<?php echo htmlspecialchars(json_encode($name_of_people)) ?>, 
-									<?php echo htmlspecialchars(json_encode($hashid_of_people)) ?>,
-									<?php echo $cpt_bill?>);
-									return false;">
-								(+) Add a row
-								</a>
-							</p>
-							
-							<div>
-								<button type="submit" name="submit_new_payment" value="Submit" 
-									title="Submit new payment" class="btn btn-primary">
-									Submit
-								</button>
+								<p>
+									<a href="#" onclick="AddPaymentLine(<?php echo htmlspecialchars(json_encode($name_of_people)) ?>, 
+										<?php echo htmlspecialchars(json_encode($hashid_of_people)) ?>,
+										<?php echo $cpt_bill?>);
+										return false;">
+									(+) Add a row
+									</a>
+								</p>
+								
+								<div>
+									<button type="submit" name="submit_new_payment" value="Submit" 
+										title="Submit new payment" class="btn btn-primary">
+										Submit
+									</button>
+								</div>
 							</div>
 						</fieldset>
 					</form>
