@@ -58,12 +58,12 @@ if($admin_mode
 <?php } else{
 ?>
 
-					<div class="col-md-9 col-lg-10">
+					<div class="col-md-9 ">
 						<h2 class="bill_title">
 							<?php echo ($cpt_bill+1).'. '.htmlspecialchars($bill['title']) ?>
 						</h2>	
 					</div>
-					<div class="col-md-3 col-lg-2 pull-left">
+					<div class="col-md-3">
 		<?php
 					if($admin_mode && $edit_mode === false)
 					{
