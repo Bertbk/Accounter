@@ -688,8 +688,7 @@ else
 													Receiver<span class="glyphicon glyphicon-asterisk red"></span>
 												</label>
 												<div class="input-group">
-													<select name="p_payment[0][p_hashid_recv]" id="<?php echo 'form_set_payment_recv_'.$cpt_bill?>_0"
-													class="form-control selectpicker" title="Receiver"> 
+													<select name="p_payment[0][p_hashid_recv]" id="<?php echo 'form_set_payment_recv_'.$cpt_bill?>_0"	class="form-control selectpicker" title="Receiver"> 
 														<option value="-1" selected="selected">Group</option>
 													</select>
 													<span class="input-group-addon glyphicon glyphicon-user"></span>

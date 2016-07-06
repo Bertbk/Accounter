@@ -24,11 +24,14 @@ function DropDownListsBetweenParticipants(payer, receiver) {
 	receiver.length= 0;
 	createOptionDropDown(receiver, 'Group', -1);
 	for (i = 0; i < payer.options.length; i++) {
-		if(payer.value != payer.options[i].value && payer.options[i].value != 'null')
+		if(payer.options[i].value != "" 
+			&& payer.value != payer.options[i].value 
+			&& payer.options[i].value != 'null')
 		{
 			createOptionDropDown(receiver, payer.options[i].text, payer.options[i].value);
 		}
 	}
+  $('.selectpicker').selectpicker('refresh');
 }
 
 
@@ -283,6 +286,6 @@ function AddParticipantLine()
 	var form_to_add = document.getElementById('inner_participant_form');
 	form_to_add.appendChild(div_row);
 	
-   AddParticipantLine.counter ++;
-   return false;
+	AddParticipantLine.counter ++;
+	return false;
 }
