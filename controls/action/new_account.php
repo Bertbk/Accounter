@@ -26,7 +26,7 @@ $token = $_SESSION['token'];
 if ($_POST['p_token'] !== $_SESSION['token'])
 {
 	header('location: '.BASEURL);
-	exit();
+	exit;
 }	
 unset($_SESSION['token']);
 unset($_SESSION['token_time']);
