@@ -95,7 +95,7 @@ if(!isset($account) || empty($account))
 	$redirect_link = BASEURL;
 }
 else{
-	$redirect_link = BASEURL.'/admin';
+	$redirect_link = BASEURL.'/account/'.$account['hashid_admin'].'/admin';
 }
 
 header('location: '.$redirect_link);
