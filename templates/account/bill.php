@@ -462,8 +462,9 @@ foreach($this_payment as $payment)
 					>
 					<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
 					<input type="hidden" name="p_hashid_payment" value="<?php echo $payment['hashid']?>">
+					<input type="hidden" name="p_cpt_bill" value="<?php echo $cpt_bill?>">
 					<button type="submit" class="btn btn-default confirmation" 
-						name="submit_delete_participant" title="Delete participation">
+						name="submit_delete_payment" title="Delete payment">
 						<span class="glyphicon glyphicon-trash"></span>
 					</button>
 				</form>
@@ -646,6 +647,7 @@ else
 				<p><em>Fields with asterisk <span class="glyphicon glyphicon-asterisk red"></span> are required</em></p>
 				<input type="hidden" name="p_hashid_account" value ="<?php echo $my_account['hashid_admin']?>">
 				<input type="hidden" name="p_hashid_bill" value ="<?php echo $bill['hashid']?>">
+				<input type="hidden" name="p_cpt_bill" value ="<?php echo $cpt_bill?>">
 				<div id="div_set_payment_<?php echo $cpt_bill?>">
 					<div class="row form-group">
 						<div class="col-xs-12 col-lg-4">
