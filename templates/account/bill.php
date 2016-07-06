@@ -32,35 +32,32 @@ foreach($my_bills as $bill)
 	id="<?php echo 'bill-'.$cpt_bill?>">
 	<div class="col-xs-12">
 		<div class="panel panel-primary">
-<?php 
+			<div class="panel-heading cursorpointer" data-toggle="collapse" data-target="#<?php echo 'panel-body_bill'.$cpt_bill?>">
+				<div class="row">
+	<?php 
 //Edit the Bill (name, description, ...)
 if($admin_mode 
 				&& $edit_mode === 'bill' 
 				&& $edit_hashid === $bill['hashid'])
 				{
 ?>
-			<div class="panel-heading">
-				<div class="row">
 					<div class="col-xs-12" id="<?php echo 'edit_tag_'.$edit_hashid?>">
-					<form method="post" id="<?php echo "form_update_bill_".$cpt_bill?>"
-						action="<?php echo ACTIONPATH.'/update_bill.php'?>">
-						<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
-						<input type="hidden" name="p_hashid_bill" value="<?php echo $bill['hashid']?>">
-						<input type="hidden" name="p_cpt_bill" value="<?php echo $cpt_bill?>">
-						<h2>
-							<label for="form_edit_bill_name">Title:</label>
-							<input type="text" name="p_title_of_bill" id="form_edit_bill_name"
-							class="form-control"	value="<?php echo htmlspecialchars($bill['title'])?>" required 
-							title="Title">
-						</h2>
-					</form>
+						<form method="post" id="<?php echo "form_update_bill_".$cpt_bill?>"
+							action="<?php echo ACTIONPATH.'/update_bill.php'?>">
+							<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
+							<input type="hidden" name="p_hashid_bill" value="<?php echo $bill['hashid']?>">
+							<input type="hidden" name="p_cpt_bill" value="<?php echo $cpt_bill?>">
+							<h2>
+								<label for="form_edit_bill_name">Title:</label>
+								<input type="text" name="p_title_of_bill" id="form_edit_bill_name"
+								class="form-control"	value="<?php echo htmlspecialchars($bill['title'])?>" required 
+								title="Title">
+							</h2>
+						</form>
 					</div>
-				</div>
-			</div>
 <?php } else{
 ?>
-			<div class="panel-heading">
-				<div class="row">
+
 					<div class="col-md-9 col-lg-10">
 						<h2 class="bill_title">
 							<?php echo ($cpt_bill+1).'. '.htmlspecialchars($bill['title']) ?>
@@ -77,14 +74,15 @@ if($admin_mode
 								<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
 								<input type="hidden" name="p_hashid_bill" value="<?php echo $bill['hashid']?>">
 								<button type="submit" class="btn btn-default confirmation" 
-									name="submit_delete_bill" title="Delete bill">
+									name="submit_delete_bill" title="Delete bill"  onclick="event.stopPropagation();">
 									<span class="glyphicon glyphicon-trash"></span>
 								</button>
 							</form>
 						</div>
 						<div class="button_bill_title">
 							<form action="<?php echo $link_tmp?>">
-									<button type="submit" value="" class="btn btn-default" title="Edit bill">
+									<button type="submit" value="" class="btn btn-default" 
+										title="Edit bill" onclick="event.stopPropagation();">
 											<span class="glyphicon glyphicon-pencil"></span>
 									</button>
 							</form>
@@ -99,11 +97,11 @@ if($admin_mode
 							</button>							
 						</div>
 					</div>
-				</div>
-			</div>
 	<?php
 		}
 ?>
+				</div>
+			</div>
 <?php //PANEL BODY OF BILL
 ?>
 		<div id="<?php echo 'panel-body_bill'.$cpt_bill?>" class="panel-collapse collapse in">

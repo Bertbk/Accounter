@@ -20,6 +20,10 @@ Template to display the solutions
 			<div class="panel-heading cursor_pointer" 
 				data-toggle="collapse" data-target="#panel-body_solution">
 				<h2>Solutions</h2>
+				<button class="btn btn-default floatright" title="Collapse/Expand"
+					data-toggle="collapse" data-target="#panel-body_solution">
+					<span class="glyphicon glyphicon-plus"></span>
+				</button>
 			</div>
 			<div id="panel-body_solution" class="panel-collapse collapse in">
 				<div class="panel-body">
