@@ -25,10 +25,10 @@ else{
 }
 ?>
 
-<div class="row <?php echo $overlay?>" id="description_panel">
+<div class="row" id="description_panel">
 	<div class="col-xs-12">
 	<?php if($admin_mode == true){	?>
-		<div class="panel panel-danger">
+		<div class="panel panel-danger <?php echo $overlay?>">
 		
 		<?php if($edit_mode === 'account' 
 			&& $edit_hashid === $my_account['hashid']){?>
@@ -40,10 +40,11 @@ else{
 	<?php	}else{?>
 		<div class="panel panel-default">
 	<?php }?>
-			<div class="panel-heading cursorpointer" data-toggle="collapse" data-target="#account_description_panel">
+			<div class="panel-heading <?php if($overlay==""){echo 'cursorpointer';}?>" 
+				<?php if($overlay==""){echo 'data-toggle="collapse" data-target="#account_description_panel"'; }?>>
 				<div class="row">
 					<div class="col-md-9">
-						<h2 class="account_title">
+						<h2>
 						<?php if($admin_mode == true
 								&& $edit_mode === "account" 
 								&& $edit_hashid === $my_account['hashid']){?>
@@ -112,10 +113,12 @@ else{
 							</form>
 						</div>
 					<?php } ?>
+					<?php if($overlay==""){ ?>
 						<button class="btn btn-default floatright" title="Collapse/Expand"
 							data-toggle="collapse" data-target="#account_description_panel">
 							<span class="glyphicon glyphicon-plus"></span>
 						</button>
+					<?php } ?>
 					</div>
 				</div>
 			</div>
