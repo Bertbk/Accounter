@@ -54,7 +54,7 @@ Template of a particular account page, that is :
 <script src="<?php echo BASEURL.'/bootstrap/js/bootstrap.min.js'?>"></script>
 
 
-<script type="text/javascript" src="<?php echo BASEURL.'/js/hide_show_add_participant.jquery'?>"></script>
+<script type="text/javascript" src="<?php echo BASEURL.'/js/jquery_accounter.jquery'?>"></script>
 
 </head>
 

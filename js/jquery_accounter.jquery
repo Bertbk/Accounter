@@ -14,8 +14,6 @@ $(document).ready(function(){
   });
 });
 
-
-
 $(document).ready(function() {
 	$('.confirmation').on('click', function () {
 		return confirm('Are you sure?');
@@ -33,11 +31,3 @@ $(document).ready(function(){
 				$(this).datepicker({ dateFormat: 'dd/mm/yy'});
 		});
 });
-
-/* Dummy for test
-$(document).ready(function(){
-	$("[id^=form_set_payment_date_]").each(function () { 
-	alert('coucou'); 
-	});
-});
-*/
