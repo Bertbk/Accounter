@@ -22,6 +22,10 @@ div#participants h2{
 	display:inline-block;
 }
 
+div#participants div.row_participant{
+	margin-bottom:5px;
+}
+
 div#div_add_participant{
 	margin-top:10px;
 }
@@ -30,6 +34,6 @@ div#div_add_participant .form-control{
 }
 
 div#div_add_participant a {
-	
 color:black;
 }
+

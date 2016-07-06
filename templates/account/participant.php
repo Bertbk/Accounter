@@ -50,7 +50,7 @@ else{
 				continue;
 			}
 ?>
-			<div class="row">
+			<div class="row row_participant">
 				<?php
 				//Check if the name takes all the width or not (edit/delete button ?)
 				if(!($admin_mode && !$edit_mode))
