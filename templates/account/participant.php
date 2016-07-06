@@ -13,10 +13,15 @@ Template to display the participants
  */
 ?>
 <div id="participants" class="panel panel-primary">
-	<div class="panel-heading">
-		<h2>Participants: <?php echo (int)$n_participants ?> (<?php echo (int)$n_people ?>)</h2>
+	<div class="panel-heading cursor_pointer"
+		data-toggle="collapse" data-target="#panel-body_participants">
+		<h2>Participants: <br><?php echo (int)$n_participants ?> (<?php echo (int)$n_people ?>)</h2>
+		<button class="btn btn-default floatright" title="Collapse/Expand"
+			data-toggle="collapse" data-target="#panel-body_participants">
+			<span class="glyphicon glyphicon-plus"></span>
+		</button>
 	</div>
-	<div class="panel-body">
+	<div class="panel-body panel-collapse collapse in" id="panel-body_participants">
 <?php if (is_array($my_participants) && sizeof($my_participants) > 0 ) 
 	{
 		$participant_to_edit = false;
