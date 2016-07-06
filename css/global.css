@@ -73,12 +73,16 @@ body div.container{
 	text-align:center;
 }
 
-.row-no-padding {
-  [class*="col-"] {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-  }
+.row-no-padding [class*="col-"]{
+    padding-left: 0px !important;
+    padding-right: 0px !important;
 }
+
+.row-no-margin [class*="col-"]{
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+}
+
 
 .red{
 	color:red;

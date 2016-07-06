@@ -124,45 +124,52 @@ Template to display the participants
 if($admin_mode && $edit_mode === false)
 { ?>
 		<div id="div_add_participant">
-			<p id="show_hide_add_participant"><a href="javascript:void(0)">(+) Add a participant</a></p>	
 <!-- Add participant-->
 			<form method="post" 
-				action="<?php echo ACTIONPATH.'/new_participant.php'?>"
-				id="show_hide_add_participant_target" 
-				class="hidden_at_first">
+				action="<?php echo ACTIONPATH.'/new_participant.php'?>">
 				<fieldset>
-					<legend>Add a participant:</legend>
-					<p><em>Fields with asterisk <span class="glyphicon glyphicon-asterisk red"></span> are required</em></p>
-					<input type="hidden" name="p_hashid_account" 
-						value="<?php echo $my_account['hashid_admin']?>">
-					<div class="row">
-						<p class="col-xs-10 xs-offset-1">
-							Name<span class="glyphicon glyphicon-asterisk red"></span> / Number of people<span class="glyphicon glyphicon-asterisk red"></span>
-						</p>
-					</div>
-					<?php //the "inner_participant_form" is used to add row with JS
-					?>
-					<div id="inner_participant_form">
-						<div class="row form-group">
-							<label for="form_set_participant_name_0" class="sr-only">
-								Name
-							</label>
-							<input type="text" name="p_new_participant[0][p_name]" 
-								id="form_set_participant_name_0" class="form-control-inline col-xs-9" 
-								placeholder="Name" title="Name" required>
-							<label for="form_set_participant_nbpeople_0" class="sr-only">
-								Nb. of people
-							</label>		
-							<input type="number" name="p_new_participant[0][p_nb_of_people]" value="1" 
-								id="form_set_participant_nbpeople_0" class="form-control-inline col-xs-3"
-								title="Number of people" required>
+					<legend id="show_hide_add_participant"
+						class="cursorpointer">
+						Add a participant
+					</legend>
+					<div id="show_hide_add_participant_target" 
+						class="hidden_at_first">
+						<p><em>Fields with asterisk <span class="glyphicon glyphicon-asterisk red"></span> are required</em></p>
+						<input type="hidden" name="p_hashid_account" 
+							value="<?php echo $my_account['hashid_admin']?>">
+						<div class="row">
+							<p class="col-xs-10 xs-offset-1">
+								Name<span class="glyphicon glyphicon-asterisk red"></span> / Number of people<span class="glyphicon glyphicon-asterisk red"></span>
+							</p>
 						</div>
+						<?php //the "inner_participant_form" is used to add row with JS
+						?>
+						<div id="inner_participant_form">
+							<div class="row form-group row-no-padding">
+								<div class="col-xs-9">
+									<label for="form_set_participant_name_0" class="sr-only">
+										Name
+									</label>
+									<input type="text" name="p_new_participant[0][p_name]" 
+										id="form_set_participant_name_0" class="form-control" 
+										placeholder="Name" title="Name" required>
+								</div>
+								<div class="col-xs-3">
+									<label for="form_set_participant_nbpeople_0" class="sr-only">
+										Nb. of people
+									</label>		
+									<input type="number" name="p_new_participant[0][p_nb_of_people]" value="1" 
+										id="form_set_participant_nbpeople_0" class="form-control"
+										title="Number of people" required>
+								</div>
+							</div>
+						</div>
+						<p><a href="#" onclick="AddParticipantLine();return false;">(+) Add a row</a></p>		
+						<button type="submit" name="submit_new_participant" class="btn btn-primary" 
+							value="Submit" title="Submit new participant">
+							Submit
+						</button>
 					</div>
-					<p><a href="#" onclick="AddParticipantLine();return false;">(+) Add a row</a></p>		
-					<button type="submit" name="submit_new_participant" class="btn btn-primary" 
-						value="Submit" title="Submit new participant">
-						Submit
-					</button> 
 				</fieldset>
 			</form>
 		</div>
