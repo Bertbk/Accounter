@@ -18,6 +18,9 @@ After the form has been properly filled:
 
 $current_url = "http://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
 $base_url = substr($current_url , 0, strlen($current_url) - strlen('/install/install.php'));
+if ( !defined('BASEURL') )
+	define('BASEURL', $base_url);
+
 
 //Session is used to send back errors to account.php (if any)
 session_start();
@@ -101,6 +104,26 @@ if(isset($_POST['submit_install']))
 		}			
 	}
 
+	//ADMIN USERNAME
+	$key = 'p_admin_username';
+	if(empty($_POST[$key])) { //If empty
+		array_push($errArray, $ErrorEmptyMessage[$key]);
+	}
+	else{
+		$admin_username = $_POST[$key];
+	}
+
+	//ADMIN PASSWORD
+	$key = 'p_admin_passwd';
+	if(empty($_POST[$key])) { //If empty
+		array_push($errArray, $ErrorEmptyMessage[$key]);
+	}
+	else{
+		$admin_passwd_clear = $_POST[$key];
+		$admin_passwd = crypt($admin_passwd_clear, base64_encode($admin_passwd_clear));
+		$admin_passwd_clear = "";
+	}
+
 	//TEST DB
 	if(empty($errArray))
 	{
@@ -123,6 +146,20 @@ if(isset($_POST['submit_install']))
 		}
 		else{
 			array_push($successArray, 'Config file created');
+		}
+	}
+
+	//Create Admin file
+	if(empty($errArray))
+	{
+		include_once(__DIR__.'/create_admin_htaccess.php');
+		$admin_page_created = create_admin_htaccess($admin_username, $admin_passwd);
+		if($admin_page_created == false)
+		{
+			array_push($errArray, 'Cannot create admin protection');
+		}
+		else{
+			array_push($successArray, 'Admin page secured');
 		}
 	}
 
@@ -192,9 +229,9 @@ if(isset($_POST['submit_install']))
 			<h1>Install Accounter</h1>
 
 			<form method="post">
+				<p><em>Fields with asterisk <span class="glyphicon glyphicon-asterisk red"></span> are required</em></p>
 				<fieldset>
-					<legend class="sr-only">Install Accounter</legend>
-					<p><em>Fields with asterisk <span class="glyphicon glyphicon-asterisk red"></span> are required</em></p>
+					<legend>SQL database</legend>
 					<div class="form-group">
 						<label for="input_host">Host<span class="glyphicon glyphicon-asterisk red"></span></label>
 						<input type="text" name="p_host" id="input_host" required
@@ -220,12 +257,27 @@ if(isset($_POST['submit_install']))
 						<input type="text" name="p_prefix" id="input_prefix" required class="form-control"
 							placeholder="Database name" value="cpter_">
 					</div>
-					
+				</fieldset>					
+				<fieldset>
+					<legend>Administration</legend>
 					<div class="form-group">
-						<label for="input_email">Email address (retrieve accounts, etc.)<span class="glyphicon glyphicon-asterisk red"></span></label>
+						<label for="input_email">Email address of the server (send email, ...)<span class="glyphicon glyphicon-asterisk red"></span></label>
 						<input type="email" name="p_contact_email" id="input_email" required class="form-control"
 							placeholder="Email address">
 					</div>
+
+					<div class="form-group">
+						<label for="input_admin_username">Admin username<span class="glyphicon glyphicon-asterisk red"></span></label>
+						<input type="text" name="p_admin_username" id="input_admin_username" required class="form-control"
+							placeholder="Username">
+					</div>
+
+					<div class="form-group">
+						<label for="input_admin_passwd">Admin password<span class="glyphicon glyphicon-asterisk red"></span></label>
+						<input type="password" name="p_admin_passwd" id="input_admin_passwd" required class="form-control"
+							placeholder="Password to admin page">
+					</div>
+
 					<button type="submit" name="submit_install" value="Submit"
 						class="btn btn-primary">
 						Submit
