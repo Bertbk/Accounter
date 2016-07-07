@@ -726,14 +726,14 @@ else
 												</div>
 											</div>
 											<div class="col-xs-12 col-lg-4">
-												<label for="<?php echo 'form_set_payment_recv_type_'.$cpt_bill?>_0">
+												<label for="<?php echo 'form_set_payment_type_'.$cpt_bill?>_0">
 													Receiver(s)<span class="glyphicon glyphicon-asterisk red"></span>
 												</label>
 												<div class="input-group">
-													<select name="p_payment[0][p_type]" id="<?php echo 'form_set_payment_recv_type_'.$cpt_bill?>_0"	
+													<select name="p_payment[0][p_type]" id="<?php echo 'form_set_payment_type_'.$cpt_bill?>_0"	
 														class="form-control selectpicker" title="Group or specific payment?"
 														onchange="DisableEnableElement(this, document.getElementById('<?php echo 'form_set_payment_recv_'.$cpt_bill?>_0'))"> 
-														<option value="-1" selected="selected">All the Group</option>
+														<option value="-1" selected="selected">Entire Group</option>
 														<option value="1">Specific</option>
 													</select>
 													<select name="p_payment[0][p_hashid_recv][]" id="<?php echo 'form_set_payment_recv_'.$cpt_bill?>_0"	

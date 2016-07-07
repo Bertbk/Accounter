@@ -107,11 +107,18 @@ function AddPaymentLine(name_of_people, hashid_of_people, cpt_bill)
 	input_cost.title = "Amount";
 	input_cost.placeholder = "Amount";
 	input_cost.setAttribute("number_type", "float");
+	var select_type = document.createElement("select");
+	select_type.id = "form_set_payment_type_"+ cpt_bill + "_" + AddPaymentLine.counter;
+	select_type.name = "p_payment["+ AddPaymentLine.counter +"][p_type]";
+	select_type.className = "form-control selectpicker";
+	select_type.title = "Group or specific payment?";
 	var select_receiver = document.createElement("select");
 	select_receiver.id = "form_set_payment_recv_"+ cpt_bill + "_" + AddPaymentLine.counter;
-	select_receiver.name = "p_payment["+ AddPaymentLine.counter +"][p_hashid_recv]";
+	select_receiver.name = "p_payment["+ AddPaymentLine.counter +"][p_hashid_recv][]";
 	select_receiver.className = "form-control selectpicker";
 	select_receiver.title = "Receiver";
+	select_receiver.disabled = "true";
+	select_receiver.multiple = "true";
 	var input_description = document.createElement("input");
 	input_description.id = "form_set_payment_desc_"+ cpt_bill + "_" + AddPaymentLine.counter;
 	input_description.type="text";
@@ -142,16 +149,26 @@ function AddPaymentLine(name_of_people, hashid_of_people, cpt_bill)
 		opt.value = hashid_of_people[i];
 		opt.text = name_of_people[i];
 		select_payer.appendChild(opt);
+
+		var opt_recv = document.createElement("option");
+		opt_recv.value = hashid_of_people[i];
+		opt_recv.text = name_of_people[i];
+		select_receiver.appendChild(opt_recv);
 	}
 
 	var opt_group = document.createElement("option");
 	opt_group.selected=true;
 	opt_group.value = "-1";
-	opt_group.text = "Group";
-	select_receiver.appendChild(opt_group);
+	opt_group.text = "Entire group";
+	var opt_particular = document.createElement("option");
+	opt_particular.selected=false;
+	opt_particular.value = "1";
+	opt_particular.text = "Specific";
+	select_type.appendChild(opt_group);
+	select_type.appendChild(opt_particular);
 	
-	select_payer.onchange=function(){
-		DropDownListsBetweenParticipants(this, select_receiver);
+	select_type.onchange=function(){
+		DisableEnableElement(this, select_receiver);
 	};
 
 	//Set label
@@ -228,6 +245,7 @@ function AddPaymentLine(name_of_people, hashid_of_people, cpt_bill)
 	div_row1.appendChild(div_amount);
 	//Receiver
 	div_receiver.appendChild(label_recv);
+	div_input_group_receiver.appendChild(select_type);
 	div_input_group_receiver.appendChild(select_receiver);
 	div_input_group_receiver.appendChild(span_glyph_receiver);
 	div_receiver.appendChild(div_input_group_receiver);
