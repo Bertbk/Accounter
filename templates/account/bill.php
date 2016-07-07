@@ -265,13 +265,9 @@ if($admin_mode
 								</div>
 							</div>
 							<div class="col-xs-6 col-sm-5 col-md-4">
-								<div class="input-group spinner">
-									<input type="text" number_type="float" step="0.01" min="0" max="100" name="p_percent_of_use"
+								<div class="input-group">
+									<input type="number" step="0.01" min="0" max="100" name="p_percent_of_use"
 										class="form-control" value="<?php echo (float)$bill_participant_tmp['percent_of_usage']?>" required>
-									<div class="input-group-btn-vertical">
-										<button class="btn btn-default" type="button"><i class="fa fa-caret-up"></i></button>
-										<button class="btn btn-default" type="button"><i class="fa fa-caret-down"></i></button>
-									</div>
 									<span class="input-group-addon">%</span>
 								</div>
 							</div>
@@ -346,15 +342,11 @@ if($admin_mode && !$edit_mode)
 											class="sr-only">
 											Percentage of use
 										</label>
-										<div class="input-group spinner">
-											<input name="p_participant['<?php echo $cpt?>'][p_percent_of_use]" type="text"
+										<div class="input-group">
+											<input name="p_participant['<?php echo $cpt?>'][p_percent_of_use]" type="number"
 														class="form-control" step="0.01" min="0" max="100"	value="100" 
 														id="<?php echo 'form_available_percent_'.$cpt_bill.'_'.(int)$participant['id']?>"
-														title="Percentage of usage" number_type="float">
-											<div class="input-group-btn-vertical">
-												<button class="btn btn-default" type="button"><i class="fa fa-caret-up"></i></button>
-												<button class="btn btn-default" type="button"><i class="fa fa-caret-down"></i></button>
-											</div>
+														title="Percentage of usage">
 											<span class="input-group-addon">%</span>
 										</div>
 									</div>
@@ -510,6 +502,7 @@ if($payment_to_edit !== false)
 							action="<?php echo ACTIONPATH.'/update_payment.php'?>">
 							<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
 							<input type="hidden" name="p_hashid_payment" value="<?php echo $payment_to_edit['hashid']?>">
+							<input type="hidden" name="p_anchor" value="<?php echo '#bill-'.$cpt_bill?>">
 							
 							<div class="row form-group">
 								<div class="col-xs-12">
@@ -714,14 +707,10 @@ else
 												<label for="<?php echo 'form_set_payment_cost_'.$cpt_bill?>_0">
 													Amount<span class="glyphicon glyphicon-asterisk red"></span>
 												</label>
-												<div class="input-group spinner">
-													<input type="text" step="0.01" min="0" placeholder="Amount" name="p_payment[0][p_cost]" 
+												<div class="input-group">
+													<input type="number" step="0.01" min="0" placeholder="Amount" name="p_payment[0][p_cost]" 
 														id="<?php echo 'form_set_payment_cost_'.$cpt_bill?>_0" required 
-														class="form-control" title="Amount" number_type="float">
-													<div class="input-group-btn-vertical">
-														<button class="btn btn-default" type="button"><i class="fa fa-caret-up"></i></button>
-														<button class="btn btn-default" type="button"><i class="fa fa-caret-down"></i></button>
-													</div>
+														class="form-control" title="Amount">
 													<span class="input-group-addon glyphicon glyphicon-euro"></span>
 												</div>
 											</div>
@@ -737,7 +726,7 @@ else
 														<option value="1">Specific</option>
 													</select>
 													<select name="p_payment[0][p_hashid_recv][]" id="<?php echo 'form_set_payment_recv_'.$cpt_bill?>_0"	
-														class="form-control selectpicker" title="Receiver" multiple="true" disabled="true"> 
+														class="form-control selectpicker" title="Receiver" multiple="multiple" disabled="disabled"> 
 														<?php
 															foreach($this_bill_participants as $bill_participant)
 															{ ?>

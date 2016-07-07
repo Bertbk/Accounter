@@ -99,14 +99,14 @@ function AddPaymentLine(name_of_people, hashid_of_people, cpt_bill)
 	select_payer.title = "Payer";
 	var input_cost = document.createElement("input");
 	input_cost.id = "form_set_payment_cost_"+ cpt_bill + "_" + AddPaymentLine.counter;
-	input_cost.type="text";
+	input_cost.type="number";
 	input_cost.min="0";
 	input_cost.step="0.01";
 	input_cost.className = "form-control";
 	input_cost.name = "p_payment["+ AddPaymentLine.counter +"][p_cost]";
 	input_cost.title = "Amount";
 	input_cost.placeholder = "Amount";
-	input_cost.setAttribute("number_type", "float");
+//	input_cost.setAttribute("number_type", "float");
 	var select_type = document.createElement("select");
 	select_type.id = "form_set_payment_type_"+ cpt_bill + "_" + AddPaymentLine.counter;
 	select_type.name = "p_payment["+ AddPaymentLine.counter +"][p_type]";
@@ -196,7 +196,7 @@ function AddPaymentLine(name_of_people, hashid_of_people, cpt_bill)
 	var span_glyph_payer = document.createElement("span");
 	span_glyph_payer.className="input-group-addon glyphicon glyphicon-user";
 	var div_input_group_amount = document.createElement("div");
-	div_input_group_amount.className="input-group spinner";
+	div_input_group_amount.className="input-group";
 	var span_glyph_amount = document.createElement("span");
 	span_glyph_amount.className="input-group-addon glyphicon glyphicon-euro";
 	var div_input_group_receiver = document.createElement("div");
@@ -212,20 +212,6 @@ function AddPaymentLine(name_of_people, hashid_of_people, cpt_bill)
 	var span_glyph_date = document.createElement("span");
 	span_glyph_date.className="input-group-addon glyphicon glyphicon-calendar";
 
-	//For the amount
-	var div_buttons = document.createElement("div");
-	div_buttons.className="input-group-btn-vertical";
-	var button_up = document.createElement("button");
-	button_up.className="btn btn-default";
-	button_up.type="button";
-	var button_down = document.createElement("button");
-	button_down.className="btn btn-default";
-	button_down.type="button";	
-	var i_up = document.createElement("i");
-	i_up.className="fa fa-caret-up"
-	var i_down = document.createElement("i");
-	i_down.className="fa fa-caret-down"
-	
 	//Add to div...
 	div_payer.appendChild(label_payer);
 	div_input_group_payer.appendChild(select_payer);
@@ -233,12 +219,7 @@ function AddPaymentLine(name_of_people, hashid_of_people, cpt_bill)
 	div_payer.appendChild(div_input_group_payer);
 	div_row1.appendChild(div_payer);
 	//Amount
-	button_up.appendChild(i_up);
-	button_down.appendChild(i_down);
-	div_buttons.appendChild(button_up);
-	div_buttons.appendChild(button_down);
 	div_input_group_amount.appendChild(input_cost);
-	div_input_group_amount.appendChild(div_buttons);
 	div_input_group_amount.appendChild(span_glyph_amount);
 	div_amount.appendChild(label_cost);
 	div_amount.appendChild(div_input_group_amount);
@@ -271,8 +252,6 @@ function AddPaymentLine(name_of_people, hashid_of_people, cpt_bill)
 	parent_div.appendChild(hr);
 	parent_div.appendChild(div_row1);
 	parent_div.appendChild(div_row2);
-	
-     
 
   $('.selectpicker').selectpicker('refresh');
   AddPaymentLine.counter ++;
@@ -294,10 +273,6 @@ function AddParticipantLine()
 	div_col_name.className="col-xs-9";	
 	var div_col_nb = document.createElement("div");
 	div_col_nb.className="col-xs-3";
-	var div_spinner = document.createElement("div");
-	div_spinner.className="input-group spinner";
-	var div_buttons = document.createElement("div");
-	div_buttons.className="input-group-btn-vertical";
 	
 	var input_name = document.createElement("input");
 	input_name.id = "form_set_participant_name_"+ AddParticipantLine.counter;
@@ -309,7 +284,7 @@ function AddParticipantLine()
 	
 	var input_nb_of_people = document.createElement("input");
 	input_nb_of_people.id = "form_set_participant_nbpeople_"+ AddParticipantLine.counter;
-	input_nb_of_people.type="text";
+	input_nb_of_people.type="number";
 	input_nb_of_people.value="1";
 	input_nb_of_people.min="1";
 	input_nb_of_people.step="1";
@@ -326,32 +301,13 @@ function AddParticipantLine()
 	label_nb_of_people.setAttribute("for", input_nb_of_people.id);
 	label_nb_of_people.innerHTML="Nb. of people:";
 	label_nb_of_people.setAttribute("class", "sr-only");
-	
-	
-	var button_up = document.createElement("button");
-	button_up.className="btn btn-default";
-	button_up.type="button";
-	var button_down = document.createElement("button");
-	button_down.className="btn btn-default";
-	button_down.type="button";
-	
-	var i_up = document.createElement("i");
-	i_up.className="fa fa-caret-up"
-	var i_down = document.createElement("i");
-	i_down.className="fa fa-caret-down"
-	
+		
 	//Assemble everything
 	div_col_name.appendChild(label_name);
 	div_col_name.appendChild(input_name);
 	
-	button_up.appendChild(i_up);
-	button_down.appendChild(i_down);
-	div_buttons.appendChild(button_up);
-	div_buttons.appendChild(button_down);
-	div_spinner.appendChild(input_nb_of_people);
-	div_spinner.appendChild(div_buttons);
 	div_col_nb.appendChild(label_nb_of_people);
-	div_col_nb.appendChild(div_spinner);
+	div_col_nb.appendChild(input_nb_of_people);
 
 	var div_row = document.createElement("div");
 	div_row.setAttribute("class", "row form-group row-no-padding");

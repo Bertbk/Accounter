@@ -109,15 +109,9 @@ else{
 							title="Name of participant">
 					</div>
 					<div class="col-xs-3">
-						<div class="input-group spinner">
-							<input type="text" name="p_nb_of_people" class="form-control"
-								min="1" step="1" value="<?php echo (int)$participant['nb_of_people']?>" required
-								title="Number of people">
-							<div class="input-group-btn-vertical">
-								<button class="btn btn-default" type="button"><i class="fa fa-caret-up"></i></button>
-								<button class="btn btn-default" type="button"><i class="fa fa-caret-down"></i></button>
-							</div>
-						</div>
+						<input type="number" name="p_nb_of_people" class="form-control"
+							min="1" step="1" value="<?php echo (int)$participant['nb_of_people']?>" required
+							title="Number of people">
 					</div>
 				</div>
 				<div class="row form-group">
@@ -180,15 +174,11 @@ if($admin_mode && $edit_mode === false)
 									<label for="form_set_participant_nbpeople_0" class="sr-only">
 										Nb. of people
 									</label>
-									<div class="input-group spinner">
-										<input type="text" name="p_new_participant[0][p_nb_of_people]" value="1" 
+									<div class="input-group">
+										<input type="number" name="p_new_participant[0][p_nb_of_people]" value="1" 
 										id="form_set_participant_nbpeople_0" class="form-control"
-										step="1" min="1" number_type="int"
+										step="1" min="1"
 										title="Number of people" required>
-										<div class="input-group-btn-vertical">
-											<button class="btn btn-default" type="button"><i class="fa fa-caret-up"></i></button>
-											<button class="btn btn-default" type="button"><i class="fa fa-caret-down"></i></button>
-										</div>
 									</div>
 								</div>
 							</div>
