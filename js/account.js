@@ -238,9 +238,8 @@ function AddPaymentLine(name_of_people, hashid_of_people, cpt_bill)
 	var button_trash = document.createElement("button");
 	button_trash.className = "btn btn-default pull-right";
 	button_trash.title = "Remove this submission";
-	button_trash.type = "submit";
+	button_trash.type = "button";
 	button_trash.name = "Remove this submission";
-	button_trash.form = "";
 	button_trash.onclick=function(){
 		RemoveChild(parent_div, div_container);
 	};

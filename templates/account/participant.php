@@ -188,9 +188,8 @@ if($admin_mode && $edit_mode === false)
 							value="Submit" title="Submit new participant">
 							Submit
 						</button>
-						<button type="submit" name="" class="btn btn-primary" 
-							value="" title="Add a row" onclick="AddParticipantLine();return false;"
-							form="">
+						<button type="button" class="btn btn-primary" 
+							value="" title="Add a row" onclick="AddParticipantLine();return false;">
 							Add a row
 						</button>
 					</div>

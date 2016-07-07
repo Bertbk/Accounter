@@ -775,11 +775,11 @@ else
 										title="Submit new payment" class="btn btn-primary">
 										Submit
 									</button>
-									<button type="submit" name="add_row" value="" 
+									<button type="button" name="add_row"
 										title="Add a row" class="btn btn-primary" 
 										onclick="AddPaymentLine(<?php echo htmlspecialchars(json_encode($name_of_people)) ?>, 
 										<?php echo htmlspecialchars(json_encode($hashid_of_people)) ?>,
-										<?php echo $cpt_bill?>);return false;" form="">
+										<?php echo $cpt_bill?>);return false;">
 										Add a row
 									</button>
 								</div>
