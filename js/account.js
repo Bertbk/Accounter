@@ -64,6 +64,11 @@ function CreatePossiblePayersLists(billListElement, payerListElement, billPartic
 
 }
 
+//Add a row for the form to submit a payment (multiple submit) 
+function RemoveChild(parent_elem, child_elem){
+	parent_elem.removeChild(child_elem);
+	return false;
+}
 
 //Add a row for the form to submit a payment (multiple submit) 
 function AddPaymentLine(name_of_people, hashid_of_people, cpt_bill)
@@ -76,6 +81,9 @@ function AddPaymentLine(name_of_people, hashid_of_people, cpt_bill)
 	if(name_of_people.length != hashid_of_people.length)
 	{return false;}
 
+	var div_container = document.createElement("div");
+	div_container.id= "container_row_payment_"+ cpt_bill + "_" + AddPaymentLine.counter;
+	div_container.className = "new_row_payment";
 	var div_row1=document.createElement("div");
 	div_row1.setAttribute("class", "row form-group");
 	var div_row2=document.createElement("div");
@@ -212,7 +220,38 @@ function AddPaymentLine(name_of_people, hashid_of_people, cpt_bill)
 	var span_glyph_date = document.createElement("span");
 	span_glyph_date.className="input-group-addon glyphicon glyphicon-calendar";
 
-	//Add to div...
+	//Parent div
+	var parent_div = document.getElementById('div_set_payment_' + cpt_bill);
+	
+	//Title
+	var div_title = document.createElement("div");
+	div_title.className="row form-group";
+	div_title.style.overflow="hidden";
+	var div_title_col = document.createElement("div");
+	div_title_col.className="col-xs-12 text-center";
+	div_title_col.style.overflow="hidden";
+	var p_title = document.createElement("p");
+	p_title.className="padding_bill_participant";
+	p_title.style.display="inline-block";
+	p_title.style.paddingLeft="10px";
+	p_title.innerHTML = "Additionnal payment"; 
+	var button_trash = document.createElement("button");
+	button_trash.className = "btn btn-default pull-right";
+	button_trash.title = "Remove this submission";
+	button_trash.type = "submit";
+	button_trash.name = "Remove this submission";
+	button_trash.form = "";
+	button_trash.onclick=function(){
+		RemoveChild(parent_div, div_container);
+	};
+	var span_trash = document.createElement("span");
+	span_trash.className="glyphicon glyphicon-trash";
+	button_trash.appendChild(span_trash);
+	div_title_col.appendChild(p_title);
+	div_title_col.appendChild(button_trash);
+	div_title.appendChild(div_title_col);
+	//Add to container
+	//Payer
 	div_payer.appendChild(label_payer);
 	div_input_group_payer.appendChild(select_payer);
 	div_input_group_payer.appendChild(span_glyph_payer);
@@ -243,16 +282,17 @@ function AddPaymentLine(name_of_people, hashid_of_people, cpt_bill)
 	div_input_group_date.appendChild(span_glyph_date);
 	div_date.appendChild(div_input_group_date);
 	div_row2.appendChild(div_date);
-
+	//container
 	var hr = document.createElement("hr");
 	hr.className="separator_payments";
+	div_container.appendChild(hr);
+	div_container.appendChild(div_title);
+	div_container.appendChild(div_row1);
+	div_container.appendChild(div_row2);
 	
 	//Parent div
-	var parent_div = document.getElementById('div_set_payment_' + cpt_bill);
-	parent_div.appendChild(hr);
-	parent_div.appendChild(div_row1);
-	parent_div.appendChild(div_row2);
-
+	parent_div.appendChild(div_container);
+	
   $('.selectpicker').selectpicker('refresh');
   AddPaymentLine.counter ++;
   return false;

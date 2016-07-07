@@ -10,7 +10,6 @@ MAJOR
 2. Date of expiration : must be used! CRON ?!
 3. How to deal with unexpected access to eg. /controls/account.php or lib/ ?
 4. Internationalisation : Framework...
-5. Remove a row (except first) (JS)
 
 DUNNO
 =====

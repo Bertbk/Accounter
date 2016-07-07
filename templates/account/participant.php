@@ -184,13 +184,14 @@ if($admin_mode && $edit_mode === false)
 							</div>
 						</div>
 <!--						<p><a href="#" onclick="AddParticipantLine();return false;">(+) Add a row</a></p>		 -->
-						<button type="submit" name="" class="btn btn-primary" 
-							value="" title="Add a row" onclick="AddParticipantLine();return false;">
-							Add a row
-						</button>
 						<button type="submit" name="submit_new_participant" class="btn btn-primary" 
 							value="Submit" title="Submit new participant">
 							Submit
+						</button>
+						<button type="submit" name="" class="btn btn-primary" 
+							value="" title="Add a row" onclick="AddParticipantLine();return false;"
+							form="">
+							Add a row
 						</button>
 					</div>
 				</fieldset>
