@@ -696,7 +696,6 @@ else
 												<div class="input-group">
 													<select name="p_payment[0][p_hashid_payer]" 
 														id="form_set_payment_payer_<?php echo $cpt_bill?>_0" 
-														onchange="DropDownListsBetweenParticipants(this, document.getElementById('<?php echo 'form_set_payment_recv_'.$cpt_bill.'_0'?>'))"
 														class="form-control selectpicker" title="Payer"> 
 															<option disabled selected value="null" data-hidden="true">
 																Choose a payer
@@ -727,12 +726,21 @@ else
 												</div>
 											</div>
 											<div class="col-xs-12 col-lg-4">
-												<label for="<?php echo 'form_set_payment_recv_'.$cpt_bill?>_0">
-													Receiver<span class="glyphicon glyphicon-asterisk red"></span>
+												<label for="<?php echo 'form_set_payment_recv_type_'.$cpt_bill?>_0">
+													Receiver(s)<span class="glyphicon glyphicon-asterisk red"></span>
 												</label>
 												<div class="input-group">
-													<select name="p_payment[0][p_hashid_recv]" id="<?php echo 'form_set_payment_recv_'.$cpt_bill?>_0"	class="form-control selectpicker" title="Receiver"> 
-														<option value="-1" selected="selected">Group</option>
+													<select name="p_payment[0][p_type]" id="<?php echo 'form_set_payment_recv_type_'.$cpt_bill?>_0"	class="form-control selectpicker" title="Group or specific payment?"
+													onchange="DisableEnableElement(this, document.getElementById('<?php echo 'form_set_payment_recv_'.$cpt_bill?>_0'))"> 
+														<option value="-1" selected="selected">All the Group</option>
+														<option value="0">Specific</option>
+													</select>
+													<select name="p_payment[0][p_hashid_recv]" id="<?php echo 'form_set_payment_recv_'.$cpt_bill?>_0"	class="form-control selectpicker" title="Receiver" multiple="true" disabled="true"> 
+														<?php
+															foreach($this_bill_participants as $bill_participant)
+															{ ?>
+																<option value="<?php echo $bill_participant['hashid']?>"><?php echo htmlspecialchars($bill_participant['name'])?></option>
+											<?php	} ?>
 													</select>
 													<span class="input-group-addon glyphicon glyphicon-user"></span>
 												</div>

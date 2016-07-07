@@ -346,3 +346,20 @@ function AddParticipantLine()
 	AddParticipantLine.counter ++;
 	return false;
 }
+
+//Onchange on trigger :
+//trigger.value == -1 then target is disabled.
+//trigger.value == 0 then targer is enable
+function DisableEnableElement(trigger, target) {
+	var choice1 = trigger.value;
+	if(choice1 == '0')
+	{
+		target.disabled  = false;
+	}
+	else if(choice1 == '-1')
+	{
+		target.disabled  = true;
+	}
+	
+  $('.selectpicker').selectpicker('refresh');
+}

@@ -148,3 +148,78 @@ if (parseFloat(current_val) > parseFloat(min_val)) {
 	}
 })
 });
+
+
+/*
+$(document).ready(function () {
+		var checkList= $("[id=form_set_payment_recv_0_0]");;
+	//	var checkList_selected = $("[id=form_set_payment_recv_0_0] option:selected");
+		var previous;
+		//I didn't find a better way to know when the focus is on the menu
+		checkList.on('shown.bs.select', function () {
+			checkList = $("[id=form_set_payment_recv_0_0]");
+			previous = checkList.val() || [];
+	}).on('change', function(){
+			checkList = $("[id=form_set_payment_recv_0_0]");
+			var group_checked = false;
+			var participants_checked = false;
+		//	checkList_selected = $("[id=form_set_payment_recv_0_0] option:selected");
+			var newly = checkList.val() || [];
+			//Find the new selection
+			var size_new  = parseInt(newly.length, 10);
+			var size_prev = parseInt(previous.length, 10);
+			if(parseInt(size_new,10) >= parseInt(size_prev,10))
+			{
+				//A new element has been added
+				//We check if the table is still valid (Group OR participants)
+				var changed_value ="";
+				for (var i = 0; i < size_new; i++)
+				{
+					var isinarray = jQuery.inArray( newly[i], previous);
+					if(isinarray == "-1")
+					{
+						changed_value = newly[i];
+					}
+					if(newly[i] == "-1")
+					{
+						group_checked = true;
+					}
+					if(newly[i] !== "-1"
+					&& newly[i] !== ""
+					&& newly[i] !== "null")
+					{
+						participants_checked = true;
+					}
+				}
+
+				if(changed_value !== ""
+				&& group_checked == true
+				&& participants_checked == true)
+				{
+					//Conflict
+					if(changed_value == "-1")
+					{
+						//Group has now been choosen
+						newly = ['1'];
+						$("[id=form_set_payment_recv_0_0]").val("-1");
+					}
+					else{
+						//Participants, now.
+						var where_is_group = jQuery.inArray( "-1", newly);
+						if(where_is_group !== "-1")
+						{
+							newly.splice(where_is_group, 1); 
+						}
+						$("[id=form_set_payment_recv_0_0]").val(newly);
+					}
+				}
+			}
+		previous = newly;
+		$("[id=form_set_payment_recv_0_0]").selectpicker('refresh');
+	})
+	previous = newly;
+	$("[id=form_set_payment_recv_0_0]").selectpicker('refresh');
+});
+*/
+
+
