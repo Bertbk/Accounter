@@ -46,6 +46,7 @@ if(isset($_POST['submit_new_payment']))
 		'p_hashid_recv' => 'Please provide a receiver',
 		'p_cost' => 'Please provide a cost',
 		'p_description' => 'Please provide a description',
+		'p_type' => 'Please provide a type of payment',
 		'p_date_of_payment' => 'Please provide a date of payment'
    );
 	 
@@ -58,6 +59,7 @@ if(isset($_POST['submit_new_payment']))
 		'p_cost' => 'Cost is not valid',
 		'p_description' => 'Description is not valid',
 		'p_date_of_payment' => 'Date of payment is not valid',
+		'p_type' => 'Type of payment not valid',
 		'p_anchor' => 'Anchor not valid'
    );
 	 
@@ -152,42 +154,61 @@ if(isset($_POST['submit_new_payment']))
 			{	array_push($errArray2, $ErrorMessage[$key]); }
 		}
 		
-		//RECEIVER
-		$key = 'p_hashid_recv';
-		 if(empty($payment[$key])) { //If empty
+		//Number of real payment
+		$n_receivers = 0;
+		$receivers_id = Array();
+		//TYPE OF PAYMENT (GROUP OR PARTICULAR)
+		$key = 'p_type';
+		if(empty($payment[$key])) { //If empty
 			array_push($errArray2, $ErrorEmptyMessage[$key]);
 		}
 		else{
 			if($payment[$key] == -1 || is_null($payment[$key]))
 			{
-				$receiver_id = null; //Group
+				$type_payment = -1;
+				$n_receivers = 1;
+				$receivers_id[0] = null; //null if for group in SQL
 			}
-			else {
-				if(validate_hashid($payment[$key])== false)
+			else if($payment[$key] == 1){
+				$type_payment = 1;
+			}
+			else{
+				array_push($errArray2, $ErrorMessage[$key]);
+			}
+		}
+		
+		//RECEIVERS (if payment from people to people)
+		if(empty($errArray2)
+			&& $type_payment == "1")
+		{
+			$key = 'p_hashid_recv';
+			foreach ($payment[$key] as $hashid_recv)
+			{
+				if(validate_hashid($hashid_recv)== false)
 				{
 					array_push($errArray2, $ErrorMessage[$key]);
 				}
 				else{
-					$hashid_recv = $payment[$key];
+					$receiver = get_bill_participant_by_hashid($account['id'], $hashid_recv);
+					if(empty($receiver))
+					{	array_push($errArray2, $ErrorMessage[$key]); }
+					else{
+						//This is a valid receiver !
+						array_push($receivers_id, $receiver['id']);
+						$n_receivers ++;
+					}
 				}
 			}
 		}
-		//Get the receiver
-		if(empty($errArray2) && ($payment[$key] != -1 && !is_null($payment[$key])))
-		{		
-			$receiver = get_bill_participant_by_hashid($account['id'], $hashid_recv);
-			if(empty($receiver))
-			{	array_push($errArray2, $ErrorMessage[$key]); }
-			$receiver_id = $receiver['id'];
-		}
-		
-		// COST
+
+		// AMOUNT / COST
 		$key = 'p_cost';
 		if(empty($payment[$key])) { //If empty
 			array_push($errArray2, $ErrorEmptyMessage[$key]);
 		}
 		else{
-			$cost = (float)$payment[$key];
+			//Amount is divided by the number of receivers (=1 if total GROUP !)
+			$cost = (float)((float)$payment[$key] / (float)$n_receivers);
 			if($cost <= 0)
 			{
 				array_push($errArray2, $ErrorMessage[$key]);
@@ -219,50 +240,63 @@ if(isset($_POST['submit_new_payment']))
 			}
 		}
 		
-		//Hash id for the new payment
-		$hashid_payment = "";
-		if(empty($errArray2))
-		{	
-			$hashid_payment = create_hashid();
-			if(is_null($hashid_payment))
-				{ array_push($errArray2, "Server error: problem while creating hashid.");}
-		}
-
+		//For each local payment
+		foreach ($receivers_id as $receiver_id)
+		{
+			if($receiver_id == $payer['id'])
+			{ continue;}
 		
-		//Check if the accounts and bills match
-		if(empty($errArray2))
-		{
-			if($payer['account_id'] !== $account['id'])
-			{
-				array_push($errArray2, 'This payer does not belong to this account.');
-			}
-			if($payer['bill_id'] !== $bill['id'])
-			{
-				array_push($errArray2, 'This payer does not belong to this bill.');
-			}
-			if(!is_null($receiver_id) && $receiver['account_id'] !== $account['id'])
-			{
-				array_push($errArray2, 'This receiver does not belong to this account.');
-			}
-			if(!is_null($receiver_id) && $receiver['bill_id'] !== $bill['id'])
-			{
-				array_push($errArray2, 'This receiver does not belong to this bill.');
-			}
-			if(!is_null($receiver_id) && $receiver['bill_id'] !== $payer['bill_id'])
-			{
-				array_push($errArray2, 'Payer and receiver do not belong to the same bill.');
-			}
-		}
+			$errArray3 = Array();
 
-		//Save the payment
-		if(empty($errArray2))
-		{
-			$success = set_payment($account['id'], $hashid_payment, $bill['id'], $payer['id'], $cost, $receiver_id, $description, $date_of_payment);	
-			if(!$success)
-			{array_push($errArray2, 'Server error: Problem while attempting to add a payment'); 	}
-		else
+			//Hash id for the new payment
+			$hashid_payment = "";
+			if(empty($errArray3))
+			{	
+				$hashid_payment = create_hashid();
+				if(is_null($hashid_payment))
+					{ array_push($errArray3, "Server error: problem while creating hashid.");}
+			}
+			
+			//Check if the accounts and bills match
+			if(empty($errArray3))
 			{
-				array_push($successArray, 'Payment has been successfully added');
+				if($payer['account_id'] !== $account['id'])
+				{
+					array_push($errArray3, 'This payer does not belong to this account.');
+				}
+				if($payer['bill_id'] !== $bill['id'])
+				{
+					array_push($errArray3, 'This payer does not belong to this bill.');
+				}
+				if(!is_null($receiver_id) && $receiver['account_id'] !== $account['id'])
+				{
+					array_push($errArray3, 'This receiver does not belong to this account.');
+				}
+				if(!is_null($receiver_id) && $receiver['bill_id'] !== $bill['id'])
+				{
+					array_push($errArray3, 'This receiver does not belong to this bill.');
+				}
+				if(!is_null($receiver_id) && $receiver['bill_id'] !== $payer['bill_id'])
+				{
+					array_push($errArray3, 'Payer and receiver do not belong to the same bill.');
+				}
+			}
+
+			//Save the payment
+			if(empty($errArray3))
+			{
+				$success = set_payment($account['id'], $hashid_payment, $bill['id'], $payer['id'], $cost, $receiver_id, $description, $date_of_payment);	
+				if(!$success)
+				{array_push($errArray3, 'Server error: Problem while attempting to add a payment'); 	}
+			else
+				{
+					array_push($successArray, 'Payment has been successfully added');
+				}
+			}
+			//Merge the errors
+			if(!empty($errArray3))
+			{
+				$errArray2 = array_merge($errArray2, $errArray3);
 			}
 		}
 		//Merge the errors
