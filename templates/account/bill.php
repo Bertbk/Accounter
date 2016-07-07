@@ -769,19 +769,18 @@ else
 		$name_of_people = array_column($this_bill_participants, 'name');
 		$hashid_of_people = array_column($this_bill_participants, 'hashid');
 	?>
-								<p>
-									<a href="#" onclick="AddPaymentLine(<?php echo htmlspecialchars(json_encode($name_of_people)) ?>, 
-										<?php echo htmlspecialchars(json_encode($hashid_of_people)) ?>,
-										<?php echo $cpt_bill?>);
-										return false;">
-									(+) Add a row
-									</a>
-								</p>
 								
 								<div>
 									<button type="submit" name="submit_new_payment" value="Submit" 
 										title="Submit new payment" class="btn btn-primary">
 										Submit
+									</button>
+									<button type="submit" name="add_row" value="" 
+										title="Add a row" class="btn btn-primary" 
+										onclick="AddPaymentLine(<?php echo htmlspecialchars(json_encode($name_of_people)) ?>, 
+										<?php echo htmlspecialchars(json_encode($hashid_of_people)) ?>,
+										<?php echo $cpt_bill?>);return false;">
+										Add a row
 									</button>
 								</div>
 							</div>

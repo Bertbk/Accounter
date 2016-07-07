@@ -6,14 +6,11 @@ INSTALLEUR
 
 MAJOR
 ======
-1. Multiple receivers for a payment : POSSIBLE TO DO !! JS !!
-2. Admin page: user/Password !
-3. Comments
-4. Date of expiration : must be used! CRON ?!
-5. How to deal with unexpected access to eg. /controls/account.php or lib/ ?
-6. Protect some forms again csrf (session token)
-https://openclassrooms.com/courses/securisation-des-failles-csrf
-7. Internationalisation : Framework...
+1. Comments
+2. Date of expiration : must be used! CRON ?!
+3. How to deal with unexpected access to eg. /controls/account.php or lib/ ?
+4. Internationalisation : Framework...
+5. Remove a row (except first) (JS)
 
 DUNNO
 =====
