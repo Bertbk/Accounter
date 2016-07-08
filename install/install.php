@@ -70,7 +70,10 @@ if(isset($_POST['submit_install']))
 	}
 		
 	//PASSWORD
-	$passwd = $_POST[$key];
+	$key = "p_password";
+	if(!isset($_POST[$key]) || empty($_POST[$key]))
+	{$passwd = "";}
+	else{$passwd = $_POST[$key];}
 	
 	//DBNAME
 	$key = 'p_dbname';
@@ -139,7 +142,7 @@ if(isset($_POST['submit_install']))
 	if(empty($errArray))
 	{
 		include_once(__DIR__.'/create_config_file.php');
-		$config_created = create_config_file($host, $username, $passwd, $dbname, $prefix, $base_url, $email);
+		$config_created = create_config_file($host, $username, $passwd, $dbname, $prefix, $base_url, $contact_email);
 		if($config_created == false)
 		{
 			array_push($errArray, 'Cannot create config file');
@@ -244,7 +247,7 @@ if(isset($_POST['submit_install']))
 					</div>
 					<div class="form-group">
 						<label for="input_password">Password (can be empty)<span class="glyphicon glyphicon-asterisk red"></span></label>
-						<input type="password" name="p_password" id="input_password" required class="form-control"
+						<input type="password" name="p_password" id="input_password" class="form-control"
 							placeholder="Password" value="">
 					</div>
 					<div class="form-group">

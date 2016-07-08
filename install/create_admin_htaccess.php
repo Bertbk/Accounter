@@ -18,7 +18,7 @@ function create_admin_htaccess($admin_username_arg, $admin_passwd_arg)
 	$admin_passwd = $admin_passwd_arg;
 	
 	$admin_path = dirname(__FILE__);
-	$admin_path = substr($admin_path , 0, strlen($admin_path) - strlen('/install/create_admin_htaccess.php'));
+	$admin_path = substr($admin_path , 0, strlen($admin_path) - strlen('/install'));
 	$htaccess_path = $admin_path.'/admin/.htaccess';
 	$htpasswd_path = $admin_path.'/admin/.htpasswd';
 	
@@ -34,7 +34,7 @@ function create_admin_htaccess($admin_username_arg, $admin_passwd_arg)
 	fclose($myfile);
 	
 	$myfile = fopen($htpasswd_path, "w") or die();
-	$txt = $admin_username.':'$admin_passwd.'\n';
+	$txt = $admin_username.':'.$admin_passwd.'\n';
 	fwrite($myfile, $txt);
 	fclose($myfile);
 	
