@@ -23,18 +23,18 @@ function create_admin_htaccess($admin_username_arg, $admin_passwd_arg)
 	$htpasswd_path = $admin_path.'/admin/.htpasswd';
 	
 	$myfile = fopen($htaccess_path, "w") or die();
-	$txt = "AuthType Basic\n";
+	$txt = "AuthType Basic".PHP_EOL;
 	fwrite($myfile, $txt);
-	$txt = "AuthName \"Administration page.\"\n";
+	$txt = "AuthName \"Administration page.\"".PHP_EOL;
 	fwrite($myfile, $txt);
-	$txt = 'AuthUserFile '.$htpasswd_path.'\n';
+	$txt = 'AuthUserFile '.$htpasswd_path.PHP_EOL;
 	fwrite($myfile, $txt);
-	$txt = "Require valid-user\n";
+	$txt = "Require valid-user".PHP_EOL;
 	fwrite($myfile, $txt);
 	fclose($myfile);
 	
 	$myfile = fopen($htpasswd_path, "w") or die();
-	$txt = $admin_username.':'.$admin_passwd.'\n';
+	$txt = $admin_username.':'.$admin_passwd.PHP_EOL;
 	fwrite($myfile, $txt);
 	fclose($myfile);
 	
