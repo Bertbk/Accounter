@@ -47,35 +47,46 @@ function compute_bill_solution($account_id_arg, $bill_id_arg)
 	$my_payments = get_payments_by_bill_id($account_id, $bill_id);
 	$my_bill_participants = get_bill_participants_by_bill_id($account_id, $bill_id);
 	
-	$Debts = array(); // Debt everyone has (to the group)
-	
+	$Balances = array(); // Balance of everyone (>0 if must pay back, <0 if creditor)
 	$total_payment = 0; //Amount of money to share
 	$nb_of_people = 0; //number of people
 	$nb_of_parts = 0; //number of part (sum of percentage)
 	
-	//Init debt towards the group
+	//Init balances to 0
 	foreach($my_bill_participants as $contrib)
 	{
 		$nb_of_people += (int)$contrib['nb_of_people'];
 		$nb_of_parts += (float)$contrib['percent_of_usage'] *  (float)$contrib['nb_of_people'];
-		$Debts[$contrib['participant_id']] = 0;
+		$Balances[$contrib['participant_id']] = 0;
 		foreach($my_bill_participants as $contrib2)
 		{
 			$Refunds[$contrib['participant_id']][$contrib2['participant_id']] = 0;
 		}
 	}
 	
-	//Init debt between users
+	//Set the payments
 	foreach ($my_payments as $payment)
 	{
 		$my_pay = number_format((float)$payment['cost'], 2, '.', '');
-		if(!is_null($payment['real_recv_id']))
+		$uid = $payment['real_recv_id'];
+		$vid = $payment['real_payer_id'];
+		
+		if(!is_null($uid))
 		{//Local payment
-			$Refunds[$payment['real_recv_id']][$payment['real_payer_id']] += $my_pay;
+			$Refunds[$uid][$vid] += $my_pay;
+			$Refunds[$vid][$uid] -= $my_pay;
 		}
-		else{//global payment
-			$total_payment += $my_pay;
-			$Debts[$payment['real_payer_id']] -= $my_pay;
+		else{//Global payment
+			$one_part = (float)((float)$my_pay / (float)$nb_of_parts);
+			$Balances[$payment['real_payer_id']] -= $my_pay;
+			foreach($my_bill_participants as $contrib)
+			{
+				$uuid = $contrib['participant_id'];
+				if($uuid == $vid){continue;}
+				$contrib_part = $one_part * (float)$contrib['percent_of_usage'] *  (float)$contrib['nb_of_people'];
+				$Refunds[$uuid][$vid] += $contrib_part;
+				$Refunds[$vid][$uuid] -= $contrib_part;
+			}
 		}
 	}
 	
@@ -84,31 +95,33 @@ function compute_bill_solution($account_id_arg, $bill_id_arg)
 	$debt_of_all = 0;
 	if($nb_of_parts > 0 )
 	{
-		$debt_of_all = ($total_payment / $nb_of_parts);
+		$debt_of_all = (float)((float)$total_payment / (float)$nb_of_parts);
 		foreach($my_bill_participants as $contrib)
 		{
 			$uid = $contrib['participant_id'];
-			$my_part = (int)$contrib['nb_of_people'] * (float)$contrib['percent_of_usage'] ;
-			$Debts[$uid] +=($debt_of_all * $my_part);
-			//Debts is not what everyone should pay (positive) or should receive (negative)
-			if($Debts[$uid] <= 0)
+			$my_part = (float)$contrib['nb_of_people'] * (float)$contrib['percent_of_usage'] ;
+			$Balances[$uid] +=($debt_of_all * $my_part);
+		}
+	}
+	
+	//Debts is now what everyone should pay (positive) or should receive (negative)
+	//We can compute the Refunds	
+	foreach($my_bill_participants as $contrib)
+	{
+		if($Balances[$uid] > 0)
+		{
+			foreach($my_bill_participants as $other)
 			{
-				continue; // This guy should receive money, not pay
-			}
-			else{
-				foreach($my_bill_participants as $other)
-				{
-					$vid = $other['participant_id'];
-					if($vid == $uid){continue;}//it's me !
-					else if($Debts[$vid] > 0){continue;} //(s)he is in debt!
-					else{
-						$to_refund = min(abs($Debts[$vid]), $Debts[$uid]);
-						$Refunds[$uid][$vid] +=$to_refund;
-						$Debts[$vid] += $to_refund;
-						$Debts[$uid] -= $to_refund;
-						if($Debts[$uid] == 0){break;}
-					}		
-				}
+				$vid = $other['participant_id'];
+				if($vid == $uid){continue;}//it's me !
+				else if($Balances[$vid] > 0){continue;} //(s)he is in debt!
+				else{
+					$to_refund = min(abs($Balances[$vid]), $Balances[$uid]);
+					$Refunds[$uid][$vid] +=$to_refund;
+					$Balances[$vid] += $to_refund;
+					$Balances[$uid] -= $to_refund;
+					if($Balances[$uid] == 0){break;}
+				}		
 			}
 		}
 	}

@@ -8,7 +8,7 @@ Options -MultiViews
 #
 # RewriteBase /Accounter
 
-RewriteBase /AccounterTEST
+RewriteBase /accounter
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
