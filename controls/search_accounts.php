@@ -12,8 +12,6 @@
 Control page: search for accounts in the SQL providing an email address
  */
 
-//Session is used to send back errors to account.php (if any)
-session_start();
 
 require_once __DIR__.'/../config-app.php';
 require_once LIBPATH.'/accounts/get_accounts_by_email.php';

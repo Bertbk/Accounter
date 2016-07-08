@@ -12,8 +12,6 @@
 Control page: Form to retrieve accounts from an email
  */
 
-session_start();
-
 require_once __DIR__.'/../config-app.php';
 
 $token = md5(uniqid(rand(), TRUE));

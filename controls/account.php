@@ -59,7 +59,6 @@ include_once(LIBPATH.'/solutions/compute_opt_solution.php');
 
 include_once(LIBPATH.'/hashid/validate_hashid.php');
 
-session_start();
 
 $my_account = array();
 $admin_mode = false; //validates the admin mode or not

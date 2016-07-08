@@ -12,7 +12,6 @@
 Control page of the create an account page
  */
 
-session_start();
 
 require_once __DIR__.'/../config-app.php';
 

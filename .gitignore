@@ -1,3 +1,4 @@
 site/config.php
 admin/.htaccess
 admin/.htpasswd
+.htaccess
