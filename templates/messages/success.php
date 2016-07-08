@@ -11,10 +11,7 @@
  /*
 	Display success messages stored in the _Session 
  */
- 
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
+
 if(isset($_SESSION['success']) && !empty($_SESSION['success']))
 {
 	?>

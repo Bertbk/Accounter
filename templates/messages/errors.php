@@ -12,9 +12,7 @@
 	Display error messages stored in the _Session 
  */
  
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
+
 if(isset($_SESSION['errors']) && !empty($_SESSION['errors']))
 {
 	?>

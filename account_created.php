@@ -7,6 +7,7 @@
  * Author of Accounter: Bertrand THIERRY (bertrand.thierry1@gmail.com)
  *
 */
+session_start();
 
 include_once(__DIR__.'/config-app.php');
 include_once(__DIR__.'/controls/account_created.php');
