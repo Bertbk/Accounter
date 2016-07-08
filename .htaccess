@@ -1,7 +1,14 @@
 RewriteEngine On
 Options -Indexes
 Options -MultiViews
-RewriteBase /Accounter
+
+# Uncomment and adapt the following line if
+# Accounter is not in the root directory but for example
+# in /Accounter :
+#
+# RewriteBase /Accounter
+
+RewriteBase /AccounterTEST
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
