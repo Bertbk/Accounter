@@ -20,7 +20,6 @@ function compute_solution($account_id_arg)
 {	
 	$account_id = (int)$account_id_arg;
 	$Refunds = array(array()); //who must give money to who ?
-	$Refunds[-1]['total'] = 0;
 
 	$bill_solutions = compute_bill_solutions($account_id);
 	if(empty($bill_solutions)){return $Refunds;}
@@ -28,7 +27,7 @@ function compute_solution($account_id_arg)
 	$my_participants = get_participants($account_id);
 	if(empty($my_participants)){return $Refunds;}
 	
-	//Store debt computed previously
+	//Init debt to zero
 	foreach ($bill_solutions as $bill_sol)
 	{
 		foreach($my_participants as $contrib)
@@ -44,11 +43,9 @@ function compute_solution($account_id_arg)
 	}
 	
 	//Store debt computed previously
-	$total_payment = 0;
 	foreach ($bill_solutions as $key => $bill_sol)
 	{
 		if($key < 1){continue;}
-		$total_payment += (float)($bill_sol[-1]['total']);
 		foreach($my_participants as $contrib)
 		{
 			$uid = $contrib['id'];
@@ -89,8 +86,6 @@ function compute_solution($account_id_arg)
 		}
 	}
 	
-	//Usefull values
-	$Refunds[-1]['total'] = $total_payment;
 		
 	//send solution	
 	return $Refunds;

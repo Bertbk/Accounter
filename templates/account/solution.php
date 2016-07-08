@@ -51,7 +51,7 @@ Template to display the solutions
 					{
 						$vid = $receiver['id'];
 						if(!isset($solution[$uid][$vid])){continue;}
-										$refund = number_format((float)$solution[$uid][$vid], 2, '.', '');
+						$refund = number_format((float)$solution[$uid][$vid], 2, '.', '');
 						if($refund > 0)
 						{
 ?>

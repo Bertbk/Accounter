@@ -179,7 +179,7 @@ foreach($my_bills as $bill)
 
 // SOLUTION
 $solution = compute_solution($my_account_id);
-$solution_opt = compute_opt_solution($solution);
+$solution_opt = compute_opt_solution($my_account_id, $solution);
 //nb. of money transfert
 $n_transfer = 0;
 $n_transfer_opt = 0;
@@ -197,7 +197,6 @@ foreach($my_participants as $payer)
 			{$n_transfer_opt++;}
 	}
 }
-
 							
 $n_participants = 0;
 $n_people = 0;
