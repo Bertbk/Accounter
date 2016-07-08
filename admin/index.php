@@ -11,7 +11,7 @@
  /*
  Admin page to delete/manage every accounts
  */
- 
+session_start();
 require_once __DIR__.'/../config-app.php';
 
 include_once(LIBPATH.'/accounts/get_accounts.php');

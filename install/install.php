@@ -16,14 +16,14 @@ After the form has been properly filled:
 - erase the install dir
 */
 
+//Session is used to send back errors to account.php (if any)
+session_start();
+
 $current_url = "http://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
 $base_url = substr($current_url , 0, strlen($current_url) - strlen('/install/install.php'));
 if ( !defined('BASEURL') )
 	define('BASEURL', $base_url);
 
-
-//Session is used to send back errors to account.php (if any)
-session_start();
 
 $errArray = array(); //error messages
 $warnArray = array(); //warning messages
