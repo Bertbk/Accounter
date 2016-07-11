@@ -185,7 +185,7 @@ function get_colorArray($type_arg)
 		10 =>$BasicColorArray['Orange'],
 		11 =>$BasicColorArray['OrangeRed'],
 		12 =>$BasicColorArray['Peru'],
-		13 =>$BasicColorArray['OrangeRed'],
+		13 =>$BasicColorArray['Wheat'],
 		14 =>$BasicColorArray['BurlyWood'],
 		15 =>$BasicColorArray['Crimson'],
 		16 =>$BasicColorArray['Chartreuse'],

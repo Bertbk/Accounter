@@ -17,31 +17,45 @@ The $type_arg can be either "participant" of "bill"
 */
 include_once(__DIR__.'/get_colorArray.php');
 
-function give_me_next_color($prev_color_arg, $type_arg)
+function give_me_next_color($entity_array_arg, $type_arg)
 {
-	$prev_color = $prev_color_arg;
-	//Type is Bill or Participant
-	$type_color = $type_arg;
-		
-	$colorArray = get_colorArray($type_color);
+	$participant_array = $participant_array_arg;
+	$type_of_entity = $type_arg;
+
+	if($type_of_entity !== 'participant'
+	&& $type_of_entity !== 'bill')
+	{return '000000';}
 	
-	$next_color = $colorArray[0]; //default color
+	$colorArray = get_colorArray($type_of_entity);
 	
-	if($prev_color != "")
+	if(empty($entity_array_arg))
+	{return $colorArray[0];}
+	
+	//Count the number of time a color is used
+	$countColorArray = Array();
+	foreach($colorArray as $key => $col)
 	{
-		$FoundIt = false;
-		foreach($colorArray as $col)
+		$countColorArray[$key] = 0;
+	}
+	
+	foreach($entity_array_arg as $entity)
+	{
+		$countColorArray[$entity['color']] ++;
+	}
+	
+	//Find the first less used color
+	reset($countColorArray);
+	$key_in_color_array = key($array);
+	$min_use = $countColorArray[$key_in_color_array];
+	foreach($countColorArray as $key => $n_time_used)
+	{
+		if($n_time_used < $min_use)
 		{
-			if($FoundIt)
-			{
-				$next_color = $col;
-				break;
-			}
-			if($col == $prev_color)
-			{
-				$FoundIt = true;
-			}
+			$min_use = $n_time_used;
+			$key_in_color_array = $key;
 		}
 	}
+	
+	$next_color = $colorArray[$key_in_color_array];
 	return $next_color;
 }
