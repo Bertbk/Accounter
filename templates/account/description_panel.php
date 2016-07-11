@@ -174,9 +174,9 @@ else{
 								&& $edit_hashid === $my_account['hashid'])
 								{?>
 								<label class="control-label" for="form_edit_account_date_of_expiration">Date of expiration</label> 
-								<input class="form-control" id="form_edit_account_date_of_expiration" 
+								<input class="form-control date_zindex" id="form_edit_account_date_of_expiration" 
 								value="<?php echo htmlspecialchars($account_date_of_expiration)?>" 
-								form="form_edit_account" name="p_date_of_expiration" type="date" required
+								form="form_edit_account" name="p_date_of_expiration" type="text" required
 								title="Date of expiration">
 							<?php }else {?>
 							<label class="control-label">Date of expiration</label> 

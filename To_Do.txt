@@ -20,7 +20,8 @@ BUGS
 
 MINOR
 =====
-
+1. zindex datapicker
+2. Date not working Chrome/Web4all
 
 ----
 NOTES d'INSTALL

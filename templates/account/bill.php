@@ -617,8 +617,8 @@ if($payment_to_edit !== false)
 										Date of payment (dd/mm/yyyy)
 									</label>
 									<div class="input-group">
-										<input type="date" name="p_date_of_payment" 
-											class="form-control"
+										<input type="text" name="p_date_of_payment" 
+											class="form-control date_zindex"
 											id="form_edit_payment_date_<?php echo $bill['id']?>"
 											value="<?php echo $tmp_date_parsed?>">
 										<span class="input-group-addon glyphicon glyphicon-calendar"></span>
@@ -756,7 +756,7 @@ else
 													Date of payment (dd/mm/yyyy)
 												</label>
 												<div class="input-group">
-													<input type="date" name="p_payment[0][p_date_of_payment]" 
+													<input type="text" name="p_payment[0][p_date_of_payment]" 
 														id="<?php echo 'form_set_payment_date_'.$cpt_bill?>_0" 
 														class="form-control" title="Date of payment">
 													<span class="input-group-addon glyphicon glyphicon-calendar"></span>
