@@ -35,7 +35,7 @@ function set_bill($account_id_arg, $hashid_bill_arg, $title_bill_arg, $descripti
 	}
 	
 	$the_bills = get_bills($account_id);
-	$my_color = give_me_next_color(end($the_bills)['color'], 'bill');
+	$my_color = give_me_next_color($the_bills, 'bill');
 	//When color will come from users, check the reg ex
 	
 	$isgood= false;
