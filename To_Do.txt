@@ -20,7 +20,7 @@ BUGS
 
 MINOR
 =====
-1. Color of bill not used in fact
+
 
 ----
 NOTES d'INSTALL

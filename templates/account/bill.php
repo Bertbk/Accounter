@@ -46,7 +46,8 @@ else{
 	<div class="col-xs-12">
 		<div class="panel panel-primary">
 			<div class="panel-heading <?php if($overlay==""){echo 'cursorpointer';}?>"
-				<?php if($overlay==""){echo 'data-toggle="collapse" data-target="#panel-body_bill'.$cpt_bill.'"';}?>>
+				<?php if($overlay==""){echo 'data-toggle="collapse" data-target="#panel-body_bill'.$cpt_bill.'"';}?>
+				style="background-color:<?php echo '#'.$bill['color']?>">
 				<div class="row">
 	<?php 
 //Edit the Bill (name, description, ...)
@@ -149,9 +150,13 @@ if($admin_mode
 				</div>
 			</div>
 <?php //PANEL BODY OF BILL
+$cred = hexdec(substr($bill['color'], 0, 2));
+$cgreen = hexdec(substr($bill['color'], 2, 2));
+$cblue = hexdec(substr($bill['color'], 4, 2));
 ?>
 			<div id="<?php echo 'panel-body_bill'.$cpt_bill?>" class="panel-collapse collapse in">
-				<div  class="panel-body">
+				<div  class="panel-body"
+				style="background-color: rgba(<?php echo $cred.','.$cgreen.','.$cblue?>, 0.5);">
 <?php 
 //Edit the Bill (name, description, ...)
 if($admin_mode 
@@ -250,7 +255,8 @@ if($admin_mode
 		$bill_participant_tmp = $this_bill_participants[$participation_to_edit];
 	//Edit activated on a bill_participant of THIS bill :
 	?>
-				<div class="highlight"  id="<?php echo 'edit_tag_'.$edit_hashid?>">
+				<div class="highlight"  id="<?php echo 'edit_tag_'.$edit_hashid?>"
+				style="background-color: rgba(<?php echo $cred.','.$cgreen.','.$cblue?>, 0.5);">
 					<h3>Edit participation of <?php echo htmlspecialchars($bill_participant_tmp['name']);?></h3>
 					<form method="post" action="<?php echo ACTIONPATH.'/update_bill_participant.php'?>">
 
@@ -535,7 +541,8 @@ foreach($this_payment as $payment)
 if($payment_to_edit !== false)
 {
 ?>
-					<div class="highlight" id="<?php echo 'edit_tag_'.$edit_hashid?>">
+					<div class="highlight" id="<?php echo 'edit_tag_'.$edit_hashid?>"
+					style="background-color: rgba(<?php echo $cred.','.$cgreen.','.$cblue?>, 0.5);">
 						<h3>Edit payment</h3>
 						<form method="post" id="form_edit_payment_send"
 							action="<?php echo ACTIONPATH.'/update_payment.php'?>">
