@@ -37,7 +37,7 @@ function set_participant($account_id_arg, $hashid_arg, $name_of_participant_arg,
 	{		return false;	}
 	
 	$the_participants = get_participants($account_id);
-	$my_color = give_me_next_color($the_participants);
+	$my_color = give_me_next_color($the_participants, 'participant');
 	//When color will come from users, check the reg ex
 	
 	try
