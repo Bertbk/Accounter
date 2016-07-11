@@ -309,6 +309,7 @@ if($admin_mode && !$edit_mode)
 							<input type="hidden" name="p_anchor" value="<?php echo '#bill-'.$cpt_bill?>">
 							<div class="hidden_at_first"
 							id=<?php echo 'show_hide_bill_add_part_'.$cpt_bill.'_target'?>>
+
 <?php
 			$cpt = -1;
 			foreach($this_free_bill_participants as $participant)
@@ -354,10 +355,48 @@ if($admin_mode && !$edit_mode)
 		<?php
 				}//for each participant
 		?>
-								<button type="submit" name="submit_new_bill_participant" 
-									value="Submit" class="btn btn-primary" title="Submit new participation">
-									Submit
-								</button>
+								<div class="row form-group assign_bill_participant">
+									<div class="col-xs-6 col-md-4 col-lg-3 ">
+										<div>
+											<input type="checkbox" name="" 
+												id="<?php echo'form_select_all_participation_'.$cpt_bill?>"
+												onchange="SelectAllParticipation(this, '<?php echo $cpt_bill?>')">
+											<div class="[ btn-group ] fullwidth" style="overflow:hidden">
+												<label for="<?php echo 'form_select_all_participation_'.$cpt_bill?>"
+													class="[ btn btn-default ] btn-assign_bill_participant">
+													<span class="[ glyphicon glyphicon-ok ]"></span>
+													<span> </span>
+												</label>
+												<span class="span-assign_bill_participant" >
+													<label for="<?php echo 'form_select_all_participation_'.$cpt_bill?>" 
+														class="[ btn btn-default active ] btn-select_all_participation">
+															Select all
+													</label>
+												</span>
+											</div>
+										</div>
+									</div>
+									<div class="col-xs-12 col-md-6 col-lg-5 ">
+										<div class="input-group">
+											<span class="input-group-addon btn btn-default"
+											onclick="SetAllPercent('<?php echo 'form_set_all_percent_'.$cpt_bill?>', '<?php echo $cpt_bill?>')">Set to all</span>
+											<input name="" type="number"
+												class="form-control"
+												step="0.01" min="0" max="100"	value="100" 
+												title="Percentage of usage"
+												id="<?php echo 'form_set_all_percent_'.$cpt_bill?>">
+											<span class="input-group-addon">%</span>
+										</div>
+									</div>
+								</div>
+								<div class="row form-group">
+									<div class="col-xs-12">
+										<button type="submit" name="submit_new_bill_participant" 
+											value="Submit" class="btn btn-primary" title="Submit new participation">
+											Submit
+										</button>
+									</div>
+								</div>
 							</div>
 						</fieldset>
 					</form>

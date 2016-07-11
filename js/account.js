@@ -376,3 +376,29 @@ function DisableEnableElement(trigger, target) {
 	
   $('.selectpicker').selectpicker('refresh');
 }
+
+
+// Select all or unselect every participation for a bill.
+function SelectAllParticipation(button_select, cpt_bill)
+{
+	var id_of_checkbox = "assign_participant_" + cpt_bill + "_";
+	var inputs = document.getElementsByTagName("input");
+	for(var i = 0; i < inputs.length; i++) {
+		if(inputs[i].id.indexOf(id_of_checkbox) == 0) {
+				inputs[i].checked = button_select.checked;
+		}
+	}
+}
+
+// Set the percent of participation.
+function SetAllPercent(percent_selected_id, cpt_bill)
+{
+	var percent_selected = document.getElementById(percent_selected_id);
+	var id_of_percent = "form_available_percent_" + cpt_bill + "_";
+	var inputs = document.getElementsByTagName("input");
+	for(var i = 0; i < inputs.length; i++) {
+		if(inputs[i].id.indexOf(id_of_percent) == 0) {
+				inputs[i].value = percent_selected.value;
+		}
+	}
+}

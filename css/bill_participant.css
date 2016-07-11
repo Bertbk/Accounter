@@ -45,6 +45,9 @@ width:100%!important;
 color:white;
 }
 
+.assign_bill_participant  label.btn-select_all_participation{
+width:100%!important;
+}
 /* Displaying the (bill-) participant */
 
 div.display_bill_participant{
