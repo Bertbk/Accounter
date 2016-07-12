@@ -37,8 +37,18 @@ else
 		define('TABLE_BILL_PARTICIPANTS', PREFIX.'bill_participants');
 	if ( !defined('TABLE_PARTICIPANTS') )
 		define('TABLE_PARTICIPANTS', PREFIX.'participants');
-		if ( !defined('TABLE_PAYMENTS') )
+	if ( !defined('TABLE_PAYMENTS') )
 		define('TABLE_PAYMENTS', PREFIX.'payments');
+	if ( !defined('TABLE_RECEPTS') )
+		define('TABLE_RECEPTS', PREFIX.'recepts');
+	if ( !defined('TABLE_RECEPT_PAYER') )
+		define('TABLE_RECEPT_PAYER', PREFIX.'recept_payer');
+	if ( !defined('TABLE_RECEPT_RECEIVER') )
+		define('TABLE_RECEPT_RECEIVER', PREFIX.'recept_receiver');
+	if ( !defined('TABLE_RECEPT_ARTICLE') )
+		define('TABLE_RECEPT_ARTICLE', PREFIX.'recept_article');
+	if ( !defined('TABLE_RECEPT_TRANSACTION') )
+		define('TABLE_RECEPT_TRANSACTION', PREFIX.'recept_transaction');
 	if ( !defined('BASEURL') )
 			define('BASEURL',$config_array['baseurl']);
 	if ( !defined('ACTIONPATH') )
