@@ -41,7 +41,7 @@ function set_receipt($account_id_arg, $hashid_receipt_arg, $title_receipt_arg, $
 	$isgood= false;
 	try
 	{
-		$myquery = 'INSERT INTO '.TABLE_receiptS.'(id, account_id, hashid, title, description, color) 
+		$myquery = 'INSERT INTO '.TABLE_RECEIPTS.'(id, account_id, hashid, title, description, color) 
 		VALUES(NULL, :account_id, :hashid_receipt, :title_receipt, :description, :my_color)';
 		$prepare_query = $db->prepare($myquery);
 		$prepare_query->bindValue(':account_id', $account_id, PDO::PARAM_INT);

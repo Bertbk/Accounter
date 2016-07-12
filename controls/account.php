@@ -53,6 +53,13 @@ include_once(LIBPATH.'/bill_participants/update_bill_participant.php');
 include_once(LIBPATH.'/bill_participants/get_free_bill_participants.php');
 include_once(LIBPATH.'/bill_participants/delete_bill_participant.php');
 
+include_once(LIBPATH.'/receipts/get_receipts.php');
+include_once(LIBPATH.'/receipts/get_receipt_by_id.php');
+include_once(LIBPATH.'/receipts/get_receipt_by_hashid.php');
+include_once(LIBPATH.'/receipts/set_receipt.php');
+include_once(LIBPATH.'/receipts/update_receipt.php');
+include_once(LIBPATH.'/receipts/delete_receipt.php');
+
 include_once(LIBPATH.'/solutions/compute_bill_solutions.php');
 include_once(LIBPATH.'/solutions/compute_solution.php');
 include_once(LIBPATH.'/solutions/compute_opt_solution.php');
@@ -151,17 +158,17 @@ if($admin_mode && !empty($_GET['edit']) && !empty($_GET['edit_hashid']))
 
 /* Computations and values used in display */
 
+//=== PARTICIPANTS ===
+$my_participants = get_participants($my_account_id); //All person
+
 //=== BILLS ===
 $my_bills = get_bills($my_account_id); // All bills
-$my_participants = get_participants($my_account_id); //All person
-$my_bill_participants = get_bill_participants($my_account_id); // Person that added to a bill
-$my_free_bill_participants = get_free_bill_participants($my_account_id); // Person that can be added to a bill
-
+$my_bill_participants = get_bill_participants($my_account_id); // Participation for each bill
+$my_free_bill_participants = get_free_bill_participants($my_account_id); // Possible participation for each bill
 //Number of bills
 $n_bills = count($my_bills);
-//Payments
-$my_payments_per_bill = get_payments_by_bills($my_account_id); //All payments
-
+//Payments of each bill
+$my_payments_per_bill = get_payments_by_bills($my_account_id); //All payments per bill
 //For JS : create the list of payer to send to JS
 $list_of_possible_payers= Array(Array(Array()));
 foreach($my_bills as $bill)
@@ -178,9 +185,12 @@ foreach($my_bills as $bill)
 	}
 }
 
-//=== RECEPTS ===
-//Number of recepts
-$n_recepts = 0;
+//=== RECEIPTS ===
+$my_receipts = get_receipts($my_account_id); // All receipts
+//$my_receipt_payers = get_receipt_payers($my_account_id); // Payers per receipts
+//$my_receipt_articles = get_receipt_articles($my_account_id); // Articles per receipts
+//Number of receipts
+$n_receipts = count($my_receipts);
 
 // === SOLUTION === 
 $solution = compute_solution($my_account_id);

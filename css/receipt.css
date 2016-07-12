@@ -7,51 +7,51 @@
  *
 */
 
-div#add_recept{
+div#add_receipt{
 	overflow:hidden;
 }
 
-div#add_recept h2{
+div#add_receipt h2{
 	display:inline-block;
 }
 
-h3.recept_title{
+h3.receipt_title{
 	display:inline-block;
 }
 
-div.button_recept_title{
+div.button_receipt_title{
 	float:right;
 }
 
 
-div.recept div.panel-primary div.panel-heading h3{
+div.receipt div.panel-primary div.panel-heading h3{
 	display:inline-block;
 	margin-right: 10px;
 }
 
-div.recept div.panel-primary div.panel-heading img{
+div.receipt div.panel-primary div.panel-heading img{
 	/*display:inline-block;*/
 }
 
-p#show_hide_add_recept a{
+p#show_hide_add_receipt a{
 	color:black;
 }
 
 
 /* back ground colors */
-  div.recept div.panel,
-  div.recept div.panel div.panel-body,
-  div.recept div.panel div.panel-heading{
+  div.receipt div.panel,
+  div.receipt div.panel div.panel-body,
+  div.receipt div.panel div.panel-heading{
     border: none;
 		color:black;
 }
 
-div.recept  div.panel{
+div.receipt  div.panel{
 	box-shadow: -4px 6px 9px rgba(50, 50, 50, 0.5);
 	color: black;
 }
 
-div.recept div.highlight{
+div.receipt div.highlight{
 	position:relative;
 	left:-15px;
 	width:calc(100% + 30px);
@@ -66,10 +66,10 @@ div.recept div.highlight{
 
 /* End back ground colors */
 
-div.recept div.panel  a{
+div.receipt div.panel  a{
 color:black;
 }
 
-div.recept div.panel  .recept_participant a{
+div.receipt div.panel  .receipt_participant a{
 color:black;
 }

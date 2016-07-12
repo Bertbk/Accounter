@@ -23,7 +23,7 @@ function get_receipt_by_hashid($account_id_arg, $hashid_arg)
 
 	try
 	{
-		$myquery = 'SELECT * FROM  '.TABLE_receiptS.'
+		$myquery = 'SELECT * FROM  '.TABLE_RECEIPTS.'
   		WHERE account_id=:account_id AND hashid=:hashid';
 		$prepare_query = $db->prepare($myquery);
 		$prepare_query->bindValue(':account_id', $account_id, PDO::PARAM_INT);

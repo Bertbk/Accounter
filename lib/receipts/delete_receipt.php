@@ -24,7 +24,7 @@ function delete_receipt($account_id_arg, $receipt_id_arg)
 	$isgood= false;
 	try
 	{
-		$myquery = 'DELETE FROM  '.TABLE_receiptS.' 
+		$myquery = 'DELETE FROM  '.TABLE_RECEIPTS.' 
 		 WHERE id=:receipt_id';
 		$prepare_query = $db->prepare($myquery);
 		$prepare_query->bindValue(':receipt_id', $receipt_id, PDO::PARAM_INT);

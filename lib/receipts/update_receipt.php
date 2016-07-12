@@ -50,7 +50,7 @@ function update_receipt($account_id_arg, $receipt_id_arg, $title_receipt, $descr
 
 	try
 	{
-		$myquery = 'UPDATE '.TABLE_receiptS.'  
+		$myquery = 'UPDATE '.TABLE_RECEIPTS.'  
 		SET title=:new_title_of_receipt, description=:new_description
 		WHERE id=:receipt_id';
 		$prepare_query = $db->prepare($myquery);

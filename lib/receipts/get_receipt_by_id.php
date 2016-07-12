@@ -23,7 +23,7 @@ function get_receipt_by_id($account_id_arg, $receipt_id_arg)
 
 	try
 	{
-		$myquery = 'SELECT * FROM  '.TABLE_receiptS.'
+		$myquery = 'SELECT * FROM  '.TABLE_RECEIPTS.'
    		WHERE account_id=:account_id AND id=:receipt_id';
 		$prepare_query = $db->prepare($myquery);
 		$prepare_query->bindValue(':account_id', $account_id, PDO::PARAM_INT);
