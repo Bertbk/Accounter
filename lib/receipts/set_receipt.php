@@ -15,6 +15,7 @@ Add a receipt, ie: a row in the receipts SQL table.
 include_once(__DIR__.'/../get_db.php');
 include_once(LIBPATH.'/receipts/get_receipt_by_title.php');
 include_once(LIBPATH.'/receipts/get_receipts.php');
+include_once(LIBPATH.'/bills/get_bills.php');
 
 include_once(LIBPATH.'/colors/give_me_next_color.php');
 
@@ -34,10 +35,11 @@ function set_receipt($account_id_arg, $hashid_receipt_arg, $title_receipt_arg, $
 		return false;
 	}
 	
+	$the_bills = get_bills($account_id);
 	$the_receipts = get_receipts($account_id);
-	$my_color = give_me_next_color($the_receipts, 'receipt');
+	$my_color = give_me_next_color(array_merge($the_bills, $the_receipts), 'bill');
 	//When color will come from users, check the reg ex
-	
+
 	$isgood= false;
 	try
 	{
@@ -54,7 +56,7 @@ function set_receipt($account_id_arg, $hashid_receipt_arg, $title_receipt_arg, $
 	}
 	catch (Exception $e)
 	{
-	//	echo 'Fail to connect: ' . $e->getMessage();
+		return $e;
 	}
 	return $isgood;
 }

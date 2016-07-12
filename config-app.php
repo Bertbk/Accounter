@@ -41,14 +41,14 @@ else
 		define('TABLE_PAYMENTS', PREFIX.'payments');
 	if ( !defined('TABLE_RECEIPTS') )
 		define('TABLE_RECEIPTS', PREFIX.'receipts');
-	if ( !defined('TABLE_RECEIPT_PAYER') )
-		define('TABLE_RECEIPT_PAYER', PREFIX.'receipt_payer');
-	if ( !defined('TABLE_RECEIPT_RECEIVER') )
-		define('TABLE_RECEIPT_RECEIVER', PREFIX.'receipt_receiver');
-	if ( !defined('TABLE_RECEIPT_ARTICLE') )
-		define('TABLE_RECEIPT_ARTICLE', PREFIX.'receipt_article');
-	if ( !defined('TABLE_RECEIPT_TRANSACTION') )
-		define('TABLE_RECEIPT_TRANSACTION', PREFIX.'receipt_transaction');
+	if ( !defined('TABLE_RECEIPT_PAYERS') )
+		define('TABLE_RECEIPT_PAYERS', PREFIX.'receipt_payers');
+	if ( !defined('TABLE_RECEIPT_RECEIVERS') )
+		define('TABLE_RECEIPT_RECEIVERS', PREFIX.'receipt_receivers');
+	if ( !defined('TABLE_RECEIPT_ARTICLES') )
+		define('TABLE_RECEIPT_ARTICLES', PREFIX.'receipt_articles');
+	if ( !defined('TABLE_RECEIPT_TRANSACTIONS') )
+		define('TABLE_RECEIPT_TRANSACTIONS', PREFIX.'receipt_transactions');
 	if ( !defined('BASEURL') )
 			define('BASEURL',$config_array['baseurl']);
 	if ( !defined('ACTIONPATH') )

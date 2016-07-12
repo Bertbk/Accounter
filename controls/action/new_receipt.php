@@ -105,11 +105,11 @@ if(isset($_POST['submit_new_receipt']))
 	if(empty($errArray))
 	{
 		$success = set_receipt($account['id'], $hashid_receipt, $title_of_receipt, $desc);	
-		if(!$success)
-		{array_push($errArray, 'Server error: Problem while attempting to add a receipt'); 	}
+		if($success !== true)
+		{array_push($errArray, 'Server error: Problem while attempting to add a receipt '.$success); 	}
 		else
 			{
-				array_push($successArray, 'receipt has been successfully added');
+				array_push($successArray, 'Receipt has been successfully added');
 			}
 	}
 }

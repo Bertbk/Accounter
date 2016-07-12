@@ -15,6 +15,7 @@ Add a bill, ie: a row in the bills SQL table.
 include_once(__DIR__.'/../get_db.php');
 include_once(LIBPATH.'/bills/get_bill_by_title.php');
 include_once(LIBPATH.'/bills/get_bills.php');
+include_once(LIBPATH.'/receipts/get_receipts.php');
 
 include_once(LIBPATH.'/colors/give_me_next_color.php');
 
@@ -35,7 +36,8 @@ function set_bill($account_id_arg, $hashid_bill_arg, $title_bill_arg, $descripti
 	}
 	
 	$the_bills = get_bills($account_id);
-	$my_color = give_me_next_color($the_bills, 'bill');
+	$the_receipts = get_receipts($account_id);
+	$my_color = give_me_next_color(array_merge($the_bills, $the_receipts), 'bill');
 	//When color will come from users, check the reg ex
 	
 	$isgood= false;
