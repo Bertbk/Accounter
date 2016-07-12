@@ -1,0 +1,75 @@
+/**
+ * This software is governed by the CeCILL-B license. If a copy of this license
+ * is not distributed with this file, you can obtain one at
+ * http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
+ *
+ * Author of Accounter: Bertrand THIERRY (bertrand.thierry1@gmail.com)
+ *
+*/
+
+div#add_recept{
+	overflow:hidden;
+}
+
+div#add_recept h2{
+	display:inline-block;
+}
+
+h3.recept_title{
+	display:inline-block;
+}
+
+div.button_recept_title{
+	float:right;
+}
+
+
+div.recept div.panel-primary div.panel-heading h3{
+	display:inline-block;
+	margin-right: 10px;
+}
+
+div.recept div.panel-primary div.panel-heading img{
+	/*display:inline-block;*/
+}
+
+p#show_hide_add_recept a{
+	color:black;
+}
+
+
+/* back ground colors */
+  div.recept div.panel,
+  div.recept div.panel div.panel-body,
+  div.recept div.panel div.panel-heading{
+    border: none;
+		color:black;
+}
+
+div.recept  div.panel{
+	box-shadow: -4px 6px 9px rgba(50, 50, 50, 0.5);
+	color: black;
+}
+
+div.recept div.highlight{
+	position:relative;
+	left:-15px;
+	width:calc(100% + 30px);
+	padding-left:15px;
+	padding-right:15px;
+	padding-top:10px;
+	padding-bottom:10px;
+	box-shadow: -4px 6px 9px rgba(50, 50, 50, 0.5);
+	margin-top: 10px;
+	margin-bottom: 10px;	
+}
+
+/* End back ground colors */
+
+div.recept div.panel  a{
+color:black;
+}
+
+div.recept div.panel  .recept_participant a{
+color:black;
+}

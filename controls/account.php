@@ -150,6 +150,8 @@ if($admin_mode && !empty($_GET['edit']) && !empty($_GET['edit_hashid']))
 }
 
 /* Computations and values used in display */
+
+//=== BILLS ===
 $my_bills = get_bills($my_account_id); // All bills
 $my_participants = get_participants($my_account_id); //All person
 $my_bill_participants = get_bill_participants($my_account_id); // Person that added to a bill
@@ -157,7 +159,6 @@ $my_free_bill_participants = get_free_bill_participants($my_account_id); // Pers
 
 //Number of bills
 $n_bills = count($my_bills);
-
 //Payments
 $my_payments_per_bill = get_payments_by_bills($my_account_id); //All payments
 
@@ -177,7 +178,11 @@ foreach($my_bills as $bill)
 	}
 }
 
-// SOLUTION
+//=== RECEPTS ===
+//Number of recepts
+$n_recepts = 0;
+
+// === SOLUTION === 
 $solution = compute_solution($my_account_id);
 $solution_opt = compute_opt_solution($my_account_id, $solution);
 //nb. of money transfert

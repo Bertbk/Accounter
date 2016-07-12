@@ -41,6 +41,7 @@ Template of a particular account page, that is :
 <link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/payment.css'?>">
 <link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/account.css'?>">
 <link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/solution.css'?>">
+<link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/recept.css'?>">
 
 <script type="text/javascript" src="<?php echo BASEURL.'/js/account.js'?>"></script>
 
@@ -77,9 +78,9 @@ Template of a particular account page, that is :
 					<?php include(__DIR__.'/header/header.php'); ?>
 				</header>
 			</div>
-	<?php include(__DIR__.'/messages/messages.php');?>
-	<?php include(__DIR__.'/account/cancel_form.php');?>
-	<?php include(__DIR__.'/account/description_panel.php');?>
+			<?php include(__DIR__.'/messages/messages.php');?>
+			<?php include(__DIR__.'/account/cancel_form.php');?>
+			<?php include(__DIR__.'/account/description_panel.php');?>
 			<div class="row">
 				<?php include(__DIR__.'/account/solution.php');?>
 			</div>
@@ -87,6 +88,7 @@ Template of a particular account page, that is :
 				<div class="col-md-3">
 					<?php include(__DIR__.'/account/participant.php');?>
 					<?php include(__DIR__.'/account/add_bill_panel.php');?>
+					<?php include(__DIR__.'/account/add_recept_panel.php');?>
 				</div>
 				<div class="col-md-9">
 					<?php include(__DIR__.'/account/bill.php');?>
