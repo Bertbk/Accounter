@@ -19,12 +19,13 @@ include_once(LIBPATH.'/articles/get_article_by_id.php');
 include_once(LIBPATH.'/receipt_participants/get_receipt_participant_by_id.php');
 
 
-function update_article($account_id_arg, $article_id_arg, $price_arg, $product_arg, $quantity_arg)
+function update_article($account_id_arg, $receipt_id_arg, $article_id_arg, $price_arg, $product_arg, $quantity_arg)
 {
 	$db = get_db();
 
 	$account_id = (int)$account_id_arg;
 	$article_id = (int)$article_id_arg;
+	$receipt_id = (int)$receipt_id_arg;	
 	$new_price = (float)$price_arg;
 	$new_product = $product_arg;
 	$new_quantity = (float)$quantity_arg;
@@ -49,12 +50,14 @@ function update_article($account_id_arg, $article_id_arg, $price_arg, $product_a
 	{
 		$myquery = 'UPDATE '.TABLE_RECEIPT_ARTICLES.' 
 		SET price=:new_price,	product=:new_product, quantity=:new_quantity
-		WHERE id=:article_id';
+		WHERE id=:article_id AND account_id=:account_id AND receipt_id=:receipt_id';
 		$prepare_query = $db->prepare($myquery);
 		$prepare_query->bindValue(':new_price', $new_price, PDO::PARAM_STR);
 		$prepare_query->bindValue(':new_description', $new_product, PDO::PARAM_STR);
 		$prepare_query->bindValue(':new_quantity', $new_quantity, PDO::PARAM_STR);
 		$prepare_query->bindValue(':article_id', $article_id, PDO::PARAM_INT);
+		$prepare_query->bindValue(':account_id', $account_id, PDO::PARAM_INT);
+		$prepare_query->bindValue(':receipt_id', $receipt_id, PDO::PARAM_INT);
 		$isgood = $prepare_query->execute();
 		$prepare_query->closeCursor();
 	}
