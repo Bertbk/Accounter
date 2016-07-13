@@ -16,26 +16,30 @@ Warning: a article points to a receipt_participant, not to a participant.
 include_once(__DIR__.'/../get_db.php');
 
 include_once(LIBPATH.'/hashid/validate_hashid.php');
-include_once(LIBPATH.'/receipt_participants/get_receipt_participant_by_id.php');
 
 function set_article($account_id_arg, $hashid_arg, $receipt_id_arg, $price_arg, $product_arg, $quantity_arg)
 {
 	$db = get_db();
 
 	$account_id = (int)$account_id_arg;
+	$receipt_id = (int)$receipt_id_arg;
 	$hashid = $hashid_arg;
 	$price = (float)$price_arg;
 	$product = $product_arg;
-	$quantity = $quantity_arg;
+	$quantity = (float)$quantity_arg;
 	
-	if(!validate_hashid($hashid))
+	if(validate_hashid($hashid) == false)
+	{return 'Problem with hashid: '.$hashid;}
+
+	if($price < 0 
+	|| $quantity < 0)
 	{return false;}
 	
 	$isgood = false;
 	try
 	{
-		$myquery = 'INSERT INTO '.TABLE_RECEIPT_ARTICLES.' (id, hashid, account_id, receipt_id, price, product, quantity) 
-		VALUES(NULL, :hashid, :account_id, :receipt_id, :price, :product, :quantity)';
+		$myquery = 'INSERT INTO '.TABLE_RECEIPT_ARTICLES.' (id, hashid, account_id, receipt_id, product, quantity, price) 
+		VALUES(NULL, :hashid, :account_id, :receipt_id, :product, :quantity, :price)';
 		$prepare_query = $db->prepare($myquery);
 		$prepare_query->bindValue(':hashid', $hashid, PDO::PARAM_STR);
 		$prepare_query->bindValue(':account_id', $account_id, PDO::PARAM_INT);
@@ -50,5 +54,6 @@ function set_article($account_id_arg, $hashid_arg, $receipt_id_arg, $price_arg, 
 	{
 		return 'Fail to connect: ' . $e->getMessage();
 	}
+	
 	return $isgood;
 }

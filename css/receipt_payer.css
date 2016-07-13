@@ -1,0 +1,82 @@
+/**
+ * This software is governed by the CeCILL-B license. If a copy of this license
+ * is not distributed with this file, you can obtain one at
+ * http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
+ *
+ * Author of Accounter: Bertrand THIERRY (bertrand.thierry1@gmail.com)
+ *
+*/
+
+/* Form to assign a participant */
+
+.assign_receipt_payer input[type="checkbox"] {
+    display: none;
+}
+
+.assign_receipt_payer input[type="checkbox"] + .btn-group > label span {
+    width: 20px;
+}
+
+.assign_receipt_payer input[type="checkbox"] + .btn-group > label span:first-child {
+    display: none;
+}
+.assign_receipt_payer input[type="checkbox"] + .btn-group > label span:last-child {
+    display: inline-block;   
+}
+
+.assign_receipt_payer input[type="checkbox"]:checked + .btn-group > label span:first-child {
+    display: inline-block;
+}
+.assign_receipt_payer input[type="checkbox"]:checked + .btn-group > label span:last-child {
+    display: none;   
+}
+
+.assign_receipt_payer  label.btn-assign_receipt_payer1{
+float:left!important;
+}
+
+.assign_receipt_payer  span.span-assign_receipt_payer{
+display: block;
+overflow: hidden;
+}
+
+.assign_receipt_payer  label.btn-assign_receipt_payer2{
+width:100%!important;
+color:white;
+}
+
+.assign_receipt_payer  label.btn-select_all_participation{
+width:100%!important;
+}
+/* Displaying the (bill-) participant */
+
+div.display_receipt_payer{
+	color:white;
+	border-radius: 5px;
+}
+
+div.padding_receipt_payer{
+	padding-top: 6px;
+	padding-bottom: 8px;
+	text-align:center;
+	word-break: break-all;
+	overflow:hidden;
+}
+
+	
+
+.billpartColor0 {background-color: blue;}
+.billpartColor1 {background-color: red;}
+.billpartColor2 {background-color: green;}
+.billpartColor3 {background-color: #FF00FF;}
+.billpartColor4 {background-color: #C0C0C0;}
+.billpartColor5 {background-color: #00FFFF;}
+.billpartColor6 {background-color: #FFFF00;}
+.billpartColor7 {background-color: #;}
+.billpartColor8 {background-color: #;}
+.billpartColor9 {background-color: #;}
+
+.group_color
+{
+background-color: #111111 !important;
+}

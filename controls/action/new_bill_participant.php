@@ -195,7 +195,7 @@ if(isset($_POST['submit_new_bill_participant']))
 		if(empty($errArray2))
 		{
 			$success = set_bill_participant($account['id'], $hashid_bill_participant, $bill['id'], $participant['id'], $percent_of_use);	
-			if(!$success)
+			if($success !== true)
 			{array_push($errArray2, 'Server error: Problem while attempting to add a participation'); 	}
 			else
 			{

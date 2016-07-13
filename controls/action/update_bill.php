@@ -153,7 +153,7 @@ else if(isset($_POST['submit_update_bill']))
 	if(empty($errArray))
 	{
 		$success = update_bill($account['id'], $bill['id'], $new_title_of_bill, $new_description);	
-		if(!$success)
+		if($success !== true)
 		{array_push($errArray, 'Server error: Problem while attempting to update a bill'); 	}
 	else
 		{

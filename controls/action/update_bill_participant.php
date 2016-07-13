@@ -143,7 +143,7 @@ if(isset($_POST['submit_update_bill_participant']))
 	if(empty($errArray))
 	{
 		$success = update_bill_participant($account['id'], $bill_participant['id'], $new_percent_of_use);	
-		if(!$success)
+		if($success !== true)
 		{array_push($errArray, 'Server error: Problem while attempting to update a participation'); 	}
 	else
 		{

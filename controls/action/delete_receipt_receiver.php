@@ -95,7 +95,7 @@ if(isset($_POST['submit_delete_receipt_receiver']))
 	if(empty($errArray))
 	{
 		$success = delete_receipt_receiver($account['id'], $receipt_receiver['id']);	
-		if(!$success)
+		if($success !== true)
 		{array_push($errArray, 'Server error: Problem while attempting to delete a receiver'); 	}
 		else
 		{

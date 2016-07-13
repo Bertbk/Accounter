@@ -95,7 +95,7 @@ if(isset($_POST['submit_delete_article']))
 	if(empty($errArray))
 	{
 		$success = delete_article($account['id'], $article['id']);	
-		if(!$success)
+		if($success !== true)
 		{array_push($errArray, 'Server error: Problem while attempting to delete a article'); 	}
 			else
 			{

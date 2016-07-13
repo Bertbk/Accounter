@@ -64,7 +64,7 @@ if(empty($errArray))
 {
 	//Delete the account
 	$success = delete_account($account['id']);	
-	if(!$success)
+	if($success !== true)
 	{array_push($errArray, 'Server error: Problem while attempting to delete an account'); 	}
 		else
 		{

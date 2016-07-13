@@ -95,7 +95,7 @@ if(isset($_POST['submit_delete_participant']))
 	if(empty($errArray))
 	{
 		$success = delete_participant($account['id'], $participant['id']);	
-		if(!$success)
+		if($success !== true)
 		{array_push($errArray, 'Server error: Problem while attempting to delete a participant'); 	}
 			else
 			{

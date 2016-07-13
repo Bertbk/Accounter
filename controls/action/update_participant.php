@@ -161,7 +161,7 @@ else if(isset($_POST['submit_update_participant']))
 	if(empty($errArray))
 	{
 		$success = update_participant($account['id'], $participant['id'], $new_name_of_participant, $new_nb_of_people, $new_email);	
-		if(!$success)
+		if($success !== true)
 		{array_push($errArray, 'Server error: Problem while attempting to update a participant'); 	}
 	else
 		{

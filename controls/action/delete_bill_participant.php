@@ -95,7 +95,7 @@ if(isset($_POST['submit_delete_bill_participant']))
 	if(empty($errArray))
 	{
 		$success = delete_bill_participant($account['id'], $bill_participant['id']);	
-		if(!$success)
+		if($success !== true)
 		{array_push($errArray, 'Server error: Problem while attempting to delete a participation'); 	}
 		else
 		{

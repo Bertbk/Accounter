@@ -105,7 +105,7 @@ if(isset($_POST['submit_new_bill']))
 	if(empty($errArray))
 	{
 		$success = set_bill($account['id'], $hashid_bill, $title_of_bill, $desc);	
-		if(!$success)
+		if($success !== true)
 		{array_push($errArray, 'Server error: Problem while attempting to add a bill'); 	}
 		else
 			{

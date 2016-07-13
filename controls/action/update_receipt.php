@@ -153,7 +153,7 @@ else if(isset($_POST['submit_update_receipt']))
 	if(empty($errArray))
 	{
 		$success = update_receipt($account['id'], $receipt['id'], $new_title_of_receipt, $new_description);	
-		if(!$success)
+		if($success !== true)
 		{array_push($errArray, 'Server error: Problem while attempting to update a receipt'); 	}
 	else
 		{

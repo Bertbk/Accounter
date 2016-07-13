@@ -286,7 +286,7 @@ if(isset($_POST['submit_new_payment']))
 			if(empty($errArray3))
 			{
 				$success = set_payment($account['id'], $hashid_payment, $bill['id'], $payer['id'], $cost, $receiver_id, $description, $date_of_payment);	
-				if(!$success)
+				if($success !== true)
 				{array_push($errArray3, 'Server error: Problem while attempting to add a payment'); 	}
 			else
 				{

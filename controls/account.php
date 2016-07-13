@@ -169,7 +169,7 @@ foreach($my_bills as $bill)
 //=== RECEIPTS ===
 $my_receipts = get_receipts($my_account_id); // All receipts
 $my_receipt_payers = get_receipt_payers($my_account_id); // Payers per receipts
-$my_receipt_articles = get_articles($my_account_id); // Articles per receipts
+$my_articles_per_receipt = get_articles($my_account_id); // Articles per receipts
 $my_free_receipt_payers = get_free_receipt_payers($my_account_id); // Possible payer for each receipt
 //Number of receipts
 $n_receipts = count($my_receipts);

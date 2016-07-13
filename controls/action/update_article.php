@@ -209,7 +209,7 @@ else if(isset($_POST['submit_update_article']))
 	if(empty($errArray))
 	{
 		$success = update_article($account['id'], $article['id'], $receipt['id'], $price, $product, $quantity);	
-		if(!$success)
+		if($success !== true)
 		{array_push($errArray, 'Server error: Problem while attempting to update a article'); 	}
 	else
 		{

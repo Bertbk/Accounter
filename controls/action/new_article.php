@@ -118,7 +118,7 @@ if(isset($_POST['submit_new_article']))
 	
 	if(empty($errArray))
 	{
-//Loop now on every articles
+	//Loop now on every articles
 	 foreach ($_POST['p_article'] as $article)
 	 {
 		$errArray2 = array(); // Error array for each article
@@ -144,7 +144,7 @@ if(isset($_POST['submit_new_article']))
 			}
 		}
 		
-		// PRICE
+		// QUANTITY
 		$key = 'p_quantity';
 		if(empty($article[$key])) { //If empty
 			array_push($errArray2, $ErrorEmptyMessage[$key]);
@@ -157,12 +157,21 @@ if(isset($_POST['submit_new_article']))
 			}
 		}
 
+		//Hash id for the new article
+		$hashid_article = "";
+		if(empty($errArray2))
+		{
+			$hashid_article = create_hashid();
+			if(is_null($hashid_article))
+				{ array_push($errArray2, "Server error: problem while creating hashid.");}
+		}
+		
 		//Save the article
 		if(empty($errArray2))
 		{
 			$success = set_article($account['id'], $hashid_article, $receipt['id'], $price, $product, $quantity);	
-			if(!$success)
-			{array_push($errArray2, 'Server error: Problem while attempting to add a article'); 	}
+			if($success !== true)
+			{array_push($errArray2, 'Server error: Problem while attempting to add an article: '.$success); 	}
 		else
 			{
 				array_push($successArray, 'Article has been successfully added');

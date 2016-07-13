@@ -42,6 +42,7 @@ Template of a particular account page, that is :
 <link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/account.css'?>">
 <link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/solution.css'?>">
 <link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/receipt.css'?>">
+<link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/receipt_payer.css'?>">
 
 <script type="text/javascript" src="<?php echo BASEURL.'/js/account.js'?>"></script>
 

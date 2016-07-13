@@ -231,7 +231,7 @@ if(isset($_POST['submit_new_receipt_receiver']))
 		if(empty($errArray2))
 		{
 			$success = set_receipt_receiver($account['id'], $hashid_receipt_receiver, $receipt['id'], $participant['id'], $article['id'], $quantity);	
-			if(!$success)
+			if($success !== true)
 			{array_push($errArray2, 'Server error: Problem while attempting to add a receiver'); 	}
 			else
 			{

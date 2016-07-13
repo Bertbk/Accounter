@@ -141,7 +141,7 @@ if(isset($_POST['submit_update_receipt_receiver']))
 	if(empty($errArray))
 	{
 		$success = update_receipt_receiver($account['id'], $receipt_receiver['id'], $new_quantity);	
-		if(!$success)
+		if($success !== true)
 		{array_push($errArray, 'Server error: Problem while attempting to update a participation'); 	}
 	else
 		{

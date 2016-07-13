@@ -143,7 +143,7 @@ if(isset($_POST['submit_update_receipt_payer']))
 	if(empty($errArray))
 	{
 		$success = update_receipt_payer($account['id'], $receipt_payer['id'], $new_percent_of_payment);	
-		if(!$success)
+		if($success !== true)
 		{array_push($errArray, 'Server error: Problem while attempting to update a participation'); 	}
 	else
 		{

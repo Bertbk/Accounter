@@ -95,7 +95,7 @@ if(isset($_POST['submit_delete_payment']))
 	if(empty($errArray))
 	{
 		$success = delete_payment($account['id'], $payment['id']);	
-		if(!$success)
+		if($success !== true)
 		{array_push($errArray, 'Server error: Problem while attempting to delete a payment'); 	}
 			else
 			{

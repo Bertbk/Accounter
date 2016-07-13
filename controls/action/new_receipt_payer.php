@@ -195,7 +195,7 @@ if(isset($_POST['submit_new_receipt_payer']))
 		if(empty($errArray2))
 		{
 			$success = set_receipt_payer($account['id'], $hashid_receipt_payer, $receipt['id'], $participant['id'], $percent_of_payment);	
-			if(!$success)
+			if($success !== true)
 			{array_push($errArray2, 'Server error: Problem while attempting to add a payer'); 	}
 			else
 			{

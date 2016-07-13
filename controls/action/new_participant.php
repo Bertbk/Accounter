@@ -128,7 +128,7 @@ if(isset($_POST['submit_new_participant']))
 			if(empty($errArray2))
 			{
 				$success = set_participant($account['id'], $hashid_participant, $name_of_participant, $nb_of_people);	
-				if(!$success)
+				if($success !== true)
 					{array_push($errArray2, 'Server error: Problem while attempting to add a participant'); 	}
 				else
 					{

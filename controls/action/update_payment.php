@@ -291,7 +291,7 @@ else if(isset($_POST['submit_update_payment']))
 	if(empty($errArray))
 	{
 		$success = update_payment($account['id'], $bill['id'], $payment['id'], $payer['id'], $cost, $receiver_id, $description, $date_of_payment);	
-		if(!$success)
+		if($success !== true)
 		{array_push($errArray, 'Server error: Problem while attempting to update a payment'); 	}
 	else
 		{

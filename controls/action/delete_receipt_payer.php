@@ -95,7 +95,7 @@ if(isset($_POST['submit_delete_receipt_payer']))
 	if(empty($errArray))
 	{
 		$success = delete_receipt_payer($account['id'], $receipt_payer['id']);	
-		if(!$success)
+		if($success !== true)
 		{array_push($errArray, 'Server error: Problem while attempting to delete a payer'); 	}
 		else
 		{

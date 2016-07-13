@@ -94,7 +94,7 @@ if(isset($_POST['submit_delete_bill']))
 	if(empty($errArray))
 	{
 		$success = delete_bill($account['id'], $bill['id']);	
-		if(!$success)
+		if($success !== true)
 		{array_push($errArray, 'Server error: Problem while attempting to delete a bill'); 	}
 			else
 			{
