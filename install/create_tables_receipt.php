@@ -65,7 +65,7 @@ function create_tables_receipt()
     hashid VARCHAR(16) NOT NULL UNIQUE,
     account_id INT UNSIGNED NOT NULL,
     receipt_id INT UNSIGNED NOT NULL,
-		designation VARCHAR(255) NOT NULL,
+		product VARCHAR(255) NOT NULL,
 		quantity DECIMAL(10,2) NOT NULL,
     price DECIMAL(10,2) NOT NULL,
     PRIMARY KEY (id),
