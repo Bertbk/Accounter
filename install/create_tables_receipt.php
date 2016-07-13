@@ -106,17 +106,17 @@ function create_tables_receipt()
 		INDEX ind_receipt_article_account_id (account_id),
 		INDEX ind_receipt_article_receipt_id (receipt_id),
 		INDEX ind_receipt_article_payer_id (payer_id),
-		CONSTRAINT fk_receipt_article_account_id
+		CONSTRAINT fk_receipt_payer_account_id
         FOREIGN KEY (account_id)
         REFERENCES '.TABLE_ACCOUNTS.'(id)
 				ON DELETE CASCADE
 				ON UPDATE CASCADE,
-		CONSTRAINT fk_receipt_article_receipt_id
+		CONSTRAINT fk_receipt_payer_receipt_id
         FOREIGN KEY (receipt_id)
         REFERENCES '.TABLE_RECEIPTS.'(id)
 				ON DELETE CASCADE
 				ON UPDATE CASCADE,
-		CONSTRAINT fk_receipt_article_payer_id
+		CONSTRAINT fk_receipt_payer_payer_id
         FOREIGN KEY (payer_id)
         REFERENCES '.TABLE_PARTICIPANTS.'(id)
 				ON DELETE CASCADE
@@ -159,13 +159,13 @@ function create_tables_receipt()
 				ON DELETE CASCADE
 				ON UPDATE CASCADE,
 		CONSTRAINT fk_receipt_receiver_receiver_id
-        FOREIGN KEY (payer_id)
+        FOREIGN KEY (receiver_id)
         REFERENCES '.TABLE_PARTICIPANTS.'(id)
 				ON DELETE CASCADE
 				ON UPDATE CASCADE,
 		CONSTRAINT fk_receipt_receiver_article_id
         FOREIGN KEY (article_id)
-        REFERENCES '.TABLE_ARTICLES.'(id)
+        REFERENCES '.TABLE_RECEIPT_ARTICLES.'(id)
 				ON DELETE CASCADE
 				ON UPDATE CASCADE
 		)
@@ -182,5 +182,4 @@ function create_tables_receipt()
 	return 'Yahou';
 }
 
-$coucou = create_tables_receipt();
-echo '<p>'.$coucou.'</p>';
+create_tables_receipt();
