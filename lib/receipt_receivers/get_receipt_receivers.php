@@ -14,7 +14,7 @@ Return an array of the receipt_receivers of the account, sorted by receipts
 include_once(__DIR__.'/../get_db.php');
 
 include_once(LIBPATH.'/receipts/get_receipts.php');
-include_once(LIBPATH.'/receipt_receivers/get_receipt_receivers_by_receipt_id.php');
+include_once(LIBPATH.'/receipt_receivers/get_receipt_receivers_by_article_id.php');
 
 include_once(LIBPATH.'/articles/get_articles_by_receipt_id.php');
 

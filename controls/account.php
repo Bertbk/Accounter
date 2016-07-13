@@ -26,57 +26,20 @@ include_once(LIBPATH.'/accounts/get_account.php');
 include_once(LIBPATH.'/accounts/get_account_admin.php');
 
 include_once(LIBPATH.'/participants/get_participants.php');
-include_once(LIBPATH.'/participants/get_participant_by_name.php');
-include_once(LIBPATH.'/participants/get_participant_by_hashid.php');
-include_once(LIBPATH.'/participants/set_participant.php');
-include_once(LIBPATH.'/participants/update_participant.php');
-include_once(LIBPATH.'/participants/delete_participant.php');
 
-include_once(LIBPATH.'/payments/get_payments.php');
-include_once(LIBPATH.'/payments/get_payment_by_hashid.php');
-include_once(LIBPATH.'/payments/set_payment.php');
-include_once(LIBPATH.'/payments/update_payment.php');
-include_once(LIBPATH.'/payments/get_payments_by_bills.php');
-include_once(LIBPATH.'/payments/delete_payment.php');
 
 include_once(LIBPATH.'/bills/get_bills.php');
-include_once(LIBPATH.'/bills/get_bill_by_id.php');
-include_once(LIBPATH.'/bills/get_bill_by_hashid.php');
-include_once(LIBPATH.'/bills/set_bill.php');
-include_once(LIBPATH.'/bills/update_bill.php');
-include_once(LIBPATH.'/bills/delete_bill.php');
-
-include_once(LIBPATH.'/bill_participants/set_bill_participant.php');
+include_once(LIBPATH.'/payments/get_payments_by_bills.php');
 include_once(LIBPATH.'/bill_participants/get_bill_participants.php');
-include_once(LIBPATH.'/bill_participants/get_bill_participant_by_hashid.php');
-include_once(LIBPATH.'/bill_participants/update_bill_participant.php');
 include_once(LIBPATH.'/bill_participants/get_free_bill_participants.php');
-include_once(LIBPATH.'/bill_participants/delete_bill_participant.php');
 
 include_once(LIBPATH.'/receipts/get_receipts.php');
-include_once(LIBPATH.'/receipts/get_receipt_by_id.php');
-include_once(LIBPATH.'/receipts/get_receipt_by_hashid.php');
-include_once(LIBPATH.'/receipts/set_receipt.php');
-include_once(LIBPATH.'/receipts/update_receipt.php');
-include_once(LIBPATH.'/receipts/delete_receipt.php');
-/*
 include_once(LIBPATH.'/articles/get_articles.php');
-include_once(LIBPATH.'/articles/get_article_by_id.php');
-include_once(LIBPATH.'/articles/get_article_by_hashid.php');
-include_once(LIBPATH.'/articles/set_article.php');
-include_once(LIBPATH.'/articles/update_article.php');
-include_once(LIBPATH.'/articles/delete_article.php');
-*/
-
-/*
 include_once(LIBPATH.'/receipt_payers/get_receipt_payers.php');
-include_once(LIBPATH.'/receipt_payers/get_receipt_payer_by_id.php');
-include_once(LIBPATH.'/receipt_payers/get_receipt_payer_by_hashid.php');
 include_once(LIBPATH.'/receipt_payers/get_free_receipt_payers.php');
-include_once(LIBPATH.'/receipt_payers/set_receipt_payer.php');
-include_once(LIBPATH.'/receipt_payers/update_receipt_payer.php');
-include_once(LIBPATH.'/receipt_payers/delete_receipt_payer.php');
-*/
+include_once(LIBPATH.'/receipt_receivers/get_receipt_receivers.php');
+include_once(LIBPATH.'/receipt_receivers/get_free_receipt_receivers.php');
+
 include_once(LIBPATH.'/solutions/compute_bill_solutions.php');
 include_once(LIBPATH.'/solutions/compute_solution.php');
 include_once(LIBPATH.'/solutions/compute_opt_solution.php');
@@ -206,7 +169,7 @@ foreach($my_bills as $bill)
 //=== RECEIPTS ===
 $my_receipts = get_receipts($my_account_id); // All receipts
 $my_receipt_payers = get_receipt_payers($my_account_id); // Payers per receipts
-$my_receipt_articles = get_receipt_articles($my_account_id); // Articles per receipts
+$my_receipt_articles = get_articles($my_account_id); // Articles per receipts
 $my_free_receipt_payers = get_free_receipt_payers($my_account_id); // Possible payer for each receipt
 //Number of receipts
 $n_receipts = count($my_receipts);
