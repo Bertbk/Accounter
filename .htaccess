@@ -19,5 +19,6 @@ RewriteRule ^account/([a-zA-Z0-9]{32})/admin/edit/payment/([a-z0-9]{16})$ accoun
 RewriteRule ^account/([a-zA-Z0-9]{32})/admin/edit/bill_participant/([a-z0-9]{16})$ account.php?hash=$1&admin=true&edit=bill_participant&edit_hashid=$2 [QSA,L]
 RewriteRule ^account/([a-zA-Z0-9]{32})/admin/edit/bill/([a-z0-9]{16})$ account.php?hash=$1&admin=true&edit=bill&edit_hashid=$2 [QSA,L]
 RewriteRule ^account/([a-zA-Z0-9]{32})/admin/edit/account/([a-z0-9]{16})$ account.php?hash=$1&admin=true&edit=account&edit_hashid=$2 [QSA,L]
+RewriteRule ^account/([a-zA-Z0-9]{32})/admin/edit/receipt/([a-z0-9]{16})$ account.php?hash=$1&admin=true&edit=receipt&edit_hashid=$2 [QSA,L]
 
 RewriteRule ^account/([a-zA-Z0-9]{32})/admin/?$ account.php?hash=$1&admin=true [QSA,L]

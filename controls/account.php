@@ -59,7 +59,24 @@ include_once(LIBPATH.'/receipts/get_receipt_by_hashid.php');
 include_once(LIBPATH.'/receipts/set_receipt.php');
 include_once(LIBPATH.'/receipts/update_receipt.php');
 include_once(LIBPATH.'/receipts/delete_receipt.php');
+/*
+include_once(LIBPATH.'/articles/get_articles.php');
+include_once(LIBPATH.'/articles/get_article_by_id.php');
+include_once(LIBPATH.'/articles/get_article_by_hashid.php');
+include_once(LIBPATH.'/articles/set_article.php');
+include_once(LIBPATH.'/articles/update_article.php');
+include_once(LIBPATH.'/articles/delete_article.php');
+*/
 
+/*
+include_once(LIBPATH.'/receipt_payers/get_receipt_payers.php');
+include_once(LIBPATH.'/receipt_payers/get_receipt_payer_by_id.php');
+include_once(LIBPATH.'/receipt_payers/get_receipt_payer_by_hashid.php');
+include_once(LIBPATH.'/receipt_payers/get_free_receipt_payers.php');
+include_once(LIBPATH.'/receipt_payers/set_receipt_payer.php');
+include_once(LIBPATH.'/receipt_payers/update_receipt_payer.php');
+include_once(LIBPATH.'/receipt_payers/delete_receipt_payer.php');
+*/
 include_once(LIBPATH.'/solutions/compute_bill_solutions.php');
 include_once(LIBPATH.'/solutions/compute_solution.php');
 include_once(LIBPATH.'/solutions/compute_opt_solution.php');
@@ -149,6 +166,7 @@ if($admin_mode && !empty($_GET['edit']) && !empty($_GET['edit_hashid']))
 	&& $edit_mode !== "bill"
 	&& $edit_mode !== "bill_participant"
 	&& $edit_mode !== "payment"
+	&& $edit_mode !== "receipt"
 	))
 	{		//Wrong id or action
 		header('location:'.$link_to_account_admin);
@@ -187,8 +205,9 @@ foreach($my_bills as $bill)
 
 //=== RECEIPTS ===
 $my_receipts = get_receipts($my_account_id); // All receipts
-//$my_receipt_payers = get_receipt_payers($my_account_id); // Payers per receipts
-//$my_receipt_articles = get_receipt_articles($my_account_id); // Articles per receipts
+$my_receipt_payers = get_receipt_payers($my_account_id); // Payers per receipts
+$my_receipt_articles = get_receipt_articles($my_account_id); // Articles per receipts
+$my_free_receipt_payers = get_free_receipt_payers($my_account_id); // Possible payer for each receipt
 //Number of receipts
 $n_receipts = count($my_receipts);
 

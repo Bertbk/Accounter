@@ -92,6 +92,7 @@ Template of a particular account page, that is :
 				</div>
 				<div class="col-md-9">
 					<?php include(__DIR__.'/account/bill.php');?>
+					<?php include(__DIR__.'/account/receipt.php');?>
 				</div>
 			</div>
 		</div>
