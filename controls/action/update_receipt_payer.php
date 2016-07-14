@@ -160,6 +160,10 @@ if(isset($_POST['submit_update_receipt_payer']))
 		{
 			array_push($errArray, 'Percent of payment > 100% !');
 		}
+		if($current_percent <= 0)
+		{
+			array_push($errArray, 'Percent of payment <= 0% !');
+		}
 	}
 
 	

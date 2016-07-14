@@ -199,6 +199,9 @@ if(isset($_POST['submit_new_receipt_payer']))
 			{
 				array_push($errArray2, 'Percent of payment > 100% !');
 			}
+			if($current_percent <= 0)
+			{
+				array_push($errArray2, 'Percent of payment <= 0% !');
 		}
 		
 		//Save the receipt_payer
