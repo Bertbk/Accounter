@@ -36,7 +36,7 @@ function delete_article($account_id_arg, $article_id_arg)
 	}
 	catch (Exception $e)
 	{
-		return echo 'Fail to connect: ' . $e->getMessage();
+		return 'Fail to connect: ' . $e->getMessage();
 	}
 	return $isgood;
 	
