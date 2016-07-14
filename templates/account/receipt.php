@@ -724,9 +724,7 @@ else
 									</button>
 									<button type="button" name="add_row"
 										title="Add a row" class="btn btn-primary" 
-										onclick="AddArticleLine(<?php echo htmlspecialchars(json_encode($name_of_people)) ?>, 
-										<?php echo htmlspecialchars(json_encode($hashid_of_people)) ?>,
-										<?php echo $cpt_bill?>);return false;">
+										onclick="AddArticleLine(<?php echo $cpt_bill?>);return false;">
 										Add a row
 									</button>
 								</div>

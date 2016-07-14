@@ -402,3 +402,137 @@ function SetAllPercent(percent_selected_id, cpt_bill)
 		}
 	}
 }
+
+//Add a row for the form to submit an article (multiple submit) 
+function AddArticleLine(cpt_bill)
+{
+	if(typeof AddArticleLine.counter == 'undefined')
+	{
+		AddArticleLine.counter = 1;
+	}
+	
+	var div_container = document.createElement("div");
+	div_container.id= "container_row_article_"+ cpt_bill + "_" + AddArticleLine.counter;
+	div_container.className = "new_row_article";
+	var div_row1=document.createElement("div");
+	div_row1.setAttribute("class", "row form-group");
+	
+	var div_product=document.createElement("div");
+	div_product.setAttribute("class",	"col-xs-12 col-lg-4");
+	var div_price=document.createElement("div");
+	div_price.setAttribute("class",	"col-xs-12 col-lg-4");
+	var div_quantity=document.createElement("div");
+	div_quantity.setAttribute("class",	"col-xs-12 col-lg-4");
+	
+	var input_product = document.createElement("input");
+	input_product.id = "form_set_article_product_"+ cpt_bill + "_" + AddArticleLine.counter;
+	input_product.type="text";
+	input_product.className = "form-control";
+	input_product.name = "p_article["+ AddArticleLine.counter +"][p_product]";
+	input_product.title = "Product";
+	input_product.placeholder = "Product";
+	var input_price = document.createElement("input");
+	input_price.id = "form_set_article_price_"+ cpt_bill + "_" + AddArticleLine.counter;
+	input_price.type="number";
+	input_price.min="0";
+	input_price.step="0.01";
+	input_price.className = "form-control";
+	input_price.name = "p_article["+ AddArticleLine.counter +"][p_price]";
+	input_price.title = "Price";
+	input_price.placeholder = "Price";
+	var input_quantity = document.createElement("input");
+	input_quantity.id = "form_set_article_quantity_"+ cpt_bill + "_" + AddArticleLine.counter;
+	input_quantity.type="number";
+	input_quantity.min="0";
+	input_quantity.className = "form-control";
+	input_quantity.name = "p_article["+ AddArticleLine.counter +"][p_quantity]";
+	input_quantity.title = "Quantity";
+	input_quantity.placeholder = "Quantity";
+
+
+	//Set label
+	var label_product = document.createElement("Label");
+	label_product.setAttribute("for", input_product.id);
+	label_product.innerHTML = "Product<span class='glyphicon glyphicon-asterisk red'></span>";
+	var label_price = document.createElement("Label");
+	label_price.setAttribute("for", input_price.id);
+	label_price.innerHTML = "Price<span class='glyphicon glyphicon-asterisk red'></span>";
+	var label_quantity = document.createElement("Label");
+	label_quantity.setAttribute("for", input_quantity.id);
+	label_quantity.innerHTML="Quantity<span class='glyphicon glyphicon-asterisk red'></span>";
+	
+	//Bootstrap add-on
+	var div_input_group_product = document.createElement("div");
+	div_input_group_product.className="input-group";
+	var span_glyph_product = document.createElement("span");
+	span_glyph_product.className="input-group-addon glyphicon glyphicon-tag";
+	var div_input_group_price = document.createElement("div");
+	div_input_group_price.className="input-group";
+	var span_glyph_price = document.createElement("span");
+	span_glyph_price.className="input-group-addon glyphicon glyphicon-euro";
+	var div_input_group_quantity = document.createElement("div");
+	div_input_group_quantity.className="input-group";
+	var span_glyph_quantity = document.createElement("span");
+	span_glyph_quantity.className="input-group-addon glyphicon glyphicon-scale";
+
+	//Parent div
+	var parent_div = document.getElementById('div_set_article_' + cpt_bill);
+	
+	//Title
+	var div_title = document.createElement("div");
+	div_title.className="row form-group";
+	div_title.style.overflow="hidden";
+	var div_title_col = document.createElement("div");
+	div_title_col.className="col-xs-12 text-center";
+	div_title_col.style.overflow="hidden";
+	var p_title = document.createElement("p");
+	p_title.className="padding_bill_participant";
+	p_title.style.display="inline-block";
+	p_title.style.paddingLeft="10px";
+	p_title.innerHTML = "Additionnal article"; 
+	var button_trash = document.createElement("button");
+	button_trash.className = "btn btn-default pull-right";
+	button_trash.title = "Remove this submission";
+	button_trash.type = "button";
+	button_trash.name = "Remove this submission";
+	button_trash.onclick=function(){
+		RemoveChild(parent_div, div_container);
+	};
+	var span_trash = document.createElement("span");
+	span_trash.className="glyphicon glyphicon-trash";
+	button_trash.appendChild(span_trash);
+	div_title_col.appendChild(p_title);
+	div_title_col.appendChild(button_trash);
+	div_title.appendChild(div_title_col);
+	//Add to container
+	//Product
+	div_product.appendChild(label_product);
+	div_input_group_product.appendChild(input_product);
+	div_input_group_product.appendChild(span_glyph_product);
+	div_product.appendChild(div_input_group_product);
+	div_row1.appendChild(div_product);
+	//Price
+	div_price.appendChild(label_price);
+	div_input_group_price.appendChild(input_price);
+	div_input_group_price.appendChild(span_glyph_price);
+	div_price.appendChild(div_input_group_price);
+	div_row1.appendChild(div_price);
+	//Quantity
+	div_quantity.appendChild(label_quantity);
+	div_input_group_quantity.appendChild(input_quantity);
+	div_input_group_quantity.appendChild(span_glyph_quantity);
+	div_quantity.appendChild(div_input_group_quantity);
+	div_row1.appendChild(div_quantity);
+	//container
+//	var hr = document.createElement("hr");
+//	hr.className="separator_payments";
+//	div_container.appendChild(hr);
+//	div_container.appendChild(div_title);
+	div_container.appendChild(div_row1);
+	
+	//Parent div
+	parent_div.appendChild(div_container);
+	
+  AddArticleLine.counter ++;
+  return false;
+}
