@@ -182,15 +182,25 @@ if(isset($_POST['submit_new_receipt_payer']))
 		if(empty($errArray2))
 		{
 			$registred_receipt_part = get_receipt_payers_by_receipt_id($account['id'], $receipt['id']);
+			$current_percent = $percent_of_payment;
 			foreach ($registred_receipt_part as $receipt_part)
 			{
 					if($receipt_part['participant_id'] == $participant['id'])
 					{
 						{array_push($errArray2, 'Payer already registred!'); 	}
 					}
+					$current_percent += $receipt_part['percent_of_payment'];
 			}
 		}
-	
+		
+		if(empty($errArray2))
+		{
+			if($current_percent > 100)
+			{
+				array_push($errArray2, 'Percent of payment > 100% !');
+			}
+		}
+		
 		//Save the receipt_payer
 		if(empty($errArray2))
 		{

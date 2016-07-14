@@ -139,6 +139,30 @@ if(isset($_POST['submit_update_receipt_payer']))
 		}
 	}
 	
+	//Check if the sum of percentage of payment is still acceptable
+	if(empty($errArray))
+	{
+		$registred_receipt_part = get_receipt_payers_by_receipt_id($account['id'], $receipt['id']);
+		$current_percent = $new_percent_of_payment;
+		foreach ($registred_receipt_part as $receipt_part)
+		{
+			if($receipt_part['participant_id'] == $participant['id'])
+			{
+				continue;
+			}
+			$current_percent += $receipt_part['percent_of_payment'];
+		}
+	}
+
+	if(empty($errArray))
+	{
+		if($current_percent > 100)
+		{
+			array_push($errArray, 'Percent of payment > 100% !');
+		}
+	}
+
+	
 	//Update the receipt_payer
 	if(empty($errArray))
 	{
