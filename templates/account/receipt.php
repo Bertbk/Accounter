@@ -470,6 +470,25 @@ foreach($these_articles as $article)
 			if($admin_mode && !$edit_mode)
 				{
 	?>
+	
+						<div class="col-xs-2 col-md-1">
+<?php						//SELECTION OF RECEIVER ?>
+							<select>
+							
+							<?php
+							foreach($my_free_article_receivers[$receipt['id']][$article['id']] as $particip)
+							{
+								?>
+								<option value="<?php echo $particip['hashid']?>">
+									<?php echo htmlspecialchars($particip['name'])?>
+								</option>
+						<?php
+								}
+								?>
+							</select>
+						</div>
+
+							
 						<div class="col-xs-2 col-md-1">
 		<?php 
 		$link_tmp = $link_to_account_admin.'/edit/article/'.$article['hashid'].'#edit_tag_'.$article['hashid'];

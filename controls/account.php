@@ -40,6 +40,7 @@ include_once(LIBPATH.'/receipt_payers/get_free_receipt_payers.php');
 include_once(LIBPATH.'/receipt_receivers/get_receipt_receivers.php');
 include_once(LIBPATH.'/receipt_receivers/get_free_receipt_receivers.php');
 
+
 include_once(LIBPATH.'/solutions/compute_bill_solutions.php');
 include_once(LIBPATH.'/solutions/compute_solution.php');
 include_once(LIBPATH.'/solutions/compute_opt_solution.php');
@@ -171,6 +172,7 @@ $my_receipts = get_receipts($my_account_id); // All receipts
 $my_receipt_payers = get_receipt_payers($my_account_id); // Payers per receipts
 $my_articles_per_receipt = get_articles($my_account_id); // Articles per receipts
 $my_free_receipt_payers = get_free_receipt_payers($my_account_id); // Possible payer for each receipt
+$my_free_article_receivers = get_free_receipt_receivers($my_account_id); // Possible receipt_receiver for each article of each receipt
 //Number of receipts
 $n_receipts = count($my_receipts);
 

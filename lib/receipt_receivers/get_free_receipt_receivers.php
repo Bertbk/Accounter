@@ -12,10 +12,10 @@
 Returns the participants that are NOT in the receipts
 (they are free to join!)
 
-$reply[$receipt['id']][$participant['id']] = $participant;
+$reply[$receipt['id']][$article['id']][$participant['id']] = Array of $participant;
 $participant are the data collected on the row of participants SQL table
 
-Attention, the returned array are not "receipt_receiver" but "Participant"
+Warning, the returned array are not "receipt_receiver" but "Participant"
 */
 include_once(__DIR__.'/../get_db.php');
 
@@ -32,17 +32,22 @@ function get_free_receipt_receivers($account_id_arg)
 	$my_receipts = get_receipts($account_id);
 	$my_participants = get_participants($account_id);
 		
-	$reply = array();
-	foreach($my_participants as $participant)
+	$reply = array(array(array()));
+	foreach($my_receipts as $receipt)
 	{
-		foreach($my_receipts as $receipt)
+		$my_articles = get_articles_by_receipt_id($account_id, $receipt['id']);
+		foreach ($my_articles as $article)
 		{
-			$is_in_this_receipt = is_this_receiver_in_article($account_id, $receipt['id'], $participant['id']);
-			if(!$is_in_this_receipt)
+			foreach($my_participants as $participant)
 			{
-				$reply[$receipt['id']][$participant['id']] = $participant;
-			}
+					$is_in_this_receipt = is_this_receiver_in_article($account_id, $receipt['id'], $article['id'], $participant['id']);
+					if(!$is_in_this_receipt)
+					{
+						$reply[$receipt['id']][$article['id']][$participant['id']] = $participant;
+					}
+				}
 		}
 	}
+	
 	return $reply;
 }

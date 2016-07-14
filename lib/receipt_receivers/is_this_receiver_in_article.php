@@ -14,7 +14,7 @@ receipt_payers contain a row with these three parameter.
  */
 include_once(__DIR__.'/../get_db.php');
 
-include_once(LIBPATH.'/receipt_payers/get_receipt_payers_by_receipt_id.php');
+include_once(LIBPATH.'/receipt_payers/get_receipt_receivers_by_article_id.php');
 
 /*
 Return true if the participant is assigned to the receipt
@@ -28,7 +28,7 @@ function is_this_receiver_in_article($account_id_arg, $receipt_id_arg, $article_
 	$article_id = (int)$article_id_arg;
 	$participant_id = (int)$participant_id_arg;
 	
-	$receipt_payers = get_receipt_payers_by_article_id($account_id, $receipt_id, $article_id);
+	$receipt_payers = get_receipt_receivers_by_article_id($account_id, $receipt_id, $article_id);
 	
 	foreach($receipt_payers as $receipt_payer)
 	{
