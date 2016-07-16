@@ -14,7 +14,7 @@ receipt_payers contain a row with these three parameter.
  */
 include_once(__DIR__.'/../get_db.php');
 
-include_once(LIBPATH.'/receipt_payers/get_receipt_receivers_by_article_id.php');
+include_once(LIBPATH.'/receipt_receivers/get_receipt_receivers_by_article_id.php');
 
 /*
 Return true if the participant is assigned to the receipt

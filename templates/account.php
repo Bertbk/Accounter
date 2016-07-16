@@ -33,7 +33,9 @@ Template of a particular account page, that is :
 <link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/spinner.css'?>" media="all">
 
 <!-- Selectpicker: Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css">
+<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css">-->
+<link rel="stylesheet" href="<?php echo BASEURL.'/bootstrap/css/bootstrap-select.min.css'?>">
+
 <link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/global.css'?>">
 <link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/participant.css'?>">
 <link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/bill.css'?>">
@@ -58,7 +60,8 @@ Template of a particular account page, that is :
 <!--<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>-->
 <script src="<?php echo BASEURL.'/bootstrap/js/bootstrap.min.js'?>"></script>
 <!-- Selectpicker:  Latest compiled and minified JavaScript -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>-->
+<script src="<?php echo BASEURL.'/bootstrap/js/bootstrap-select.min.js'?>"></script>
 
 
 <script type="text/javascript" src="<?php echo BASEURL.'/js/jquery_accounter.jquery'?>"></script>

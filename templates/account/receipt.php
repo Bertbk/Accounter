@@ -433,9 +433,11 @@ if($admin_mode && !$edit_mode)
 						</div>
 				<?php if($admin_mode && !$edit_mode){?>
 						<div class="hidden-xs hidden-sm col-xs-1">
+							<strong>Assign receivers</strong>
+						</div>
+						<div class="hidden-xs hidden-sm col-xs-1">
 							<strong>Edit</strong>
 						</div>
-				<?php }if($admin_mode && !$edit_mode){?>
 						<div class="hidden-xs hidden-sm col-xs-1">
 							<strong>Delete</strong>
 						</div>
