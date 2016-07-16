@@ -35,7 +35,7 @@ function get_receipt_receiver_by_hashid($account_id_arg, $receipt_receiver_hashi
 	}
 	catch (Exception $e)
 	{
-		return echo 'Fail to connect: ' . $e->getMessage();
+		return 'Fail to connect: ' . $e->getMessage();
 	}
 	$reply = $prepare_query->fetchAll();
 	$prepare_query->closeCursor();

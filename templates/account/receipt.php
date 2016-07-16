@@ -504,15 +504,40 @@ foreach($these_articles as $article)
 					{
 					?>
 						<div class="col-xs-12 col-sm-6 col-lg-4 receipt_receiver">
-							<div class="floatleft width60 padding_receipt_receiver display_receipt_receiver" style="background-color:<?php echo '#'.$recipient['color']?>">
+							<div class="floatleft width60 padding_receipt_payer display_receipt_payer" style="background-color:<?php echo '#'.$recipient['color']?>">
 								<?php
 									echo htmlspecialchars($recipient['name']).' ('.(float)$recipient['quantity'].')';
 								?>
 							</div>
+							<?php
+								if($admin_mode === true
+								&& $edit_mode === false){
+									$link_tmp = $link_to_account_admin.'/edit/receipt_receiver/'.$recipient['hashid'].'#edit_tag_'.$recipient['hashid'];
+									?>
+							<div class="zeromargin floatleft">
+										<form action="<?php echo $link_tmp?>">
+											<button type="submit" value="" class="btn btn-default" title="Edit recipient">
+													<span class="glyphicon glyphicon-pencil"></span>
+											</button>
+										</form>
+							</div>
+							<div class="receipt_payer_button">
+								<form method="post" 
+								class="deleteicon"
+								action="<?php echo ACTIONPATH.'/delete_receipt_receiver.php'?>">		
+									<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
+									<input type="hidden" name="p_hashid_receipt_receiver" value="<?php echo $recipient['hashid']?>">
+									<input type="hidden" name="p_anchor" value="<?php echo '#receipt-'.$cpt_bill?>">
+									<button type="submit" class="btn btn-default confirmation" 
+										name="submit_delete_receipt_receiver" title="Delete recipient">
+										<span class="glyphicon glyphicon-trash"></span>
+									</button>
+								</form>
+							</div>
+					<?php	} ?>
 						</div>
-<?php } ?>
+				<?php	} ?>
 					</div>
-
 <?php
 //Add a receipients
 if($admin_mode && !$edit_mode)
