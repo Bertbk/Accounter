@@ -173,6 +173,7 @@ $my_receipt_payers = get_receipt_payers($my_account_id); // Payers per receipts
 $my_articles_per_receipt = get_articles($my_account_id); // Articles per receipts
 $my_free_receipt_payers = get_free_receipt_payers($my_account_id); // Possible payer for each receipt
 $my_free_article_receivers = get_free_receipt_receivers($my_account_id); // Possible receipt_receiver for each article of each receipt
+$my_receipt_receivers = get_receipt_receivers($my_account_id);
 //Number of receipts
 $n_receipts = count($my_receipts);
 

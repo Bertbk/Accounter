@@ -433,9 +433,6 @@ if($admin_mode && !$edit_mode)
 						</div>
 				<?php if($admin_mode && !$edit_mode){?>
 						<div class="hidden-xs hidden-sm col-xs-1">
-							<strong>Assign receivers</strong>
-						</div>
-						<div class="hidden-xs hidden-sm col-xs-1">
 							<strong>Edit</strong>
 						</div>
 						<div class="hidden-xs hidden-sm col-xs-1">
@@ -518,6 +515,21 @@ foreach($these_articles as $article)
 		<?php
 			}//end if admin + non edit 
 			?>
+					</div>
+					<div class="row">
+					<?php 
+					$this_receipt_receivers = $my_receipt_receivers[$receipt['id']][$article['id']];
+					foreach($this_receipt_receivers as $recipient)
+					{
+					?>
+						<div class="col-xs-12 col-sm-6 col-lg-4 bill_participant">
+							<div class="floatleft width60 padding_bill_participant display_bill_participant" style="background-color:<?php echo '#'.$recipient['color']?>">
+								<?php
+									echo htmlspecialchars($recipient['name']).' ('.(float)$recipient['quantity'].')';
+								?>
+							</div>
+						</div>
+<?php } ?>
 					</div>
 <?php	}//foreach current article 
 

@@ -9,7 +9,7 @@
  */
  
 /*
-Return an array of the receipt_receivers of the account, sorted by receipts
+Return an array of the receipt_receivers of the account, sorted by receipts and article
 */
 include_once(__DIR__.'/../get_db.php');
 
