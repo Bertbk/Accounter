@@ -21,7 +21,7 @@ include_once(__DIR__.'/../get_db.php');
 
 include_once(LIBPATH.'/receipts/get_receipts.php');
 include_once(LIBPATH.'/participants/get_participants.php');
-include_once(LIBPATH.'/receipt_receivers/is_this_receiver_in_article.php');
+include_once(LIBPATH.'/receipt_receivers/get_receipt_receiver_by_participant_id.php');
 
 function get_free_receipt_receivers($account_id_arg)
 {
@@ -32,20 +32,32 @@ function get_free_receipt_receivers($account_id_arg)
 	$my_receipts = get_receipts($account_id);
 	$my_participants = get_participants($account_id);
 		
-	$reply = array(array(array()));
+	$reply = array(array());
+	
 	foreach($my_receipts as $receipt)
 	{
 		$my_articles = get_articles_by_receipt_id($account_id, $receipt['id']);
 		foreach ($my_articles as $article)
 		{
-			foreach($my_participants as $participant)
+			$reply[$receipt['id']][$article['id']] = array();
+			$max_quantity = $article['quantity'];
+			$current_quantity = 0;
+			$recipients = get_receipt_receivers_by_article_id($account_id, $receipt['id'], $article['id']);
+			foreach ($recipients as $recip)
 			{
-					$is_in_this_receipt = is_this_receiver_in_article($account_id, $receipt['id'], $article['id'], $participant['id']);
-					if(!$is_in_this_receipt)
+				$current_quantity += $recip['quantity'];
+			}
+			if($current_quantity < $max_quantity)
+			{
+				foreach($my_participants as $participant)
+				{
+					$registered_particip = get_receipt_receiver_by_participant_id($account_id, $receipt['id'], $article['id'], $participant['id']);
+					if(empty($registered_particip))
 					{
 						$reply[$receipt['id']][$article['id']][$participant['id']] = $participant;
 					}
 				}
+			}
 		}
 	}
 	
