@@ -366,7 +366,7 @@ if($admin_mode && !$edit_mode)
 										<div>
 											<input type="checkbox" name="" 
 												id="<?php echo'form_select_all_participation_'.$cpt_bill?>"
-												onchange="SelectAllParticipation(this, '<?php echo $cpt_bill?>')">
+												onchange="SelectAllParticipation(this, '<?php echo "assign_participant_".$cpt_bill."_"?>')">
 											<div class="[ btn-group ] fullwidth" style="overflow:hidden">
 												<label for="<?php echo 'form_select_all_participation_'.$cpt_bill?>"
 													class="[ btn btn-default ] btn-assign_bill_participant">
@@ -385,7 +385,9 @@ if($admin_mode && !$edit_mode)
 									<div class="col-xs-12 col-md-6 col-lg-5 ">
 										<div class="input-group">
 											<span class="input-group-addon btn btn-default"
-											onclick="SetAllPercent('<?php echo 'form_set_all_percent_'.$cpt_bill?>', '<?php echo $cpt_bill?>')">Set to all</span>
+											onclick="SetAllValue('<?php echo 'form_set_all_percent_'.$cpt_bill?>', '<?php echo "form_available_percent_".$cpt_bill."_"?>')">
+												Set to all
+											</span>
 											<input name="" type="number"
 												class="form-control"
 												step="0.01" min="0" max="100"	value="100" 

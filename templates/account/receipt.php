@@ -326,15 +326,15 @@ if($admin_mode && !$edit_mode)
 										<div>
 											<input type="checkbox" name="p_participant['<?php echo $cpt?>'][p_hashid_participant]" 
 												value="<?php echo $participant['hashid']?>" title="Participant"
-												id="<?php echo'assign_participant_'.$cpt_bill.'_'.$cpt?>" >
+												id="<?php echo'assign_recipient_'.$cpt_bill.'_'.$cpt?>" >
 											<div class="[ btn-group ] fullwidth" style="overflow:hidden">
-												<label for="<?php echo 'assign_participant_'.$cpt_bill.'_'.$cpt?>"
+												<label for="<?php echo 'assign_recipient_'.$cpt_bill.'_'.$cpt?>"
 													class="[ btn btn-default ] btn-assign_receipt_payer">
 													<span class="[ glyphicon glyphicon-ok ]"></span>
 													<span> </span>
 												</label>
 												<span class="span-assign_receipt_payer" >
-													<label for="<?php echo 'assign_participant_'.$cpt_bill.'_'.$cpt?>" 
+													<label for="<?php echo 'assign_recipient_'.$cpt_bill.'_'.$cpt?>" 
 														class="[ btn btn-default active ] btn-assign_receipt_payer2"
 														style="background-color:<?php echo '#'.$participant['color']?>">
 															<?php echo htmlspecialchars($participant['name'])?>
@@ -543,15 +543,16 @@ if($admin_mode && !$edit_mode)
 					<form method="post"	enctype="multipart/form-data"
 						action="<?php echo ACTIONPATH.'/new_receipt_receiver.php'?>">
 						<fieldset>
-							<legend id="<?php echo 'show_hide_receiptl_add_recipient_'.$cpt_bill?>"
+							<legend id="<?php echo 'show_hide_receiptl_add_recipient_'.$cpt_bill.'_'.$cpt_article?>"
 								class="cursorpointer">
 								(+) Add a recipient
 							</legend>
 							<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
-							<input type="hidden" name="p_hashid_bill" value="<?php echo $bill['hashid']?>">
+							<input type="hidden" name="p_hashid_receipt" value="<?php echo $receipt['hashid']?>">
+							<input type="hidden" name="p_hashid_article" value="<?php echo $article['hashid']?>">
 							<input type="hidden" name="p_anchor" value="<?php echo '#bill-'.$cpt_bill?>">
 							<div class="hidden_at_first"
-							id=<?php echo 'show_hide_receiptl_add_recipient_'.$cpt_bill.'_target'?>>
+							id=<?php echo 'show_hide_receiptl_add_recipient_'.$cpt_bill.'_'.$cpt_article.'_target'?>>
 
 <?php
 			$cpt = -1;
@@ -564,15 +565,15 @@ if($admin_mode && !$edit_mode)
 										<div>
 											<input type="checkbox" name="p_participant['<?php echo $cpt?>'][p_hashid_participant]" 
 												value="<?php echo $participant['hashid']?>" title="Participant"
-												id="<?php echo'assign_participant_'.$cpt_bill.'_'.$cpt?>" >
+												id="<?php echo 'assign_recipient_'.$cpt_bill.'_'.$cpt_article.'_'.$cpt?>" >
 											<div class="[ btn-group ] fullwidth" style="overflow:hidden">
-												<label for="<?php echo 'assign_participant_'.$cpt_bill.'_'.$cpt?>"
+												<label for="<?php echo 'assign_recipient_'.$cpt_bill.'_'.$cpt_article.'_'.$cpt?>"
 													class="[ btn btn-default ] btn-assign_receipt_receiver">
 													<span class="[ glyphicon glyphicon-ok ]"></span>
 													<span> </span>
 												</label>
 												<span class="span-assign_receipt_receiver" >
-													<label for="<?php echo 'assign_participant_'.$cpt_bill.'_'.$cpt?>" 
+													<label for="<?php echo 'assign_recipient_'.$cpt_bill.'_'.$cpt_article.'_'.$cpt?>" 
 														class="[ btn btn-default active ] btn-assign_receipt_receiver2"
 														style="background-color:<?php echo '#'.$participant['color']?>">
 															<?php echo htmlspecialchars($participant['name'])?>
@@ -582,16 +583,16 @@ if($admin_mode && !$edit_mode)
 										</div>
 									</div>
 									<div class="col-xs-12 col-md-6 col-lg-4">
-										<label for="<?php echo 'form_available_quantity_'.$cpt_bill.'_'.$participant['id']?>" 
+										<label for="<?php echo 'form_available_quantity_'.$cpt_bill.'_'.$cpt_article.'_'.$participant['id']?>" 
 											class="sr-only">
 											Quantity
 										</label>
 										<div class="input-group">
 											<input name="p_participant['<?php echo $cpt?>'][p_quantity]" type="number"
-														class="form-control" step="0.01" min="0" max="100"	value="100" 
-														id="<?php echo 'form_available_quantity_'.$cpt_bill.'_'.$participant['id']?>"
+														class="form-control" min="0" value="1" 
+														id="<?php echo 'form_available_quantity_'.$cpt_bill.'_'.$cpt_article.'_'.$participant['id']?>"
 														title="Quantity">
-											<span class="input-group-addon">%</span>
+											<span class="input-group-addon glyphicon glyphicon-scale"></span>
 										</div>
 									</div>
 								</div>
@@ -602,16 +603,16 @@ if($admin_mode && !$edit_mode)
 									<div class="col-xs-6 col-md-4 col-lg-3 ">
 										<div>
 											<input type="checkbox" name="" 
-												id="<?php echo'form_select_all_participation_'.$cpt_bill?>"
-												onchange="SelectAllParticipation(this, '<?php echo $cpt_bill?>')">
+												id="<?php echo'form_select_all_participation_'.$cpt_bill.'_'.$cpt_article?>"
+												onchange="SelectAllParticipation(this, '<?php echo 'assign_recipient_'.$cpt_bill.'_'.$cpt_article.'_' ?>')">
 											<div class="[ btn-group ] fullwidth" style="overflow:hidden">
-												<label for="<?php echo 'form_select_all_participation_'.$cpt_bill?>"
+												<label for="<?php echo 'form_select_all_participation_'.$cpt_bill.'_'.$cpt_article?>"
 													class="[ btn btn-default ] btn-assign_receipt_receiver">
 													<span class="[ glyphicon glyphicon-ok ]"></span>
 													<span> </span>
 												</label>
 												<span class="span-assign_receipt_receiver" >
-													<label for="<?php echo 'form_select_all_participation_'.$cpt_bill?>" 
+													<label for="<?php echo 'form_select_all_participation_'.$cpt_bill.'_'.$cpt_article?>" 
 														class="[ btn btn-default active ] btn-select_all_participation">
 															Select all
 													</label>
@@ -622,13 +623,13 @@ if($admin_mode && !$edit_mode)
 									<div class="col-xs-12 col-md-6 col-lg-5 ">
 										<div class="input-group">
 											<span class="input-group-addon btn btn-default"
-											onclick="SetAllPercent('<?php echo 'form_set_all_percent_'.$cpt_bill?>', '<?php echo $cpt_bill?>')">Set to all</span>
+											onclick="SetAllValue('<?php echo 'form_set_all_quantity_'.$cpt_bill.'_'.$cpt_article.'_'.$cpt?>', '<?php echo 'form_available_quantity_'.$cpt_bill.'_'.$cpt_article.'_'?>')">Set to all</span>
 											<input name="" type="number"
 												class="form-control"
 												step="0.01" min="0" max="100"	value="100" 
 												title="Percentage of usage"
-												id="<?php echo 'form_set_all_percent_'.$cpt_bill?>">
-											<span class="input-group-addon">%</span>
+												id="<?php echo 'form_set_all_quantity_'.$cpt_bill.'_'.$cpt_article.'_'.$cpt?>">
+											<span class="input-group-addon glyphicon glyphicon-scale"></span>
 										</div>
 									</div>
 								</div>

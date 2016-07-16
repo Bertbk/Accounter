@@ -379,9 +379,10 @@ function DisableEnableElement(trigger, target) {
 
 
 // Select all or unselect every participation for a bill.
-function SelectAllParticipation(button_select, cpt_bill)
+// Check/Uncheck every input box with id starting with $id_of_checkbox
+function SelectAllParticipation(button_select, id_of_checkbox)
 {
-	var id_of_checkbox = "assign_participant_" + cpt_bill + "_";
+//	var  = "assign_participant_" + cpt_bill + "_";
 	var inputs = document.getElementsByTagName("input");
 	for(var i = 0; i < inputs.length; i++) {
 		if(inputs[i].id.indexOf(id_of_checkbox) == 0) {
@@ -391,14 +392,15 @@ function SelectAllParticipation(button_select, cpt_bill)
 }
 
 // Set the percent of participation.
-function SetAllPercent(percent_selected_id, cpt_bill)
+// Set the input box with id starting with $id_of_input to the value of the element of id $ref_id
+function SetAllValue(ref_id, id_of_input)
 {
-	var percent_selected = document.getElementById(percent_selected_id);
-	var id_of_percent = "form_available_percent_" + cpt_bill + "_";
+	var ref_selected = document.getElementById(ref_id);
+//	var id_of_percent = "form_available_percent_" + cpt_bill + "_";
 	var inputs = document.getElementsByTagName("input");
 	for(var i = 0; i < inputs.length; i++) {
-		if(inputs[i].id.indexOf(id_of_percent) == 0) {
-				inputs[i].value = percent_selected.value;
+		if(inputs[i].id.indexOf(id_of_input) == 0) {
+				inputs[i].value = ref_selected.value;
 		}
 	}
 }
