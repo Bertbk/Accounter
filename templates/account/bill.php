@@ -190,7 +190,7 @@ if($admin_mode
 	}?>
 
 	<?php // PARTICIPANTS ?>
-					<h3 id="<?php echo 'bill_participants_'.$cpt_bill?>">Participants</h3>
+					<h3 id="<?php echo 'bill_participants_'.$cpt_bill?>">Participants (benefiary %)</h3>
 	<?php // Display the current participant of this bill
 	if(!empty($this_bill_participants))
 	{

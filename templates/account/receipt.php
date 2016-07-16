@@ -543,16 +543,16 @@ if($admin_mode && !$edit_mode)
 					<form method="post"	enctype="multipart/form-data"
 						action="<?php echo ACTIONPATH.'/new_receipt_receiver.php'?>">
 						<fieldset>
-							<legend id="<?php echo 'show_hide_receiptl_add_recipient_'.$cpt_bill.'_'.$cpt_article?>"
+							<legend id="<?php echo 'show_hide_receipt_add_recipient_'.$cpt_bill.'_'.$cpt_article?>"
 								class="cursorpointer">
 								(+) Add a recipient
 							</legend>
 							<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
 							<input type="hidden" name="p_hashid_receipt" value="<?php echo $receipt['hashid']?>">
 							<input type="hidden" name="p_hashid_article" value="<?php echo $article['hashid']?>">
-							<input type="hidden" name="p_anchor" value="<?php echo '#bill-'.$cpt_bill?>">
+							<input type="hidden" name="p_anchor" value="<?php echo '#receipt-'.$cpt_bill?>">
 							<div class="hidden_at_first"
-							id=<?php echo 'show_hide_receiptl_add_recipient_'.$cpt_bill.'_'.$cpt_article.'_target'?>>
+							id=<?php echo 'show_hide_receipt_add_recipient_'.$cpt_bill.'_'.$cpt_article.'_target'?>>
 
 <?php
 			$cpt = -1;
@@ -563,7 +563,7 @@ if($admin_mode && !$edit_mode)
 								<div class="row form-group assign_receipt_receiver">
 									<div class="col-xs-12 col-md-6 col-lg-4 ">
 										<div>
-											<input type="checkbox" name="p_participant['<?php echo $cpt?>'][p_hashid_participant]" 
+											<input type="checkbox" name="p_receiver['<?php echo $cpt?>'][p_hashid_participant]" 
 												value="<?php echo $participant['hashid']?>" title="Participant"
 												id="<?php echo 'assign_recipient_'.$cpt_bill.'_'.$cpt_article.'_'.$cpt?>" >
 											<div class="[ btn-group ] fullwidth" style="overflow:hidden">
@@ -588,7 +588,7 @@ if($admin_mode && !$edit_mode)
 											Quantity
 										</label>
 										<div class="input-group">
-											<input name="p_participant['<?php echo $cpt?>'][p_quantity]" type="number"
+											<input name="p_receiver['<?php echo $cpt?>'][p_quantity]" type="number"
 														class="form-control" min="0" value="1" 
 														id="<?php echo 'form_available_quantity_'.$cpt_bill.'_'.$cpt_article.'_'.$participant['id']?>"
 														title="Quantity">
@@ -626,8 +626,8 @@ if($admin_mode && !$edit_mode)
 											onclick="SetAllValue('<?php echo 'form_set_all_quantity_'.$cpt_bill.'_'.$cpt_article.'_'.$cpt?>', '<?php echo 'form_available_quantity_'.$cpt_bill.'_'.$cpt_article.'_'?>')">Set to all</span>
 											<input name="" type="number"
 												class="form-control"
-												step="0.01" min="0" max="100"	value="100" 
-												title="Percentage of usage"
+												min="0" value="1" 
+												title="Quantity"
 												id="<?php echo 'form_set_all_quantity_'.$cpt_bill.'_'.$cpt_article.'_'.$cpt?>">
 											<span class="input-group-addon glyphicon glyphicon-scale"></span>
 										</div>
@@ -636,7 +636,7 @@ if($admin_mode && !$edit_mode)
 								<div class="row form-group">
 									<div class="col-xs-12">
 										<button type="submit" name="submit_new_receipt_receiver" 
-											value="Submit" class="btn btn-primary" title="Submit new participation">
+											value="Submit" class="btn btn-primary" title="Submit new recipient">
 											Submit
 										</button>
 									</div>
