@@ -19,6 +19,7 @@ Template to display all the receipts with their participants and articles
 {
 foreach($my_receipts as $receipt)
 {
+	if(!isset($cpt_bill)){$cpt_bill = -1;}
 	$cpt_bill ++;
 	$this_receipt_payers = array();
 	$this_free_receipt_payers = array();

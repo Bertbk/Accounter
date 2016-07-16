@@ -15,6 +15,7 @@
  */
 
  include_once(__DIR__.'/compute_bill_solutions.php');
+ include_once(__DIR__.'/compute_receipt_solutions.php');
 
 function compute_solution($account_id_arg)
 {	
@@ -22,23 +23,21 @@ function compute_solution($account_id_arg)
 	$Refunds = array(array()); //who must give money to who ?
 
 	$bill_solutions = compute_bill_solutions($account_id);
-	if(empty($bill_solutions)){return $Refunds;}
+	$receipt_solutions = compute_receipt_solutions($account_id);
+	if(empty($bill_solutions) && empty($receipt_solutions)){return $Refunds;}
 
 	$my_participants = get_participants($account_id);
 	if(empty($my_participants)){return $Refunds;}
 	
 	//Init debt to zero
-	foreach ($bill_solutions as $bill_sol)
+	foreach($my_participants as $contrib)
 	{
-		foreach($my_participants as $contrib)
+		$uid = $contrib['id'];
+		foreach($my_participants as $other)
 		{
-			$uid = $contrib['id'];
-			foreach($my_participants as $other)
-			{
-				$vid = $other['id'];
-				if($uid == $vid){continue;}
-				$Refunds[$uid][$vid] = 0;
-			}
+			$vid = $other['id'];
+			if($uid == $vid){continue;}
+			$Refunds[$uid][$vid] = 0;
 		}
 	}
 	
@@ -56,6 +55,22 @@ function compute_solution($account_id_arg)
 				if($uid == $vid){continue;}
 				if(!isset($bill_sol[$uid][$vid])){continue;}
 				$Refunds[$uid][$vid] += $bill_sol[$uid][$vid];
+			}
+		}
+	}
+	foreach ($receipt_solutions as $key => $receipt_sol)
+	{
+		if($key < 1){continue;}
+		foreach($my_participants as $contrib)
+		{
+			$uid = $contrib['id'];
+			if(!isset($receipt_sol[$uid])){continue;}
+			foreach($my_participants as $other)
+			{
+				$vid = $other['id'];
+				if($uid == $vid){continue;}
+				if(!isset($receipt_sol[$uid][$vid])){continue;}
+				$Refunds[$uid][$vid] += $receipt_sol[$uid][$vid];
 			}
 		}
 	}
