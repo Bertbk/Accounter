@@ -20,10 +20,11 @@ include_once(LIBPATH.'/accounts/get_account_admin.php');
 include_once(LIBPATH.'/participants/get_participant_by_hashid.php');
 include_once(LIBPATH.'/participants/get_participant_by_id.php');
 
-include_once(LIBPATH.'/receipts/get_receipt_by_id.php');
+include_once(LIBPATH.'/receipts/get_receipt_by_hashid.php');
+
+include_once(LIBPATH.'/articles/get_article_by_hashid.php');
 
 include_once(LIBPATH.'/receipt_receivers/get_receipt_receiver_by_hashid.php');
-include_once(LIBPATH.'/receipt_receivers/get_receipt_receivers_by_receipt_id.php');
 include_once(LIBPATH.'/receipt_receivers/update_receipt_receiver.php');
 
 include_once(LIBPATH.'/hashid/validate_hashid.php');
@@ -39,12 +40,16 @@ $redirect_link ="" ;
 
 $ErrorEmptyMessage = array(
 		'p_hashid_account' => 'Please provide an acount',
+		'p_hashid_receipt' => 'Please provide a receipt',
+		'p_hashid_article' => 'Please provide an article',
 		'p_hashid_receipt_receiver' => 'Please provide a receiver',
 		'p_quantity' => 'Please provide a percentage'
    );
 	 
 $ErrorMessage = array(
 	'p_hashid_account' => 'Account is not valid',
+	'p_hashid_receipt' => 'Receipt is not valid',
+	'p_hashid_article' => 'Article is not valid',
 	'p_hashid_receipt_receiver' => 'Receiver is not valid',
 	'p_quantity' => 'Quantity is not valid',
 	'p_anchor' => 'Anchor not valid'
@@ -93,6 +98,72 @@ else{
 
 if(isset($_POST['submit_update_receipt_receiver']))
 {
+		// receipt
+	$key = 'p_hashid_receipt';
+	if(empty($_POST[$key])) { //If empty
+		array_push($errArray, $ErrorEmptyMessage[$key]);
+	}
+	else{
+		if(validate_hashid($_POST[$key])== false)
+		{
+			array_push($errArray, $ErrorMessage[$key]);
+		}
+		else{
+			$hashid_receipt = $_POST[$key];
+			}
+	}
+	//Get the receipt
+	if(empty($errArray))
+	{		
+		$receipt = get_receipt_by_hashid($account['id'], $hashid_receipt);
+		if(empty($receipt))
+		{	array_push($errArray, $ErrorMessage[$key]); }
+	}
+	
+	//Check if the accounts match between receipt and account
+	if(empty($errArray))
+	{
+		if($receipt['account_id'] !== $account['id'])
+		{
+			array_push($errArray, 'This receipt does not belong to this account.');
+		}
+	}
+	
+	// CURRENT article
+	$key = 'p_hashid_article';
+	if(empty($_POST[$key])) { //If empty
+		array_push($errArray, $ErrorEmptyMessage[$key]);
+	}
+	else{
+		if(validate_hashid($_POST[$key])== false)
+		{
+			array_push($errArray, $ErrorMessage[$key]);
+		}
+		else{
+			$hashid_article = $_POST[$key];
+			}
+	}
+	//Get the article
+	if(empty($errArray))
+	{		
+		$article = get_article_by_hashid($account['id'], $hashid_article);
+		if(empty($article))
+		{	array_push($errArray, $ErrorMessage[$key]); }
+	}
+	
+	//Check if the accounts match between article and account
+	if(empty($errArray))
+	{
+		if($article['account_id'] !== $account['id'])
+		{
+			array_push($errArray, 'This article does not belong to this account.');
+		}
+		if($article['receipt_id'] !== $receipt['id'])
+		{
+			array_push($errArray, 'This article does not belong to this receipt.');
+		}
+	}
+	
 	// receipt_receiver
 	$key = 'p_hashid_receipt_receiver';
 	if(empty($_POST[$key])) { //If empty
@@ -120,7 +191,15 @@ if(isset($_POST['submit_update_receipt_receiver']))
 	{
 		if($receipt_receiver['account_id'] !== $account['id'])
 		{
-			array_push($errArray, 'This participation does not belong to this account.');
+			array_push($errArray, 'This recipient does not belong to this account.');
+		}
+		if($receipt_receiver['receipt_id'] !== $receipt['id'])
+		{
+			array_push($errArray, 'This recipient does not belong to this receipt.');
+		}
+		if($receipt_receiver['article_id'] !== $article['id'])
+		{
+			array_push($errArray, 'This recipient does not belong to this article.');
 		}
 	}
 			

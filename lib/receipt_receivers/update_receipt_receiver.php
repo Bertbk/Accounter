@@ -15,7 +15,6 @@ return error message or false otherwise
  */
  
 include_once(__DIR__.'/../get_db.php');
-include_once(LIBPATH.'/receipt_receivers/get_receipt_receivers_by_receipt_id.php');
 include_once(LIBPATH.'/receipt_receivers/get_receipt_receiver_by_id.php');
 
 

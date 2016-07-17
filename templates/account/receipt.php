@@ -448,12 +448,12 @@ $article_to_edit = false; // if editing, place the article after the other
 foreach($these_articles as $article)
 {
 	$cpt_article++;
-		if($admin_mode && $edit_mode === 'article' 
-		&& $article['hashid'] === $edit_hashid)
-		{ 
-			$article_to_edit = $article;
-			continue;
-		}
+	if($admin_mode && $edit_mode === 'article' 
+	&& $article['hashid'] === $edit_hashid)
+	{ 
+		$article_to_edit = $article;
+		continue;
+	}
 ?>
 					<div class="row text-center">
 						<div class="col-xs-4 col-md-2">
@@ -501,8 +501,16 @@ foreach($these_articles as $article)
 					<div class="row">
 					<?php 
 					$this_receipt_receivers = $my_receipt_receivers[$receipt['id']][$article['id']];
+					$receipt_receiver_to_edit = false;
 					foreach($this_receipt_receivers as $recipient)
 					{
+						if($admin_mode && $edit_mode === 'receipt_receiver'
+							&& $recipient['hashid'] === $edit_hashid)
+						{ 
+							$receipt_receiver_to_edit = $recipient;
+							continue;
+						}
+
 					?>
 						<div class="col-xs-12 col-sm-6 col-lg-4 receipt_receiver">
 							<div class="floatleft width60 padding_receipt_payer display_receipt_payer" style="background-color:<?php echo '#'.$recipient['color']?>">
@@ -539,6 +547,54 @@ foreach($these_articles as $article)
 						</div>
 				<?php	} ?>
 					</div>
+					
+					<?php
+//Display recipient to edit (if exists)
+if($receipt_receiver_to_edit !== false)
+{
+?>
+					<div class="highlight" id="<?php echo 'edit_tag_'.$edit_hashid?>"
+						style="background-color: rgba(<?php echo $cred.','.$cgreen.','.$cblue?>, 0.5);">
+						<h3>Edit recipient <?php echo htmlspecialchars($receipt_receiver_to_edit['name']);?></h3>
+						<form method="post" id="form_edit_recipient_send"
+							action="<?php echo ACTIONPATH.'/update_receipt_receiver.php'?>">
+							<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
+							<input type="hidden" name="p_hashid_receipt" value="<?php echo $receipt['hashid']?>">
+							<input type="hidden" name="p_hashid_article" value="<?php echo $article['hashid']?>">
+							<input type="hidden" name="p_hashid_receipt_receiver" value="<?php echo $receipt_receiver_to_edit['hashid']?>">
+							<input type="hidden" name="p_anchor" value="<?php echo '#receipt-'.$cpt_bill?>">
+							<div class="row form-group row-no-padding">
+								<div class="col-xs-6 col-sm-5 col-md-4">
+									<div class="fullwidth padding_receipt_payer display_receipt_payer" style="background-color:<?php echo '#'.$receipt_receiver_to_edit['color']?>">
+										<?php echo htmlspecialchars($receipt_receiver_to_edit['name']);?>
+									</div>
+								</div>
+								<div class="col-xs-6 col-sm-5 col-md-4">
+									<div class="input-group">
+										<input type="number" min="0" name="p_quantity"
+											class="form-control" value="<?php echo (float)$receipt_receiver_to_edit['quantity']?>" required>
+										<span class="input-group-addon glyphicon glyphicon-scale"></span>
+									</div>
+								</div>
+							</div>
+							<button type="submit" name="submit_update_receipt_receiver" 
+								value="Submit" class="btn btn-primary" title="Submit changes">
+								Submit changes
+							</button> 
+							<button type="submit" name="submit_cancel" value="<?php echo '#receipt-'.$cpt_bill?>" 
+								form="form_cancel" class="btn btn-primary" title="Cancel">
+							 Cancel
+							</button>
+						</form>
+					</div>
+	<?php
+$receipt_receiver_to_edit= false;
+} //edit this recipient
+?>
+
+
+					
+					
 <?php
 //Add a receipients
 if($admin_mode && !$edit_mode)
@@ -562,10 +618,10 @@ if($admin_mode && !$edit_mode)
 							id=<?php echo 'show_hide_receipt_add_recipient_'.$cpt_bill.'_'.$cpt_article.'_target'?>>
 
 <?php
-			$cpt = -1;
-			foreach($this_free_receivers as $participant)
-			{
-				$cpt++;
+						$cpt = -1;
+						foreach($this_free_receivers as $participant)
+						{
+							$cpt++;
 		?>
 								<div class="row form-group assign_receipt_receiver">
 									<div class="col-xs-12 col-md-6 col-lg-4 ">
@@ -604,7 +660,7 @@ if($admin_mode && !$edit_mode)
 									</div>
 								</div>
 		<?php
-				}//for each participant
+						}//for each participant
 		?>
 								<div class="row form-group assign_receipt_receiver">
 									<div class="col-xs-6 col-md-4 col-lg-3 ">
