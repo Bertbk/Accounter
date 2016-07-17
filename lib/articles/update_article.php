@@ -11,12 +11,9 @@
 /*
 Updates a article providing its hashid and the associated account id.
 A participant is here a row in the articless SQL table 
-
-Warning: a article points to a receipt_participant, not to a participant.
 */
 include_once(__DIR__.'/../get_db.php');
 include_once(LIBPATH.'/articles/get_article_by_id.php');
-include_once(LIBPATH.'/receipt_participants/get_receipt_participant_by_id.php');
 
 
 function update_article($account_id_arg, $receipt_id_arg, $article_id_arg, $price_arg, $product_arg, $quantity_arg)
@@ -33,13 +30,13 @@ function update_article($account_id_arg, $receipt_id_arg, $article_id_arg, $pric
 	//Get current article
 	$article_to_edit = get_article_by_id($account_id, $article_id);
 	
-	if(empty($article_to_edit))
-	{		return false;	}
+//	if(empty($article_to_edit))
+//	{		return false;	}
 	
 	//Check if nothing to do
-	if($new_price === $article_to_edit['price']
-	&& $new_product === $article_to_edit['product']
-	&& $new_quantity === $article_to_edit['quantity']
+	if($new_price == $article_to_edit['price']
+	&& $new_product == $article_to_edit['product']
+	&& $new_quantity == $article_to_edit['quantity']
 	)
 	{
 		return true;
@@ -53,7 +50,7 @@ function update_article($account_id_arg, $receipt_id_arg, $article_id_arg, $pric
 		WHERE id=:article_id AND account_id=:account_id AND receipt_id=:receipt_id';
 		$prepare_query = $db->prepare($myquery);
 		$prepare_query->bindValue(':new_price', $new_price, PDO::PARAM_STR);
-		$prepare_query->bindValue(':new_description', $new_product, PDO::PARAM_STR);
+		$prepare_query->bindValue(':new_product', $new_product, PDO::PARAM_STR);
 		$prepare_query->bindValue(':new_quantity', $new_quantity, PDO::PARAM_STR);
 		$prepare_query->bindValue(':article_id', $article_id, PDO::PARAM_INT);
 		$prepare_query->bindValue(':account_id', $account_id, PDO::PARAM_INT);

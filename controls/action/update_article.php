@@ -19,8 +19,6 @@ include_once(LIBPATH.'/accounts/get_account_admin.php');
 
 include_once(LIBPATH.'/receipts/get_receipt_by_hashid.php');
 
-include_once(LIBPATH.'/receipt_participants/get_receipt_participant_by_hashid.php');
-
 include_once(LIBPATH.'/articles/get_article_by_hashid.php');
 include_once(LIBPATH.'/articles/update_article.php');
 
@@ -172,20 +170,20 @@ else if(isset($_POST['submit_update_article']))
 	
 	//PRODUCT
 	$key = 'p_product';
-	 if(empty($article[$key])) { //If empty
+	 if(empty($_POST[$key])) { //If empty
 		array_push($errArray, $ErrorEmptyMessage[$key]);
 	}
 	else{
-		$product = $article[$key];
+		$product = $_POST[$key];
 	}
 	
 	// PRICE
 	$key = 'p_price';
-	if(empty($article[$key])) { //If empty
+	if(empty($_POST[$key])) { //If empty
 		array_push($errArray, $ErrorEmptyMessage[$key]);
 	}
 	else{
-		$price = (float)$article[$key];
+		$price = (float)$_POST[$key];
 		if($price <= 0)
 		{
 			array_push($errArray, $ErrorMessage[$key]);
@@ -194,11 +192,11 @@ else if(isset($_POST['submit_update_article']))
 	
 	// PRICE
 	$key = 'p_quantity';
-	if(empty($article[$key])) { //If empty
+	if(empty($_POST[$key])) { //If empty
 		array_push($errArray, $ErrorEmptyMessage[$key]);
 	}
 	else{
-		$quantity = (float)$article[$key];
+		$quantity = (float)$_POST[$key];
 		if($quantity <= 0)
 		{
 			array_push($errArray, $ErrorMessage[$key]);

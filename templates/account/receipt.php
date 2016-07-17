@@ -663,147 +663,60 @@ if($article_to_edit !== false)
 {
 ?>
 					<div class="highlight" id="<?php echo 'edit_tag_'.$edit_hashid?>"
-					style="background-color: rgba(<?php echo $cred.','.$cgreen.','.$cblue?>, 0.5);">
+						style="background-color: rgba(<?php echo $cred.','.$cgreen.','.$cblue?>, 0.5);">
 						<h3>Edit article</h3>
 						<form method="post" id="form_edit_article_send"
 							action="<?php echo ACTIONPATH.'/update_article.php'?>">
 							<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
+							<input type="hidden" name="p_hashid_receipt" value="<?php echo $receipt['hashid']?>">
 							<input type="hidden" name="p_hashid_article" value="<?php echo $article_to_edit['hashid']?>">
 							<input type="hidden" name="p_anchor" value="<?php echo '#receipt-'.$cpt_bill?>">
 							
-							<div class="row form-group">
-								<div class="col-xs-12">
-									<label for="form_edit_article_receipt_<?php echo $cpt_bill?>">
-										Move to another receipt
-									</label>
-									<div class="input-group">
-										<select name="p_hashid_receipt" id="form_edit_article_receipt_<?php echo $cpt_bill?>"
-											onchange="CreatePossiblePayersLists(this, document.getElementById('form_edit_article_payer_<?php echo $cpt_bill?>'),	
-											<?php echo htmlspecialchars(json_encode($list_of_possible_payers, 3))?>)"
-											class="form-control selectpicker"> 
-								<?php //list of receipts
-										foreach($my_receipts as $sub_receipt)
-											{
-								?>
-												<option value="<?php echo $sub_receipt['hashid']?>"
-												<?php if($sub_receipt['id']==$article_to_edit['receipt_id']){echo ' selected';}?>
-												><?php echo htmlspecialchars($sub_receipt['title'])?></option>
-								<?php
-											}
-								?>
-										</select>
-										<span class="input-group-addon glyphicon glyphicon-list"></span>
-									</div>
-								</div>
-							</div>
+							<p><em>Fields with asterisk <span class="glyphicon glyphicon-asterisk red"></span> are required</em></p>
 							<div class="row form-group">
 								<div class="col-xs-12 col-lg-4">
-									<label for="form_edit_article_payer_<?php echo $cpt_bill?>">
-										Payer
+									<label for="form_edit_article_product">
+										Product<span class="glyphicon glyphicon-asterisk red"></span>
 									</label>
 									<div class="input-group">
-										<select name="p_hashid_payer" 
-											onchange="DropDownListsBetweenParticipants(this, document.getElementById('form_edit_article_recv_<?php echo $receipt['id']?>'))"
-											id="form_edit_article_payer_<?php echo $cpt_bill?>" class="form-control selectpicker">
-								<?php
-											foreach($this_receipt_payers as $receipt_payer)
-											{
-								?>
-												<option value="<?php echo $receipt_payer['hashid']?>"
-												<?php if($receipt_payer['id']==$article_to_edit['payer_id']){echo ' selected';}?>>
-												<?php echo htmlspecialchars($receipt_payer['name'])?></option>
-								<?php
-											}
-								?>
-										</select>
-										<span class="input-group-addon glyphicon glyphicon-user"></span>
+										<input name="p_product" 
+											id="form_edit_article_product" value="<?php echo htmlspecialchars($article_to_edit['product'])?>" 
+											class="form-control" title="Product" type="text"> 
+										<span class="input-group-addon glyphicon glyphicon-tag"></span>
 									</div>
 								</div>
 								<div class="col-xs-12 col-lg-4">
-									<label for="form_edit_article_cost_<?php echo $cpt_bill?>">
-										Amount
+									<label for="form_edit_article_price">
+										Price<span class="glyphicon glyphicon-asterisk red"></span>
 									</label>
 									<div class="input-group">
-										<input type="number" step="0.01" min="0" name="p_cost" 
-											class="form-control"
-											id="form_edit_article_cost_<?php echo $cpt_bill?>"
-											value="<?php echo (float)$article_to_edit['cost']?>" required>
+										<input name="p_price" 
+											id="form_edit_article_price" value="<?php echo (float)$article_to_edit['price']?>" 
+											class="form-control" title="Product" type="number" min="0" step="0.01"> 
 										<span class="input-group-addon glyphicon glyphicon-euro"></span>
 									</div>
 								</div>
 								<div class="col-xs-12 col-lg-4">
-									<label for="form_edit_article_recv_<?php echo $cpt_bill?>">
-										Receiver
+									<label for="form_edit_article_quantity">
+										Quantity<span class="glyphicon glyphicon-asterisk red"></span>
 									</label>
 									<div class="input-group">
-										<select name="p_hashid_recv" 
-											id="form_edit_article_recv_<?php echo $cpt_bill?>"
-											class="form-control selectpicker">
-											<option value="-1" >Group</option>
-									<?php
-											foreach($this_receipt_payers as $receipt_payer)
-												{
-													if($receipt_payer['id'] == $article_to_edit['payer_id']){continue;}
-									?>
-													<option value="<?php echo $receipt_payer['hashid']?>"
-													<?php if($receipt_payer['id']==$article_to_edit['receiver_id']){echo ' selected';}?>>
-													<?php echo htmlspecialchars($receipt_payer['name'])?></option>
-									<?php
-												}
-									?>
-										</select>
-										<span class="input-group-addon glyphicon glyphicon-user"></span>
+										<input name="p_quantity" value="<?php echo (float)$article_to_edit['quantity']?>" 
+											id="form_edit_article_quantity" 
+											class="form-control" title="Product" type="number" min="0"> 
+										<span class="input-group-addon glyphicon glyphicon-scale"></span>
 									</div>
 								</div>
-							</div>
-							<div class="row form-group">
-								<div class="col-xs-12 col-lg-6">
-									<label for="form_edit_article_desc_<?php echo $receipt['id']?>">
-										Description
-									</label>
-									<div class="input-group">
-										<input type="text" name="p_description" class="form-control"
-											id="form_edit_article_desc_<?php echo $receipt['id']?>"
-											value="<?php echo htmlspecialchars($article_to_edit['description'])?>"
-											placeholder="Description">
-										<span class="input-group-addon glyphicon glyphicon-tag"></span>
-									</div>
-								</div>
-								<?php
-									$tmp_date_parsed = date_parse($article_to_edit['date_of_article']);
-									if ($tmp_date_parsed == false 
-									|| !checkdate($tmp_date_parsed['month'], $tmp_date_parsed['day'], $tmp_date_parsed['year'])) 
-									{
-										$tmp_date_parsed = null;
-									}else{
-										$tmp_date_parsed=$tmp_date_parsed['day'].'/'.$tmp_date_parsed['month'].'/'.$tmp_date_parsed['year'];
-									}
-								?>
-								<div class="col-xs-12 col-lg-6">
-									<label for="form_edit_article_date_<?php echo $receipt['id']?>">
-										Date of article (dd/mm/yyyy)
-									</label>
-									<div class="input-group">
-										<input type="text" name="p_date_of_article" 
-											class="form-control date_zindex"
-											id="form_edit_article_date_<?php echo $receipt['id']?>"
-											value="<?php echo $tmp_date_parsed?>">
-										<span class="input-group-addon glyphicon glyphicon-calendar"></span>
-									</div>
-								</div>
-								<?php $tmp_date_parsed = null;?>
-							</div>
-							<div>
-								<button type="submit" name="submit_update_article" value="Submit" 
-									class="btn btn-primary" title="Update article">
-									Submit changes
-								</button>
-								<button type="submit" name="submit_cancel" 
-									value="<?php echo '#receipt-'.$cpt_bill?>" class="btn btn-primary"
-									form="form_cancel" title="Cancel">
-									Cancel
-								</button>
-							</div>
+							</div>										
+							<button type="submit" name="submit_update_article" value="Submit" 
+								class="btn btn-primary" title="Update article">
+								Submit changes
+							</button>
+							<button type="submit" name="submit_cancel" 
+								value="<?php echo '#receipt-'.$cpt_bill?>" class="btn btn-primary"
+								form="form_cancel" title="Cancel">
+								Cancel
+							</button>
 						</form>
 					</div>
 <?php
