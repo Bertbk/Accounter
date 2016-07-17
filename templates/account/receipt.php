@@ -421,7 +421,19 @@ if($admin_mode && !$edit_mode)
 		$these_articles = $my_articles_per_receipt[$receipt['id']];
 		$cpt_article = -1;
 	?>
+	<?php
 	
+$article_to_edit = false; // if editing, place the article after the other
+foreach($these_articles as $article)
+{
+	$cpt_article++;
+	if($admin_mode && $edit_mode === 'article' 
+	&& $article['hashid'] === $edit_hashid)
+	{ 
+		$article_to_edit = $article;
+		continue;
+	}
+?>
 					<div class="row text-center">
 						<div class="col-xs-4 col-md-2">
 							<strong>Product</strong>
@@ -441,20 +453,6 @@ if($admin_mode && !$edit_mode)
 						</div>
 				<?php }?>
 					</div>
-	
-	<?php
-	
-$article_to_edit = false; // if editing, place the article after the other
-foreach($these_articles as $article)
-{
-	$cpt_article++;
-	if($admin_mode && $edit_mode === 'article' 
-	&& $article['hashid'] === $edit_hashid)
-	{ 
-		$article_to_edit = $article;
-		continue;
-	}
-?>
 					<div class="row text-center">
 						<div class="col-xs-4 col-md-2">
 							<?php echo htmlspecialchars($article['product'])?>
