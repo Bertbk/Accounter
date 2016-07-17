@@ -197,7 +197,7 @@ if($admin_mode
 ?>
 					<div class="row">		
 <?php
-	$participation_to_edit = false; // if editing, place a button after the list
+	$contributor_to_edit = false; // if editing, place a button after the list
 	$cpt_receipt_receiver = -1;
 	foreach($this_receipt_payers as $key => $receipt_payer)
 	{
@@ -207,7 +207,7 @@ if($admin_mode
 			&& $edit_hashid === $receipt_payer['hashid'])
 		{
 			//We found the receipt_payer to be edited. Will be displayed after the other.
-			$participation_to_edit = $key;
+			$contributor_to_edit = $key;
 			continue;
 		}
 		?>
@@ -250,14 +250,14 @@ if($admin_mode
 				</div> <?php //row ?>
 	<?php
 	
-	if($participation_to_edit !== false)
+	if($contributor_to_edit !== false)
 	{
-		$receipt_payer_tmp = $this_receipt_payers[$participation_to_edit];
+		$receipt_payer_tmp = $this_receipt_payers[$contributor_to_edit];
 	//Edit activated on a receipt_payer of THIS receipt :
 	?>
 				<div class="highlight"  id="<?php echo 'edit_tag_'.$edit_hashid?>"
 				style="background-color: rgba(<?php echo $cred.','.$cgreen.','.$cblue?>, 0.5);">
-					<h3>Edit participation of <?php echo htmlspecialchars($receipt_payer_tmp['name']);?></h3>
+					<h3>Edit payer <?php echo htmlspecialchars($receipt_payer_tmp['name']);?></h3>
 					<form method="post" action="<?php echo ACTIONPATH.'/update_receipt_payer.php'?>">
 
 						<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
@@ -272,7 +272,7 @@ if($admin_mode
 							</div>
 							<div class="col-xs-6 col-sm-5 col-md-4">
 								<div class="input-group">
-									<input type="number" step="0.01" min="0" max="100" name="p_percent_of_use"
+									<input type="number" step="0.01" min="0" name="p_percent_of_payment"
 										class="form-control" value="<?php echo (float)$receipt_payer_tmp['percent_of_payment']?>" required>
 									<span class="input-group-addon">%</span>
 								</div>
@@ -290,7 +290,7 @@ if($admin_mode
 				</div>
 <?php	
 //reset temporary variables
-$participation_to_edit=false;
+$contributor_to_edit=false;
 $receipt_payer_tmp=null;
 	}
 	?>

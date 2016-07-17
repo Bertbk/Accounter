@@ -131,6 +131,9 @@ if($admin_mode && !empty($_GET['edit']) && !empty($_GET['edit_hashid']))
 	&& $edit_mode !== "bill_participant"
 	&& $edit_mode !== "payment"
 	&& $edit_mode !== "receipt"
+	&& $edit_mode !== "receipt_payer"
+	&& $edit_mode !== "receipt_receiver"
+	&& $edit_mode !== "article"	
 	))
 	{		//Wrong id or action
 		header('location:'.$link_to_account_admin);

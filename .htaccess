@@ -14,7 +14,7 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 
 RewriteRule ^account/([a-zA-Z0-9]{16})$ account.php?hash=$1 [QSA,L]
-RewriteRule ^account/([a-zA-Z0-9]{32})/admin/edit/([a-z0-9]+)/([a-z0-9]{16})$ account.php?hash=$1&admin=true&edit=$2&edit_hashid=$3 [QSA,L]
+RewriteRule ^account/([a-zA-Z0-9]{32})/admin/edit/([a-z-_]+)/([a-z0-9]{16})$ account.php?hash=$1&admin=true&edit=$2&edit_hashid=$3 [QSA,L]
 
 
 RewriteRule ^account/([a-zA-Z0-9]{32})/admin/?$ account.php?hash=$1&admin=true [QSA,L]
