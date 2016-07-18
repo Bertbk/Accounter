@@ -65,25 +65,46 @@ function compute_opt_solution($account_id_arg, $Refunds)
 	if(is_null($banquer))
 	{return Array(Array());}
 
-	$balance[$banquer] = 0;
 	
 	//Every debitor send money to banquer
 	foreach($balance as $uid => $bal)
 	{
-		if($bal == 0)
+		if($bal == 0 || $uid == $banquer)
 		{continue;}
 		else if((float)$bal > 0){
 			//Debitor send money to banquer
 			$Refunds_opt[$uid][$banquer] = $bal;
-			$balance[$uid] = 0;
 		}
 		else
 		{
 			$Refunds_opt[$banquer][$uid] = abs($bal);
-			$balance[$uid] = 0;
 		}
 	}
 		
+		
+	// Last cleaning in money transfers
+	foreach($balance as $uid => $bal)
+	{
+		if((float)$bal <= 0 || $uid == $banquer)
+		{continue;}
+	
+		//Money going to banquer
+		$uid_to_banquer = (float)$Refunds_opt[$uid][$banquer];
+
+		//Loop on banquers refunds:
+		foreach($Refunds_opt[$banquer] as $vid => $refund)
+		{
+			if((float)$refund >= (float)$uid_to_banquer)
+			{
+				//Change the destination : $uid give money to $vid instead of banquer
+				$Refunds_opt[$uid][$banquer] = 0;
+				$Refunds_opt[$uid][$vid] = $uid_to_banquer;
+				$Refunds_opt[$banquer][$vid] -= (float)$uid_to_banquer;
+				break;
+			}
+		}
+	}
+	
 	//That's it.
 	return $Refunds_opt;
 }
