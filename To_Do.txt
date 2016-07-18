@@ -10,7 +10,47 @@ MAJOR
 2. Date of expiration : must be used! CRON ?!
 3. How to deal with unexpected access to eg. /controls/account.php or lib/ ?
 4. Internationalisation : Framework...
-5. Add receipt so that there can be bills and receipts
+5. Email optionnel lors de la creation d'un accompte
+
+
+
+NEW VERSION
+===========
+
+A. SQL
+
+- Bill and Receipt => Spreadsheet
+- Spreadsheet: title, description, TYPE (=Budget or Receipt), DATE OF CREATION
+- Participant => Members
+- Bill_participant => (Budget) Participant
+- Payment => (Budget) Payment
+- Receipt_payer => (Receipt) Contributor
+- Receipt_Receiver => (Receipt) Recipient
+- Article => (Receipt) Article
+
+Tables (PREFIX + ...) :
+- accounts
+- members
+- spreadsheets
+- bdg_participants
+- bdg_payments
+- recpt_contributors
+- recpt_articles
+- recpt_recipients
+
+B. ARBORESCENCE
+
+Dossiers controls :
+- action/accounts
+- action/spreadsheets/
+- action/spreadsheets/budget/
+- action/spreadsheets/receipt/
+- action/members/
+etc.
+
+C. FRAMEWORK SYMPHONY or SMARTY
+A priori smarty a l'air plus facile à utiliser :)
+
 
 DUNNO
 =====
