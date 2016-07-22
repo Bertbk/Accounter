@@ -9,7 +9,7 @@
  */
  
  /*
-Check the data before asking the SQL to update a member 
+Check the data before asking the SQL to update a user 
  */
 
  
@@ -17,9 +17,9 @@ require_once __DIR__.'/../../config-app.php';
 
 include_once(LIBPATH.'/accounts/get_account_admin.php');
 
-include_once(LIBPATH.'/members/get_member_by_hashid.php');
-include_once(LIBPATH.'/members/get_member_by_name.php');
-include_once(LIBPATH.'/members/update_member.php');
+include_once(LIBPATH.'/users/get_user_by_hashid.php');
+include_once(LIBPATH.'/users/get_user_by_name.php');
+include_once(LIBPATH.'/users/update_user.php');
 
 include_once(LIBPATH.'/hashid/validate_hashid.php');
 
@@ -34,15 +34,15 @@ $redirect_link ="" ;
 
 $ErrorEmptyMessage = array(
 		'p_hashid_account' => 'Please provide an acount',
-		'p_hashid_member' => 'Please provide a member',
-		'p_name_of_member' => 'Please provide a name',
+		'p_hashid_user' => 'Please provide a user',
+		'p_name_of_user' => 'Please provide a name',
 		'p_nb_of_people' => 'Please provide a number of people'
    );
 	 
 $ErrorMessage = array(
 	'p_hashid_account' => 'Account is not valid',
-	'p_hashid_member' => 'member is not valid',
-	'p_name_of_member' => 'Name is not valid',
+	'p_hashid_user' => 'user is not valid',
+	'p_name_of_user' => 'Name is not valid',
 	'p_nb_of_people' => 'Number of people is not valid',
 	'p_email' => 'Email address is not valid'
  );
@@ -76,7 +76,7 @@ if(empty($account))
 	$redirect_link = BASEURL;
 }
 else{
-	$redirect_link = BASEURL.'/account/'.$account['hashid_admin'].'/admin#members';
+	$redirect_link = BASEURL.'/account/'.$account['hashid_admin'].'/admin#users';
 }
 
 if(isset($_POST['submit_cancel']))
@@ -84,10 +84,10 @@ if(isset($_POST['submit_cancel']))
 	header('location:'.$link_to_account_admin);
 	exit;
 }
-else if(isset($_POST['submit_update_member']))
+else if(isset($_POST['submit_update_user']))
 {
-	//member
-	$key = 'p_hashid_member';
+	//user
+	$key = 'p_hashid_user';
 	if(empty($_POST[$key])) { //If empty
 		array_push($errArray, $ErrorEmptyMessage[$key]);
 	}
@@ -97,31 +97,31 @@ else if(isset($_POST['submit_update_member']))
 			array_push($errArray, $ErrorMessage[$key]);
 		}
 		else{
-			$hashid_member = $_POST[$key];
+			$hashid_user = $_POST[$key];
 			}
 	}
-	//Get the member
+	//Get the user
 	if(empty($errArray))
 	{		
-		$member = get_member_by_hashid($account['id'], $hashid_member);
-		if(empty($member))
+		$user = get_user_by_hashid($account['id'], $hashid_user);
+		if(empty($user))
 		{	array_push($errArray, $ErrorMessage[$key]); }
 	}
 	
 	//Check if accounts match
 	if(empty($errArray))
 	{		
-		if($member['account_id'] !== $account['id'])
+		if($user['account_id'] !== $account['id'])
 		{	array_push($errArray, 'Accounts mismatch.'); }
 	}
 
-	//Get the (new) name of member
-	$key = 'p_name_of_member';
+	//Get the (new) name of user
+	$key = 'p_name_of_user';
 	if(empty($_POST[$key])) { //If empty
 		array_push($errArray, $ErrorEmptyMessage[$key]);
 	}
 	else{
-		$new_name_of_member = $_POST[$key];
+		$new_name_of_user = $_POST[$key];
 	}
 	
 	//New number of people
@@ -149,23 +149,23 @@ else if(isset($_POST['submit_update_member']))
 	else{$new_email = null;}
 
 	
-	//Check if two members have the same name
-	if(empty($errArray) && $new_name_of_member !== $member['name'])
+	//Check if two users have the same name
+	if(empty($errArray) && $new_name_of_user !== $user['name'])
 	{
-		$does_this_guy_exists = get_member_by_name($account['id'], $new_name_of_member);
+		$does_this_guy_exists = get_user_by_name($account['id'], $new_name_of_user);
 		if(!empty($does_this_guy_exists))
-		{array_push($errArray, 'Another member has the same name'); 	}
+		{array_push($errArray, 'Another user has the same name'); 	}
 	}
 	
-	//Save the member
+	//Save the user
 	if(empty($errArray))
 	{
-		$success = update_member($account['id'], $member['id'], $new_name_of_member, $new_nb_of_people, $new_email);	
+		$success = update_user($account['id'], $user['id'], $new_name_of_user, $new_nb_of_people, $new_email);	
 		if($success !== true)
-		{array_push($errArray, 'Server error: Problem while attempting to update a member'); 	}
+		{array_push($errArray, 'Server error: Problem while attempting to update a user'); 	}
 	else
 		{
-			array_push($successArray, 'member has been successfully updated');
+			array_push($successArray, 'user has been successfully updated');
 		}
 	}
 }

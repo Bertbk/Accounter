@@ -36,13 +36,15 @@ if(isset($_POST['submit_new_spreadsheet']))
 {
 	$ErrorEmptyMessage = array(
 		'p_hashid_account' => 'No acount provided',
-		'p_title_of_spreadsheet' => 'Please provide a title'
+		'p_title_of_spreadsheet' => 'Please provide a title',
+		'p_type' => 'Please provide a type'
 		);
 	 
 	$ErrorMessage = array(
 		'p_hashid_account' => 'Account is not valid',
 		'p_title_of_spreadsheet' => 'Title is not valid',
 		'p_description' => 'Description is not valid',
+		'p_type' => 'Type is not valid',
 		'p_anchor' => 'Anchor not valid'
    );
 
@@ -77,6 +79,21 @@ if(isset($_POST['submit_new_spreadsheet']))
 		$title_of_spreadsheet = $_POST[$key];
 	}
 	
+	$key = 'p_type';
+	if(empty($_POST[$key])) { //If empty
+		array_push($errArray, $ErrorEmptyMessage[$key]);
+	}
+	else{
+		if($_POST[$key] !== "budget"
+		&& $_POST[$key] !== "receipt")
+		{
+			array_push($errArray, $ErrorMessage[$key]);
+		}
+		else{
+			$type_of_spreadsheet = $_POST[$key];
+		}
+	}
+
 	$key = 'p_description';
 	if(!empty($_POST[$key]))
 	{
@@ -104,7 +121,7 @@ if(isset($_POST['submit_new_spreadsheet']))
 	//Save the spreadsheet
 	if(empty($errArray))
 	{
-		$success = set_spreadsheet($account['id'], $hashid_spreadsheet, $title_of_spreadsheet, $desc);	
+		$success = set_spreadsheet($account['id'], $hashid_spreadsheet, $type_of_spreadsheet, $title_of_spreadsheet, $desc);
 		if($success !== true)
 		{array_push($errArray, 'Server error: Problem while attempting to add a spreadsheet'); 	}
 		else
