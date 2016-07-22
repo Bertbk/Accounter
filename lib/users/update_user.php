@@ -9,19 +9,19 @@
  */
  
 /*
-Update a participant providing its id and its associated account id.
-A participant is a row in the participants SQL table.
+Update a user providing its id and its associated account id.
+A user is a row in the users SQL table.
 */
 include_once(__DIR__.'/../get_db.php');
-include_once(LIBPATH.'/participants/get_participant_by_id.php');
-include_once(LIBPATH.'/participants/get_participant_by_name.php');
+include_once(LIBPATH.'/users/get_user_by_id.php');
+include_once(LIBPATH.'/users/get_user_by_name.php');
 
-function update_participant($account_id_arg, $participant_id_arg, $name_of_contrib_arg, $nb_of_people_arg)
+function update_user($account_id_arg, $user_id_arg, $name_of_contrib_arg, $nb_of_people_arg)
 {
 	$db = get_db();
 
 	$account_id = (int)$account_id_arg;
-	$participant_id = (int)$participant_id_arg;
+	$user_id = (int)$user_id_arg;
 	$new_name_of_contrib = $name_of_contrib_arg;
 	$new_nb_of_people = (int)$nb_of_people_arg;
 
@@ -35,7 +35,7 @@ function update_participant($account_id_arg, $participant_id_arg, $name_of_contr
 	}
 	*/
 	
-	$contrib = get_participant_by_id($account_id, $participant_id);
+	$contrib = get_user_by_id($account_id, $user_id);
 	if(empty($contrib))
 	{		return false;	}
 	
@@ -52,20 +52,20 @@ function update_participant($account_id_arg, $participant_id_arg, $name_of_contr
 	//If the name changes, we have to check if it's free
 	if($new_name_of_contrib != $contrib['name'])
 	{
-		$isthenamefree = get_participant_by_name($account_id, $new_name_of_contrib);
+		$isthenamefree = get_user_by_name($account_id, $new_name_of_contrib);
 		if(!empty($isthenamefree))
 		{			return false;		}
 	}
 	
 	try
 	{
-		$myquery = 'UPDATE  '.TABLE_PARTICIPANTS.' 
+		$myquery = 'UPDATE  '.TABLE_USERS.' 
 		 SET name=:new_name_of_contrib, nb_of_people=:new_nb_of_people
-		WHERE id=:participant_id';
+		WHERE id=:user_id';
 		$prepare_query = $db->prepare($myquery);
 		$prepare_query->bindValue(':new_name_of_contrib', $new_name_of_contrib, PDO::PARAM_STR);
 		$prepare_query->bindValue(':new_nb_of_people', $new_nb_of_people, PDO::PARAM_INT);
-		$prepare_query->bindValue(':participant_id', $participant_id, PDO::PARAM_INT);
+		$prepare_query->bindValue(':user_id', $user_id, PDO::PARAM_INT);
 		$isgood = $prepare_query->execute();
 		$prepare_query->closeCursor();
 	}

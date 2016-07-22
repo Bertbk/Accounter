@@ -9,30 +9,30 @@
  */
  
 /*
-Return a participant providing its id and its associated account id.
-A participant is a row in the participants SQL table.
+Return a receipt providing its id and its associated account id.
+A receipt is a row in the receipts SQL table.
 */
 include_once(__DIR__.'/../get_db.php');
 
-function get_participant_by_id($account_id_arg, $contrib_id_arg)
+function get_receipt_by_id($account_id_arg, $receipt_id_arg)
 {
 	$db = get_db();
 
 	$account_id = (int)$account_id_arg;
-	$contrib_id = (int)$contrib_id_arg;
+	$receipt_id = (int)$receipt_id_arg;
 
 	try
 	{
-		$myquery = 'SELECT * FROM  '.TABLE_PARTICIPANTS.' 
-		 WHERE account_id=:account_id AND id=:contrib_id';
+		$myquery = 'SELECT * FROM  '.TABLE_RECEIPTS.'
+   		WHERE account_id=:account_id AND id=:receipt_id';
 		$prepare_query = $db->prepare($myquery);
 		$prepare_query->bindValue(':account_id', $account_id, PDO::PARAM_INT);
-		$prepare_query->bindValue(':contrib_id', $contrib_id, PDO::PARAM_INT);
+		$prepare_query->bindValue(':receipt_id', $receipt_id, PDO::PARAM_INT);
 		$prepare_query->execute();
 	}
 	catch (Exception $e)
 	{
-	//	echo 'Fail to connect: ' . $e->getMessage();
+//		echo 'Fail to connect: ' . $e->getMessage();
 	}
 	$reply = $prepare_query->fetchAll();
 	$prepare_query->closeCursor();

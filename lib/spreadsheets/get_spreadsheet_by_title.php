@@ -9,25 +9,26 @@
  */
  
 /*
-Return the participant of name $contrib_name_arg associated to the account of id $account_id_arg.
-A participant is a row in the participants SQL table.
+Return an array of every receipts of a particular title and associated account id.
+A receipt is a row in the receipts SQL table.
 */
+
 include_once(__DIR__.'/../get_db.php');
 
-function get_participant_by_name($account_id_arg, $contrib_name_arg)
+function get_receipt_by_title($account_id_arg, $receipt_title_arg)
 {
 	$db = get_db();
 
 	$account_id = (int)$account_id_arg;
-	$contrib_name = $contrib_name_arg;
+	$receipt_title = $receipt_title_arg;
 	
 	try
 	{
-		$myquery = 'SELECT * FROM  '.TABLE_PARTICIPANTS.' 
-		 WHERE account_id=:account_id AND upper(name)=upper(:contrib_name)';
+		$myquery = 'SELECT * FROM  '.TABLE_RECEIPTS.'
+     WHERE account_id=:account_id AND upper(title)=upper(:receipt_title)';
 		$prepare_query = $db->prepare($myquery);
 		$prepare_query->bindValue(':account_id', $account_id, PDO::PARAM_INT);
-		$prepare_query->bindValue(':contrib_name', $contrib_name, PDO::PARAM_STR); 
+		$prepare_query->bindValue(':receipt_title', $receipt_title, PDO::PARAM_STR); 
 		$prepare_query->execute();
 	}
 	catch (Exception $e)

@@ -9,37 +9,33 @@
  */
  
 /*
-Return every participants of the account of id account_id_arg.
-A participant is a row in the participants SQL table.
+Delete a row in the receipt_receivers SQL table providing its id 
 */
+
 include_once(__DIR__.'/../get_db.php');
 
-function get_participants($account_id_arg)
+function delete_receipt_receiver($account_id_arg, $receipt_receiver_id_arg)
 {
 	$db = get_db();
 
 	$account_id = (int)$account_id_arg;
-
+	$receiver_id = (int)$receipt_receiver_id_arg;
+		
+	$isgood= false;
 	try
 	{
-		$myquery = 'SELECT * FROM  '.TABLE_PARTICIPANTS.' 
-  		WHERE account_id=:account_id';
+		$myquery = 'DELETE FROM '.TABLE_RECEIPT_RECEIVERS.'  
+		 WHERE id=:receiver_id AND account_id=:account_id';
 		$prepare_query = $db->prepare($myquery);
+		$prepare_query->bindValue(':receiver_id', $receiver_id, PDO::PARAM_INT);
 		$prepare_query->bindValue(':account_id', $account_id, PDO::PARAM_INT);
-		$prepare_query->execute();
+		$isgood = $prepare_query->execute();
+		$prepare_query->closeCursor();
 	}
 	catch (Exception $e)
 	{
-	//	echo 'Fail to connect: ' . $e->getMessage();
+	 return 'Fail to connect: ' . $e->getMessage();
 	}
-	$reply = $prepare_query->fetchAll();
-	$prepare_query->closeCursor();
-	if(!empty($reply))
-	{
-		return $reply;
-	}
-	else
-	{
-		return array();
-	}
+	return $isgood;
+	
 }
