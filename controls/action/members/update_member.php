@@ -9,7 +9,7 @@
  */
  
  /*
-Check the data before asking the SQL to update a participant 
+Check the data before asking the SQL to update a member 
  */
 
  
@@ -17,9 +17,9 @@ require_once __DIR__.'/../../config-app.php';
 
 include_once(LIBPATH.'/accounts/get_account_admin.php');
 
-include_once(LIBPATH.'/participants/get_participant_by_hashid.php');
-include_once(LIBPATH.'/participants/get_participant_by_name.php');
-include_once(LIBPATH.'/participants/update_participant.php');
+include_once(LIBPATH.'/members/get_member_by_hashid.php');
+include_once(LIBPATH.'/members/get_member_by_name.php');
+include_once(LIBPATH.'/members/update_member.php');
 
 include_once(LIBPATH.'/hashid/validate_hashid.php');
 
@@ -34,15 +34,15 @@ $redirect_link ="" ;
 
 $ErrorEmptyMessage = array(
 		'p_hashid_account' => 'Please provide an acount',
-		'p_hashid_participant' => 'Please provide a participant',
-		'p_name_of_participant' => 'Please provide a name',
+		'p_hashid_member' => 'Please provide a member',
+		'p_name_of_member' => 'Please provide a name',
 		'p_nb_of_people' => 'Please provide a number of people'
    );
 	 
 $ErrorMessage = array(
 	'p_hashid_account' => 'Account is not valid',
-	'p_hashid_participant' => 'Participant is not valid',
-	'p_name_of_participant' => 'Name is not valid',
+	'p_hashid_member' => 'member is not valid',
+	'p_name_of_member' => 'Name is not valid',
 	'p_nb_of_people' => 'Number of people is not valid',
 	'p_email' => 'Email address is not valid'
  );
@@ -76,7 +76,7 @@ if(empty($account))
 	$redirect_link = BASEURL;
 }
 else{
-	$redirect_link = BASEURL.'/account/'.$account['hashid_admin'].'/admin#participants';
+	$redirect_link = BASEURL.'/account/'.$account['hashid_admin'].'/admin#members';
 }
 
 if(isset($_POST['submit_cancel']))
@@ -84,10 +84,10 @@ if(isset($_POST['submit_cancel']))
 	header('location:'.$link_to_account_admin);
 	exit;
 }
-else if(isset($_POST['submit_update_participant']))
+else if(isset($_POST['submit_update_member']))
 {
-	//PARTICIPANT
-	$key = 'p_hashid_participant';
+	//member
+	$key = 'p_hashid_member';
 	if(empty($_POST[$key])) { //If empty
 		array_push($errArray, $ErrorEmptyMessage[$key]);
 	}
@@ -97,31 +97,31 @@ else if(isset($_POST['submit_update_participant']))
 			array_push($errArray, $ErrorMessage[$key]);
 		}
 		else{
-			$hashid_participant = $_POST[$key];
+			$hashid_member = $_POST[$key];
 			}
 	}
-	//Get the participant
+	//Get the member
 	if(empty($errArray))
 	{		
-		$participant = get_participant_by_hashid($account['id'], $hashid_participant);
-		if(empty($participant))
+		$member = get_member_by_hashid($account['id'], $hashid_member);
+		if(empty($member))
 		{	array_push($errArray, $ErrorMessage[$key]); }
 	}
 	
 	//Check if accounts match
 	if(empty($errArray))
 	{		
-		if($participant['account_id'] !== $account['id'])
+		if($member['account_id'] !== $account['id'])
 		{	array_push($errArray, 'Accounts mismatch.'); }
 	}
 
-	//Get the (new) name of participant
-	$key = 'p_name_of_participant';
+	//Get the (new) name of member
+	$key = 'p_name_of_member';
 	if(empty($_POST[$key])) { //If empty
 		array_push($errArray, $ErrorEmptyMessage[$key]);
 	}
 	else{
-		$new_name_of_participant = $_POST[$key];
+		$new_name_of_member = $_POST[$key];
 	}
 	
 	//New number of people
@@ -149,23 +149,23 @@ else if(isset($_POST['submit_update_participant']))
 	else{$new_email = null;}
 
 	
-	//Check if two participants have the same name
-	if(empty($errArray) && $new_name_of_participant !== $participant['name'])
+	//Check if two members have the same name
+	if(empty($errArray) && $new_name_of_member !== $member['name'])
 	{
-		$does_this_guy_exists = get_participant_by_name($account['id'], $new_name_of_participant);
+		$does_this_guy_exists = get_member_by_name($account['id'], $new_name_of_member);
 		if(!empty($does_this_guy_exists))
-		{array_push($errArray, 'Another participant has the same name'); 	}
+		{array_push($errArray, 'Another member has the same name'); 	}
 	}
 	
-	//Save the participant
+	//Save the member
 	if(empty($errArray))
 	{
-		$success = update_participant($account['id'], $participant['id'], $new_name_of_participant, $new_nb_of_people, $new_email);	
+		$success = update_member($account['id'], $member['id'], $new_name_of_member, $new_nb_of_people, $new_email);	
 		if($success !== true)
-		{array_push($errArray, 'Server error: Problem while attempting to update a participant'); 	}
+		{array_push($errArray, 'Server error: Problem while attempting to update a member'); 	}
 	else
 		{
-			array_push($successArray, 'Participant has been successfully updated');
+			array_push($successArray, 'member has been successfully updated');
 		}
 	}
 }
