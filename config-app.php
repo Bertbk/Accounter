@@ -31,16 +31,14 @@ else
 			define('PREFIX',$config_array['prefix_table']);
 	if ( !defined('TABLE_ACCOUNTS') )
 		define('TABLE_ACCOUNTS', PREFIX.'accounts');
-	if ( !defined('TABLE_BILLS') )
-		define('TABLE_BILLS', PREFIX.'bills');
+	if ( !defined('TABLE_SPREADSHEETS') )
+		define('TABLE_SPREADSHEETS', PREFIX.'spreadsheets');
 	if ( !defined('TABLE_BILL_PARTICIPANTS') )
 		define('TABLE_BILL_PARTICIPANTS', PREFIX.'bill_participants');
 	if ( !defined('TABLE_PARTICIPANTS') )
 		define('TABLE_PARTICIPANTS', PREFIX.'participants');
 	if ( !defined('TABLE_PAYMENTS') )
 		define('TABLE_PAYMENTS', PREFIX.'payments');
-	if ( !defined('TABLE_RECEIPTS') )
-		define('TABLE_RECEIPTS', PREFIX.'receipts');
 	if ( !defined('TABLE_RECEIPT_PAYERS') )
 		define('TABLE_RECEIPT_PAYERS', PREFIX.'receipt_payers');
 	if ( !defined('TABLE_RECEIPT_RECEIVERS') )
