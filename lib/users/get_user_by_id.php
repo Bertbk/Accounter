@@ -14,20 +14,20 @@ A user is a row in the users SQL table.
 */
 include_once(__DIR__.'/../get_db.php');
 
-function get_user_by_id($account_id_arg, $contrib_id_arg)
+function get_user_by_id($account_id_arg, $user_id_arg)
 {
 	$db = get_db();
 
 	$account_id = (int)$account_id_arg;
-	$contrib_id = (int)$contrib_id_arg;
+	$user_id = (int)$user_id_arg;
 
 	try
 	{
 		$myquery = 'SELECT * FROM  '.TABLE_USERS.' 
-		 WHERE account_id=:account_id AND id=:contrib_id';
+		 WHERE account_id=:account_id AND id=:user_id';
 		$prepare_query = $db->prepare($myquery);
 		$prepare_query->bindValue(':account_id', $account_id, PDO::PARAM_INT);
-		$prepare_query->bindValue(':contrib_id', $contrib_id, PDO::PARAM_INT);
+		$prepare_query->bindValue(':user_id', $user_id, PDO::PARAM_INT);
 		$prepare_query->execute();
 	}
 	catch (Exception $e)

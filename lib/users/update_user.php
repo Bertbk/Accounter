@@ -16,13 +16,13 @@ include_once(__DIR__.'/../get_db.php');
 include_once(LIBPATH.'/users/get_user_by_id.php');
 include_once(LIBPATH.'/users/get_user_by_name.php');
 
-function update_user($account_id_arg, $user_id_arg, $name_of_contrib_arg, $nb_of_people_arg)
+function update_user($account_id_arg, $user_id_arg, $name_of_user_arg, $nb_of_people_arg)
 {
 	$db = get_db();
 
 	$account_id = (int)$account_id_arg;
 	$user_id = (int)$user_id_arg;
-	$new_name_of_contrib = $name_of_contrib_arg;
+	$new_name_of_user = $name_of_user_arg;
 	$new_nb_of_people = (int)$nb_of_people_arg;
 
 	/*
@@ -35,24 +35,24 @@ function update_user($account_id_arg, $user_id_arg, $name_of_contrib_arg, $nb_of
 	}
 	*/
 	
-	$contrib = get_user_by_id($account_id, $user_id);
-	if(empty($contrib))
+	$user = get_user_by_id($account_id, $user_id);
+	if(empty($user))
 	{		return false;	}
 	
 	if($new_nb_of_people < 0)
 	{return false;}
 	
 	//Nothing to change?
-	if($new_name_of_contrib === $contrib['name'] 
-	&& $new_nb_of_people == $contrib['nb_of_people'])
+	if($new_name_of_user === $user['name'] 
+	&& $new_nb_of_people == $user['nb_of_people'])
 	{
 		return true;
 	}
 	
 	//If the name changes, we have to check if it's free
-	if($new_name_of_contrib != $contrib['name'])
+	if($new_name_of_user != $user['name'])
 	{
-		$isthenamefree = get_user_by_name($account_id, $new_name_of_contrib);
+		$isthenamefree = get_user_by_name($account_id, $new_name_of_user);
 		if(!empty($isthenamefree))
 		{			return false;		}
 	}
@@ -60,10 +60,10 @@ function update_user($account_id_arg, $user_id_arg, $name_of_contrib_arg, $nb_of
 	try
 	{
 		$myquery = 'UPDATE  '.TABLE_USERS.' 
-		 SET name=:new_name_of_contrib, nb_of_people=:new_nb_of_people
+		 SET name=:new_name_of_user, nb_of_people=:new_nb_of_people
 		WHERE id=:user_id';
 		$prepare_query = $db->prepare($myquery);
-		$prepare_query->bindValue(':new_name_of_contrib', $new_name_of_contrib, PDO::PARAM_STR);
+		$prepare_query->bindValue(':new_name_of_user', $new_name_of_user, PDO::PARAM_STR);
 		$prepare_query->bindValue(':new_nb_of_people', $new_nb_of_people, PDO::PARAM_INT);
 		$prepare_query->bindValue(':user_id', $user_id, PDO::PARAM_INT);
 		$isgood = $prepare_query->execute();

@@ -31,22 +31,20 @@ else
 			define('PREFIX',$config_array['prefix_table']);
 	if ( !defined('TABLE_ACCOUNTS') )
 		define('TABLE_ACCOUNTS', PREFIX.'accounts');
+	if ( !defined('TABLE_USERS') )
+		define('TABLE_USERS', PREFIX.'users');
 	if ( !defined('TABLE_SPREADSHEETS') )
 		define('TABLE_SPREADSHEETS', PREFIX.'spreadsheets');
-	if ( !defined('TABLE_BILL_PARTICIPANTS') )
-		define('TABLE_BILL_PARTICIPANTS', PREFIX.'bill_participants');
-	if ( !defined('TABLE_PARTICIPANTS') )
-		define('TABLE_PARTICIPANTS', PREFIX.'participants');
-	if ( !defined('TABLE_PAYMENTS') )
-		define('TABLE_PAYMENTS', PREFIX.'payments');
-	if ( !defined('TABLE_RECEIPT_PAYERS') )
-		define('TABLE_RECEIPT_PAYERS', PREFIX.'receipt_payers');
-	if ( !defined('TABLE_RECEIPT_RECEIVERS') )
-		define('TABLE_RECEIPT_RECEIVERS', PREFIX.'receipt_receivers');
-	if ( !defined('TABLE_RECEIPT_ARTICLES') )
-		define('TABLE_RECEIPT_ARTICLES', PREFIX.'receipt_articles');
-	if ( !defined('TABLE_RECEIPT_TRANSACTIONS') )
-		define('TABLE_RECEIPT_TRANSACTIONS', PREFIX.'receipt_transactions');
+	if ( !defined('TABLE_BDGT_PARTICIPANTS') )
+		define('TABLE_BDGT_PARTICIPANTS', PREFIX.'bdgt_participants');
+	if ( !defined('TABLE_BDGT_PAYMENTS') )
+		define('TABLE_BDGT_PAYMENTS', PREFIX.'bdgt_payments');
+	if ( !defined('TABLE_RCPT_PAYERS') )
+		define('TABLE_RCPT_PAYERS', PREFIX.'rcpt_payers');
+	if ( !defined('TABLE_RCPT_RECIPIENTS') )
+		define('TABLE_RCPT_RECIPIENTS', PREFIX.'rcpt_recipients');
+	if ( !defined('TABLE_RCPT_ARTICLES') )
+		define('TABLE_RCPT_ARTICLES', PREFIX.'rcpt_articles');
 	if ( !defined('BASEURL') )
 			define('BASEURL',$config_array['baseurl']);
 	if ( !defined('ACTIONPATH') )
