@@ -1,0 +1,50 @@
+/**
+ * This software is governed by the CeCILL-B license. If a copy of this license
+ * is not distributed with this file, you can obtain one at
+ * http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
+ *
+ * Author of Accounter: Bertrand THIERRY (bertrand.thierry1@gmail.com)
+ *
+*/
+
+/* Form to assign a participant */
+
+.assign_rcpt_payer input[type="checkbox"] {
+    display: none;
+}
+
+.assign_rcpt_payer input[type="checkbox"] + .btn-group > label span {
+    width: 20px;
+}
+
+.assign_rcpt_payer input[type="checkbox"] + .btn-group > label span:first-child {
+    display: none;
+}
+.assign_rcpt_payer input[type="checkbox"] + .btn-group > label span:last-child {
+    display: inline-block;   
+}
+
+.assign_rcpt_payer input[type="checkbox"]:checked + .btn-group > label span:first-child {
+    display: inline-block;
+}
+.assign_rcpt_payer input[type="checkbox"]:checked + .btn-group > label span:last-child {
+    display: none;   
+}
+
+.assign_rcpt_payer  label.btn-assign_rcpt_payer1{
+float:left!important;
+}
+
+.assign_rcpt_payer  span.span-assign_rcpt_payer{
+display: block;
+overflow: hidden;
+}
+
+.assign_rcpt_payer  label.btn-assign_rcpt_payer2{
+width:100%!important;
+color:white;
+}
+
+.assign_rcpt_payer  label.btn-select_all_participation{
+width:100%!important;
+}

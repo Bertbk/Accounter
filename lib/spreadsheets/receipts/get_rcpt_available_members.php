@@ -38,7 +38,7 @@ function get_rcpt_available_members($account_id_arg)
 		$reply[$rcpt['id']] = array();
 		foreach($my_members as $member)
 		{
-			$find_payer = get_rcpt_participant_by_member_id($account_id, $rcpt['id'], $member['id']);
+			$find_payer = get_rcpt_payer_by_member_id($account_id, $rcpt['id'], $member['id']);
 			if((empty($find_payer)))
 			{
 				$reply[$rcpt['id']][$member['id']] = $member;

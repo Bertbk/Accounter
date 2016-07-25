@@ -192,10 +192,7 @@ if($admin_mode
 	}
 	else if($this_type == "receipt")
 	{
-		?>
-		<p>Receipt</p>
-		<?php
-//		include(__DIR__.'/spreadsheet/receipt.php');
+		include(__DIR__.'/receipt.php');
 	}
 ?>
 				</div> 

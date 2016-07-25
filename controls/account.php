@@ -33,7 +33,9 @@ include_once(LIBPATH.'/spreadsheets/budgets/bdgt_participants/get_bdgt_participa
 include_once(LIBPATH.'/spreadsheets/budgets/bdgt_payments/get_bdgt_payments.php');
 
 include_once(LIBPATH.'/spreadsheets/receipts/rcpt_payers/get_rcpt_payers.php');
-include_once(LIBPATH.'/spreadsheets/receipts/rcpt_recipients/get_receipt_recipients.php');
+include_once(LIBPATH.'/spreadsheets/receipts/get_rcpt_available_members.php');
+
+//include_once(LIBPATH.'/spreadsheets/receipts/rcpt_recipients/get_receipt_recipients.php');
 
 
 /*
@@ -180,11 +182,11 @@ foreach($my_spreadsheets as $spreadsheet)
 */
 
 //=== RECEIPTS ===
-$my_receipt_payers = get_rcpt_payers($my_account_id); // Payers per receipt
-$my_receipt_recipients = get_rcpt_recipients($my_account_id); // Recipients per receipt
+$my_rcpt_payers = get_rcpt_payers($my_account_id); // Payers per receipt
+$my_possible_rcpt_payers = get_rcpt_available_members($my_account_id); // Possible payer for each receipt
+//$my_receipt_recipients = get_rcpt_recipients($my_account_id); // Recipients per receipt
 /*
 $my_articles_per_receipt = get_articles($my_account_id); // Articles per receipts
-$my_free_receipt_payers = get_free_receipt_payers($my_account_id); // Possible payer for each receipt
 $my_free_article_receivers = get_free_receipt_receivers($my_account_id); // Possible receipt_receiver for each article of each receipt
 //Number of receipts
 $n_receipts = count($my_receipts);
