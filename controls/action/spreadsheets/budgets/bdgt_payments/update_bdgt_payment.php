@@ -13,17 +13,15 @@ Action launched when the form "Cancel" has been called (when editing).
 Redirect to the admin page of an account.
  */
  
-require_once __DIR__.'/../../config-app.php';
+ require_once __DIR__.'/../../../../../config-app.php';
 
 include_once(LIBPATH.'/accounts/get_account_admin.php');
 
-include_once(LIBPATH.'/bills/get_bill_by_hashid.php');
+include_once(LIBPATH.'/spreadsheets/get_spreadsheet_by_hashid.php');
 
-include_once(LIBPATH.'/bill_participants/get_bill_participant_by_hashid.php');
-
-include_once(LIBPATH.'/payments/get_payment_by_hashid.php');
-include_once(LIBPATH.'/payments/update_payment.php');
-
+include_once(LIBPATH.'/spreadsheets/budgets/bdgt_participants/get_bdgt_participant_by_hashid.php');
+include_once(LIBPATH.'/spreadsheets/budgets/bdgt_payments/get_bdgt_payment_by_hashid.php');
+include_once(LIBPATH.'/spreadsheets/budgets/bdgt_payments/update_bdgt_payment.php');
 
 include_once(LIBPATH.'/hashid/validate_hashid.php');
 include_once(LIBPATH.'/hashid/create_hashid.php');
@@ -39,11 +37,11 @@ $redirect_link ="" ;
 
 $ErrorEmptyMessage = array(
 	'p_hashid_account' => 'Please provide an acount',
-	'p_hashid_bill' => 'Please provide a bill',
+	'p_hashid_spreadsheet' => 'Please provide a spreadsheet',
 	'p_hashid_payment' => 'Please provide a payment',
-	'p_hashid_payer' => 'Please provide a payer',
-	'p_hashid_recv' => 'Please provide a receiver',
-	'p_cost' => 'Please provide a cost',
+	'p_hashid_creditor' => 'Please provide a creditor',
+	'p_hashid_debtor' => 'Please provide a debtor',
+	'p_amount' => 'Please provide a amount',
 	'p_description' => 'Please provide a description',
 	'p_date_of_payment' => 'Please provide a date of payment',
 	'p_anchor' => 'Anchor not valid'
@@ -51,11 +49,10 @@ $ErrorEmptyMessage = array(
  
 $ErrorMessage = array(
 	'p_hashid_account' => 'Account is not valid',
-	'p_hashid_bill' => 'Bill is not valid',
 	'p_hashid_payment' => 'Payment is not valid',
-	'p_hashid_payer' => 'Payer is not valid',
-	'p_hashid_recv' => 'Receiver is not valid',
-	'p_cost' => 'Cost is not valid',
+	'p_hashid_creditor' => 'Creditor is not valid',
+	'p_hashid_debtor' => 'Debtor is not valid',
+	'p_amount' => 'Amount is not valid',
 	'p_description' => 'Description is not valid',
 	'p_date_of_payment' => 'Date of payment is not valid'
  );
@@ -128,7 +125,7 @@ else if(isset($_POST['submit_update_payment']))
 	//Get the payment
 	if(empty($errArray))
 	{		
-		$payment = get_payment_by_hashid($account['id'], $hashid_payment);
+		$payment = get_bdgt_payment_by_hashid($account['id'], $hashid_payment);
 		if(empty($payment))
 		{	array_push($errArray, $ErrorMessage[$key]); }
 	}
@@ -143,7 +140,7 @@ else if(isset($_POST['submit_update_payment']))
 	}	
 	
 	// BILL
-	$key = 'p_hashid_bill';
+	$key = 'p_hashid_spreadsheet';
 	if(empty($_POST[$key])) { //If empty
 		array_push($errArray, $ErrorEmptyMessage[$key]);
 	}
@@ -153,28 +150,28 @@ else if(isset($_POST['submit_update_payment']))
 			array_push($errArray, $ErrorMessage[$key]);
 		}
 		else{
-			$hashid_bill = $_POST[$key];
+			$hashid_spreadsheet = $_POST[$key];
 			}
 	}
-	//Get the bill
+	//Get the spreadsheet
 	if(empty($errArray))
 	{		
-		$bill = get_bill_by_hashid($account['id'], $hashid_bill);
-		if(empty($bill))
+		$spreadsheet = get_spreadsheet_by_hashid($account['id'], $hashid_spreadsheet);
+		if(empty($spreadsheet))
 		{	array_push($errArray, $ErrorMessage[$key]); }
 	}
 	
-	//Check if the accounts match between bill and account
+	//Check if the accounts match between spreadsheet and account
 	if(empty($errArray))
 	{
-		if($bill['account_id'] !== $account['id'])
+		if($spreadsheet['account_id'] !== $account['id'])
 		{
-			array_push($errArray, 'This bill does not belong to this account.');
+			array_push($errArray, 'This spreadsheet does not belong to this account.');
 		}
 	}
 	
-	//PAYER
-	$key = 'p_hashid_payer';
+	//Creditor
+	$key = 'p_hashid_creditor';
 	 if(empty($_POST[$key])) { //If empty
 		array_push($errArray, $ErrorEmptyMessage[$key]);
 	}
@@ -184,26 +181,26 @@ else if(isset($_POST['submit_update_payment']))
 			array_push($errArray, $ErrorMessage[$key]);
 		}
 		else{
-			$hashid_payer = $_POST[$key];
+			$hashid_creditor = $_POST[$key];
 			}
 	}
-	//Get the payer
+	//Get the creditor
 	if(empty($errArray))
 	{		
-		$payer = get_bill_participant_by_hashid($account['id'], $hashid_payer);
-		if(empty($payer))
+		$creditor = get_bdgt_participant_by_hashid($account['id'], $hashid_creditor);
+		if(empty($creditor))
 		{	array_push($errArray, $ErrorMessage[$key]); }
 	}
 	
-	//RECEIVER
-	$key = 'p_hashid_recv';
+	//Debtor
+	$key = 'p_hashid_debtor';
 	 if(empty($_POST[$key])) { //If empty
 		array_push($errArray, $ErrorEmptyMessage[$key]);
 	}
 	else{
 		if($_POST[$key] == -1 || is_null($_POST[$key]))
 		{
-			$receiver_id = null; //Group
+			$debtor_id = null; //Group
 		}
 		else {
 			if(validate_hashid($_POST[$key])== false)
@@ -211,27 +208,27 @@ else if(isset($_POST['submit_update_payment']))
 				array_push($errArray, $ErrorMessage[$key]);
 			}
 			else{
-				$hashid_recv = $_POST[$key];
+				$hashid_debtor = $_POST[$key];
 			}
 		}
 	}
-	//Get the receiver
+	//Get the debtor
 	if(empty($errArray) && ($_POST[$key] != -1 && !is_null($_POST[$key])))
 	{		
-		$receiver = get_bill_participant_by_hashid($account['id'], $hashid_recv);
-		if(empty($receiver))
+		$debtor = get_bdgt_participant_by_hashid($account['id'], $hashid_debtor);
+		if(empty($debtor))
 		{	array_push($errArray, $ErrorMessage[$key]); }
-		$receiver_id = $receiver['id'];
+		$debtor_id = $debtor['id'];
 	}
 	
 	// COST
-	$key = 'p_cost';
+	$key = 'p_amount';
 	if(empty($_POST[$key])) { //If empty
 		array_push($errArray, $ErrorEmptyMessage[$key]);
 	}
 	else{
-		$cost = (float)$_POST[$key];
-		if($cost <= 0)
+		$amount = (float)$_POST[$key];
+		if($amount <= 0)
 		{
 			array_push($errArray, $ErrorMessage[$key]);
 		}
@@ -262,46 +259,41 @@ else if(isset($_POST['submit_update_payment']))
 		}
 	}
 	
-	//Check if the accounts and bills match
+	//Check if the accounts and spreadsheets match
 	if(empty($errArray))
 	{
-		if($payer['account_id'] !== $account['id'])
+		if($creditor['account_id'] !== $account['id'])
 		{
-			array_push($errArray, 'This payer does not belong to this account.');
+			array_push($errArray, 'This creditor does not belong to this account.');
 		}
-		if($payer['bill_id'] !== $bill['id'])
+		if($creditor['spreadsheet_id'] !== $spreadsheet['id'])
 		{
-			array_push($errArray, 'This payer does not belong to this bill.');
+			array_push($errArray, 'This creditor does not belong to this spreadsheet.');
 		}
-		if(!is_null($receiver_id) && $receiver['account_id'] !== $account['id'])
+		if(!is_null($debtor_id) && $debtor['account_id'] !== $account['id'])
 		{
-			array_push($errArray, 'This receiver does not belong to this account.');
+			array_push($errArray, 'This debtor does not belong to this account.');
 		}
-		if(!is_null($receiver_id) && $receiver['bill_id'] !== $bill['id'])
+		if(!is_null($debtor_id) && $debtor['spreadsheet_id'] !== $spreadsheet['id'])
 		{
-			array_push($errArray, 'This receiver does not belong to this bill.');
+			array_push($errArray, 'This debtor does not belong to this spreadsheet.');
 		}
-		if(!is_null($receiver_id) && $receiver['bill_id'] !== $payer['bill_id'])
+		if(!is_null($debtor_id) && $debtor['spreadsheet_id'] !== $creditor['spreadsheet_id'])
 		{
-			array_push($errArray, 'Payer and receiver do not belong to the same bill.');
+			array_push($errArray, 'Creditor and debtor do not belong to the same spreadsheet.');
 		}
 	}
 	
 	//Update the payment
 	if(empty($errArray))
 	{
-		$success = update_payment($account['id'], $bill['id'], $payment['id'], $payer['id'], $cost, $receiver_id, $description, $date_of_payment);	
+		$success = update_bdgt_payment($account['id'], $spreadsheet['id'], $payment['id'], $creditor['id'], $amount, $debtor_id, $description, $date_of_payment);	
 		if($success !== true)
 		{array_push($errArray, 'Server error: Problem while attempting to update a payment'); 	}
 	else
 		{
 			array_push($successArray, 'Payment has been successfully updated');
 		}
-	}
-	//Merge the errors
-	if(!empty($errArray))
-	{
-		$errArray = array_merge($errArray, $errArray);
 	}
 }
 

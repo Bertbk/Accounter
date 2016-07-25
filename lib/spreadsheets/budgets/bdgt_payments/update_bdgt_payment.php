@@ -18,12 +18,13 @@ include_once(__DIR__.'/../../../get_db.php');
 include_once(LIBPATH.'/spreadsheets/budgets/bdgt_payments/get_bdgt_payment_by_id.php');
 
 
-function update_bdgt_payment($account_id_arg, $payment_id_arg, $creditor_id_arg, $amount_arg, 
+function update_bdgt_payment($account_id_arg, $spreadsheet_id_arg, $payment_id_arg, $creditor_id_arg, $amount_arg, 
 			$debtor_id_arg, $description_arg, $date_of_payment_arg)
 {
 	$db = get_db();
 
 	$account_id = (int)$account_id_arg;
+	$spreadsheet_id = (int)$spreadsheet_id_arg;
 	$payment_id = (int)$payment_id_arg;
 	$new_creditor_id = (int)$creditor_id_arg;
 	$new_amount = (float)$amount_arg;
@@ -40,7 +41,6 @@ function update_bdgt_payment($account_id_arg, $payment_id_arg, $creditor_id_arg,
 	
 	//Get current payment
 	$payment_to_edit = get_bdgt_payment_by_id($account_id, $payment_id);
-	
 	if(empty($payment_to_edit))
 	{		return false;	}
 	
@@ -71,10 +71,10 @@ function update_bdgt_payment($account_id_arg, $payment_id_arg, $creditor_id_arg,
 	$isgood= false;
 	try
 	{
-		$myquery = 'UPDATE '.TABLE_PAYMENTS.' 
+		$myquery = 'UPDATE '.TABLE_BDGT_PAYMENTS.' 
 		SET creditor_id=:new_creditor_id, amount=:new_amount, debtor_id=:new_debtor_id, 
-		description=:new_description, date_of_payment=:new_date_of_payment
-		WHERE id=:payment_id';
+		description=:new_description, date_of_payment=:new_date_of_payment 
+		WHERE id=:payment_id AND account_id=:account_id AND spreadsheet_id=:spreadsheet_id';
 		$prepare_query = $db->prepare($myquery);
 		$prepare_query->bindValue(':new_creditor_id', $new_creditor_id, PDO::PARAM_INT);
 		$prepare_query->bindValue(':new_amount', $new_amount, PDO::PARAM_STR);
@@ -82,6 +82,8 @@ function update_bdgt_payment($account_id_arg, $payment_id_arg, $creditor_id_arg,
 		$prepare_query->bindValue(':new_description', $new_description, ((is_null($new_description))?(PDO::PARAM_NULL):(PDO::PARAM_STR)));
 		$prepare_query->bindValue(':new_date_of_payment', $new_date_of_payment, ((is_null($new_date_of_payment))?(PDO::PARAM_NULL):(PDO::PARAM_STR)));
 		$prepare_query->bindValue(':payment_id', $payment_id, PDO::PARAM_INT);
+		$prepare_query->bindValue(':account_id', $account_id, PDO::PARAM_INT);
+		$prepare_query->bindValue(':spreadsheet_id', $spreadsheet_id, PDO::PARAM_INT);
 		$isgood = $prepare_query->execute();
 		$prepare_query->closeCursor();
 	}

@@ -293,7 +293,7 @@ $payment_to_edit = false; // if editing, place the payment after the other
 foreach($this_payment as $payment)
 {
 	$cpt_paymt++;
-		if($admin_mode && $edit_mode === 'payment' 
+		if($admin_mode && $edit_mode === 'bdgt_payment' 
 		&& $payment['hashid'] === $edit_hashid)
 		{ 
 			$payment_to_edit = $payment;
@@ -348,7 +348,7 @@ foreach($this_payment as $payment)
 	?>
 						<div class="col-xs-2 col-md-1">
 		<?php 
-		$link_tmp = $link_to_account_admin.'/edit/payment/'.$payment['hashid'].'#edit_tag_'.$payment['hashid'];
+		$link_tmp = $link_to_account_admin.'/edit/bdgt_payment/'.$payment['hashid'].'#edit_tag_'.$payment['hashid'];
 		?>
 							<form action="<?php echo $link_tmp ?>">
 								<button type="submit" class="btn btn-default" title="Edit payment">
@@ -384,36 +384,12 @@ if($payment_to_edit !== false)
 					style="background-color: rgba(<?php echo $cred.','.$cgreen.','.$cblue?>, 0.5);">
 						<h3>Edit payment</h3>
 						<form method="post" id="form_edit_payment_send"
-							action="<?php echo ACTIONPATH.'/spreadsheets/budgets/bdgt_payments/update_payment.php'?>">
+							action="<?php echo ACTIONPATH.'/spreadsheets/budgets/bdgt_payments/update_bdgt_payment.php'?>">
 							<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
+							<input type="hidden" name="p_hashid_spreadsheet" value="<?php echo $spreadsheet['hashid']?>">
 							<input type="hidden" name="p_hashid_payment" value="<?php echo $payment_to_edit['hashid']?>">
 							<input type="hidden" name="p_anchor" value="<?php echo '#spreadsheet-'.$cpt_spreadsheet?>">
 							
-							<div class="row form-group">
-								<div class="col-xs-12">
-									<label for="form_edit_payment_spreadsheet_<?php echo $cpt_spreadsheet?>">
-										Move to another spreadsheet
-									</label>
-									<div class="input-group">
-										<select name="p_hashid_spreadsheet" id="form_edit_payment_spreadsheet_<?php echo $cpt_spreadsheet?>"
-											onchange="CreatePossibleCreditorsLists(this, document.getElementById('form_edit_payment_creditor_<?php echo $cpt_spreadsheet?>'),	
-											<?php echo htmlspecialchars(json_encode($list_of_possible_creditors, 3))?>)"
-											class="form-control selectpicker"> 
-								<?php //list of spreadsheets
-										foreach($my_spreadsheets as $sub_spreadsheet)
-											{
-								?>
-												<option value="<?php echo $sub_spreadsheet['hashid']?>"
-												<?php if($sub_spreadsheet['id']==$payment_to_edit['spreadsheet_id']){echo ' selected';}?>
-												><?php echo htmlspecialchars($sub_spreadsheet['title'])?></option>
-								<?php
-											}
-								?>
-										</select>
-										<span class="input-group-addon glyphicon glyphicon-list"></span>
-									</div>
-								</div>
-							</div>
 							<div class="row form-group">
 								<div class="col-xs-12 col-lg-4">
 									<label for="form_edit_payment_creditor_<?php echo $cpt_spreadsheet?>">
@@ -454,7 +430,7 @@ if($payment_to_edit !== false)
 										debtor
 									</label>
 									<div class="input-group">
-										<select name="p_hashid_recv" 
+										<select name="p_hashid_debtor" 
 											id="form_edit_payment_recv_<?php echo $cpt_spreadsheet?>"
 											class="form-control selectpicker">
 											<option value="-1" >Group</option>
