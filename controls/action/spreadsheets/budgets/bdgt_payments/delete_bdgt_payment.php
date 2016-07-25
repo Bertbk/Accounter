@@ -13,12 +13,12 @@ Check the data before asking the SQL to delete a payment
  */
 
  
-require_once __DIR__.'/../../config-app.php';
+ require_once __DIR__.'/../../../../../config-app.php';
 
 include_once(LIBPATH.'/accounts/get_account_admin.php');
 
-include_once(LIBPATH.'/payments/get_payment_by_hashid.php');
-include_once(LIBPATH.'/payments/delete_payment.php');
+include_once(LIBPATH.'/spreadsheets/budgets/bdgt_payments/get_bdgt_payment_by_hashid.php');
+include_once(LIBPATH.'/spreadsheets/budgets/bdgt_payments/delete_bdgt_payment.php');
 
 include_once(LIBPATH.'/hashid/validate_hashid.php');
 
@@ -79,7 +79,7 @@ if(isset($_POST['submit_delete_payment']))
 	//Get the payment
 	if(empty($errArray))
 	{		
-		$payment = get_payment_by_hashid($account['id'], $hashid_payment);
+		$payment = get_bdgt_payment_by_hashid($account['id'], $hashid_payment);
 		if(empty($payment))
 		{	array_push($errArray, $ErrorMessage['p_hashid_payment']); }
 	}
@@ -94,7 +94,7 @@ if(isset($_POST['submit_delete_payment']))
 	//Delete the participant
 	if(empty($errArray))
 	{
-		$success = delete_payment($account['id'], $payment['id']);	
+		$success = delete_bdgt_payment($account['id'], $payment['id']);	
 		if($success !== true)
 		{array_push($errArray, 'Server error: Problem while attempting to delete a payment'); 	}
 			else

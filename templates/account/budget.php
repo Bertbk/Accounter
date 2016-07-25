@@ -359,7 +359,7 @@ foreach($this_payment as $payment)
 						<div class="col-xs-2 col-md-1">
 							<form method="post" 
 								class="deleteicon"
-								action="<?php echo ACTIONPATH.'/spreadsheets/budgets/bdgt_payments/delete_payment.php'?>"
+								action="<?php echo ACTIONPATH.'/spreadsheets/budgets/bdgt_payments/delete_bdgt_payment.php'?>"
 									>
 									<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
 									<input type="hidden" name="p_hashid_payment" value="<?php echo $payment['hashid']?>">

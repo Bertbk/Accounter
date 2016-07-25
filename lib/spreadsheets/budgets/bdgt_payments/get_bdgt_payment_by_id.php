@@ -15,9 +15,9 @@ A participant is here a row in the paymentss SQL table
 Warning: a payment points to a bill_participant, not to a participant.
 */
 
-include_once(__DIR__.'/../get_db.php');
+include_once(__DIR__.'/../../../get_db.php');
 
-function get_payment_by_id($account_id_arg, $payment_id_arg)
+function get_bdgt_payment_by_id($account_id_arg, $payment_id_arg)
 {
 	$db = get_db();
 
@@ -26,7 +26,7 @@ function get_payment_by_id($account_id_arg, $payment_id_arg)
 	
 	try
 	{
-		$myquery = 'SELECT * FROM '.TABLE_PAYMENTS.'
+		$myquery = 'SELECT * FROM '.TABLE_BDGT_PAYMENTS.'
 		WHERE account_id=:account_id AND id=:payment_id';
 		$prepare_query = $db->prepare($myquery);
 		$prepare_query->bindValue(':account_id', $account_id, PDO::PARAM_INT);
@@ -35,6 +35,7 @@ function get_payment_by_id($account_id_arg, $payment_id_arg)
 	}
 	catch (Exception $e)
 	{
+		return array();
 	//	echo 'Fail to connect: ' . $e->getMessage();
 	}
 	$reply = $prepare_query->fetchAll();

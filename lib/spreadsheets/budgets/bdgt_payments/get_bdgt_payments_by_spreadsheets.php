@@ -9,36 +9,36 @@
  */
  
 /*
-Returns every payments of an account (by its id), stored by bills.
+Returns every payments of an account (by its id), stored by spreadsheets.
 A participant is here a row in the paymentss SQL table 
 JOINED WITH: payer name and color, and receiver name/color (participants SQL table).
 
-Warning: a payment points to a bill_participant, not to a participant.
+Warning: a payment points to a spreadsheet_participant, not to a participant.
 */
-include_once(__DIR__.'/../get_db.php');
-include_once(LIBPATH.'/payments/get_payments_by_bill_id.php');
-include_once(LIBPATH.'/bills/get_bills.php');
+include_once(__DIR__.'/../../../get_db.php');
+include_once(LIBPATH.'/spreadsheets/budgets/bdgt_payments/get_bdgt_payments_by_spreadsheet_id.php');
+include_once(LIBPATH.'/spreadsheets/get_spreadsheets_by_type.php');
 
 /*
-Return an array of every payments for every bill:
+Return an array of every payments for every spreadsheet:
 $reply is an array of size = number of payments.
-$reply['bill_id'] = array obtained by get_payments_by_bill_id(..., $bill_id)
+$reply['spreadsheet_id'] = array obtained by get_payments_by_spreadsheet_id(..., $spreadsheet_id)
 */
-function get_payments_by_bills($account_id_arg)
+function get_payments_by_spreadsheets($account_id_arg)
 {
 	$db = get_db();
 
 	$account_id = (int)$account_id_arg;
 	
-	$bills = get_bills($account_id);
+	$budgets = get_spreadsheets_by_type($account_id, "budget");
 	
-	if(empty($bills)){return array();}
+	if(empty($budgets)){return array();}
 
 	$reply = array();
 	
-	foreach ($bills as $bill)
+	foreach ($budgets as $budget)
 	{
-		$reply[$bill['id']] = get_payments_by_bill_id($account_id, $bill['id']);
+		$reply[$budget['id']] = get_bdgt_payments_by_spreadsheet_id($account_id, $budget['id']);
 	}
 	return $reply;
 	

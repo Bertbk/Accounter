@@ -15,10 +15,10 @@ A participant is here a row in the paymentss SQL table
 Warning: a payment points to a bill_participant, not to a participant.
 */
 
-include_once(__DIR__.'/../get_db.php');
+include_once(__DIR__.'/../../../get_db.php');
 include_once(LIBPATH.'/hashid/validate_hashid.php');
 
-function get_payment_by_hashid($account_id_arg, $payment_hashid_arg)
+function get_bdgt_payment_by_hashid($account_id_arg, $payment_hashid_arg)
 {
 	$db = get_db();
 
@@ -30,7 +30,7 @@ function get_payment_by_hashid($account_id_arg, $payment_hashid_arg)
 	
 	try
 	{
-		$myquery = 'SELECT * FROM '.TABLE_PAYMENTS.'
+		$myquery = 'SELECT * FROM '.TABLE_BDGT_PAYMENTS.'
 		WHERE account_id=:account_id AND hashid=:payment_hashid';
 		$prepare_query = $db->prepare($myquery);
 		$prepare_query->bindValue(':account_id', $account_id, PDO::PARAM_INT);

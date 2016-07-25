@@ -12,36 +12,34 @@
 Updates a payment providing its hashid and the associated account id.
 A participant is here a row in the paymentss SQL table 
 
-Warning: a payment points to a bill_participant, not to a participant.
+Warning: a payment points to a spreadsheet_participant, not to a participant.
 */
-include_once(__DIR__.'/../get_db.php');
-include_once(LIBPATH.'/payments/get_payment_by_id.php');
-include_once(LIBPATH.'/bill_participants/get_bill_participant_by_id.php');
+include_once(__DIR__.'/../../../get_db.php');
+include_once(LIBPATH.'/spreadsheets/budgets/bdgt_payments/get_bdgt_payment_by_id.php');
 
 
-function update_payment($account_id_arg, $bill_id_arg, $payment_id_arg, $payer_id_arg, $cost_arg, 
-			$receiver_id_arg, $description_arg, $date_of_payment_arg)
+function update_bdgt_payment($account_id_arg, $payment_id_arg, $creditor_id_arg, $amount_arg, 
+			$debtor_id_arg, $description_arg, $date_of_payment_arg)
 {
 	$db = get_db();
 
 	$account_id = (int)$account_id_arg;
-	$new_bill_id = (int)$bill_id_arg;
 	$payment_id = (int)$payment_id_arg;
-	$new_payer_id = (int)$payer_id_arg;
-	$new_cost = (float)$cost_arg;
-	$new_receiver_id = (is_null($receiver_id_arg)||empty($receiver_id_arg))?null:(int)$receiver_id_arg;
+	$new_creditor_id = (int)$creditor_id_arg;
+	$new_amount = (float)$amount_arg;
+	$new_debtor_id = (is_null($debtor_id_arg)||empty($debtor_id_arg))?null:(int)$debtor_id_arg;
 	$new_description = $description_arg;
 	$new_date_of_payment = $date_of_payment_arg;
 
-	$new_receiver_id = empty($new_receiver_id) ? null:$new_receiver_id;
+	$new_debtor_id = empty($new_debtor_id) ? null:$new_debtor_id;
 	$new_description = empty($new_description) ? null:$new_description;
 	$new_date_of_payment = empty($new_date_of_payment) ? null:$new_date_of_payment;
 	
-	if($new_receiver_id == -1)
-	{		$new_receiver_id=null;	}
+	if($new_debtor_id == -1)
+	{		$new_debtor_id=null;	}
 	
 	//Get current payment
-	$payment_to_edit = get_payment_by_id($account_id, $payment_id);
+	$payment_to_edit = get_bdgt_payment_by_id($account_id, $payment_id);
 	
 	if(empty($payment_to_edit))
 	{		return false;	}
@@ -55,30 +53,18 @@ function update_payment($account_id_arg, $bill_id_arg, $payment_id_arg, $payer_i
 		}
 	}
 	
-	if($new_payer_id === $new_receiver_id)
+	if($new_creditor_id == $new_debtor_id)
 	{		return false;	}
 	
 	//Check if nothing to do
-	if($new_bill_id === $payment_to_edit['bill_id']
-	&& $new_payer_id === $payment_to_edit['payer_id']
-	&& $new_cost === $payment_to_edit['cost']
-	&& $new_receiver_id === $payment_to_edit['receiver_id']
-	&& $new_description === $payment_to_edit['description']
+	if($new_creditor_id == $payment_to_edit['creditor_id']
+	&& $new_amount == $payment_to_edit['amount']
+	&& $new_debtor_id == $payment_to_edit['debtor_id']
+	&& $new_description == $payment_to_edit['description']
 	&& $new_date_of_payment == $payment_to_edit['date_of_payment']
 	)
 	{
 		return true;
-	}
-	
-	// If moving to another bill, check if people exists
-	$new_participation_payer = get_bill_participant_by_id($account_id, $new_payer_id);
-	if($new_participation_payer['bill_id'] != $new_bill_id )
-	{return false;}
-	if(!is_null($receiver_id))
-	{
-		$new_participation_recv = get_bill_participant_by_id($account_id, $new_receiver_id);
-		if($new_participation_recv['bill_id'] != $new_bill_id )
-		{return false;}
 	}
 	
 	
@@ -86,14 +72,13 @@ function update_payment($account_id_arg, $bill_id_arg, $payment_id_arg, $payer_i
 	try
 	{
 		$myquery = 'UPDATE '.TABLE_PAYMENTS.' 
-		SET bill_id=:new_bill_id, payer_id=:new_payer_id, cost=:new_cost, receiver_id=:new_receiver_id, 
+		SET creditor_id=:new_creditor_id, amount=:new_amount, debtor_id=:new_debtor_id, 
 		description=:new_description, date_of_payment=:new_date_of_payment
 		WHERE id=:payment_id';
 		$prepare_query = $db->prepare($myquery);
-		$prepare_query->bindValue(':new_bill_id', $new_bill_id, PDO::PARAM_INT);
-		$prepare_query->bindValue(':new_payer_id', $new_payer_id, PDO::PARAM_INT);
-		$prepare_query->bindValue(':new_cost', $new_cost, PDO::PARAM_STR);
-		$prepare_query->bindValue(':new_receiver_id', $new_receiver_id, ((is_null($new_receiver_id))?(PDO::PARAM_NULL):(PDO::PARAM_INT)));
+		$prepare_query->bindValue(':new_creditor_id', $new_creditor_id, PDO::PARAM_INT);
+		$prepare_query->bindValue(':new_amount', $new_amount, PDO::PARAM_STR);
+		$prepare_query->bindValue(':new_debtor_id', $new_debtor_id, ((is_null($new_debtor_id))?(PDO::PARAM_NULL):(PDO::PARAM_INT)));
 		$prepare_query->bindValue(':new_description', $new_description, ((is_null($new_description))?(PDO::PARAM_NULL):(PDO::PARAM_STR)));
 		$prepare_query->bindValue(':new_date_of_payment', $new_date_of_payment, ((is_null($new_date_of_payment))?(PDO::PARAM_NULL):(PDO::PARAM_STR)));
 		$prepare_query->bindValue(':payment_id', $payment_id, PDO::PARAM_INT);
@@ -102,6 +87,7 @@ function update_payment($account_id_arg, $bill_id_arg, $payment_id_arg, $payer_i
 	}
 	catch (Exception $e)
 	{
+		return false;
 	//	echo 'Fail to connect: ' . $e->getMessage();
 	}
 	return $isgood;
