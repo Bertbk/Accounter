@@ -13,7 +13,7 @@ Check the data before asking the SQL to delete a spreadsheet
 The SQL should be done so that every dependent spreadsheet_participants and payments are also deleted
  */
 
- require_once __DIR__.'/../../config-app.php';
+ require_once __DIR__.'/../../../config-app.php';
 
 include_once(LIBPATH.'/accounts/get_account_admin.php');
 

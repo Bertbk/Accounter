@@ -13,7 +13,7 @@ Check the data before asking the SQL to update a spreadsheet
  */
 
  
-require_once __DIR__.'/../../config-app.php';
+require_once __DIR__.'/../../../config-app.php';
 
 include_once(LIBPATH.'/accounts/get_account_admin.php');
 

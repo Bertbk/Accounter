@@ -28,6 +28,12 @@ include_once(LIBPATH.'/accounts/get_account_admin.php');
 include_once(LIBPATH.'/members/get_members.php');
 include_once(LIBPATH.'/spreadsheets/get_spreadsheets.php');
 
+include_once(LIBPATH.'/spreadsheets/budgets/get_bdgt_participants.php');
+include_once(LIBPATH.'/spreadsheets/budgets/get_available_bdgt_participants.php');
+include_once(LIBPATH.'/spreadsheets/budgets/get_bdgt_payments.php');
+
+
+
 /*
 include_once(LIBPATH.'/payments/get_payments_by_spreadsheets.php');
 include_once(LIBPATH.'/spreadsheet_participants/get_spreadsheet_participants.php');
@@ -144,22 +150,20 @@ if($admin_mode && !empty($_GET['edit']) && !empty($_GET['edit_hashid']))
 
 //=== MEMBERS ===
 $my_members = get_members($my_account_id); //All person
-$n_members = 0;
+$n_members = count($my_members);
 $n_people = 0;
 foreach($my_members  as $member)
 {
-	$n_members += 1 ;
 	$n_people += (int)$member['nb_of_people'] ;
 }
 
-//=== spreadsheetS ===
+//=== SPREADSHEETS ===
 $my_spreadsheets = get_spreadsheets($my_account_id); // All spreadsheets
-//$my_spreadsheet_participants = get_spreadsheet_participants($my_account_id); // Participation for each spreadsheet
-//$my_free_spreadsheet_participants = get_free_spreadsheet_participants($my_account_id); // Possible participation for each spreadsheet
-//Number of spreadsheets
 $n_spreadsheets = count($my_spreadsheets);
-//Payments of each spreadsheet
-//$my_payments_per_spreadsheet = get_payments_by_spreadsheets($my_account_id); //All payments per spreadsheet
+//Budget sheet
+$my_budget_participants = get_bdgt_participants($my_account_id); // Participation for each budget sheet
+$my_available_budget_participants = get_available_bdgt_participants($my_account_id); // Possible participation for each budget spreadsheet
+$my_payments_per_budget = get_bdgt_payments($my_account_id); //All payments organized by budget sheets
 //For JS : create the list of payer to send to JS
 
 /*
