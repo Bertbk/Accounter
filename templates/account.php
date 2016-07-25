@@ -37,8 +37,8 @@ Template of a particular account page, that is :
 <link rel="stylesheet" href="<?php echo BASEURL.'/bootstrap/css/bootstrap-select.min.css'?>">
 
 <link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/global.css'?>">
-<link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/participant.css'?>">
-<link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/bill.css'?>">
+<link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/member.css'?>">
+<link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/spreadsheet.css'?>">
 <link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/bill_participant.css'?>">
 <link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/payment.css'?>">
 <link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/account.css'?>">
@@ -91,7 +91,7 @@ Template of a particular account page, that is :
 			</div>
 			<div class="row">
 				<div class="col-md-3">
-					<?php //include(__DIR__.'/account/members.php');?>
+					<?php include(__DIR__.'/account/aside_members.php');?>
 					<?php //include(__DIR__.'/account/add_spreadsheet_panel.php');?>
 				</div>
 				<div class="col-md-9">

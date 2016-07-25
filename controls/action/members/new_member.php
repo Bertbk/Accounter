@@ -9,16 +9,16 @@
  */
  
  /*
-Check the data before asking the SQL to create a new user
+Check the data before asking the SQL to create a new member
  */
 
  
-require_once __DIR__.'/../../config-app.php';
+require_once __DIR__.'/../../../config-app.php';
 
 include_once(LIBPATH.'/accounts/get_account_admin.php');
 
-include_once(LIBPATH.'/users/get_user_by_name.php');
-include_once(LIBPATH.'/users/set_user.php');
+include_once(LIBPATH.'/members/get_member_by_name.php');
+include_once(LIBPATH.'/members/set_member.php');
 
 include_once(LIBPATH.'/hashid/validate_hashid.php');
 include_once(LIBPATH.'/hashid/create_hashid.php');
@@ -34,21 +34,21 @@ $redirect_link ="" ;
 
 $ErrorEmptyMessage = array(
 		'p_hashid_account' => 'Please provide an acount',
-		'p_new_user' => 'Please provide at least one user',
+		'p_new_member' => 'Please provide at least one member',
 		'p_name' => 'Please provide a name',
 		'p_nb_of_people' => 'Please provide a number of people'
  );
  
 $ErrorMessage = array(
 	'p_hashid_account' => 'Account is not valid',
-	'p_new_user' => 'users are not valid',
+	'p_new_member' => 'members are not valid',
 	'p_name' => 'Name is not valid',
 	'p_nb_of_people' => 'Number of people is not valid',
 	'p_email' => 'Email address is not valid'
  );
 
 
-if(isset($_POST['submit_new_user']))
+if(isset($_POST['submit_new_member']))
 {
 	//Manual treatments of arguments
 	$key = 'p_hashid_account';
@@ -72,8 +72,8 @@ if(isset($_POST['submit_new_user']))
 		{	array_push($errArray, $ErrorMessage['p_hashid_account']); }
 	}
 
-	//users (possibly multiple)
-	$key = 'p_new_user';
+	//members (possibly multiple)
+	$key = 'p_new_member';
 	if(empty($_POST[$key])) { //If empty
 		array_push($errArray, $ErrorEmptyMessage[$key]);
 	}
@@ -81,58 +81,58 @@ if(isset($_POST['submit_new_user']))
 	
 	if(empty($errArray))
 	{
-		foreach($_POST['p_new_user'] as $caca=>$user)
+		foreach($_POST['p_new_member'] as $caca=>$member)
 		{
-			$errArray2 = array(); // Error array for each user
+			$errArray2 = array(); // Error array for each member
 			
 			//Name
 			$key = 'p_name';
-			if(empty($user[$key])) { //If empty
+			if(empty($member[$key])) { //If empty
 				continue;
 			}
 			else{
-				$name_of_user = $user[$key];
+				$name_of_member = $member[$key];
 			}
 			
 			//Number of people
 			$key = 'p_nb_of_people';
-			if(empty($user[$key])) { //If empty
+			if(empty($member[$key])) { //If empty
 				array_push($errArray2, $ErrorEmptyMessage[$key]);
 			}
 			else{
-				$nb_of_people = filter_var($user[$key], FILTER_VALIDATE_INT);
+				$nb_of_people = filter_var($member[$key], FILTER_VALIDATE_INT);
 				if($nb_of_people === false)
 				{array_push($errArray2, $ErrorMessage[$key]);}
 				else if($nb_of_people < 1)
 				{array_push($errArray2, $ErrorMessage[$key]);}
 			}
 			
-			//Hash id for the new user
-			$hashid_user = "";
+			//Hash id for the new member
+			$hashid_member = "";
 			if(empty($errArray2))
 			{	
-				$hashid_user = create_hashid();
-				if(is_null($hashid_user))
+				$hashid_member = create_hashid();
+				if(is_null($hashid_member))
 					{ array_push($errArray2, "Server error: problem while creating hashid.");}
 			}
 			
-			//Check if two users have the same name
+			//Check if two members have the same name
 			if(empty($errArray2))
 			{
-				$does_this_guy_exists = get_user_by_name($account['id'], $name_of_user);
+				$does_this_guy_exists = get_member_by_name($account['id'], $name_of_member);
 				if(!empty($does_this_guy_exists))
-				{array_push($errArray2, 'A user has the same name'); 	}
+				{array_push($errArray2, 'A member has the same name'); 	}
 			}
 			
-			//Save the user
+			//Save the member
 			if(empty($errArray2))
 			{
-				$success = set_user($account['id'], $hashid_user, $name_of_user, $nb_of_people);	
+				$success = set_member($account['id'], $hashid_member, $name_of_member, $nb_of_people);	
 				if($success !== true)
-					{array_push($errArray2, 'Server error: Problem while attempting to add a user'); 	}
+					{array_push($errArray2, 'Server error: Problem while attempting to add a member'); 	}
 				else
 					{
-						array_push($successArray, 'user '.$name_of_user.' has been successfully added');
+						array_push($successArray, 'member '.$name_of_member.' has been successfully added');
 					}
 			}
 			
@@ -141,7 +141,7 @@ if(isset($_POST['submit_new_user']))
 			{
 				$errArray = array_merge($errArray, $errArray2);
 			}
-		} //Foreach user
+		} //Foreach member
 	}//If statement
 }
 
@@ -164,7 +164,7 @@ if(empty($account))
 	$redirect_link = BASEURL;
 }
 else{
-	$redirect_link = BASEURL.'/account/'.$account['hashid_admin'].'/admin#users';
+	$redirect_link = BASEURL.'/account/'.$account['hashid_admin'].'/admin#members';
 }
 header('location: '.$redirect_link);
 exit;

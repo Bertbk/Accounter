@@ -9,17 +9,17 @@
  */
  
  /*
-Check the data before asking the SQL to delete a user
-The SQL should be done so that every depending bill_user and payment are also deleted
+Check the data before asking the SQL to delete a member
+The SQL should be done so that every depending bill_member and payment are also deleted
  */
 
  
-require_once __DIR__.'/../../config-app.php';
+require_once __DIR__.'/../../../config-app.php';
 
 include_once(LIBPATH.'/accounts/get_account_admin.php');
 
-include_once(LIBPATH.'/users/get_user_by_hashid.php');
-include_once(LIBPATH.'/users/delete_user.php');
+include_once(LIBPATH.'/members/get_member_by_hashid.php');
+include_once(LIBPATH.'/members/delete_member.php');
 
 include_once(LIBPATH.'/hashid/validate_hashid.php');
 
@@ -32,16 +32,16 @@ $warnArray = array(); //warning messages
 $successArray = array(); //success messages
 $redirect_link ="" ;
 
-if(isset($_POST['submit_delete_user']))
+if(isset($_POST['submit_delete_member']))
 {
 	$ErrorEmptyMessage = array(
 		'p_hashid_account' => 'No acount provided',
-		'p_hashid_user' => 'No user provided'
+		'p_hashid_member' => 'No member provided'
    );
 	 
 	$ErrorMessage = array(
 		'p_hashid_account' => 'Account not valid',
-		'p_hashid_user' => 'user not valid'
+		'p_hashid_member' => 'member not valid'
    );
 
 	//ACCOUNT
@@ -64,8 +64,8 @@ if(isset($_POST['submit_delete_user']))
 		{	array_push($errArray, $ErrorMessage['p_hashid_account']); }
 	}
 
-	//user
-	$key = 'p_hashid_user';
+	//member
+	$key = 'p_hashid_member';
 	if(empty($_POST[$key])) { //If empty
 		array_push($errArray, $ErrorEmptyMessage[$key]);
 	}
@@ -73,33 +73,33 @@ if(isset($_POST['submit_delete_user']))
 		if(validate_hashid($_POST[$key]) == false)
 		{array_push($errArray, $ErrorMessage[$key]);}
 	else{
-		$hashid_user = $_POST[$key];		
+		$hashid_member = $_POST[$key];		
 		}
 	}
-	//Get the user
+	//Get the member
 	if(empty($errArray))
 	{		
-		$user = get_user_by_hashid($account['id'], $hashid_user);
-		if(empty($user))
-		{	array_push($errArray, $ErrorMessage['p_hashid_user']); }
+		$member = get_member_by_hashid($account['id'], $hashid_member);
+		if(empty($member))
+		{	array_push($errArray, $ErrorMessage['p_hashid_member']); }
 	}
 
 	//Check if accounts match
 	if(empty($errArray))
 	{		
-		if($user['account_id'] !== $account['id'])
+		if($member['account_id'] !== $account['id'])
 		{	array_push($errArray, $ErrorMessage['Accounts mismatch']); }
 	}
 	
-	//Delete the user
+	//Delete the member
 	if(empty($errArray))
 	{
-		$success = delete_user($account['id'], $user['id']);	
+		$success = delete_member($account['id'], $member['id']);	
 		if($success !== true)
-		{array_push($errArray, 'Server error: Problem while attempting to delete a user'); 	}
+		{array_push($errArray, 'Server error: Problem while attempting to delete a member'); 	}
 			else
 			{
-				array_push($successArray, 'user has been successfully deleted');
+				array_push($successArray, 'member has been successfully deleted');
 			}
 	}
 }
@@ -123,7 +123,7 @@ if(empty($account))
 	$redirect_link = BASEURL;
 }
 else{
-	$redirect_link = BASEURL.'/account/'.$account['hashid_admin'].'/admin#users';
+	$redirect_link = BASEURL.'/account/'.$account['hashid_admin'].'/admin#members';
 }
 header('location: '.$redirect_link);
 exit;

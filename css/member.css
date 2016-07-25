@@ -7,33 +7,33 @@
  *
 */
 
-/*Participant*/
+/*member*/
 
-div#participants{
+div#members{
 	overflow:hidden;
 }
 
-div#participants div.panel-heading{
+div#members div.panel-heading{
 	overflow:hidden;
 }
 
 
-div#participants h2{
+div#members h2{
 	display:inline-block;
 }
 
-div#participants div.row_participant{
+div#members div.row_member{
 	margin-bottom:5px;
 }
 
-div#div_add_participant{
+div#div_add_member{
 	margin-top:10px;
 }
 
-div#div_add_participant .form-control{
+div#div_add_member .form-control{
 }
 
-div#div_add_participant a {
+div#div_add_member a {
 color:black;
 }
 

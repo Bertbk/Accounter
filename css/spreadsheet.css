@@ -7,51 +7,51 @@
  *
 */
 
-div#add_bill{
+div#add_spreadsheet{
 	overflow:hidden;
 }
 
-div#add_bill h2{
+div#add_spreadsheet h2{
 	display:inline-block;
 }
 
-h3.bill_title{
+h3.spreadsheet_title{
 	display:inline-block;
 }
 
-div.button_bill_title{
+div.button_spreadsheet_title{
 	float:right;
 }
 
 
-div.bill div.panel-primary div.panel-heading h3{
+div.spreadsheet div.panel-primary div.panel-heading h3{
 	display:inline-block;
 	margin-right: 10px;
 }
 
-div.bill div.panel-primary div.panel-heading img{
+div.spreadsheet div.panel-primary div.panel-heading img{
 	/*display:inline-block;*/
 }
 
-p#show_hide_add_bill a{
+p#show_hide_add_spreadsheet a{
 	color:black;
 }
 
 
 /* back ground colors */
-  div.bill div.panel,
-  div.bill div.panel div.panel-body,
-  div.bill div.panel div.panel-heading{
+  div.spreadsheet div.panel,
+  div.spreadsheet div.panel div.panel-body,
+  div.spreadsheet div.panel div.panel-heading{
     border: none;
 		color:black;
 }
 
-div.bill  div.panel{
+div.spreadsheet  div.panel{
 	box-shadow: -4px 6px 9px rgba(50, 50, 50, 0.5);
 	color: black;
 }
 
-div.bill div.highlight{
+div.spreadsheet div.highlight{
 	position:relative;
 	left:-15px;
 	width:calc(100% + 30px);
@@ -66,10 +66,10 @@ div.bill div.highlight{
 
 /* End back ground colors */
 
-div.bill div.panel  a{
+div.spreadsheet div.panel  a{
 color:black;
 }
 
-div.bill div.panel  .bill_participant a{
+div.spreadsheet div.panel  .spreadsheet_participant a{
 color:black;
 }
