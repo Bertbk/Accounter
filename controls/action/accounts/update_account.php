@@ -14,7 +14,7 @@ Check the data before asking the SQL to update an account
  */
 
  
-require_once __DIR__.'/../../config-app.php';
+require_once __DIR__.'/../../../config-app.php';
 
 include_once(LIBPATH.'/accounts/update_account.php');
 include_once(LIBPATH.'/accounts/get_account_admin.php');

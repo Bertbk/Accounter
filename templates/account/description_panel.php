@@ -32,7 +32,7 @@ else{
 		
 		<?php if($edit_mode === 'account' 
 			&& $edit_hashid === $my_account['hashid']){?>
-		<form method="post"	action="<?php echo ACTIONPATH.'/update_account.php'?>" role="form"
+		<form method="post"	action="<?php echo ACTIONPATH.'/accounts/update_account.php'?>" role="form"
 		id="form_edit_account">
 			<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
 		</form>

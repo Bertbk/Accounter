@@ -83,9 +83,9 @@ Template of a particular account page, that is :
 					<?php include(__DIR__.'/header/header.php'); ?>
 				</header>
 			</div>
-			<?php //include(__DIR__.'/messages/messages.php');?>
-			<?php //include(__DIR__.'/account/cancel_form.php');?>
-			<?php //include(__DIR__.'/account/description_panel.php');?>
+			<?php include(__DIR__.'/messages/messages.php');?>
+			<?php include(__DIR__.'/account/cancel_form.php');?>
+			<?php include(__DIR__.'/account/description_panel.php');?>
 			<div class="row">
 				<?php //include(__DIR__.'/account/solution.php');?>
 			</div>
