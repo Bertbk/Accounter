@@ -142,15 +142,22 @@ if($admin_mode && !empty($_GET['edit']) && !empty($_GET['edit_hashid']))
 
 /* Computations and values used in display */
 
-//=== PARTICIPANTS ===
+//=== MEMBERS ===
 $my_members = get_members($my_account_id); //All person
+$n_members = 0;
+$n_people = 0;
+foreach($my_members  as $member)
+{
+	$n_members += 1 ;
+	$n_people += (int)$member['nb_of_people'] ;
+}
 
 //=== spreadsheetS ===
 $my_spreadsheets = get_spreadsheets($my_account_id); // All spreadsheets
 //$my_spreadsheet_participants = get_spreadsheet_participants($my_account_id); // Participation for each spreadsheet
 //$my_free_spreadsheet_participants = get_free_spreadsheet_participants($my_account_id); // Possible participation for each spreadsheet
 //Number of spreadsheets
-//$n_spreadsheets = count($my_spreadsheets);
+$n_spreadsheets = count($my_spreadsheets);
 //Payments of each spreadsheet
 //$my_payments_per_spreadsheet = get_payments_by_spreadsheets($my_account_id); //All payments per spreadsheet
 //For JS : create the list of payer to send to JS
@@ -208,14 +215,7 @@ foreach($my_participants as $payer)
 	}
 }
 */
-							
-$n_members = 0;
-$n_people = 0;
-foreach($my_members  as $member)
-{
-	$n_members += 1 ;
-	$n_people += (int)$members['nb_of_people'] ;
-}
+
 
 if(empty($my_account['description'])
 	||is_null($my_account['description']))

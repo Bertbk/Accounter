@@ -25,13 +25,13 @@ else{
 ?>
 
 <div id="members" class="panel panel-primary <?php echo $overlay?>">
-	<div class="panel-heading cursor_pointer"
+	<div class="panel-heading cursor_pointer overflowhidden"
 		data-toggle="collapse" data-target="#panel-body_members">
-		<h2>Members: <?php echo (int)$n_members ?> (<?php echo (int)$n_people ?>)</h2>
 		<button class="btn btn-default floatright" title="Collapse/Expand"
 			data-toggle="collapse" data-target="#panel-body_members">
 			<span class="glyphicon glyphicon-plus"></span>
 		</button>
+		<h2>Members: <?php echo (int)$n_members ?> (<?php echo (int)$n_people ?>)</h2>
 	</div>
 	<div class="panel-body panel-collapse collapse in" id="panel-body_members">
 <?php if (is_array($my_members) && sizeof($my_members) > 0 ) 

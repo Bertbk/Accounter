@@ -37,15 +37,15 @@ Template of a particular account page, that is :
 <link rel="stylesheet" href="<?php echo BASEURL.'/bootstrap/css/bootstrap-select.min.css'?>">
 
 <link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/global.css'?>">
-<link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/member.css'?>">
-<link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/spreadsheet.css'?>">
-<link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/bill_participant.css'?>">
-<link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/payment.css'?>">
 <link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/account.css'?>">
 <link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/solution.css'?>">
-<link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/receipt.css'?>">
-<link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/receipt_payer.css'?>">
-<link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/receipt_receiver.css'?>">
+<link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/member.css'?>">
+<link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/spreadsheet.css'?>">
+<link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/bdgt_member.css'?>">
+<link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/bdgt_payment.css'?>">
+<link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/rcpt.css'?>">
+<link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/rcpt_payer.css'?>">
+<link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/rcpt_recipient.css'?>">
 
 <script type="text/javascript" src="<?php echo BASEURL.'/js/account.js'?>"></script>
 
@@ -85,14 +85,14 @@ Template of a particular account page, that is :
 			</div>
 			<?php include(__DIR__.'/messages/messages.php');?>
 			<?php include(__DIR__.'/account/cancel_form.php');?>
-			<?php include(__DIR__.'/account/description_panel.php');?>
+			<?php include(__DIR__.'/account/panel_description.php');?>
 			<div class="row">
 				<?php //include(__DIR__.'/account/solution.php');?>
 			</div>
 			<div class="row">
 				<div class="col-md-3">
-					<?php include(__DIR__.'/account/aside_members.php');?>
-					<?php //include(__DIR__.'/account/add_spreadsheet_panel.php');?>
+					<?php include(__DIR__.'/account/panel_members.php');?>
+					<?php include(__DIR__.'/account/panel_add_spreadsheet.php');?>
 				</div>
 				<div class="col-md-9">
 					<?php //include(__DIR__.'/account/spreadsheet.php');?>

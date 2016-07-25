@@ -103,9 +103,12 @@ div#overlay{
     margin-right: 0px !important;
 }
 
-
 .red{
 	color:red;
+}
+
+.overflowhidden{
+	overflow:hidden;
 }
 
 div.input-group span.input-group-addon.glyphicon{

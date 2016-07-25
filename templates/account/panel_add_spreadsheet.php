@@ -20,29 +20,30 @@ if($admin_mode && $edit_mode == false)
 ?>
 <form method="post"
 	id="form_add_spreadsheet"
-	action="<?php echo ACTIONPATH.'/new_spreadsheet.php'?>">
+	action="<?php echo ACTIONPATH.'/spreadsheets/new_spreadsheet.php'?>">
 	<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>" >
 	<input type="hidden" name="p_cpt_spreadsheet" value="<?php echo $n_spreadsheets?>" >
 </form>
 
 <div id="add_spreadsheet">
 	<div class="panel panel-primary">
-		<div class="panel-heading cursorpointer" data-toggle="collapse" data-target="#form_add_spreadsheet_panel_body">
-			<h2>Add a spreadsheet</h2>
+		<div class="panel-heading cursorpointer overflowhidden" data-toggle="collapse" data-target="#form_add_spreadsheet_panel_body">
 			<button class="btn btn-default floatright" title="Collapse/Expand"
 				data-toggle="collapse" data-target="#form_add_spreadsheet_panel_body">
 				<span class="glyphicon glyphicon-plus"></span>
 			</button>
+			<h2>Add a spreadsheet</h2>
 		</div>
 		<div class="panel-body panel-collapse collapse in" id="form_add_spreadsheet_panel_body">
 			<fieldset>
 				<p><em>Fields with asterisk <span class="glyphicon glyphicon-asterisk red"></span> are required</em></p>
 				<div class="form-group">
 					<label for="form_set_spreadsheet_description">Type<span class="glyphicon glyphicon-asterisk red"></span></label>
-					 <input name="p_type" id="form_set_spreadsheet_type" class="form-control" 
+					 <select name="p_type" id="form_set_spreadsheet_type" class="form-control" 
 					 placeholder="Type" title="Type" form="form_add_spreadsheet">
-						<option value="budget" selected=selected>Budget (standard)</option>
+						<option value="budget" selected=selected>Budget (default)</option>
 						<option value="receipt">Receipt</option>
+					</select>
 				</div>
 				<div class="form-group">
 					<label for="form_set_spreadsheet_name">Title<span class="glyphicon glyphicon-asterisk red"></span></label>
