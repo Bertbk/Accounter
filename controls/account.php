@@ -28,9 +28,9 @@ include_once(LIBPATH.'/accounts/get_account_admin.php');
 include_once(LIBPATH.'/members/get_members.php');
 include_once(LIBPATH.'/spreadsheets/get_spreadsheets.php');
 
-include_once(LIBPATH.'/spreadsheets/budget_participants/get_bdgt_participants.php');
-include_once(LIBPATH.'/spreadsheets/budget_participants/get_available_bdgt_participants.php');
-include_once(LIBPATH.'/spreadsheets/budget_payments/get_bdgt_payments.php');
+include_once(LIBPATH.'/spreadsheets/budgets/bdgt_participants/get_bdgt_participants.php');
+include_once(LIBPATH.'/spreadsheets/budgets/get_bdgt_available_members.php');
+//include_once(LIBPATH.'/spreadsheets/budgets/bdgt_payments/get_bdgt_payments.php');
 
 
 
@@ -162,8 +162,8 @@ $my_spreadsheets = get_spreadsheets($my_account_id); // All spreadsheets
 $n_spreadsheets = count($my_spreadsheets);
 //Budget sheet
 $my_budget_participants = get_bdgt_participants($my_account_id); // Participation for each budget sheet
-$my_available_budget_participants = get_available_bdgt_participants($my_account_id); // Possible participation for each budget spreadsheet
-$my_payments_per_budget = get_bdgt_payments($my_account_id); //All payments organized by budget sheets
+$my_available_budget_participants = get_bdgt_available_members($my_account_id); // Possible participation for each budget spreadsheet
+//$my_payments_per_budget = get_bdgt_payments($my_account_id); //All payments organized by budget sheets
 //For JS : create the list of payer to send to JS
 
 /*

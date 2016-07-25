@@ -15,18 +15,20 @@ A spreadsheet is a row in the spreadsheets SQL table.
 
 include_once(__DIR__.'/../get_db.php');
 
-function get_spreadsheets($account_id_arg)
+function get_spreadsheets_by_type($account_id_arg, $type_arg)
 {
 	$db = get_db();
 
 	$account_id = (int)$account_id_arg;
+	$type_of_sheet = $type_arg;
 
 	try
 	{
 		$myquery = 'SELECT * FROM  '.TABLE_SPREADSHEETS.'
-		 WHERE account_id=:account_id ';
+		 WHERE account_id=:account_id AND type_of_sheet=:type_of_sheet';
 		$prepare_query = $db->prepare($myquery);
 		$prepare_query->bindValue(':account_id', $account_id, PDO::PARAM_INT);
+		$prepare_query->bindValue(':type_of_sheet', $type_of_sheet, PDO::PARAM_STR);
 		$isgood = $prepare_query->execute();
 	}
 	catch (Exception $e)

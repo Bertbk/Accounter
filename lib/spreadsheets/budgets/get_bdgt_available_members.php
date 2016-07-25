@@ -29,17 +29,14 @@ function get_bdgt_available_members($account_id_arg)
 
 	$account_id = (int)$account_id_arg;
 	
-	$my_spreadsheets = get_spreadsheets($account_id);
+	$my_bdgts = get_spreadsheets_by_type($account_id, "budget");
 	$my_members = get_members($account_id);
 		
 	$reply = array();
 	foreach($my_members as $member)
 	{
-		foreach($my_spreadsheets as $bdgt)
+		foreach($my_bdgts as $bdgt)
 		{
-			if($bdgt['type_of_sheet'] !== "budget")
-			{continue;}
-			
 			$find_participant = get_bdgt_participant_by_member_id($accout_id, $bdgt['id'], $member['id']);
 			if(!(empty($find_participant)))
 			{

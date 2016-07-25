@@ -11,7 +11,7 @@
  /*
 Lib: Add a row in the bdgt_participants SQL table
  */
-include_once(__DIR__.'/../get_db.php');
+include_once(__DIR__.'/../../../get_db.php');
 
 include_once(LIBPATH.'/bdgts/get_bdgt_by_id.php');
 include_once(LIBPATH.'/participants/get_participant_by_id.php');

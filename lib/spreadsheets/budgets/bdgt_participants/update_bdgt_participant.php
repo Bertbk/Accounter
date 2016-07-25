@@ -14,7 +14,7 @@ return true if everything went fine
 return error message or false otherwise
  */
  
-include_once(__DIR__.'/../get_db.php');
+include_once(__DIR__.'/../../../get_db.php');
 include_once(LIBPATH.'/spreadsheets/budgets/bdgt_participants/get_bdgt_participants_by_bdgt_id.php');
 include_once(LIBPATH.'/spreadsheets/budgets/bdgt_participants/get_bdgt_participant_by_id.php');
 

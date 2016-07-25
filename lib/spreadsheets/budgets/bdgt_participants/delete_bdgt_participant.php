@@ -12,7 +12,7 @@
 Delete a row in the bdgt_participants SQL table providing its id
 */
 
-include_once(__DIR__.'/../get_db.php');
+include_once(__DIR__.'/../../../get_db.php');
 
 function delete_bdgt_participant($account_id_arg, $bdgt_part_id_arg)
 {
