@@ -18,7 +18,7 @@ include_once(LIBPATH.'/spreadsheets/get_spreadsheets.php');
 
 include_once(LIBPATH.'/colors/give_me_next_color.php');
 
-function set_spreadsheet($account_id_arg, $hashid_spreadsheet_arg, $type_of_spreadsheet_arg, $title_spreadsheet_arg, $description_arg="")
+function set_spreadsheet($account_id_arg, $hashid_spreadsheet_arg, $type_of_spreadsheet_arg, $title_spreadsheet_arg, $description_arg)
 {
 	$db = get_db();
 
@@ -34,7 +34,7 @@ function set_spreadsheet($account_id_arg, $hashid_spreadsheet_arg, $type_of_spre
 	{
 		return false;
 	}
-	
+
 	$the_spreadsheets = get_spreadsheets($account_id);
 	$my_color = give_me_next_color($the_spreadsheets, 'spreadsheet');
 	//When color will come from users, check the reg ex
@@ -42,7 +42,7 @@ function set_spreadsheet($account_id_arg, $hashid_spreadsheet_arg, $type_of_spre
 	$isgood= false;
 	try
 	{
-		$myquery = 'INSERT INTO '.TABLE_SPREADSHEETS.'(id, account_id, hashid, type, title, description, color) 
+		$myquery = 'INSERT INTO '.TABLE_SPREADSHEETS.'(id, account_id, hashid, type_of_sheet, title, description, color) 
 		VALUES(NULL, :account_id, :hashid_spreadsheet, :type_spreadsheet, :title_spreadsheet, :description, :my_color)';
 		$prepare_query = $db->prepare($myquery);
 		$prepare_query->bindValue(':account_id', $account_id, PDO::PARAM_INT);

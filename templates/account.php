@@ -95,7 +95,7 @@ Template of a particular account page, that is :
 					<?php include(__DIR__.'/account/panel_add_spreadsheet.php');?>
 				</div>
 				<div class="col-md-9">
-					<?php //include(__DIR__.'/account/spreadsheet.php');?>
+					<?php include(__DIR__.'/account/spreadsheet.php');?>
 				</div>
 			</div>
 		</div>

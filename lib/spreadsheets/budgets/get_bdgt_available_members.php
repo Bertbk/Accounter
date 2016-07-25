@@ -37,7 +37,7 @@ function get_bdgt_available_members($account_id_arg)
 	{
 		foreach($my_bdgts as $bdgt)
 		{
-			$find_participant = get_bdgt_participant_by_member_id($accout_id, $bdgt['id'], $member['id']);
+			$find_participant = get_bdgt_participant_by_member_id($account_id, $bdgt['id'], $member['id']);
 			if(!(empty($find_participant)))
 			{
 				$reply[$bdgt['id']][$member['id']] = $member;

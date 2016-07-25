@@ -9,7 +9,7 @@
  */
  
  /*
-Template to display all the spreadsheets with their participants and payments
+Template to display all the spreadsheets
  */
  ?>
  
@@ -21,37 +21,41 @@ $cpt_spreadsheet = -1;
 foreach($my_spreadsheets as $spreadsheet)
 {
 	$cpt_spreadsheet ++;
-	$this_type = $my_spreadsheets['type'];
+	$this_type = $spreadsheet['type_of_sheet'];
 	//Overlay setting
 if($admin_mode 
 && $edit_mode == 'spreadsheet'
 && $edit_hashid === $spreadsheet['hashid'])
 {
-	$overlay="highlight";
+	$overlay=true;
+	$ovl_highlight = 'highlight';
+	$ovl_cursorpointer = '';
 }
 else{
-	$overlay = "";
+	$overlay = false;
+	$ovl_highlight = '';
+	$ovl_cursorpointer = 'cursorpointer';
 }
 ?>
 
-<div class="row spreadsheet <?php echo 'spreadsheet-'.$cpt_spreadsheet?> <?php echo $overlay?>" 
+<div class="row spreadsheet <?php echo 'spreadsheet-'.$cpt_spreadsheet?> <?php echo $ovl_highlight?>" 
 	id="<?php echo 'spreadsheet-'.$cpt_spreadsheet?>">
 	<div class="col-xs-12">
 		<div class="panel panel-primary">
-			<div class="panel-heading <?php if($overlay==""){echo 'cursorpointer';}?>"
-				<?php if($overlay==""){echo 'data-toggle="collapse" data-target="#panel-body_spreadsheet'.$cpt_spreadsheet.'"';}?>
+			<div class="panel-heading <?php echo $ovl_cursorpointer?>"
+				<?php if($overlay==false){echo 'data-toggle="collapse" data-target="#panel-body_spreadsheet'.$cpt_spreadsheet.'"';}?>
 				style="background-color:<?php echo '#'.$spreadsheet['color']?>">
 				<div class="row">
 	<?php 
 //Edit the spreadsheet (name, description, ...)
-if($admin_mode 
+		if($admin_mode 
 				&& $edit_mode === 'spreadsheet' 
 				&& $edit_hashid === $spreadsheet['hashid'])
 				{
 ?>
 					<div class="col-xs-12" id="<?php echo 'edit_tag_'.$edit_hashid?>">
 						<form method="post" id="<?php echo "form_update_spreadsheet_".$cpt_spreadsheet?>"
-							action="<?php echo ACTIONPATH.'/update_spreadsheet.php'?>">
+							action="<?php echo ACTIONPATH.'/spreadsheets/update_spreadsheet.php'?>">
 							<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
 							<input type="hidden" name="p_hashid_spreadsheet" value="<?php echo $spreadsheet['hashid']?>">
 							<input type="hidden" name="p_anchor" value="<?php echo '#spreadsheet-'.$cpt_spreadsheet?>">
@@ -63,9 +67,9 @@ if($admin_mode
 							</h2>
 						</form>
 					</div>
-<?php } else{
+<?php } 
+		else{
 ?>
-
 					<div class="col-md-9 ">
 						<h2 class="spreadsheet_title">
 							<?php echo ($cpt_spreadsheet+1).'. '.htmlspecialchars($spreadsheet['title']) ?>
@@ -86,7 +90,7 @@ if($admin_mode
 							</button>
 							<ul class="dropdown-menu" role="menu">
 								<li>
-									<form method="post" action="<?php echo ACTIONPATH.'/remove_spreadsheet_participants.php'?>">
+									<form method="post" action="<?php echo ACTIONPATH.'/spreadsheets/remove_spreadsheet_participants.php'?>">
 										<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
 										<input type="hidden" name="p_hashid_spreadsheet" value="<?php echo $spreadsheet['hashid']?>">
 										<input type="hidden" name="p_anchor" value="<?php echo '#spreadsheet-'.$cpt_spreadsheet?>">
@@ -97,7 +101,7 @@ if($admin_mode
 									</form>
 								</li>
 								<li>
-									<form method="post" action="<?php echo ACTIONPATH.'/remove_payments.php'?>">
+									<form method="post" action="<?php echo ACTIONPATH.'/spreadsheets/remove_payments.php'?>">
 										<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
 										<input type="hidden" name="p_hashid_spreadsheet" value="<?php echo $spreadsheet['hashid']?>">
 										<input type="hidden" name="p_anchor" value="<?php echo '#spreadsheet-'.$cpt_spreadsheet?>">
@@ -108,7 +112,7 @@ if($admin_mode
 									</form>
 								</li>
 								<li class="li_margin_top">
-									<form method="post" action="<?php echo ACTIONPATH.'/delete_spreadsheet.php'?>">
+									<form method="post" action="<?php echo ACTIONPATH.'/spreadsheets/delete_spreadsheet.php'?>">
 											<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
 											<input type="hidden" name="p_hashid_spreadsheet" value="<?php echo $spreadsheet['hashid']?>">
 											<button type="submit" class="btn btn-link confirmation" 
@@ -138,7 +142,7 @@ if($admin_mode
 						</div>
 					</div>
 	<?php
-		}
+				}
 ?>
 				</div>
 			</div>
@@ -149,7 +153,7 @@ $cblue = hexdec(substr($spreadsheet['color'], 4, 2));
 ?>
 			<div id="<?php echo 'panel-body_spreadsheet'.$cpt_spreadsheet?>" class="panel-collapse collapse in">
 				<div  class="panel-body"
-				style="background-color: rgba(<?php echo $cred.','.$cgreen.','.$cblue?>, 0.5);">
+					style="background-color: rgba(<?php echo $cred.','.$cgreen.','.$cblue?>, 0.5);">
 <?php 
 //Edit the spreadsheet (name, description, ...)
 if($admin_mode 
@@ -161,7 +165,7 @@ if($admin_mode
 						<label for="form_edit_spreadsheet_description">Description: </label>
 						<textarea name="p_description" class="form-control"
 						 form="<?php echo "form_update_spreadsheet_".$cpt_spreadsheet?>"><?php if(!empty($spreadsheet['description'])){echo htmlspecialchars($spreadsheet['description']);}?></textarea>
-					 </div>
+					</div>
 					<button type="submit" name="submit_update_spreadsheet" value="Submit"
 						form="<?php echo "form_update_spreadsheet_".$cpt_spreadsheet?>"
 						class="btn btn-primary" title="Submit changes">
@@ -172,23 +176,29 @@ if($admin_mode
 						Cancel
 					</button> 
 <?php	
-	}	else{
-	//Display only
-	if(!empty($spreadsheet['description']) && !is_null($spreadsheet['description']))
-	{
+	}
+	else{
+		//Display only
+		if(!empty($spreadsheet['description']) && !is_null($spreadsheet['description']))
+		{
 ?>
 					<h3>Description</h3>
 					<p><?php echo htmlspecialchars($spreadsheet['description'])?></p>
 <?php }
 	}
-	
 	if( $this_type == "budget")
 	{
-		include(__DIR__.'/spreadsheet/budget.php');
+		?>
+		<p>Budget</p>
+		<?php
+	//	include(__DIR__.'/spreadsheet/budget.php');
 	}
 	else if($this_type == "receipt")
 	{
-		include(__DIR__.'/spreadsheet/receipt.php');
+		?>
+		<p>Receipt</p>
+		<?php
+//		include(__DIR__.'/spreadsheet/receipt.php');
 	}
 ?>
 				</div> 
