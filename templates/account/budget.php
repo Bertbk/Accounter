@@ -268,10 +268,10 @@ $bdgt_participant_tmp  = null;
 							<strong>Amount</strong>
 						</div>
 						<div class="col-xs-4 col-md-2">
-							<strong>debtor</strong>
+							<strong>Debtor</strong>
 						</div>
 						<div class="hidden-xs hidden-sm hidden-md col-lg-2">
-							<strong>Designation</strong>
+							<strong>Description</strong>
 						</div>
 						<div class="hidden-xs hidden-sm hidden-md col-lg-2">
 							<strong>Date</strong>
@@ -397,7 +397,7 @@ if($payment_to_edit !== false)
 									</label>
 									<div class="input-group">
 										<select name="p_hashid_creditor" 
-											onchange="DropDownListsBetweenParticipants(this, document.getElementById('form_edit_payment_recv_<?php echo $spreadsheet['id']?>'))"
+											onchange="DropDownListsBetweenParticipants(this, document.getElementById('form_edit_payment_debtor_<?php echo $spreadsheet['id']?>'))"
 											id="form_edit_payment_creditor_<?php echo $cpt_spreadsheet?>" class="form-control selectpicker">
 								<?php
 											foreach($this_bdgt_participants as $bdgt_participant)
@@ -426,12 +426,12 @@ if($payment_to_edit !== false)
 									</div>
 								</div>
 								<div class="col-xs-12 col-lg-4">
-									<label for="form_edit_payment_recv_<?php echo $cpt_spreadsheet?>">
+									<label for="form_edit_payment_debtor_<?php echo $cpt_spreadsheet?>">
 										debtor
 									</label>
 									<div class="input-group">
 										<select name="p_hashid_debtor" 
-											id="form_edit_payment_recv_<?php echo $cpt_spreadsheet?>"
+											id="form_edit_payment_debtor_<?php echo $cpt_spreadsheet?>"
 											class="form-control selectpicker">
 											<option value="-1" >Group</option>
 									<?php
@@ -586,12 +586,12 @@ else
 												</label>
 												<div class="input-group">
 													<select name="p_payment[0][p_type]" id="<?php echo 'form_set_payment_type_'.$cpt_spreadsheet?>_0"	
-														class="form-control selectpicker" title="Group or specific payment?"
-														onchange="DisableEnableElement(this, document.getElementById('<?php echo 'form_set_payment_recv_'.$cpt_spreadsheet?>_0'))"> 
-														<option value="-1" selected="selected">Entire Group</option>
-														<option value="1">Specific</option>
+														class="form-control selectpicker" title="Group or member to member payment?"
+														onchange="DisableEnableElement(this, document.getElementById('<?php echo 'form_set_payment_debtor_'.$cpt_spreadsheet?>_0'))"> 
+														<option value="group" selected="selected">Entire Group</option>
+														<option value="p2p">People to people</option>
 													</select>
-													<select name="p_payment[0][p_hashid_recv][]" id="<?php echo 'form_set_payment_recv_'.$cpt_spreadsheet?>_0"	
+													<select name="p_payment[0][p_hashid_debtor][]" id="<?php echo 'form_set_payment_debtor_'.$cpt_spreadsheet?>_0"	
 														class="form-control selectpicker" title="debtor" multiple="multiple" disabled="disabled"> 
 														<?php
 															foreach($this_bdgt_participants as $bdgt_participant)

@@ -361,15 +361,15 @@ function AddParticipantLine()
 }
 
 //Onchange on trigger :
-//trigger.value == -1 then target is disabled.
-//trigger.value == 1 then targer is enable
+//trigger.value == "group" then target is disabled.
+//trigger.value == "p2p" then targer is enable
 function DisableEnableElement(trigger, target) {
 	var choice1 = trigger.value;
-	if(choice1 == '1')
+	if(choice1 == 'p2p')
 	{
 		target.disabled  = false;
 	}
-	else if(choice1 == '-1')
+	else if(choice1 == 'group')
 	{
 		target.disabled  = true;
 	}

@@ -151,7 +151,7 @@ if(isset($_POST['submit_new_payment']))
 		}
 		
 		//Number of real payment
-		$n_debtors = 0;
+		$n_debtors = (int)0;
 		$debtors_id = Array();
 		//TYPE OF PAYMENT (GROUP OR PARTICULAR)
 		$key = 'p_type';
@@ -159,14 +159,14 @@ if(isset($_POST['submit_new_payment']))
 			array_push($errArray2, $ErrorEmptyMessage[$key]);
 		}
 		else{
-			if($payment[$key] == -1 || is_null($payment[$key]))
+			if($payment[$key] == "group" || is_null($payment[$key]))
 			{
-				$type_payment = -1;
+				$type_payment = "group";
 				$n_debtors = 1;
-				$debtors_id[0] = null; //null if for group in SQL
+				$debtors_id[0] = null; //null if group (in SQL)
 			}
-			else if($payment[$key] == 1){
-				$type_payment = 1;
+			else if($payment[$key] == "p2p"){
+				$type_payment = "p2p";
 			}
 			else{
 				array_push($errArray2, $ErrorMessage[$key]);
@@ -175,17 +175,17 @@ if(isset($_POST['submit_new_payment']))
 		
 		//debtorS (if payment from people to people)
 		if(empty($errArray2)
-			&& $type_payment == "1")
+			&& $type_payment == "p2p")
 		{
 			$key = 'p_hashid_debtor';
-			foreach ($payment[$key] as $hashid_recv)
+			foreach ($payment[$key] as $hashid_debtor)
 			{
-				if(validate_hashid($hashid_recv)== false)
+				if(validate_hashid($hashid_debtor)== false)
 				{
 					array_push($errArray2, $ErrorMessage[$key]);
 				}
 				else{
-					$debtor = get_spreadsheet_participant_by_hashid($account['id'], $hashid_recv);
+					$debtor = get_bdgt_participant_by_hashid($account['id'], $hashid_debtor);
 					if(empty($debtor))
 					{	array_push($errArray2, $ErrorMessage[$key]); }
 					else{
@@ -198,16 +198,19 @@ if(isset($_POST['submit_new_payment']))
 		}
 
 		// AMOUNT / amount
-		$key = 'p_amount';
-		if(empty($payment[$key])) { //If empty
-			array_push($errArray2, $ErrorEmptyMessage[$key]);
-		}
-		else{
-			//Amount is divided by the number of debtors (=1 if total GROUP !)
-			$amount = (float)((float)$payment[$key] / (float)$n_debtors);
-			if($amount <= 0)
-			{
-				array_push($errArray2, $ErrorMessage[$key]);
+		if(empty($errArray2))
+		{
+			$key = 'p_amount';
+			if(empty($payment[$key])) { //If empty
+				array_push($errArray2, $ErrorEmptyMessage[$key]);
+			}
+			else{
+				//Amount is divided by the number of debtors (=1 if total GROUP !)
+				$amount = (float)((float)$payment[$key] / (float)$n_debtors);
+				if($amount <= 0)
+				{
+					array_push($errArray2, $ErrorMessage[$key].' n_debtors = '.$n_debtors);
+				}
 			}
 		}
 		
