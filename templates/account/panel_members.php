@@ -189,7 +189,7 @@ if($admin_mode && $edit_mode === false)
 							Submit
 						</button>
 						<button type="button" class="btn btn-primary" 
-							value="" title="Add a row" onclick="AddmemberLine();return false;">
+							value="" title="Add a row" onclick="AddMemberLine();return false;">
 							Add a row
 						</button>
 					</div>
