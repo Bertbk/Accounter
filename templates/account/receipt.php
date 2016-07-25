@@ -152,7 +152,7 @@ if($admin_mode && !$edit_mode)
 	{
 	?>
 					<form method="post"	enctype="multipart/form-data"
-						action="<?php echo ACTIONPATH.'/new_receipt_payer.php'?>">
+						action="<?php echo ACTIONPATH.'/spreadsheets/receipts/rcpt_payers/new_rcpt_payer.php'?>">
 						<fieldset>
 							<legend id="<?php echo 'show_hide_receipt_add_payer_'.$cpt_spreadsheet?>"
 								class="cursorpointer">
