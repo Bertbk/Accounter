@@ -427,7 +427,7 @@ if($payment_to_edit !== false)
 								</div>
 								<div class="col-xs-12 col-lg-4">
 									<label for="form_edit_payment_debtor_<?php echo $cpt_spreadsheet?>">
-										debtor
+										Debtor
 									</label>
 									<div class="input-group">
 										<select name="p_hashid_debtor" 
@@ -592,7 +592,7 @@ else
 														<option value="p2p">People to people</option>
 													</select>
 													<select name="p_payment[0][p_hashid_debtor][]" id="<?php echo 'form_set_payment_debtor_'.$cpt_spreadsheet?>_0"	
-														class="form-control selectpicker" title="debtor" multiple="multiple" disabled="disabled"> 
+														class="form-control selectpicker" title="Debtor" multiple="multiple" disabled="disabled"> 
 														<?php
 															foreach($this_bdgt_participants as $bdgt_participant)
 															{ ?>
