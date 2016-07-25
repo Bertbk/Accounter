@@ -25,7 +25,7 @@ function get_bdgt_participant_by_member_id($account_id_arg, $spreadsheet_id_arg,
 
 	try
 	{
-		$myquery = 'SELECT '.TABLE_BDGT_PARTICIPANTS.' 
+		$myquery = 'SELECT *  
 		FROM '.TABLE_BDGT_PARTICIPANTS.'  
 		WHERE account_id=:account_id AND spreadsheet_id=:spreadsheet_id AND member_id=:member_id' ;
 		$prepare_query = $db->prepare($myquery);
