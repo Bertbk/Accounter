@@ -13,12 +13,12 @@ Check the data before asking the SQL to delete a bdgt_participant
 The SQL should be done so that every dependent payments are also deleted
  */
 
- require_once __DIR__.'/../../config-app.php';
+ require_once __DIR__.'/../../../../../config-app.php';
 
 include_once(LIBPATH.'/accounts/get_account_admin.php');
 
-include_once(LIBPATH.'/spreadsheets/budgets/get_bdgt_participant_by_hashid.php');
-include_once(LIBPATH.'/spreadsheets/budgets/delete_bdgt_participant.php');
+include_once(LIBPATH.'/spreadsheets/budgets/bdgt_participants/get_bdgt_participant_by_hashid.php');
+include_once(LIBPATH.'/spreadsheets/budgets/bdgt_participants/delete_bdgt_participant.php');
 
 include_once(LIBPATH.'/hashid/validate_hashid.php');
 
