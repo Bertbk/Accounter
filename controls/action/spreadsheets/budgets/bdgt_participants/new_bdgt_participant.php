@@ -9,19 +9,19 @@
  */
  
  /*
-Check the data before asking the SQL to assign a participant to a bill
+Check the data before asking the SQL to assign a participant to a spreadsheet
  */
  
-require_once __DIR__.'/../../config-app.php';
+require_once __DIR__.'/../../../../../config-app.php';
 
 include_once(LIBPATH.'/accounts/get_account_admin.php');
 
-include_once(LIBPATH.'/participants/get_participant_by_hashid.php');
+include_once(LIBPATH.'/members/get_member_by_hashid.php');
 
-include_once(LIBPATH.'/bills/get_bill_by_hashid.php');
+include_once(LIBPATH.'/spreadsheets/get_spreadsheet_by_hashid.php');
 
-include_once(LIBPATH.'/bill_participants/get_bill_participants_by_bill_id.php');
-include_once(LIBPATH.'/bill_participants/set_bill_participant.php');
+include_once(LIBPATH.'/spreadsheets/budgets/bdgt_participants/get_bdgt_participant_by_member_id.php');
+include_once(LIBPATH.'/spreadsheets/budgets/bdgt_participants/set_bdgt_participant.php');
 
 include_once(LIBPATH.'/hashid/validate_hashid.php');
 include_once(LIBPATH.'/hashid/create_hashid.php');
@@ -35,22 +35,22 @@ $warnArray = array(); //warning messages
 $successArray = array(); //success messages
 $redirect_link ="" ;
 
-if(isset($_POST['submit_new_bill_participant']))
+if(isset($_POST['submit_new_bdgt_participant']))
 {
 	$ErrorEmptyMessage = array(
 		'p_hashid_account' => 'Please provide an acount',
-		'p_hashid_bill' => 'Please provide a bill',
+		'p_hashid_spreadsheet' => 'Please provide a spreadsheet',
 		'p_participant' => 'Please provide a participant',
-		'p_hashid_participant' => 'Please provide a participant',
-		'p_percent_of_use' => 'Please provide a percentage'
+		'p_hashid_member' => 'Please provide a participant',
+		'p_percent_of_benefit' => 'Please provide a percentage'
    );
 	 
 	$ErrorMessage = array(
 		'p_hashid_account' => 'Account is not valid',
-		'p_hashid_bill' => 'Bill is not valid',
+		'p_hashid_spreadsheet' => 'spreadsheet is not valid',
 		'p_participant' => 'Participant is not valid',
-		'p_hashid_participant' => 'Participant is not valid',
-		'p_percent_of_use' => 'Percent is not valid',
+		'p_hashid_member' => 'Participant is not valid',
+		'p_percent_of_benefit' => 'Percent is not valid',
 		'p_anchor' => 'Anchor not valid'
    );
 
@@ -76,8 +76,8 @@ if(isset($_POST['submit_new_bill_participant']))
 		{	array_push($errArray, $ErrorMessage['p_hashid_account']); }
 	}
 
-	// BILL
-	$key = 'p_hashid_bill';
+	// spreadsheet
+	$key = 'p_hashid_spreadsheet';
 	if(empty($_POST[$key])) { //If empty
 		array_push($errArray, $ErrorEmptyMessage[$key]);
 	}
@@ -87,23 +87,27 @@ if(isset($_POST['submit_new_bill_participant']))
 			array_push($errArray, $ErrorMessage[$key]);
 		}
 		else{
-			$hashid_bill = $_POST[$key];
+			$hashid_spreadsheet = $_POST[$key];
 			}
 	}
-	//Get the bill
+	//Get the spreadsheet
 	if(empty($errArray))
 	{		
-		$bill = get_bill_by_hashid($account['id'], $hashid_bill);
-		if(empty($bill))
-		{	array_push($errArray, $ErrorMessage['p_hashid_bill']); }
+		$spreadsheet = get_spreadsheet_by_hashid($account['id'], $hashid_spreadsheet);
+		if(empty($spreadsheet))
+		{	array_push($errArray, $ErrorMessage[$key]); }
+		else{
+			if($spreadsheet['type_of_sheet'] !== 'budget')
+			{	array_push($errArray, $ErrorMessage[$key]); }
+		}
 	}
 	
-	//Check if the accounts match between bill and account
+	//Check if the accounts match between spreadsheet and account
 	if(empty($errArray))
 	{
-		if($bill['account_id'] !== $account['id'])
+		if($spreadsheet['account_id'] !== $account['id'])
 		{
-			array_push($errArray, 'This bill does not belong to this account.');
+			array_push($errArray, 'This spreadsheet does not belong to this account.');
 		}
 	}
 	
@@ -119,10 +123,9 @@ if(isset($_POST['submit_new_bill_participant']))
 	 foreach ($_POST['p_participant'] as $particip)
 	 {
 		$errArray2 = array(); // Error array for each participant
-		$key = 'p_hashid_participant';
+		$key = 'p_hashid_member';
 		 if(empty($particip[$key])) { //If empty
 			continue;
-			//array_push($errArray2, $ErrorEmptyMessage[$key]);
 		}
 		else{
 			if(validate_hashid($particip[$key])== false)
@@ -130,37 +133,37 @@ if(isset($_POST['submit_new_bill_participant']))
 				array_push($errArray2, $ErrorMessage[$key]);
 			}
 			else{
-				$hashid_participant = $particip[$key];
+				$hashid_member = $particip[$key];
 				}
 		}
 		//Get the participant
 		if(empty($errArray2))
 		{		
-			$participant = get_participant_by_hashid($account['id'], $hashid_participant);
-			if(empty($participant))
-			{	array_push($errArray2, $ErrorMessage['p_hashid_participant']); }
+			$member = get_member_by_hashid($account['id'], $hashid_member);
+			if(empty($member))
+			{	array_push($errArray2, $ErrorMessage['p_hashid_member']); }
 		}
 		
 		// PERCENT OF USE
-		$key = 'p_percent_of_use';
+		$key = 'p_percent_of_benefit';
 		if(!isset($particip[$key])) { //If empty
 			array_push($errArray2, $ErrorEmptyMessage[$key]);
 		}
 		else{
-			$percent_of_use = (float)$particip[$key];
-			if($percent_of_use < 0 
-				|| $percent_of_use > 100)
+			$percent_of_benefit = (float)$particip[$key];
+			if($percent_of_benefit < 0 
+				|| $percent_of_benefit > 100)
 			{
-				array_push($errArray2, $ErrorMessage[$key].': '.$percent_of_use);
+				array_push($errArray2, $ErrorMessage[$key].': '.$percent_of_benefit);
 			}
 		}
 		
-		//Hash id for the new bill_participant
-		$hashid_bill_participant = "";
+		//Hash id for the new bdgt_participant
+		$hashid_bdgt_participant = "";
 		if(empty($errArray2))
 		{	
-			$hashid_bill_participant = create_hashid();
-			if(is_null($hashid_bill_participant))
+			$hashid_bdgt_participant = create_hashid();
+			if(is_null($hashid_bdgt_participant))
 				{ array_push($errArray2, "Server error: problem while creating hashid.");}
 		}
 
@@ -168,38 +171,35 @@ if(isset($_POST['submit_new_bill_participant']))
 		//Check if the accounts match
 		if(empty($errArray2))
 		{
-			if($participant['account_id'] !== $account['id'])
+			if($member['account_id'] !== $account['id'])
 			{
-				array_push($errArray2, 'This participant does not belong to this account.');
+				array_push($errArray2, 'This member does not belong to this account.');
 			}
-			if($participant['account_id'] !== $bill['account_id'])
+			if($member['account_id'] !== $spreadsheet['account_id'])
 			{
-				array_push($errArray2, 'Participant and bill do not belong to the same account');
+				array_push($errArray2, 'Member and spreadsheet do not belong to the same account');
 			}
 		}
 		
-		//Check if the bill_participant is not already affected to the bill
+		//Check if the bdgt_participant is not already affected to the spreadsheet
 		if(empty($errArray2))
 		{
-			$registred_bill_part = get_bill_participants_by_bill_id($account['id'], $bill['id']);
-			foreach ($registred_bill_part as $bill_part)
+			$registred_bdgt_part = get_bdgt_participant_by_member_id($account['id'], $spreadsheet['id'], $member['id']);
+			if(!empty($registred_bdgt_part))
 			{
-					if($bill_part['participant_id'] == $participant['id'])
-					{
-						{array_push($errArray2, 'Participation already registred!'); 	}
-					}
+				{array_push($errArray2, 'Member already assigned to this budget sheet!'); 	}
 			}
 		}
 	
-		//Save the bill_participant
+		//Save the bdgt_participant
 		if(empty($errArray2))
 		{
-			$success = set_bill_participant($account['id'], $hashid_bill_participant, $bill['id'], $participant['id'], $percent_of_use);	
+			$success = set_bdgt_participant($account['id'], $hashid_bdgt_participant, $spreadsheet['id'], $member['id'], $percent_of_benefit);	
 			if($success !== true)
-			{array_push($errArray2, 'Server error: Problem while attempting to add a participation'); 	}
+			{array_push($errArray2, 'Server error: Problem while attempting to add a participant '.$success); 	}
 			else
 			{
-				array_push($successArray, 'Participation has been successfully added');
+				array_push($successArray, 'participant has been successfully added');
 			}
 		}
 		//Merge the errors

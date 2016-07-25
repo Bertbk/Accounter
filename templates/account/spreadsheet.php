@@ -188,10 +188,7 @@ if($admin_mode
 	}
 	if( $this_type == "budget")
 	{
-		?>
-		<p>Budget</p>
-		<?php
-	//	include(__DIR__.'/spreadsheet/budget.php');
+		include(__DIR__.'/budget.php');
 	}
 	else if($this_type == "receipt")
 	{

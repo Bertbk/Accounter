@@ -158,7 +158,7 @@ function create_tables()
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     hashid VARCHAR(16) NOT NULL UNIQUE,
     account_id INT UNSIGNED NOT NULL,
-    budget_id INT UNSIGNED NOT NULL,
+    spreadsheet_id INT UNSIGNED NOT NULL,
     creditor_id INT UNSIGNED NOT NULL,
     amount DECIMAL(12,2) NOT NULL,
     debtor_id INT UNSIGNED,
@@ -166,7 +166,7 @@ function create_tables()
 		date_of_payment DATE,
     PRIMARY KEY (id),
 		INDEX ind_bdgt_paymt_account_id (account_id),
-		INDEX ind_bdgt_paymt_budget_id (budget_id),
+		INDEX ind_bdgt_paymt_budget_id (spreadsheet_id),
 		INDEX ind_bdgt_paymt_payer_id (creditor_id),
 		INDEX ind_bdgt_paymt_debtor_id (debtor_id),
 		CONSTRAINT fk_paymt_account_id
@@ -175,7 +175,7 @@ function create_tables()
 				ON DELETE CASCADE
 				ON UPDATE CASCADE,
 		CONSTRAINT fk_paymt_budget_id
-        FOREIGN KEY (budget_id)
+        FOREIGN KEY (spreadsheet_id)
         REFERENCES '.TABLE_SPREADSHEETS.'(id)
 				ON DELETE CASCADE
 				ON UPDATE CASCADE,

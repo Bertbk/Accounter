@@ -14,7 +14,7 @@ Return an array of the bdgt_participants of the account, sorted by bdgts
 include_once(__DIR__.'/../../../get_db.php');
 
 include_once(LIBPATH.'/spreadsheets/get_spreadsheets_by_type.php');
-include_once(LIBPATH.'/spreadsheets/budgets/bdgt_participants/get_bdgt_participants_by_bdgt_id.php');
+include_once(LIBPATH.'/spreadsheets/budgets/bdgt_participants/get_bdgt_participants_by_spreadsheet_id.php');
 
 /*
 Return every bdgt_participants of every bdgt. The reply is an array such that
@@ -32,7 +32,7 @@ function get_bdgt_participants($account_id_arg)
 
 	foreach($my_bdgts as $bdgt)
 	{
-		$reply[$bdgt['id']] = get_bdgt_participants_by_bdgt_id($account_id, $bdgt['id']);
+		$reply[$bdgt['id']] = get_bdgt_participants_by_spreadsheet_id($account_id, $bdgt['id']);
 	}
 	return $reply;
 }

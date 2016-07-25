@@ -162,7 +162,7 @@ $my_spreadsheets = get_spreadsheets($my_account_id); // All spreadsheets
 $n_spreadsheets = count($my_spreadsheets);
 //Budget sheet
 $my_budget_participants = get_bdgt_participants($my_account_id); // Participation for each budget sheet
-$my_available_budget_participants = get_bdgt_available_members($my_account_id); // Possible participation for each budget spreadsheet
+$my_available_bdgt_members = get_bdgt_available_members($my_account_id); // Possible participation for each budget spreadsheet
 //$my_payments_per_budget = get_bdgt_payments($my_account_id); //All payments organized by budget sheets
 //For JS : create the list of payer to send to JS
 

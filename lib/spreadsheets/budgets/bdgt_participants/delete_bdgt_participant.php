@@ -14,20 +14,21 @@ Delete a row in the bdgt_participants SQL table providing its id
 
 include_once(__DIR__.'/../../../get_db.php');
 
-function delete_bdgt_participant($account_id_arg, $bdgt_part_id_arg)
+function delete_bdgt_participant($account_id_arg, $bdgt_participant_id_arg)
 {
 	$db = get_db();
 
 	$account_id = (int)$account_id_arg;
-	$bdgt_part_id = (int)$bdgt_part_id_arg;
+	$bdgt_participant_id = (int)$bdgt_participant_id_arg;
 		
 	$isgood= false;
 	try
 	{
 		$myquery = 'DELETE FROM '.TABLE_BDGT_PARTICIPANTS.'  
-		 WHERE id=:bdgt_part_id';
+		 WHERE account_id=:account_id AND id=:bdgt_participant_id';
 		$prepare_query = $db->prepare($myquery);
-		$prepare_query->bindValue(':bdgt_part_id', $bdgt_part_id, PDO::PARAM_INT);
+		$prepare_query->bindValue(':account_id', $account_id, PDO::PARAM_INT);
+		$prepare_query->bindValue(':bdgt_participant_id', $bdgt_participant_id, PDO::PARAM_INT);
 		$isgood = $prepare_query->execute();
 		$prepare_query->closeCursor();
 	}

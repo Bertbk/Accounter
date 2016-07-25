@@ -13,12 +13,12 @@ If exists, returns the budget_participant from its account_id, spreadsheet_id an
 */
 include_once(__DIR__.'/../../../get_db.php');
 
-function get_bdgt_participant_by_member_id($account_id_arg, $bdgt_id_arg, $member_id_arg)
+function get_bdgt_participant_by_member_id($account_id_arg, $spreadsheet_id_arg, $member_id_arg)
 {
 	$db = get_db();
 
 	$account_id = (int)$account_id_arg;
-	$bdgt_id = (int)$bdgt_id_arg;
+	$spreadsheet_id = (int)$spreadsheet_id_arg;
 	$member_id = (int)$member_id_arg;
 	
 	$reply = array();
@@ -27,10 +27,10 @@ function get_bdgt_participant_by_member_id($account_id_arg, $bdgt_id_arg, $membe
 	{
 		$myquery = 'SELECT '.TABLE_BDGT_PARTICIPANTS.' 
 		FROM '.TABLE_BDGT_PARTICIPANTS.'  
-		WHERE account_id=:account_id AND bdgt_id=:bdgt_id AND member_id=:member_id' ;
+		WHERE account_id=:account_id AND spreadsheet_id=:spreadsheet_id AND member_id=:member_id' ;
 		$prepare_query = $db->prepare($myquery);
 		$prepare_query->bindValue(':account_id', $account_id, PDO::PARAM_INT);
-		$prepare_query->bindValue(':bdgt_id', $bdgt_id, PDO::PARAM_INT);
+		$prepare_query->bindValue(':spreadsheet_id', $spreadsheet_id, PDO::PARAM_INT);
 		$prepare_query->bindValue(':member_id', $member_id, PDO::PARAM_INT);
 		$prepare_query->execute();
 	}
