@@ -9,18 +9,17 @@
  */
  
  /*
-Check the data before asking the SQL to delete every payments of a bill
+Check the data before asking the SQL to delete every payments of a spreadsheet
  */
 
  require_once __DIR__.'/../../config-app.php';
 
 include_once(LIBPATH.'/accounts/get_account_admin.php');
-include_once(LIBPATH.'/accounts/delete_account.php');
 
-include_once(LIBPATH.'/bills/get_bill_by_hashid.php');
+include_once(LIBPATH.'/spreadsheets/get_spreadhseet_by_hashid.php');
 
-include_once(LIBPATH.'/payments/get_payments_by_bill_id.php');
-include_once(LIBPATH.'/payments/delete_payment.php');
+include_once(LIBPATH.'/budgets/payments/get_bgt_payments_by_spreadsheet_id.php');
+include_once(LIBPATH.'/budgets/payments/delete_bgt_payment.php');
 
 include_once(LIBPATH.'/hashid/validate_hashid.php');
 
@@ -33,16 +32,16 @@ $warnArray = array(); //warning messages
 $successArray = array(); //success messages
 $redirect_link ="" ;
 
-if(isset($_POST['submit_remove_all_payments']))
+if(isset($_POST['submit_remove_all_bgt_payments']))
 {
 	$ErrorEmptyMessage = array(
 		'p_hashid_account' => 'No acount provided',
-		'p_hashid_bill' => 'No bill provided'
+		'p_hashid_spreadsheet' => 'No spreadsheet provided'
    );
 	 
 	$ErrorMessage = array(
 		'p_hashid_account' => 'Account not valid',
-		'p_hashid_bill' => 'Bill not valid'
+		'p_hashid_spreadsheet' => 'spreadsheet not valid'
    );
 
 	//ACCOUNT
@@ -65,8 +64,8 @@ if(isset($_POST['submit_remove_all_payments']))
 		{	array_push($errArray, $ErrorMessage[$key]); }
 	}
 
-	//BILL
-	$key = 'p_hashid_bill';
+	//spreadsheet
+	$key = 'p_hashid_spreadsheet';
 	if(empty($_POST[$key])) { //If empty
 		array_push($errArray, $ErrorEmptyMessage[$key]);
 	}
@@ -74,29 +73,29 @@ if(isset($_POST['submit_remove_all_payments']))
 		if(validate_hashid($_POST[$key])== false)
 		{array_push($errArray, $ErrorMessage[$key]);}
 		else{
-			$hashid_bill = $_POST[$key];
+			$hashid_spreadsheet = $_POST[$key];
 			}
 	}
-	//Get the bill
+	//Get the spreadsheet
 	if(empty($errArray))
 	{
-		$bill = get_bill_by_hashid($account['id'], $hashid_bill);
-		if(empty($bill))
+		$spreadsheet = get_spreadsheet_by_hashid($account['id'], $hashid_spreadsheet);
+		if(empty($spreadsheet))
 		{	array_push($errArray, $ErrorMessage[$key]); }
 	}
 	
-	//Check if bill belongs to the account
+	//Check if spreadsheet belongs to the account
 	if(empty($errArray))
 	{
-		if($bill['account_id'] !== $account['id'])
+		if($spreadsheet['account_id'] !== $account['id'])
 		{
-			array_push($errArray, "This bill does not belong to this account!");
+			array_push($errArray, "This spreadsheet does not belong to this account!");
 		}		
 	}
 	
 	if(empty($errArray))
 	{
-		$payments = get_payments_by_bill_id($account['id'], $bill['id']);
+		$payments = get_payments_by_spreadsheet_id($account['id'], $spreadsheet['id']);
 		//Delete the participants
 		foreach($payments as $payment)
 		{

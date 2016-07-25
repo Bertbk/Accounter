@@ -42,8 +42,8 @@ function set_spreadsheet($account_id_arg, $hashid_spreadsheet_arg, $type_of_spre
 	$isgood= false;
 	try
 	{
-		$myquery = 'INSERT INTO '.TABLE_SPREADSHEETS.'(id, account_id, hashid, type, title, description, color, date_of_creation) 
-		VALUES(NULL, :account_id, :hashid_spreadsheet, :type_spreadsheet, :title_spreadsheet, :description, :my_color, NOW())';
+		$myquery = 'INSERT INTO '.TABLE_SPREADSHEETS.'(id, account_id, hashid, type, title, description, color) 
+		VALUES(NULL, :account_id, :hashid_spreadsheet, :type_spreadsheet, :title_spreadsheet, :description, :my_color)';
 		$prepare_query = $db->prepare($myquery);
 		$prepare_query->bindValue(':account_id', $account_id, PDO::PARAM_INT);
 		$prepare_query->bindValue(':hashid_spreadsheet', $hashid_spreadsheet, PDO::PARAM_STR);

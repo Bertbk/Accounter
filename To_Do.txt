@@ -20,7 +20,7 @@ NEW VERSION
 A. SQL
 
 - Bill and Receipt => Spreadsheet
-- Spreadsheet: title, description, TYPE (=Budget or Receipt), DATE OF CREATION
+- Spreadsheet: title, description, TYPE (=Budget or Receipt)
 - Participant => Members
 - Bill_participant => (Budget) Participant
 - Payment => (Budget) Payment

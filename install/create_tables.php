@@ -56,16 +56,17 @@ function create_tables()
 	// BILLS
 		try
 	{
-		$myquery = 'CREATE TABLE IF NOT EXISTS '.TABLE_BILLS.'(
+		$myquery = 'CREATE TABLE IF NOT EXISTS '.TABLE_SPREADSHEETS.'(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     hashid VARCHAR(16) NOT NULL UNIQUE,
     account_id INT UNSIGNED NOT NULL,
+    type_of_sheet VARCHAR(255) NOT NULL,
     title VARCHAR(255) NOT NULL,
     description TEXT,
     color VARCHAR(6) NOT NULL,
     PRIMARY KEY (id),
-		INDEX ind_bill_account_id (account_id),
-		CONSTRAINT fk_bill_account_id
+		INDEX ind_spreadsheet_account_id (account_id),
+		CONSTRAINT fk_spreadsheet_account_id
         FOREIGN KEY (account_id)
         REFERENCES '.TABLE_ACCOUNTS.'(id)
 				ON DELETE CASCADE
@@ -81,10 +82,10 @@ function create_tables()
 			return 'Fail to connect: ' . $e->getMessage();
 	}
 	
-	// PARTICIPANTS
+	// MEMBERS
 		try
 	{
-		$myquery = 'CREATE TABLE IF NOT EXISTS '.TABLE_PARTICIPANTS.'(
+		$myquery = 'CREATE TABLE IF NOT EXISTS '.TABLE_MEMBERS.'(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     hashid VARCHAR(16) NOT NULL UNIQUE,
     account_id INT UNSIGNED NOT NULL,
@@ -92,7 +93,7 @@ function create_tables()
     nb_of_people SMALLINT UNSIGNED NOT NULL DEFAULT 1,
     color VARCHAR(6) NOT NULL,
     PRIMARY KEY (id),
-		INDEX ind_part_account_id (account_id),
+		INDEX ind_members_account_id (account_id),
 		CONSTRAINT fk_part_account_id
         FOREIGN KEY (account_id)
         REFERENCES '.TABLE_ACCOUNTS.'(id)
@@ -110,33 +111,33 @@ function create_tables()
 	}
 
 	
-	// BILL_PARTICIPANTS
+	// (BUDGET) PARTICIPANT
 		try
 	{
-		$myquery = 'CREATE TABLE IF NOT EXISTS '.TABLE_BILL_PARTICIPANTS.'(
+		$myquery = 'CREATE TABLE IF NOT EXISTS '.TABLE_BDGT_PARTICIPANTS.'(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     hashid VARCHAR(16) NOT NULL UNIQUE,
     account_id INT UNSIGNED NOT NULL,
-    bill_id INT UNSIGNED NOT NULL,
-    participant_id INT UNSIGNED NOT NULL,
-    percent_of_usage DECIMAL(5,2) NOT NULL DEFAULT 100.00,
+    spreadsheet_id INT UNSIGNED NOT NULL,
+    member_id INT UNSIGNED NOT NULL,
+    percent_of_benefit DECIMAL(5,2) NOT NULL DEFAULT 100.00,
     PRIMARY KEY (id),
-		INDEX ind_billpart_account_id (account_id),
-		INDEX ind_billpart_bill_id (bill_id),
-		INDEX ind_billpart_participant_id (participant_id),
-		CONSTRAINT fk_billpart_account_id
+		INDEX ind_bdgt_participant_account_id (account_id),
+		INDEX ind_bdgt_participant_spreadsheet_id (spreadsheet_id),
+		INDEX ind_bdgt_participant_member_id (member_id),
+		CONSTRAINT fk_bdgt_participant_account_id
         FOREIGN KEY (account_id)
         REFERENCES '.TABLE_ACCOUNTS.'(id)
 				ON DELETE CASCADE
 				ON UPDATE CASCADE,
-		CONSTRAINT fk_billpart_bill_id
-        FOREIGN KEY (bill_id)
-        REFERENCES '.TABLE_BILLS.'(id)
+		CONSTRAINT fk_bdgt_participant_spreadsheet_id
+        FOREIGN KEY (spreadsheet_id)
+        REFERENCES '.TABLE_SPREADSHEETS.'(id)
 				ON DELETE CASCADE
 				ON UPDATE CASCADE,
-		CONSTRAINT fk_billpart_participant_id
-        FOREIGN KEY (participant_id)
-        REFERENCES '.TABLE_PARTICIPANTS.'(id)
+		CONSTRAINT fk_bdgt_participant_member_id
+        FOREIGN KEY (member_id)
+        REFERENCES '.TABLE_MEMBERS.'(id)
 				ON DELETE CASCADE
 				ON UPDATE CASCADE
 			)
@@ -150,45 +151,168 @@ function create_tables()
 			return 'Fail to connect: ' . $e->getMessage();
 	}
 	
-	// PAYMENTS
+	// (BUDGET) PAYMENTS
 	try
 	{
 		$myquery = 'CREATE TABLE IF NOT EXISTS '.TABLE_PAYMENTS.'(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     hashid VARCHAR(16) NOT NULL UNIQUE,
     account_id INT UNSIGNED NOT NULL,
-    bill_id INT UNSIGNED NOT NULL,
-    payer_id INT UNSIGNED NOT NULL,
-    cost DECIMAL(12,2) NOT NULL,
-    receiver_id INT UNSIGNED,
+    budget_id INT UNSIGNED NOT NULL,
+    creditor_id INT UNSIGNED NOT NULL,
+    amount DECIMAL(12,2) NOT NULL,
+    debtor_id INT UNSIGNED,
 		description VARCHAR(255),
 		date_of_payment DATE,
     PRIMARY KEY (id),
-		INDEX ind_paymt_account_id (account_id),
-		INDEX ind_paymt_bill_id (bill_id),
-		INDEX ind_paymt_payer_id (payer_id),
-		INDEX ind_paymt_receiver_id (receiver_id),
+		INDEX ind_bdgt_paymt_account_id (account_id),
+		INDEX ind_bdgt_paymt_budget_id (budget_id),
+		INDEX ind_bdgt_paymt_payer_id (creditor_id),
+		INDEX ind_bdgt_paymt_recipient_id (debtor_id),
 		CONSTRAINT fk_paymt_account_id
         FOREIGN KEY (account_id)
         REFERENCES '.TABLE_ACCOUNTS.'(id)
 				ON DELETE CASCADE
 				ON UPDATE CASCADE,
-		CONSTRAINT fk_paymt_bill_id
-        FOREIGN KEY (bill_id)
-        REFERENCES '.TABLE_BILLS.'(id)
+		CONSTRAINT fk_paymt_budget_id
+        FOREIGN KEY (budget_id)
+        REFERENCES '.TABLE_SPREADSHEETS.'(id)
 				ON DELETE CASCADE
 				ON UPDATE CASCADE,
 		CONSTRAINT fk_paymt_payer_id
         FOREIGN KEY (payer_id)
-        REFERENCES '.TABLE_BILL_PARTICIPANTS.'(id)
+        REFERENCES '.TABLE_BUDGET_PARTICIPANTS.'(id)
 				ON DELETE CASCADE
 				ON UPDATE CASCADE,
-		CONSTRAINT fk_paymt_receiver_id
-        FOREIGN KEY (receiver_id)
-        REFERENCES '.TABLE_BILL_PARTICIPANTS.'(id)
+		CONSTRAINT fk_paymt_recipient_id
+        FOREIGN KEY (debtor_id)
+        REFERENCES '.TABLE_BUDGET_PARTICIPANTS.'(id)
 				ON DELETE CASCADE
 				ON UPDATE CASCADE
 		)
+		ENGINE=INNODB DEFAULT CHARSET=utf8;';
+		$prepare_query = $db->prepare($myquery);
+		$isgood = $prepare_query->execute();
+		$prepare_query->closeCursor();
+	}
+	catch (Exception $e)
+	{
+			return 'Fail to connect: ' . $e->getMessage();
+	}
+	
+	// (RECEIPT) PAYERS
+	try
+	{
+		$myquery = 'CREATE TABLE IF NOT EXISTS '.TABLE_RCPT_PAYERS.'(
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    hashid VARCHAR(16) NOT NULL UNIQUE,
+    account_id INT UNSIGNED NOT NULL,
+    spreadsheet_id INT UNSIGNED NOT NULL,
+    member_id INT UNSIGNED NOT NULL,
+    percent_of_payment DECIMAL(5,2) NOT NULL DEFAULT 100.00,
+    PRIMARY KEY (id),
+		INDEX ind_rcpt_payer_account_id (account_id),
+		INDEX ind_rcpt_payer_spreadsheet_id (spreadsheet_id),
+		INDEX ind_rcpt_payer_member_id (member_id),
+		CONSTRAINT fk_rcpt_payer_account_id
+        FOREIGN KEY (account_id)
+        REFERENCES '.TABLE_ACCOUNTS.'(id)
+				ON DELETE CASCADE
+				ON UPDATE CASCADE,
+		CONSTRAINT fk_rcpt_payer_spreadsheet_id
+        FOREIGN KEY (spreadsheet_id)
+        REFERENCES '.TABLE_SPREADSHEETS.'(id)
+				ON DELETE CASCADE
+				ON UPDATE CASCADE,
+		CONSTRAINT fk_rcpt_payer_member_id
+        FOREIGN KEY (member_id)
+        REFERENCES '.TABLE_MEMBERS.'(id)
+				ON DELETE CASCADE
+				ON UPDATE CASCADE
+			)
+		ENGINE=INNODB DEFAULT CHARSET=utf8;';
+		$prepare_query = $db->prepare($myquery);
+		$isgood = $prepare_query->execute();
+		$prepare_query->closeCursor();
+	}
+	catch (Exception $e)
+	{
+			return 'Fail to connect: ' . $e->getMessage();
+	}
+
+	// (RECEIPT) ARTICLES
+	try
+	{
+		$myquery = 'CREATE TABLE IF NOT EXISTS '.TABLE_RCPT_ARTICLES.'(
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    hashid VARCHAR(16) NOT NULL UNIQUE,
+    account_id INT UNSIGNED NOT NULL,
+    spreadsheet_id INT UNSIGNED NOT NULL,
+    member_id INT UNSIGNED NOT NULL,
+    description VARCHAR(255) NOT NULL,
+    price DECIMAL(12,2) NOT NULL,
+    quantity DECIMAL(12,2) NOT NULL,
+    PRIMARY KEY (id),
+		INDEX ind_rcpt_article_account_id (account_id),
+		INDEX ind_rcpt_article_spreadsheet_id (spreadsheet_id),
+		CONSTRAINT fk_rcpt_article_account_id
+			FOREIGN KEY (account_id)
+			REFERENCES '.TABLE_ACCOUNTS.'(id)
+			ON DELETE CASCADE
+			ON UPDATE CASCADE,
+		CONSTRAINT fk_rcpt_article_spreadsheet_id
+			FOREIGN KEY (spreadsheet_id)
+			REFERENCES '.TABLE_SPREADSHEETS.'(id)
+			ON DELETE CASCADE
+			ON UPDATE CASCADE
+		)
+		ENGINE=INNODB DEFAULT CHARSET=utf8;';
+		$prepare_query = $db->prepare($myquery);
+		$isgood = $prepare_query->execute();
+		$prepare_query->closeCursor();
+	}
+	catch (Exception $e)
+	{
+			return 'Fail to connect: ' . $e->getMessage();
+	}
+
+	// (RECEIPT) BENEFICIARIES
+	try
+	{
+		$myquery = 'CREATE TABLE IF NOT EXISTS '.TABLE_RCPT_RECIPIENTS.'(
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    hashid VARCHAR(16) NOT NULL UNIQUE,
+    account_id INT UNSIGNED NOT NULL,
+    spreadsheet_id INT UNSIGNED NOT NULL,
+    member_id INT UNSIGNED NOT NULL,
+    article_id INT UNSIGNED NOT NULL,
+    quantity DECIMAL(12,2) NOT NULL,
+    PRIMARY KEY (id),
+		INDEX ind_rcpt_recipient_account_id (account_id),
+		INDEX ind_rcpt_recipient_spreadsheet_id (spreadsheet_id),
+		INDEX ind_rcpt_recipient_member_id (member_id),
+		INDEX ind_rcpt_recipient_article_id (article_id),
+		CONSTRAINT fk_rcpt_recipient_account_id
+        FOREIGN KEY (account_id)
+        REFERENCES '.TABLE_ACCOUNTS.'(id)
+				ON DELETE CASCADE
+				ON UPDATE CASCADE,
+		CONSTRAINT fk_rcpt_recipient_spreadsheet_id
+        FOREIGN KEY (spreadsheet_id)
+        REFERENCES '.TABLE_SPREADSHEETS.'(id)
+				ON DELETE CASCADE
+				ON UPDATE CASCADE,
+		CONSTRAINT fk_rcpt_recipient_member_id
+        FOREIGN KEY (member_id)
+        REFERENCES '.TABLE_MEMBERS.'(id)
+				ON DELETE CASCADE
+				ON UPDATE CASCADE,
+		CONSTRAINT fk_rcpt_recipient_article_id
+        FOREIGN KEY (article_id)
+        REFERENCES '.TABLE_RCPT_ARTICLES.'(id)
+				ON DELETE CASCADE
+				ON UPDATE CASCADE
+			)
 		ENGINE=INNODB DEFAULT CHARSET=utf8;';
 		$prepare_query = $db->prepare($myquery);
 		$isgood = $prepare_query->execute();

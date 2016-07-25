@@ -87,16 +87,15 @@ Template of a particular account page, that is :
 			<?php include(__DIR__.'/account/cancel_form.php');?>
 			<?php include(__DIR__.'/account/description_panel.php');?>
 			<div class="row">
-				<?php include(__DIR__.'/account/solution.php');?>
+				<?php //include(__DIR__.'/account/solution.php');?>
 			</div>
 			<div class="row">
 				<div class="col-md-3">
-					<?php include(__DIR__.'/account/participant.php');?>
+					<?php include(__DIR__.'/account/members.php');?>
 					<?php include(__DIR__.'/account/add_spreadsheet_panel.php');?>
 				</div>
 				<div class="col-md-9">
-					<?php include(__DIR__.'/account/bill.php');?>
-					<?php include(__DIR__.'/account/receipt.php');?>
+					<?php //include(__DIR__.'/account/spreadsheet.php');?>
 				</div>
 			</div>
 		</div>
