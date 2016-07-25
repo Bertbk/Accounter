@@ -154,7 +154,7 @@ function create_tables()
 	// (BUDGET) PAYMENTS
 	try
 	{
-		$myquery = 'CREATE TABLE IF NOT EXISTS '.TABLE_PAYMENTS.'(
+		$myquery = 'CREATE TABLE IF NOT EXISTS '.TABLE_BDGT_PAYMENTS.'(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     hashid VARCHAR(16) NOT NULL UNIQUE,
     account_id INT UNSIGNED NOT NULL,
@@ -168,7 +168,7 @@ function create_tables()
 		INDEX ind_bdgt_paymt_account_id (account_id),
 		INDEX ind_bdgt_paymt_budget_id (budget_id),
 		INDEX ind_bdgt_paymt_payer_id (creditor_id),
-		INDEX ind_bdgt_paymt_recipient_id (debtor_id),
+		INDEX ind_bdgt_paymt_debtor_id (debtor_id),
 		CONSTRAINT fk_paymt_account_id
         FOREIGN KEY (account_id)
         REFERENCES '.TABLE_ACCOUNTS.'(id)
@@ -179,14 +179,14 @@ function create_tables()
         REFERENCES '.TABLE_SPREADSHEETS.'(id)
 				ON DELETE CASCADE
 				ON UPDATE CASCADE,
-		CONSTRAINT fk_paymt_payer_id
-        FOREIGN KEY (payer_id)
-        REFERENCES '.TABLE_BUDGET_PARTICIPANTS.'(id)
+		CONSTRAINT fk_paymt_creditor_id
+        FOREIGN KEY (creditor_id)
+        REFERENCES '.TABLE_BDGT_PARTICIPANTS.'(id)
 				ON DELETE CASCADE
 				ON UPDATE CASCADE,
-		CONSTRAINT fk_paymt_recipient_id
+		CONSTRAINT fk_paymt_debtor_id
         FOREIGN KEY (debtor_id)
-        REFERENCES '.TABLE_BUDGET_PARTICIPANTS.'(id)
+        REFERENCES '.TABLE_BDGT_PARTICIPANTS.'(id)
 				ON DELETE CASCADE
 				ON UPDATE CASCADE
 		)
