@@ -49,3 +49,8 @@ div.padding_member{
 	word-break: break-all;
 	overflow:hidden;
 }
+
+.group_color
+{
+background-color: #111111 !important;
+}

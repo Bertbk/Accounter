@@ -41,7 +41,7 @@ Template of a particular account page, that is :
 <link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/solution.css'?>">
 <link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/member.css'?>">
 <link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/spreadsheet.css'?>">
-<link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/bdgt_member.css'?>">
+<link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/bdgt_participant.css'?>">
 <link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/bdgt_payment.css'?>">
 <link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/rcpt.css'?>">
 <link rel="stylesheet" type="text/css" href="<?php echo BASEURL.'/css/rcpt_payer.css'?>">

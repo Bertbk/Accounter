@@ -13,16 +13,12 @@ Check the data before asking the SQL to create a new payment
  */
 
  
-require_once __DIR__.'/../../config-app.php';
+require_once __DIR__.'/../../../../../config-app.php';
 
 include_once(LIBPATH.'/accounts/get_account_admin.php');
-
-include_once(LIBPATH.'/bills/get_bill_by_hashid.php');
-
-include_once(LIBPATH.'/bill_participants/get_bill_participant_by_hashid.php');
-
-include_once(LIBPATH.'/payments/set_payment.php');
-
+include_once(LIBPATH.'/spreadsheets/get_spreadsheet_by_hashid.php');
+include_once(LIBPATH.'/spreadsheets/budgets/bdgt_participants/get_bdgt_participant_by_hashid.php');
+include_once(LIBPATH.'/spreadsheets/budgets/bdgt_payments/set_bdgt_payment.php');
 
 include_once(LIBPATH.'/hashid/validate_hashid.php');
 include_once(LIBPATH.'/hashid/create_hashid.php');
@@ -40,11 +36,11 @@ if(isset($_POST['submit_new_payment']))
 {
 	$ErrorEmptyMessage = array(
 		'p_hashid_account' => 'Please provide an acount',
-		'p_hashid_bill' => 'Please provide a bill',
+		'p_hashid_spreadsheet' => 'Please provide a spreadsheet',
 		'p_payment' => 'Please provide a payment',
-		'p_hashid_payer' => 'Please provide a payer',
-		'p_hashid_recv' => 'Please provide a receiver',
-		'p_cost' => 'Please provide a cost',
+		'p_hashid_creditor' => 'Please provide a creditor',
+		'p_hashid_debtor' => 'Please provide a debtor',
+		'p_amount' => 'Please provide an amount',
 		'p_description' => 'Please provide a description',
 		'p_type' => 'Please provide a type of payment',
 		'p_date_of_payment' => 'Please provide a date of payment'
@@ -52,11 +48,11 @@ if(isset($_POST['submit_new_payment']))
 	 
 	$ErrorMessage = array(
 		'p_hashid_account' => 'Account is not valid',
-		'p_hashid_bill' => 'Bill is not valid',
+		'p_hashid_spreadsheet' => 'spreadsheet is not valid',
 		'p_payment' => 'Payment is not valid',
-		'p_hashid_payer' => 'Payer is not valid',
-		'p_hashid_recv' => 'Receiver is not valid',
-		'p_cost' => 'Cost is not valid',
+		'p_hashid_creditor' => 'creditor is not valid',
+		'p_hashid_debtor' => 'debtor is not valid',
+		'p_amount' => 'Amount is not valid',
 		'p_description' => 'Description is not valid',
 		'p_date_of_payment' => 'Date of payment is not valid',
 		'p_type' => 'Type of payment not valid',
@@ -89,8 +85,8 @@ if(isset($_POST['submit_new_payment']))
 		{	array_push($errArray, $ErrorMessage[$key]); }
 	}
 
-	// BILL
-	$key = 'p_hashid_bill';
+	// spreadsheet
+	$key = 'p_hashid_spreadsheet';
 	if(empty($_POST[$key])) { //If empty
 		array_push($errArray, $ErrorEmptyMessage[$key]);
 	}
@@ -100,23 +96,23 @@ if(isset($_POST['submit_new_payment']))
 			array_push($errArray, $ErrorMessage[$key]);
 		}
 		else{
-			$hashid_bill = $_POST[$key];
+			$hashid_spreadsheet = $_POST[$key];
 			}
 	}
-	//Get the bill
+	//Get the spreadsheet
 	if(empty($errArray))
 	{		
-		$bill = get_bill_by_hashid($account['id'], $hashid_bill);
-		if(empty($bill))
+		$spreadsheet = get_spreadsheet_by_hashid($account['id'], $hashid_spreadsheet);
+		if(empty($spreadsheet))
 		{	array_push($errArray, $ErrorMessage[$key]); }
 	}
 	
-	//Check if the accounts match between bill and account
+	//Check if the accounts match between spreadsheet and account
 	if(empty($errArray))
 	{
-		if($bill['account_id'] !== $account['id'])
+		if($spreadsheet['account_id'] !== $account['id'])
 		{
-			array_push($errArray, 'This bill does not belong to this account.');
+			array_push($errArray, 'This spreadsheet does not belong to this account.');
 		}
 	}
 	
@@ -132,8 +128,8 @@ if(isset($_POST['submit_new_payment']))
 	 foreach ($_POST['p_payment'] as $payment)
 	 {
 		$errArray2 = array(); // Error array for each payment
-		//PAYER
-		$key = 'p_hashid_payer';
+		//CREDITOR
+		$key = 'p_hashid_creditor';
 		 if(empty($payment[$key])) { //If empty
 			array_push($errArray2, $ErrorEmptyMessage[$key]);
 		}
@@ -143,20 +139,20 @@ if(isset($_POST['submit_new_payment']))
 				array_push($errArray2, $ErrorMessage[$key]);
 			}
 			else{
-				$hashid_payer = $payment[$key];
+				$hashid_creditor = $payment[$key];
 				}
 		}
-		//Get the payer
+		//Get the creditor
 		if(empty($errArray2))
 		{		
-			$payer = get_bill_participant_by_hashid($account['id'], $hashid_payer);
-			if(empty($payer))
+			$creditor = get_bdgt_participant_by_hashid($account['id'], $hashid_creditor);
+			if(empty($creditor))
 			{	array_push($errArray2, $ErrorMessage[$key]); }
 		}
 		
 		//Number of real payment
-		$n_receivers = 0;
-		$receivers_id = Array();
+		$n_debtors = 0;
+		$debtors_id = Array();
 		//TYPE OF PAYMENT (GROUP OR PARTICULAR)
 		$key = 'p_type';
 		if(empty($payment[$key])) { //If empty
@@ -166,8 +162,8 @@ if(isset($_POST['submit_new_payment']))
 			if($payment[$key] == -1 || is_null($payment[$key]))
 			{
 				$type_payment = -1;
-				$n_receivers = 1;
-				$receivers_id[0] = null; //null if for group in SQL
+				$n_debtors = 1;
+				$debtors_id[0] = null; //null if for group in SQL
 			}
 			else if($payment[$key] == 1){
 				$type_payment = 1;
@@ -177,11 +173,11 @@ if(isset($_POST['submit_new_payment']))
 			}
 		}
 		
-		//RECEIVERS (if payment from people to people)
+		//debtorS (if payment from people to people)
 		if(empty($errArray2)
 			&& $type_payment == "1")
 		{
-			$key = 'p_hashid_recv';
+			$key = 'p_hashid_debtor';
 			foreach ($payment[$key] as $hashid_recv)
 			{
 				if(validate_hashid($hashid_recv)== false)
@@ -189,27 +185,27 @@ if(isset($_POST['submit_new_payment']))
 					array_push($errArray2, $ErrorMessage[$key]);
 				}
 				else{
-					$receiver = get_bill_participant_by_hashid($account['id'], $hashid_recv);
-					if(empty($receiver))
+					$debtor = get_spreadsheet_participant_by_hashid($account['id'], $hashid_recv);
+					if(empty($debtor))
 					{	array_push($errArray2, $ErrorMessage[$key]); }
 					else{
-						//This is a valid receiver !
-						array_push($receivers_id, $receiver['id']);
-						$n_receivers ++;
+						//This is a valid debtor !
+						array_push($debtors_id, $debtor['id']);
+						$n_debtors ++;
 					}
 				}
 			}
 		}
 
-		// AMOUNT / COST
-		$key = 'p_cost';
+		// AMOUNT / amount
+		$key = 'p_amount';
 		if(empty($payment[$key])) { //If empty
 			array_push($errArray2, $ErrorEmptyMessage[$key]);
 		}
 		else{
-			//Amount is divided by the number of receivers (=1 if total GROUP !)
-			$cost = (float)((float)$payment[$key] / (float)$n_receivers);
-			if($cost <= 0)
+			//Amount is divided by the number of debtors (=1 if total GROUP !)
+			$amount = (float)((float)$payment[$key] / (float)$n_debtors);
+			if($amount <= 0)
 			{
 				array_push($errArray2, $ErrorMessage[$key]);
 			}
@@ -241,9 +237,9 @@ if(isset($_POST['submit_new_payment']))
 		}
 		
 		//For each local payment
-		foreach ($receivers_id as $receiver_id)
+		foreach ($debtors_id as $debtor_id)
 		{
-			if($receiver_id == $payer['id'])
+			if($debtor_id == $creditor['id'])
 			{ continue;}
 		
 			$errArray3 = Array();
@@ -257,35 +253,35 @@ if(isset($_POST['submit_new_payment']))
 					{ array_push($errArray3, "Server error: problem while creating hashid.");}
 			}
 			
-			//Check if the accounts and bills match
+			//Check if the accounts and spreadsheets match
 			if(empty($errArray3))
 			{
-				if($payer['account_id'] !== $account['id'])
+				if($creditor['account_id'] !== $account['id'])
 				{
-					array_push($errArray3, 'This payer does not belong to this account.');
+					array_push($errArray3, 'This creditor does not belong to this account.');
 				}
-				if($payer['bill_id'] !== $bill['id'])
+				if($creditor['spreadsheet_id'] !== $spreadsheet['id'])
 				{
-					array_push($errArray3, 'This payer does not belong to this bill.');
+					array_push($errArray3, 'This creditor does not belong to this spreadsheet.');
 				}
-				if(!is_null($receiver_id) && $receiver['account_id'] !== $account['id'])
+				if(!is_null($debtor_id) && $debtor['account_id'] !== $account['id'])
 				{
-					array_push($errArray3, 'This receiver does not belong to this account.');
+					array_push($errArray3, 'This debtor does not belong to this account.');
 				}
-				if(!is_null($receiver_id) && $receiver['bill_id'] !== $bill['id'])
+				if(!is_null($debtor_id) && $debtor['spreadsheet_id'] !== $spreadsheet['id'])
 				{
-					array_push($errArray3, 'This receiver does not belong to this bill.');
+					array_push($errArray3, 'This debtor does not belong to this spreadsheet.');
 				}
-				if(!is_null($receiver_id) && $receiver['bill_id'] !== $payer['bill_id'])
+				if(!is_null($debtor_id) && $debtor['spreadsheet_id'] !== $creditor['spreadsheet_id'])
 				{
-					array_push($errArray3, 'Payer and receiver do not belong to the same bill.');
+					array_push($errArray3, 'creditor and debtor do not belong to the same spreadsheet.');
 				}
 			}
 
 			//Save the payment
 			if(empty($errArray3))
 			{
-				$success = set_payment($account['id'], $hashid_payment, $bill['id'], $payer['id'], $cost, $receiver_id, $description, $date_of_payment);	
+				$success = set_payment($account['id'], $hashid_payment, $spreadsheet['id'], $creditor['id'], $amount, $debtor_id, $description, $date_of_payment);	
 				if($success !== true)
 				{array_push($errArray3, 'Server error: Problem while attempting to add a payment'); 	}
 			else

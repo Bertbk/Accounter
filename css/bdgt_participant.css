@@ -9,43 +9,43 @@
 
 /* Form to assign a participant */
 
-.assign_bill_participant input[type="checkbox"] {
+.assign_bdgt_participant input[type="checkbox"] {
     display: none;
 }
 
-.assign_bill_participant input[type="checkbox"] + .btn-group > label span {
+.assign_bdgt_participant input[type="checkbox"] + .btn-group > label span {
     width: 20px;
 }
 
-.assign_bill_participant input[type="checkbox"] + .btn-group > label span:first-child {
+.assign_bdgt_participant input[type="checkbox"] + .btn-group > label span:first-child {
     display: none;
 }
-.assign_bill_participant input[type="checkbox"] + .btn-group > label span:last-child {
+.assign_bdgt_participant input[type="checkbox"] + .btn-group > label span:last-child {
     display: inline-block;   
 }
 
-.assign_bill_participant input[type="checkbox"]:checked + .btn-group > label span:first-child {
+.assign_bdgt_participant input[type="checkbox"]:checked + .btn-group > label span:first-child {
     display: inline-block;
 }
-.assign_bill_participant input[type="checkbox"]:checked + .btn-group > label span:last-child {
+.assign_bdgt_participant input[type="checkbox"]:checked + .btn-group > label span:last-child {
     display: none;   
 }
 
-.assign_bill_participant  label.btn-assign_bill_participant1{
+.assign_bdgt_participant  label.btn-assign_bdgt_participant1{
 float:left!important;
 }
 
-.assign_bill_participant  span.span-assign_bill_participant{
+.assign_bdgt_participant  span.span-assign_bdgt_participant{
 display: block;
 overflow: hidden;
 }
 
-.assign_bill_participant  label.btn-assign_bill_participant2{
+.assign_bdgt_participant  label.btn-assign_bdgt_participant2{
 width:100%!important;
 color:white;
 }
 
-.assign_bill_participant  label.btn-select_all_participation{
+.assign_bdgt_participant  label.btn-select_all_participation{
 width:100%!important;
 }
 
@@ -63,7 +63,3 @@ width:100%!important;
 .billpartColor8 {background-color: #;}
 .billpartColor9 {background-color: #;}
 
-.group_color
-{
-background-color: #111111 !important;
-}

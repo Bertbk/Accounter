@@ -33,9 +33,10 @@ function get_bdgt_available_members($account_id_arg)
 	$my_members = get_members($account_id);
 		
 	$reply = array();
-	foreach($my_members as $member)
+	foreach($my_bdgts as $bdgt)
 	{
-		foreach($my_bdgts as $bdgt)
+		$reply[$bdgt['id']] = array();
+		foreach($my_members as $member)
 		{
 			$find_participant = get_bdgt_participant_by_member_id($account_id, $bdgt['id'], $member['id']);
 			if((empty($find_participant)))
