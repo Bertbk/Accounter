@@ -9,32 +9,33 @@
  */
  
 /*
-Return the bill_participant providing its hashid.
-A bill_participant is a rown in bill_participants SQL table
+Return the bdgt_participant providing its hashid.
+A bdgt_participant is a rown in bdgt_participants SQL table
 */
-include_once(__DIR__.'/../get_db.php');
+include_once(__DIR__.'/../../../get_db.php');
 include_once(LIBPATH.'/hashid/validate_hashid.php');
 
-function get_bill_participant_by_hashid($account_id_arg, $bill_participant_hashid_arg)
+function get_bdgt_participant_by_hashid($account_id_arg, $bdgt_participant_hashid_arg)
 {
 	$db = get_db();
 
 	$account_id = (int)$account_id_arg;
-	$bill_participant_hashid = $bill_participant_hashid_arg;
-	if(validate_hashid($bill_participant_hashid)==false)
+	$bdgt_participant_hashid = $bdgt_participant_hashid_arg;
+	if(validate_hashid($bdgt_participant_hashid)==false)
 	{return false;}
 	
 	try
 	{
-		$myquery = 'SELECT * FROM '.TABLE_BILL_PARTICIPANTS.' 
-		 WHERE account_id=:account_id AND hashid=:bill_participant_hashid';
+		$myquery = 'SELECT * FROM '.TABLE_BDGT_PARTICIPANTS.' 
+		 WHERE account_id=:account_id AND hashid=:bdgt_participant_hashid';
 		$prepare_query = $db->prepare($myquery);
 		$prepare_query->bindValue(':account_id', $account_id, PDO::PARAM_INT);
-		$prepare_query->bindValue(':bill_participant_hashid', $bill_participant_hashid, PDO::PARAM_STR);
+		$prepare_query->bindValue(':bdgt_participant_hashid', $bdgt_participant_hashid, PDO::PARAM_STR);
 		$prepare_query->execute();
 	}
 	catch (Exception $e)
 	{
+		return array();
 	//	echo 'Fail to connect: ' . $e->getMessage();
 	}
 	$reply = $prepare_query->fetchAll();

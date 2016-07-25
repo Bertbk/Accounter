@@ -9,25 +9,25 @@
  */
  
 /*
-Delete a row in the bill_participants SQL table providing its id
+Delete a row in the bdgt_participants SQL table providing its id
 */
 
 include_once(__DIR__.'/../get_db.php');
 
-function delete_bill_participant($account_id_arg, $bill_part_id_arg)
+function delete_bdgt_participant($account_id_arg, $bdgt_part_id_arg)
 {
 	$db = get_db();
 
 	$account_id = (int)$account_id_arg;
-	$bill_part_id = (int)$bill_part_id_arg;
+	$bdgt_part_id = (int)$bdgt_part_id_arg;
 		
 	$isgood= false;
 	try
 	{
-		$myquery = 'DELETE FROM '.TABLE_BILL_PARTICIPANTS.'  
-		 WHERE id=:bill_part_id';
+		$myquery = 'DELETE FROM '.TABLE_BDGT_PARTICIPANTS.'  
+		 WHERE id=:bdgt_part_id';
 		$prepare_query = $db->prepare($myquery);
-		$prepare_query->bindValue(':bill_part_id', $bill_part_id, PDO::PARAM_INT);
+		$prepare_query->bindValue(':bdgt_part_id', $bdgt_part_id, PDO::PARAM_INT);
 		$isgood = $prepare_query->execute();
 		$prepare_query->closeCursor();
 	}

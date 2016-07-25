@@ -9,30 +9,31 @@
  */
  
 /*
-Return the bill_participant providing its id.
-A bill_participant is a rown in bill_participants SQL table
+Return the bdgt_participant providing its id.
+A bdgt_participant is a rown in bdgt_participants SQL table
 */
 
-include_once(__DIR__.'/../get_db.php');
+include_once(__DIR__.'/../../../get_db.php');
 
-function get_bill_participant_by_id($account_id_arg, $bill_participant_id_arg)
+function get_bdgt_participant_by_id($account_id_arg, $bdgt_participant_id_arg)
 {
 	$db = get_db();
 
 	$account_id = (int)$account_id_arg;
-	$bill_participant_id = (int)$bill_participant_id_arg;
+	$bdgt_participant_id = (int)$bdgt_participant_id_arg;
 
 	try
 	{
-		$myquery = 'SELECT * FROM '.TABLE_BILL_PARTICIPANTS.' 
-		 WHERE account_id=:account_id AND id=:bill_participant_id';
+		$myquery = 'SELECT * FROM '.TABLE_BDGT_PARTICIPANTS.' 
+		 WHERE account_id=:account_id AND id=:bdgt_participant_id';
 		$prepare_query = $db->prepare($myquery);
 		$prepare_query->bindValue(':account_id', $account_id, PDO::PARAM_INT);
-		$prepare_query->bindValue(':bill_participant_id', $bill_participant_id, PDO::PARAM_INT);
+		$prepare_query->bindValue(':bdgt_participant_id', $bdgt_participant_id, PDO::PARAM_INT);
 		$prepare_query->execute();
 	}
 	catch (Exception $e)
 	{
+		return array();
 //		echo 'Fail to connect: ' . $e->getMessage();
 	}
 	$reply = $prepare_query->fetchAll();

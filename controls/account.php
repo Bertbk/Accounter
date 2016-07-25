@@ -28,9 +28,9 @@ include_once(LIBPATH.'/accounts/get_account_admin.php');
 include_once(LIBPATH.'/members/get_members.php');
 include_once(LIBPATH.'/spreadsheets/get_spreadsheets.php');
 
-include_once(LIBPATH.'/spreadsheets/budgets/get_bdgt_participants.php');
-include_once(LIBPATH.'/spreadsheets/budgets/get_available_bdgt_participants.php');
-include_once(LIBPATH.'/spreadsheets/budgets/get_bdgt_payments.php');
+include_once(LIBPATH.'/spreadsheets/budget_participants/get_bdgt_participants.php');
+include_once(LIBPATH.'/spreadsheets/budget_participants/get_available_bdgt_participants.php');
+include_once(LIBPATH.'/spreadsheets/budget_payments/get_bdgt_payments.php');
 
 
 
