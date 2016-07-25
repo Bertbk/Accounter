@@ -9,14 +9,14 @@
  */
  
 /*
-Return an array of every receipts associated to the account of provided account id.
-A receipt is a row in the receipts SQL table.
+Return an array of every spreadsheets associated to the account of provided account id.
+A spreadsheet is a row in the spreadsheets SQL table.
 */
 
 include_once(__DIR__.'/../get_db.php');
-include_once(LIBPATH.'/receipts/get_receipt_by_title.php');
+include_once(LIBPATH.'/spreadsheets/get_spreadsheet_by_title.php');
 
-function get_receipts($account_id_arg)
+function get_spreadsheets($account_id_arg)
 {
 	$db = get_db();
 
@@ -24,17 +24,15 @@ function get_receipts($account_id_arg)
 
 	try
 	{
-		$myquery = 'SELECT * FROM  '.TABLE_RECEIPTS.'
+		$myquery = 'SELECT * FROM  '.TABLE_SPREADSHEETS.'
 		 WHERE account_id=:account_id ';
 		$prepare_query = $db->prepare($myquery);
 		$prepare_query->bindValue(':account_id', $account_id, PDO::PARAM_INT);
 		$isgood = $prepare_query->execute();
-		if(!$isgood)
-		{echo '<p>PROBLEM '.$account_id.'</p>';}
 	}
 	catch (Exception $e)
 	{
-//	 return 'Fail to connect: ' . $e->getMessage();
+	 return 'Fail to connect: ' . $e->getMessage();
 	}
 	$reply = $prepare_query->fetchAll();
 	$prepare_query->closeCursor();

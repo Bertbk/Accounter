@@ -9,25 +9,23 @@
  */
  
 /*
-Return the user of name $user_name_arg associated to the account of id $account_id_arg.
-A user is a row in the users SQL table.
+Return every members of the account of id account_id_arg.
+A member is a row in the members SQL table.
 */
 include_once(__DIR__.'/../get_db.php');
 
-function get_user_by_name($account_id_arg, $user_name_arg)
+function get_members($account_id_arg)
 {
 	$db = get_db();
 
 	$account_id = (int)$account_id_arg;
-	$user_name = $user_name_arg;
-	
+
 	try
 	{
-		$myquery = 'SELECT * FROM  '.TABLE_USERS.' 
-		 WHERE account_id=:account_id AND upper(name)=upper(:user_name)';
+		$myquery = 'SELECT * FROM  '.TABLE_MEMBERS.' 
+  		WHERE account_id=:account_id';
 		$prepare_query = $db->prepare($myquery);
 		$prepare_query->bindValue(':account_id', $account_id, PDO::PARAM_INT);
-		$prepare_query->bindValue(':user_name', $user_name, PDO::PARAM_STR); 
 		$prepare_query->execute();
 	}
 	catch (Exception $e)
@@ -38,7 +36,7 @@ function get_user_by_name($account_id_arg, $user_name_arg)
 	$prepare_query->closeCursor();
 	if(!empty($reply))
 	{
-		return $reply[0];
+		return $reply;
 	}
 	else
 	{

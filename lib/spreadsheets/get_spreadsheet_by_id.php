@@ -9,25 +9,25 @@
  */
  
 /*
-Return a receipt providing its id and its associated account id.
-A receipt is a row in the receipts SQL table.
+Return a spreadsheet providing its id and its associated account id.
+A spreadsheet is a row in the spreadsheets SQL table.
 */
 include_once(__DIR__.'/../get_db.php');
 
-function get_receipt_by_id($account_id_arg, $receipt_id_arg)
+function get_spreadsheet_by_id($account_id_arg, $spreadsheet_id_arg)
 {
 	$db = get_db();
 
 	$account_id = (int)$account_id_arg;
-	$receipt_id = (int)$receipt_id_arg;
+	$spreadsheet_id = (int)$spreadsheet_id_arg;
 
 	try
 	{
-		$myquery = 'SELECT * FROM  '.TABLE_RECEIPTS.'
-   		WHERE account_id=:account_id AND id=:receipt_id';
+		$myquery = 'SELECT * FROM  '.TABLE_SPREADSHEETS.'
+   		WHERE account_id=:account_id AND id=:spreadsheet_id';
 		$prepare_query = $db->prepare($myquery);
 		$prepare_query->bindValue(':account_id', $account_id, PDO::PARAM_INT);
-		$prepare_query->bindValue(':receipt_id', $receipt_id, PDO::PARAM_INT);
+		$prepare_query->bindValue(':spreadsheet_id', $spreadsheet_id, PDO::PARAM_INT);
 		$prepare_query->execute();
 	}
 	catch (Exception $e)

@@ -20,18 +20,17 @@ This page checks if... :
 - Something is being edited (ie: admin mode + edit argument)
  */
 
- require_once __DIR__.'/../config-app.php';
+require_once __DIR__.'/../config-app.php';
 
 include_once(LIBPATH.'/accounts/get_account.php');
 include_once(LIBPATH.'/accounts/get_account_admin.php');
 
-include_once(LIBPATH.'/participants/get_participants.php');
-
-
-include_once(LIBPATH.'/bills/get_bills.php');
-include_once(LIBPATH.'/payments/get_payments_by_bills.php');
-include_once(LIBPATH.'/bill_participants/get_bill_participants.php');
-include_once(LIBPATH.'/bill_participants/get_free_bill_participants.php');
+include_once(LIBPATH.'/members/get_members.php');
+include_once(LIBPATH.'/spreadsheets/get_spreadsheets.php');
+/*
+include_once(LIBPATH.'/payments/get_payments_by_spreadsheets.php');
+include_once(LIBPATH.'/spreadsheet_participants/get_spreadsheet_participants.php');
+include_once(LIBPATH.'/spreadsheet_participants/get_free_spreadsheet_participants.php');
 
 include_once(LIBPATH.'/receipts/get_receipts.php');
 include_once(LIBPATH.'/articles/get_articles.php');
@@ -41,12 +40,12 @@ include_once(LIBPATH.'/receipt_receivers/get_receipt_receivers.php');
 include_once(LIBPATH.'/receipt_receivers/get_free_receipt_receivers.php');
 
 
-include_once(LIBPATH.'/solutions/compute_bill_solutions.php');
+include_once(LIBPATH.'/solutions/compute_spreadsheet_solutions.php');
 include_once(LIBPATH.'/solutions/compute_solution.php');
 include_once(LIBPATH.'/solutions/compute_opt_solution.php');
+*/
 
 include_once(LIBPATH.'/hashid/validate_hashid.php');
-
 
 $my_account = array();
 $admin_mode = false; //validates the admin mode or not
@@ -126,14 +125,13 @@ if($admin_mode && !empty($_GET['edit']) && !empty($_GET['edit_hashid']))
 	if(validate_hashid($edit_hashid) == false
 	||
 	($edit_mode !== "account"
-	&& $edit_mode !== "participant"
-	&& $edit_mode !== "bill"
-	&& $edit_mode !== "bill_participant"
-	&& $edit_mode !== "payment"
-	&& $edit_mode !== "receipt"
-	&& $edit_mode !== "receipt_payer"
-	&& $edit_mode !== "receipt_receiver"
-	&& $edit_mode !== "article"	
+	&& $edit_mode !== "member"
+	&& $edit_mode !== "spreadsheet"
+	&& $edit_mode !== "bdgt_participant"
+	&& $edit_mode !== "bdgt_payment"
+	&& $edit_mode !== "rcpt_payer"
+	&& $edit_mode !== "rcpt_recipient"
+	&& $edit_mode !== "rcpt_article"	
 	))
 	{		//Wrong id or action
 		header('location:'.$link_to_account_admin);
@@ -144,33 +142,37 @@ if($admin_mode && !empty($_GET['edit']) && !empty($_GET['edit_hashid']))
 /* Computations and values used in display */
 
 //=== PARTICIPANTS ===
-$my_participants = get_participants($my_account_id); //All person
+$my_members = get_members($my_account_id); //All person
 
-//=== BILLS ===
-$my_bills = get_bills($my_account_id); // All bills
-$my_bill_participants = get_bill_participants($my_account_id); // Participation for each bill
-$my_free_bill_participants = get_free_bill_participants($my_account_id); // Possible participation for each bill
-//Number of bills
-$n_bills = count($my_bills);
-//Payments of each bill
-$my_payments_per_bill = get_payments_by_bills($my_account_id); //All payments per bill
+//=== spreadsheetS ===
+$my_spreadsheets = get_spreadsheets($my_account_id); // All spreadsheets
+//$my_spreadsheet_participants = get_spreadsheet_participants($my_account_id); // Participation for each spreadsheet
+//$my_free_spreadsheet_participants = get_free_spreadsheet_participants($my_account_id); // Possible participation for each spreadsheet
+//Number of spreadsheets
+//$n_spreadsheets = count($my_spreadsheets);
+//Payments of each spreadsheet
+//$my_payments_per_spreadsheet = get_payments_by_spreadsheets($my_account_id); //All payments per spreadsheet
 //For JS : create the list of payer to send to JS
+
+/*
 $list_of_possible_payers= Array(Array(Array()));
-foreach($my_bills as $bill)
+foreach($my_spreadsheets as $spreadsheet)
 {
 	$cpt = -1;
-	foreach ($my_bill_participants[$bill['id']] as $bill_participant)
+	foreach ($my_spreadsheet_participants[$spreadsheet['id']] as $spreadsheet_participant)
 	{
 		$cpt ++;
-		$list_of_possible_payers[$bill['hashid']][$cpt] = 
+		$list_of_possible_payers[$spreadsheet['hashid']][$cpt] = 
 		Array(
-			'part_name' => $bill_participant['name'],
-			'part_hashid' => $bill_participant['hashid']
+			'part_name' => $spreadsheet_participant['name'],
+			'part_hashid' => $spreadsheet_participant['hashid']
 		);
 	}
 }
+*/
 
 //=== RECEIPTS ===
+/*
 $my_receipts = get_receipts($my_account_id); // All receipts
 $my_receipt_payers = get_receipt_payers($my_account_id); // Payers per receipts
 $my_articles_per_receipt = get_articles($my_account_id); // Articles per receipts
@@ -179,11 +181,15 @@ $my_free_article_receivers = get_free_receipt_receivers($my_account_id); // Poss
 $my_receipt_receivers = get_receipt_receivers($my_account_id);
 //Number of receipts
 $n_receipts = count($my_receipts);
+*/
 
 // === SOLUTION === 
+/*
 $solution = compute_solution($my_account_id);
 $solution_opt = compute_opt_solution($my_account_id, $solution);
+*/
 //nb. of money transfert
+/*
 $n_transfer = 0;
 $n_transfer_opt = 0;
 foreach($my_participants as $payer)
@@ -200,13 +206,14 @@ foreach($my_participants as $payer)
 			{$n_transfer_opt++;}
 	}
 }
+*/
 							
-$n_participants = 0;
+$n_members = 0;
 $n_people = 0;
-foreach($my_participants  as $participant)
+foreach($my_members  as $member)
 {
-	$n_participants += 1 ;
-	$n_people += (int)$participant['nb_of_people'] ;
+	$n_members += 1 ;
+	$n_people += (int)$members['nb_of_people'] ;
 }
 
 if(empty($my_account['description'])

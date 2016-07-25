@@ -9,26 +9,25 @@
  */
  
 /*
-Return an array of every spreadsheets of a particular title and associated account id.
-A spreadsheet is a row in the spreadsheets SQL table.
+Return a member providing its id and its associated account id.
+A member is a row in the members SQL table.
 */
-
 include_once(__DIR__.'/../get_db.php');
 
-function get_spreadsheet_by_title($account_id_arg, $spreadsheet_title_arg)
+function get_member_by_id($account_id_arg, $member_id_arg)
 {
 	$db = get_db();
 
 	$account_id = (int)$account_id_arg;
-	$spreadsheet_title = $spreadsheet_title_arg;
-	
+	$member_id = (int)$member_id_arg;
+
 	try
 	{
-		$myquery = 'SELECT * FROM  '.TABLE_SPREADSHEETS.'
-     WHERE account_id=:account_id AND upper(title)=upper(:spreadsheet_title)';
+		$myquery = 'SELECT * FROM  '.TABLE_MEMBERS.' 
+		 WHERE account_id=:account_id AND id=:member_id';
 		$prepare_query = $db->prepare($myquery);
 		$prepare_query->bindValue(':account_id', $account_id, PDO::PARAM_INT);
-		$prepare_query->bindValue(':spreadsheet_title', $spreadsheet_title, PDO::PARAM_STR); 
+		$prepare_query->bindValue(':member_id', $member_id, PDO::PARAM_INT);
 		$prepare_query->execute();
 	}
 	catch (Exception $e)

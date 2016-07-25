@@ -9,45 +9,45 @@
  */
  
 /*
-Add a user, that is a row in the users SQL table.
+Add a member, that is a row in the members SQL table.
 */
 include_once(__DIR__.'/../get_db.php');
-include_once(LIBPATH.'/users/get_user_by_name.php');
-include_once(LIBPATH.'/users/get_users.php');
+include_once(LIBPATH.'/members/get_member_by_name.php');
+include_once(LIBPATH.'/members/get_members.php');
 
 include_once(LIBPATH.'/colors/give_me_next_color.php');
 
 include_once(LIBPATH.'/hashid/validate_hashid.php');
 
-function set_user($account_id_arg, $hashid_arg, $name_of_user_arg, $nb_of_people_arg)
+function set_member($account_id_arg, $hashid_arg, $name_of_member_arg, $nb_of_people_arg)
 {
 	$db = get_db();
 
 	$account_id = (int)$account_id_arg;
 	$hashid = $hashid_arg;
-	$name_of_user = $name_of_user_arg;
+	$name_of_member = $name_of_member_arg;
 	$nb_of_people = (int)$nb_of_people_arg;
 	
 	if(validate_hashid($hashid) == false)
 	{return false;}
 	
-	//Check if a user with the same name already exists
-	$does_this_guy_exists = get_user_by_name($account_id, $name_of_user);
+	//Check if a member with the same name already exists
+	$does_this_guy_exists = get_member_by_name($account_id, $name_of_member);
 	if(!empty($does_this_guy_exists))
 	{		return false;	}
 	
-	$the_users = get_users($account_id);
-	$my_color = give_me_next_color($the_users, 'user');
-	//When color will come from users, check the reg ex
+	$the_members = get_members($account_id);
+	$my_color = give_me_next_color($the_members, 'member');
+	//When color will come from members, check the reg ex
 	
 	try
 	{
-		$myquery = 'INSERT INTO  '.TABLE_USERS.' (id, hashid,  account_id, name, nb_of_people, color) 
-		VALUES(NULL, :hashid, :account_id, :name_of_user, :nb_of_people, :my_color)';
+		$myquery = 'INSERT INTO  '.TABLE_MEMBERS.' (id, hashid,  account_id, name, nb_of_people, color) 
+		VALUES(NULL, :hashid, :account_id, :name_of_member, :nb_of_people, :my_color)';
 		$prepare_query = $db->prepare($myquery);
 		$prepare_query->bindValue(':hashid', $hashid, PDO::PARAM_STR);
 		$prepare_query->bindValue(':account_id', $account_id, PDO::PARAM_INT);
-		$prepare_query->bindValue(':name_of_user', $name_of_user, PDO::PARAM_STR);
+		$prepare_query->bindValue(':name_of_member', $name_of_member, PDO::PARAM_STR);
 		$prepare_query->bindValue(':nb_of_people', $nb_of_people, PDO::PARAM_INT);
 		$prepare_query->bindValue(':my_color', $my_color, PDO::PARAM_STR);
 		$isgood = $prepare_query->execute();

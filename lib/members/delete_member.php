@@ -9,37 +9,32 @@
  */
  
 /*
-Return every users of the account of id account_id_arg.
-A user is a row in the users SQL table.
+Delete a member providing its id and its associated account id.
+A member is a row in the members SQL table.
 */
 include_once(__DIR__.'/../get_db.php');
 
-function get_users($account_id_arg)
+function delete_member($account_id_arg, $member_id_arg)
 {
 	$db = get_db();
 
 	$account_id = (int)$account_id_arg;
-
+	$member_id = (int)$member_id_arg;
+		
+	$isgood= false;
 	try
 	{
-		$myquery = 'SELECT * FROM  '.TABLE_USERS.' 
-  		WHERE account_id=:account_id';
+		$myquery = 'DELETE FROM  '.TABLE_MEMBERS.'  
+		 WHERE id=:member_id';
 		$prepare_query = $db->prepare($myquery);
-		$prepare_query->bindValue(':account_id', $account_id, PDO::PARAM_INT);
-		$prepare_query->execute();
+		$prepare_query->bindValue(':member_id', $member_id, PDO::PARAM_INT);
+		$isgood = $prepare_query->execute();
+		$prepare_query->closeCursor();
 	}
 	catch (Exception $e)
 	{
 	//	echo 'Fail to connect: ' . $e->getMessage();
 	}
-	$reply = $prepare_query->fetchAll();
-	$prepare_query->closeCursor();
-	if(!empty($reply))
-	{
-		return $reply;
-	}
-	else
-	{
-		return array();
-	}
+	
+	return $isgood;
 }

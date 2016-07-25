@@ -9,12 +9,12 @@
  */
  
 /*
-Return a receipt providing its hashid and its associated account id.
-A receipt is a row in the receipts SQL table.
+Return a spreadsheet providing its hashid and its associated account id.
+A spreadsheet is a row in the spreadsheets SQL table.
 */
 include_once(__DIR__.'/../get_db.php');
 
-function get_receipt_by_hashid($account_id_arg, $hashid_arg)
+function get_spreadsheet_by_hashid($account_id_arg, $hashid_arg)
 {
 	$db = get_db();
 
@@ -23,7 +23,7 @@ function get_receipt_by_hashid($account_id_arg, $hashid_arg)
 
 	try
 	{
-		$myquery = 'SELECT * FROM  '.TABLE_RECEIPTS.'
+		$myquery = 'SELECT * FROM  '.TABLE_SPREADSHEETS.'
   		WHERE account_id=:account_id AND hashid=:hashid';
 		$prepare_query = $db->prepare($myquery);
 		$prepare_query->bindValue(':account_id', $account_id, PDO::PARAM_INT);

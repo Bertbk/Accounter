@@ -9,20 +9,20 @@
  */
  
 /*
-Update a user providing its id and its associated account id.
-A user is a row in the users SQL table.
+Update a member providing its id and its associated account id.
+A member is a row in the members SQL table.
 */
 include_once(__DIR__.'/../get_db.php');
-include_once(LIBPATH.'/users/get_user_by_id.php');
-include_once(LIBPATH.'/users/get_user_by_name.php');
+include_once(LIBPATH.'/members/get_member_by_id.php');
+include_once(LIBPATH.'/members/get_member_by_name.php');
 
-function update_user($account_id_arg, $user_id_arg, $name_of_user_arg, $nb_of_people_arg)
+function update_member($account_id_arg, $member_id_arg, $name_of_member_arg, $nb_of_people_arg)
 {
 	$db = get_db();
 
 	$account_id = (int)$account_id_arg;
-	$user_id = (int)$user_id_arg;
-	$new_name_of_user = $name_of_user_arg;
+	$member_id = (int)$member_id_arg;
+	$new_name_of_member = $name_of_member_arg;
 	$new_nb_of_people = (int)$nb_of_people_arg;
 
 	/*
@@ -35,37 +35,37 @@ function update_user($account_id_arg, $user_id_arg, $name_of_user_arg, $nb_of_pe
 	}
 	*/
 	
-	$user = get_user_by_id($account_id, $user_id);
-	if(empty($user))
+	$member = get_member_by_id($account_id, $member_id);
+	if(empty($member))
 	{		return false;	}
 	
 	if($new_nb_of_people < 0)
 	{return false;}
 	
 	//Nothing to change?
-	if($new_name_of_user === $user['name'] 
-	&& $new_nb_of_people == $user['nb_of_people'])
+	if($new_name_of_member === $member['name'] 
+	&& $new_nb_of_people == $member['nb_of_people'])
 	{
 		return true;
 	}
 	
 	//If the name changes, we have to check if it's free
-	if($new_name_of_user != $user['name'])
+	if($new_name_of_member != $member['name'])
 	{
-		$isthenamefree = get_user_by_name($account_id, $new_name_of_user);
+		$isthenamefree = get_member_by_name($account_id, $new_name_of_member);
 		if(!empty($isthenamefree))
 		{			return false;		}
 	}
 	
 	try
 	{
-		$myquery = 'UPDATE  '.TABLE_USERS.' 
-		 SET name=:new_name_of_user, nb_of_people=:new_nb_of_people
-		WHERE id=:user_id';
+		$myquery = 'UPDATE  '.TABLE_MEMBERS.' 
+		 SET name=:new_name_of_member, nb_of_people=:new_nb_of_people
+		WHERE id=:member_id';
 		$prepare_query = $db->prepare($myquery);
-		$prepare_query->bindValue(':new_name_of_user', $new_name_of_user, PDO::PARAM_STR);
+		$prepare_query->bindValue(':new_name_of_member', $new_name_of_member, PDO::PARAM_STR);
 		$prepare_query->bindValue(':new_nb_of_people', $new_nb_of_people, PDO::PARAM_INT);
-		$prepare_query->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+		$prepare_query->bindValue(':member_id', $member_id, PDO::PARAM_INT);
 		$isgood = $prepare_query->execute();
 		$prepare_query->closeCursor();
 	}
