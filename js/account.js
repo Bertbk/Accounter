@@ -380,7 +380,7 @@ function DisableEnableElement(trigger, target) {
 
 // Select all or unselect every participation for a bill.
 // Check/Uncheck every input box with id starting with $id_of_checkbox
-function SelectAllParticipant(button_select, id_of_checkbox)
+function SelectAll(button_select, id_of_checkbox)
 {
 	var inputs = document.getElementsByTagName("input");
 	for(var i = 0; i < inputs.length; i++) {

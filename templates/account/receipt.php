@@ -214,7 +214,7 @@ if($admin_mode && !$edit_mode)
 										<div>
 											<input type="checkbox" name="" 
 												id="<?php echo'form_select_all_payers_'.$cpt_spreadsheet?>"
-												onchange="SelectAllParticipation(this, '<?php echo $cpt_spreadsheet?>')">
+												onchange="SelectAll(this, '<?php echo "assign_payer_".$cpt_spreadsheet."_"?>')">
 											<div class="[ btn-group ] fullwidth" style="overflow:hidden">
 												<label for="<?php echo 'form_select_all_payers_'.$cpt_spreadsheet?>"
 													class="[ btn btn-default ] btn-assign_rcpt_payer">

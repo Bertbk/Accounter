@@ -200,7 +200,7 @@ $bdgt_participant_tmp  = null;
 										<div>
 											<input type="checkbox" name="" 
 												id="<?php echo'form_select_all_participant_'.$cpt_spreadsheet?>"
-												onchange="SelectAllParticipant(this, '<?php echo "assign_participant_".$cpt_spreadsheet."_"?>')">
+												onchange="SelectAll(this, '<?php echo "assign_participant_".$cpt_spreadsheet."_"?>')">
 											<div class="[ btn-group ] fullwidth" style="overflow:hidden">
 												<label for="<?php echo 'form_select_all_participant_'.$cpt_spreadsheet?>"
 													class="[ btn btn-default ] btn-assign_bdgt_participant">
