@@ -64,7 +64,7 @@ function create_new_account($hashid_arg, $hashid_admin_arg, $title_of_account_ar
 		$prepare_query->bindValue(':hashid_admin', $hashid_admin, PDO::PARAM_STR);
 		$prepare_query->bindValue(':title', $title_of_account, PDO::PARAM_STR);
 		$prepare_query->bindValue(':author', $author, PDO::PARAM_STR);
-		$prepare_query->bindValue(':email', $contact_email, PDO::PARAM_STR);
+		$prepare_query->bindValue(':email', $contact_email, (is_null($contact_email))?(PDO::PARAM_NULL):(PDO::PARAM_STR));
 		$prepare_query->bindValue(':description', $description, (is_null($description))?(PDO::PARAM_NULL):(PDO::PARAM_STR));
 		$prepare_query->bindValue(':date_of_creation', $date_of_creation, PDO::PARAM_STR);
 		$prepare_query->bindValue(':date_of_expiration', $date_of_expiration, PDO::PARAM_STR);
@@ -73,7 +73,7 @@ function create_new_account($hashid_arg, $hashid_admin_arg, $title_of_account_ar
 	}
 	catch (Exception $e)
 	{
-//		echo 'Fail to connect: ' . $e->getMessage();
+		return 'Fail to connect: ' . $e->getMessage();
 	}
 	
 	return $isgood;

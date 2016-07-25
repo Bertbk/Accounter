@@ -12,7 +12,7 @@
 Check the data before asking the SQL to create a new account */
 
  
-require_once __DIR__.'/../../config-app.php';
+require_once __DIR__.'/../../../config-app.php';
 
 include_once(LIBPATH.'/accounts/create_new_account.php');
 include_once(LIBPATH.'/email/send_email_new_account.php');
@@ -68,7 +68,8 @@ if(isset($_POST['submit_new_account']))
 	//CONTACT EMAIL
 	$key = 'p_contact_email';
 	if(empty($_POST[$key])) { //If empty
-		array_push($errArray, $ErrorEmptyMessage[$key]);
+		array_push($warnArray, 'No email address provided: do not lose the links!');
+		$account_email = null;
 	}
 	else{
 		$account_email_tmp = filter_input(INPUT_POST, $key, FILTER_SANITIZE_EMAIL);
@@ -118,10 +119,13 @@ if(isset($_POST['submit_new_account']))
 			array_push($errArray, 'Problem while creating account. Please try again');
 		}
 		else{
-			$email_sent = send_email_new_account($hashid);
-			if($email_sent == false)
+			if(!is_null($account_email))
 			{
-				array_push($warnArray, 'Problem while sending email. Account has been created though.');
+				$email_sent = send_email_new_account($hashid);
+				if($email_sent == false)
+				{
+					array_push($warnArray, 'Problem while sending email. Account has been created though.');
+				}
 			}
 		}
 	}

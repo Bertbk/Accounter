@@ -31,7 +31,7 @@ function send_email_new_account($account_hashid_arg)
 	{
 		return false;
 	}
-		
+	
 	$dest_email = filter_var($account['email'], FILTER_SANITIZE_EMAIL);
 	$dest_email = filter_var($dest_email, FILTER_VALIDATE_EMAIL);
 	

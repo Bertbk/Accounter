@@ -38,7 +38,7 @@ Template of the create an account page.
 
 			<h1>Create a new account</h1>
 
-			<form method="post" action="<?php echo ACTIONPATH.'/new_account.php'?>">
+			<form method="post" action="<?php echo ACTIONPATH.'/accounts/new_account.php'?>">
 				<fieldset>
 					<legend class="sr-only">Create a new account</legend>
 					<p><em>Fields with asterisk <span class="glyphicon glyphicon-asterisk red"></span> are required</em></p>
@@ -66,9 +66,9 @@ Template of the create an account page.
 						</div>
 						<div class="col-xs-12 col-sm-6 col-lg-4">
 							<div class="form-group">
-								<label for="form_email">Email address<span class="glyphicon glyphicon-asterisk red"></span></label>
+								<label for="form_email">Email address</label>
 								<div class="input-group">
-									<input type="email" name="p_contact_email" id="form_email" required class="form-control"
+									<input type="email" name="p_contact_email" id="form_email" class="form-control"
 										placeholder="Email address" title="Email address">
 									<span class="input-group-addon glyphicon glyphicon-envelope"></span>
 								</div>

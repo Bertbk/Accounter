@@ -37,7 +37,7 @@ function create_tables()
     hashid_admin VARCHAR(32) NOT NULL UNIQUE,
     title VARCHAR(255) NOT NULL,
     author VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL,
+    email VARCHAR(255),
 		date_of_creation DATE,
 		date_of_expiration DATE,
     description TEXT,
