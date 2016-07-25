@@ -9,9 +9,9 @@
  */
  
 /*
-Hard-coded color for participants and bills.
+Hard-coded color for members and spreadsheets.
 
-Returns an array of the corresponding type (participant or bill).
+Returns an array of the corresponding type (member or spreadsheet).
 */
 
 function get_colorArray($type_arg)
@@ -170,7 +170,7 @@ function get_colorArray($type_arg)
 		'YellowGreen'=>'9ACD32'
 	);
 	
-	if($type_color == 'participant')
+	if($type_color == 'member')
 	{
 		$colorArray = array(
 		0 => $BasicColorArray['Blue'],
@@ -196,7 +196,7 @@ function get_colorArray($type_arg)
 		);
 		
 	}
-	if($type_color == 'bill')
+	if($type_color == 'spreadsheet')
 	{
 		$colorArray = array(
 		0 =>'FDD2C2',

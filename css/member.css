@@ -37,3 +37,15 @@ div#div_add_member a {
 color:black;
 }
 
+div.display_member{
+	color:white;
+	border-radius: 5px;
+}
+
+div.padding_member{
+	padding-top: 6px;
+	padding-bottom: 8px;
+	text-align:center;
+	word-break: break-all;
+	overflow:hidden;
+}

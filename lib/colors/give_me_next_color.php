@@ -9,10 +9,10 @@
  */
  
 /*
-Return the next color of participant. 
+Return the next color of member. 
 It just loop on a hard-coded $colorArray for the color that is next to $prev_color_arg.
-This is used to find the next "free" color of a participant or a bill.
-The $type_arg can be either "participant" of "bill"
+This is used to find the next "free" color of a member or a spreadsheet.
+The $type_arg can be either "member" of "spreadsheet"
 (see get_colorArray.php)
 */
 include_once(__DIR__.'/get_colorArray.php');
@@ -22,8 +22,8 @@ function give_me_next_color($entity_array_arg, $type_arg)
 	$entity_array = $entity_array_arg;
 	$type_of_entity = $type_arg;
 
-	if($type_of_entity !== 'participant'
-	&& $type_of_entity !== 'bill')
+	if($type_of_entity !== 'member'
+	&& $type_of_entity !== 'spreadsheet')
 	{return '444444';}
 	
 	$colorArray = get_colorArray($type_of_entity);

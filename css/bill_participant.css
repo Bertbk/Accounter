@@ -48,20 +48,7 @@ color:white;
 .assign_bill_participant  label.btn-select_all_participation{
 width:100%!important;
 }
-/* Displaying the (bill-) participant */
 
-div.display_bill_participant{
-	color:white;
-	border-radius: 5px;
-}
-
-div.padding_bill_participant{
-	padding-top: 6px;
-	padding-bottom: 8px;
-	text-align:center;
-	word-break: break-all;
-	overflow:hidden;
-}
 
 	
 

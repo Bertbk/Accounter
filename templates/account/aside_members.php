@@ -56,7 +56,7 @@ else{
 				if(!($admin_mode && !$edit_mode))
 				{	?>
 				<div class="col-xs-12">
-					<div class="fullwidth padding_bill_member display_bill_member" style="background-color:<?php echo '#'.$member['color']?>">
+					<div class="fullwidth padding_member display_member" style="background-color:<?php echo '#'.$member['color']?>">
 			<?php	echo htmlspecialchars($member['name']).' ('.(int)$member['nb_of_people'].')';?>
 					</div>
 				</div>
@@ -64,7 +64,7 @@ else{
 				$link_tmp = $link_to_account_admin.'/edit/member/'.$member['hashid'].'#edit_tag_'.$member['hashid'];
 ?>
 				<div class="col-xs-7">
-					<div class="fullwidth padding_bill_member display_bill_member" style="background-color:<?php echo '#'.$member['color']?>">	
+					<div class="fullwidth padding_member display_member" style="background-color:<?php echo '#'.$member['color']?>">	
 	<?php 		echo htmlspecialchars($member['name']).' ('.(int)$member['nb_of_people'].')';	?>
 					</div>
 				</div>
