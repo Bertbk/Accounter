@@ -9,7 +9,10 @@
  */
  
  /*
-Template to display all the receipts with their participants and articles
+Template to display a receipt:
+- The payer(s)
+- The articles
+-- Their recipients
  */
  ?>
  

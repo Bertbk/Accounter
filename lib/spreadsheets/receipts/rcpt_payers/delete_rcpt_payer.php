@@ -9,22 +9,22 @@
  */
  
 /*
-Delete a row in the receipt_payers SQL table providing its id 
+Delete a row in the rcpt_payers SQL table providing its id 
 */
 
-include_once(__DIR__.'/../get_db.php');
+include_once(__DIR__.'/../../../get_db.php');
 
-function delete_receipt_payer($account_id_arg, $receipt_payer_id_arg)
+function delete_rcpt_payer($account_id_arg, $rcpt_payer_id_arg)
 {
 	$db = get_db();
 
 	$account_id = (int)$account_id_arg;
-	$payer_id = (int)$receipt_payer_id_arg;
+	$payer_id = (int)$rcpt_payer_id_arg;
 		
 	$isgood= false;
 	try
 	{
-		$myquery = 'DELETE FROM '.TABLE_RECEIPT_PAYERS.'  
+		$myquery = 'DELETE FROM '.TABLE_rcpt_payerS.'  
 		 WHERE id=:payer_id AND account_id=:account_id';
 		$prepare_query = $db->prepare($myquery);
 		$prepare_query->bindValue(':payer_id', $payer_id, PDO::PARAM_INT);

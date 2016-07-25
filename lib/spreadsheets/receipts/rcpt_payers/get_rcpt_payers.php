@@ -11,28 +11,28 @@
 /*
 Return an array of the receipt_payers of the account, sorted by receipts
 */
-include_once(__DIR__.'/../get_db.php');
+include_once(__DIR__.'/../../../get_db.php');
 
-include_once(LIBPATH.'/receipts/get_receipts.php');
-include_once(LIBPATH.'/receipt_payers/get_receipt_payers_by_receipt_id.php');
+include_once(LIBPATH.'/spreadsheets/get_spreadsheets_by_type.php');
+include_once(LIBPATH.'/spreadsheets/receipts/rcpt_payers/get_rcpt_payers_by_spreadsheet_id.php');
 
 /*
 Return every receipt_payers of every receipt. The reply is an array such that
 $reply[receipt_id] = array of receipt_payers + name of participants + color  + hashid
 */
-function get_receipt_payers($account_id_arg)
+function get_rcpt_payers($account_id_arg)
 {
 	$db = get_db();
 
 	$account_id = (int)$account_id_arg;
 	
-	$my_receipts = get_receipts($account_id);
+	$my_receipts = get_spreadsheets_by_type($account_id, "receipt");
 	
 	$reply = array();
 
 	foreach($my_receipts as $receipt)
 	{
-		$reply[$receipt['id']] = get_receipt_payers_by_receipt_id($account_id, $receipt['id']);
+		$reply[$receipt['id']] = get_rcpt_payers_by_spreadsheet_id($account_id, $receipt['id']);
 	}
 	return $reply;
 }
