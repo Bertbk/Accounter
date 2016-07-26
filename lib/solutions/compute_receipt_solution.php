@@ -61,13 +61,13 @@ function compute_receipt_solution($account_id_arg, $receipt_id_arg)
 		$my_quantity = $article['quantity'];
 		foreach($my_recipients as $recipient)
 		{
-			$uid = $recipient['participant_id'];
+			$uid = $recipient['member_id'];
 			$ratio = (float)$recipient['quantity'] / (float)$my_quantity;
 			$price_to_pay = $ratio * $article['price'];
 			//divide the price between payer
 			foreach($my_receipt_payers as $payer)
 			{
-				$vid = $payer['participant_id'];
+				$vid = $payer['member_id'];
 				if($uid == $vid){continue;}
 				$member_part = $price_to_pay * $payer['percent_of_payment']/100;
 				$Refunds[$uid][$vid] += $member_part;
