@@ -73,3 +73,12 @@ color:black;
 div.spreadsheet div.panel  .spreadsheet_participant a{
 color:black;
 }
+
+div.article_item{
+	width:95%;
+	margin:auto;
+	margin-bottom:3px;
+	margin-top:3px;
+	padding:10px;
+	border:1px solid;
+}
