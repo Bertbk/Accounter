@@ -41,6 +41,7 @@ include_once(LIBPATH.'/spreadsheets/receipts/get_rcpt_available_members.php');
 
 include_once(LIBPATH.'/spreadsheets/receipts/rcpt_recipients/get_rcpt_recipients.php');
 include_once(LIBPATH.'/spreadsheets/receipts/get_available_rcpt_recipients.php');
+include_once(LIBPATH.'/spreadsheets/receipts/get_all_rcpt_quantities_taken.php');
 
 
 /*
@@ -193,7 +194,7 @@ $my_percents_of_payments = get_all_rcpt_percents($my_account_id);
 $my_articles = get_rcpt_articles($my_account_id); // Articles per receipts
 $my_rcpt_recipients = get_rcpt_recipients($my_account_id); // Recipients per receipt and per article
 $available_rcpt_recipients = get_available_rcpt_recipients($my_account_id);
-
+$my_rcpt_quantities = get_all_rcpt_quantities_taken($my_account_id);
 // === SOLUTION === 
 /*
 $solution = compute_solution($my_account_id);

@@ -363,7 +363,7 @@ foreach($these_articles as $article)
 					$spreadsheet_receiver_to_edit = false;
 					foreach($this_rcpt_recipients as $recipient)
 					{
-						if($admin_mode && $edit_mode === 'receipt_receiver'
+						if($admin_mode && $edit_mode === 'rcpt_recipient'
 							&& $recipient['hashid'] === $edit_hashid)
 						{ 
 							$spreadsheet_receiver_to_edit = $recipient;
@@ -371,8 +371,8 @@ foreach($these_articles as $article)
 						}
 
 					?>
-						<div class="col-xs-12 col-sm-6 col-lg-4 receipt_receiver">
-							<div class="floatleft width60 padding_receipt_payer display_receipt_payer" style="background-color:<?php echo '#'.$recipient['color']?>">
+						<div class="col-xs-12 col-sm-6 col-lg-4 rcpt_recipient">
+							<div class="floatleft width60 padding_member display_member" style="background-color:<?php echo '#'.$recipient['color']?>">
 								<?php
 									echo htmlspecialchars($recipient['name']).' ('.(float)$recipient['quantity'].')';
 								?>
@@ -380,7 +380,7 @@ foreach($these_articles as $article)
 							<?php
 								if($admin_mode === true
 								&& $edit_mode === false){
-									$link_tmp = $link_to_account_admin.'/edit/receipt_receiver/'.$recipient['hashid'].'#edit_tag_'.$recipient['hashid'];
+									$link_tmp = $link_to_account_admin.'/edit/rcpt_recipient/'.$recipient['hashid'].'#edit_tag_'.$recipient['hashid'];
 									?>
 							<div class="zeromargin floatleft">
 										<form action="<?php echo $link_tmp?>">
@@ -392,12 +392,12 @@ foreach($these_articles as $article)
 							<div class="receipt_payer_button">
 								<form method="post" 
 								class="deleteicon"
-								action="<?php echo ACTIONPATH.'/delete_receipt_receiver.php'?>">		
+								action="<?php echo ACTIONPATH.'/spreadsheets/receipts/rcpt_recipients/delete_rcpt_recipient.php'?>">		
 									<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
-									<input type="hidden" name="p_hashid_spreadsheet_receiver" value="<?php echo $recipient['hashid']?>">
+									<input type="hidden" name="p_hashid_recipient" value="<?php echo $recipient['hashid']?>">
 									<input type="hidden" name="p_anchor" value="<?php echo '#receipt-'.$cpt_spreadsheet?>">
 									<button type="submit" class="btn btn-default confirmation" 
-										name="submit_delete_receipt_receiver" title="Delete recipient">
+										name="submit_delete_rcpt_recipient" title="Delete recipient">
 										<span class="glyphicon glyphicon-trash"></span>
 									</button>
 								</form>
@@ -416,7 +416,7 @@ if($spreadsheet_receiver_to_edit !== false)
 						style="background-color: rgba(<?php echo $cred.','.$cgreen.','.$cblue?>, 0.5);">
 						<h3>Edit recipient <?php echo htmlspecialchars($spreadsheet_receiver_to_edit['name']);?></h3>
 						<form method="post" id="form_edit_recipient_send"
-							action="<?php echo ACTIONPATH.'/update_receipt_receiver.php'?>">
+							action="<?php echo ACTIONPATH.'/update_rcpt_recipient.php'?>">
 							<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
 							<input type="hidden" name="p_hashid_spreadsheet" value="<?php echo $spreadsheet['hashid']?>">
 							<input type="hidden" name="p_hashid_article" value="<?php echo $article['hashid']?>">
@@ -436,7 +436,7 @@ if($spreadsheet_receiver_to_edit !== false)
 									</div>
 								</div>
 							</div>
-							<button type="submit" name="submit_update_receipt_receiver" 
+							<button type="submit" name="submit_update_rcpt_recipient" 
 								value="Submit" class="btn btn-primary" title="Submit changes">
 								Submit changes
 							</button> 
@@ -459,11 +459,13 @@ $spreadsheet_receiver_to_edit= false;
 if($admin_mode && !$edit_mode)
 	{
 				$this_available_rcpt_recipients = $available_rcpt_recipients[$spreadsheet['id']][$article['id']];
-				if(!empty($this_available_rcpt_recipients))
+				$this_available_quantity = (float)$article['quantity'] - (float)$my_rcpt_quantities[$spreadsheet['id']][$article['id']];
+				if(!empty($this_available_rcpt_recipients)
+					&& $this_available_quantity > 0)
 		{
 	?>
 					<form method="post"	enctype="multipart/form-data"
-						action="<?php echo ACTIONPATH.'/new_receipt_receiver.php'?>">
+						action="<?php echo ACTIONPATH.'/spreadsheets/receipts/rcpt_recipients/new_rcpt_recipient.php'?>">
 						<fieldset>
 							<legend id="<?php echo 'show_hide_receipt_add_recipient_'.$cpt_spreadsheet.'_'.$cpt_article?>"
 								class="cursorpointer">
@@ -482,21 +484,21 @@ if($admin_mode && !$edit_mode)
 						{
 							$cpt++;
 		?>
-								<div class="row form-group assign_receipt_receiver">
+								<div class="row form-group assign_rcpt_recipient">
 									<div class="col-xs-12 col-md-6 col-lg-4 ">
 										<div>
-											<input type="checkbox" name="p_receiver['<?php echo $cpt?>'][p_hashid_participant]" 
-												value="<?php echo $member['hashid']?>" title="Participant"
+											<input type="checkbox" name="p_recipient['<?php echo $cpt?>'][p_hashid_member]" 
+												value="<?php echo $member['hashid']?>" title="member"
 												id="<?php echo 'assign_payer_'.$cpt_spreadsheet.'_'.$cpt_article.'_'.$cpt?>" >
 											<div class="[ btn-group ] fullwidth" style="overflow:hidden">
 												<label for="<?php echo 'assign_payer_'.$cpt_spreadsheet.'_'.$cpt_article.'_'.$cpt?>"
-													class="[ btn btn-default ] btn-assign_receipt_receiver">
+													class="[ btn btn-default ] btn-assign_rcpt_recipient">
 													<span class="[ glyphicon glyphicon-ok ]"></span>
 													<span> </span>
 												</label>
-												<span class="span-assign_receipt_receiver" >
+												<span class="span-assign_rcpt_recipient" >
 													<label for="<?php echo 'assign_payer_'.$cpt_spreadsheet.'_'.$cpt_article.'_'.$cpt?>" 
-														class="[ btn btn-default active ] btn-assign_receipt_receiver2"
+														class="[ btn btn-default active ] btn-assign_rcpt_recipient2"
 														style="background-color:<?php echo '#'.$member['color']?>">
 															<?php echo htmlspecialchars($member['name'])?>
 													</label>
@@ -510,8 +512,10 @@ if($admin_mode && !$edit_mode)
 											Quantity
 										</label>
 										<div class="input-group">
-											<input name="p_receiver['<?php echo $cpt?>'][p_quantity]" type="number"
-														class="form-control" min="0" value="1" 
+											<input name="p_recipient['<?php echo $cpt?>'][p_quantity]" type="number"
+														class="form-control" min="0" step="0.001"
+														max="<?php echo (float)$this_available_quantity?>"
+														value="<?php echo (float)$this_available_quantity?>"
 														id="<?php echo 'form_available_quantity_'.$cpt_spreadsheet.'_'.$cpt_article.'_'.$member['id']?>"
 														title="Quantity">
 											<span class="input-group-addon glyphicon glyphicon-scale"></span>
@@ -521,7 +525,7 @@ if($admin_mode && !$edit_mode)
 		<?php
 						}//for each participant
 		?>
-								<div class="row form-group assign_receipt_receiver">
+								<div class="row form-group assign_rcpt_recipient">
 									<div class="col-xs-6 col-md-4 col-lg-3 ">
 										<div>
 											<input type="checkbox" name="" 
@@ -529,11 +533,11 @@ if($admin_mode && !$edit_mode)
 												onchange="SelectAllParticipation(this, '<?php echo 'assign_payer_'.$cpt_spreadsheet.'_'.$cpt_article.'_' ?>')">
 											<div class="[ btn-group ] fullwidth" style="overflow:hidden">
 												<label for="<?php echo 'form_select_all_payers_'.$cpt_spreadsheet.'_'.$cpt_article?>"
-													class="[ btn btn-default ] btn-assign_receipt_receiver">
+													class="[ btn btn-default ] btn-assign_rcpt_recipient">
 													<span class="[ glyphicon glyphicon-ok ]"></span>
 													<span> </span>
 												</label>
-												<span class="span-assign_receipt_receiver" >
+												<span class="span-assign_rcpt_recipient" >
 													<label for="<?php echo 'form_select_all_payers_'.$cpt_spreadsheet.'_'.$cpt_article?>" 
 														class="[ btn btn-default active ] btn-select_all_participation">
 															Select all
@@ -557,7 +561,7 @@ if($admin_mode && !$edit_mode)
 								</div>
 								<div class="row form-group">
 									<div class="col-xs-12">
-										<button type="submit" name="submit_new_receipt_receiver" 
+										<button type="submit" name="submit_new_rcpt_recipient" 
 											value="Submit" class="btn btn-primary" title="Submit new recipient">
 											Submit
 										</button>

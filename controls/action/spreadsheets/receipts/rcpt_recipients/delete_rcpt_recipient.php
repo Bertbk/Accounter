@@ -9,16 +9,16 @@
  */
  
  /*
-Check the data before asking the SQL to delete a receipt_receiver
+Check the data before asking the SQL to delete a rcpt_recipient
 The SQL should be done so that every dependent payments are also deleted
  */
 
- require_once __DIR__.'/../../config-app.php';
+require_once __DIR__.'/../../../../../config-app.php';
 
 include_once(LIBPATH.'/accounts/get_account_admin.php');
 
-include_once(LIBPATH.'/receipt_receivers/get_receipt_receiver_by_hashid.php');
-include_once(LIBPATH.'/receipt_receivers/delete_receipt_receiver.php');
+include_once(LIBPATH.'/spreadsheets/receipts/rcpt_recipients/get_rcpt_recipient_by_hashid.php');
+include_once(LIBPATH.'/spreadsheets/receipts/rcpt_recipients/delete_rcpt_recipient.php');
 
 include_once(LIBPATH.'/hashid/validate_hashid.php');
 
@@ -31,16 +31,16 @@ $warnArray = array(); //warning messages
 $successArray = array(); //success messages
 $redirect_link ="" ;
 
-if(isset($_POST['submit_delete_receipt_receiver']))
+if(isset($_POST['submit_delete_rcpt_recipient']))
 {
 	$ErrorEmptyMessage = array(
 		'p_hashid_account' => 'No acount provided',
-		'p_hashid_receipt_receiver' => 'No receiver provided'
+		'p_hashid_recipient' => 'No recipient provided'
    );
 	 
 	$ErrorMessage = array(
 		'p_hashid_account' => 'Account not valid',
-		'p_hashid_receipt_receiver' => 'Receiver not valid',
+		'p_hashid_recipient' => 'recipient not valid',
 		'p_anchor' => 'Anchor not valid'
    );
 
@@ -64,8 +64,8 @@ if(isset($_POST['submit_delete_receipt_receiver']))
 		{	array_push($errArray, $ErrorMessage['p_hashid_account']); }
 	}
 
-	//RECEIPT receiver
-	$key = 'p_hashid_receipt_receiver';
+	//spreadsheet recipient
+	$key = 'p_hashid_recipient';
 	if(empty($_POST[$key])) { //If empty
 		array_push($errArray, $ErrorEmptyMessage[$key]);
 	}
@@ -73,33 +73,33 @@ if(isset($_POST['submit_delete_receipt_receiver']))
 		if(validate_hashid($_POST[$key]) == false)
 		{array_push($errArray, $ErrorMessage[$key]);}
 	else{
-		$hashid_receipt_receiver = $_POST[$key];		
+		$hashid_rcpt_recipient = $_POST[$key];		
 		}
 	}
-	//Get the receipt receiver
+	//Get the spreadsheet recipient
 	if(empty($errArray))
 	{		
-		$receipt_receiver = get_receipt_receiver_by_hashid($account['id'], $hashid_receipt_receiver);
-		if(empty($receipt_receiver))
-		{	array_push($errArray, $ErrorMessage['p_hashid_receipt_receiver']); }
+		$rcpt_recipient = get_rcpt_recipient_by_hashid($account['id'], $hashid_rcpt_recipient);
+		if(empty($rcpt_recipient))
+		{	array_push($errArray, $ErrorMessage['p_hashid_recipient']); }
 	}
 
 	//Check if accounts match
 	if(empty($errArray))
 	{		
-		if($receipt_receiver['account_id'] !== $account['id'])
+		if($rcpt_recipient['account_id'] != $account['id'])
 		{	array_push($errArray, $ErrorMessage['Accounts mismatch']); }
 	}
 			
-	//Delete the bill participant
+	//Delete the rcpt recipient
 	if(empty($errArray))
 	{
-		$success = delete_receipt_receiver($account['id'], $receipt_receiver['id']);	
+		$success = delete_rcpt_recipient($account['id'], $rcpt_recipient['id']);	
 		if($success !== true)
-		{array_push($errArray, 'Server error: Problem while attempting to delete a receiver'); 	}
+		{array_push($errArray, 'Server error: Problem while attempting to delete a recipient'); 	}
 		else
 		{
-			array_push($successArray, 'receiver has been successfully deleted');
+			array_push($successArray, 'Recipient has been successfully deleted');
 		}
 	}
 }
