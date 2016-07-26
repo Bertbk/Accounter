@@ -54,3 +54,45 @@ div.padding_member{
 {
 background-color: #111111 !important;
 }
+
+
+
+.assign_member input[type="checkbox"] {
+    display: none;
+}
+
+.assign_member input[type="checkbox"] + .btn-group > label span {
+    width: 20px;
+}
+
+.assign_member input[type="checkbox"] + .btn-group > label span:first-child {
+    display: none;
+}
+.assign_member input[type="checkbox"] + .btn-group > label span:last-child {
+    display: inline-block;   
+}
+
+.assign_member input[type="checkbox"]:checked + .btn-group > label span:first-child {
+    display: inline-block;
+}
+.assign_member input[type="checkbox"]:checked + .btn-group > label span:last-child {
+    display: none;   
+}
+
+.assign_member  label.btn-assign_member1{
+float:left!important;
+}
+
+.assign_member  span.span-assign_member{
+display: block;
+overflow: hidden;
+}
+
+.assign_member  label.btn-assign_member2{
+width:100%!important;
+color:white;
+}
+
+.assign_member  label.btn-select_all{
+width:100%!important;
+}

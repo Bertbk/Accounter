@@ -156,7 +156,7 @@ $bdgt_participant_tmp  = null;
 							{
 								$cpt++;
 		?>
-								<div class="row form-group assign_bdgt_participant">
+								<div class="row form-group assign_member">
 									<div class="col-xs-12 col-md-6 col-lg-4 ">
 										<div>
 											<input type="checkbox" name="p_participant['<?php echo $cpt?>'][p_hashid_member]" 
@@ -164,13 +164,13 @@ $bdgt_participant_tmp  = null;
 												id="<?php echo'assign_participant_'.$cpt_spreadsheet.'_'.$cpt?>" >
 											<div class="[ btn-group ] fullwidth" style="overflow:hidden">
 												<label for="<?php echo 'assign_participant_'.$cpt_spreadsheet.'_'.$cpt?>"
-													class="[ btn btn-default ] btn-assign_bdgt_participant">
+													class="[ btn btn-default ] btn-assign_member">
 													<span class="[ glyphicon glyphicon-ok ]"></span>
 													<span> </span>
 												</label>
-												<span class="span-assign_bdgt_participant" >
+												<span class="span-assign_member" >
 													<label for="<?php echo 'assign_participant_'.$cpt_spreadsheet.'_'.$cpt?>" 
-														class="[ btn btn-default active ] btn-assign_bdgt_participant2"
+														class="[ btn btn-default active ] btn-assign_member2"
 														style="background-color:<?php echo '#'.$member['color']?>">
 															<?php echo htmlspecialchars($member['name'])?>
 													</label>
@@ -195,7 +195,7 @@ $bdgt_participant_tmp  = null;
 		<?php
 				}//for each member
 		?>
-								<div class="row form-group assign_bdgt_participant">
+								<div class="row form-group assign_member">
 									<div class="col-xs-6 col-md-4 col-lg-3 ">
 										<div>
 											<input type="checkbox" name="" 
@@ -203,13 +203,13 @@ $bdgt_participant_tmp  = null;
 												onchange="SelectAll(this, '<?php echo "assign_participant_".$cpt_spreadsheet."_"?>')">
 											<div class="[ btn-group ] fullwidth" style="overflow:hidden">
 												<label for="<?php echo 'form_select_all_participant_'.$cpt_spreadsheet?>"
-													class="[ btn btn-default ] btn-assign_bdgt_participant">
+													class="[ btn btn-default ] btn-assign_member">
 													<span class="[ glyphicon glyphicon-ok ]"></span>
 													<span> </span>
 												</label>
-												<span class="span-assign_bdgt_participant" >
+												<span class="span-assign_member" >
 													<label for="<?php echo 'form_select_all_participant_'.$cpt_spreadsheet?>" 
-														class="[ btn btn-default active ] btn-select_all_participant">
+														class="[ btn btn-default active ] btn-select_all">
 															Select all
 													</label>
 												</span>

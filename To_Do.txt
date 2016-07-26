@@ -17,20 +17,11 @@ MAJOR
 NEW VERSION
 ===========
 
-A. SQL
+A. Links
 
+Remove every payments/etc. must changed if budget or receipt
 
-B. ARBORESCENCE
-
-Dossiers controls :
-- action/accounts
-- action/spreadsheets/
-- action/spreadsheets/budget/
-- action/spreadsheets/receipt/
-- action/members/
-etc.
-
-C. FRAMEWORK SYMPHONY or SMARTY
+B. FRAMEWORK SYMPHONY or SMARTY
 A priori smarty a l'air plus facile à utiliser :)
 
 
