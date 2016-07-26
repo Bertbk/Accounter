@@ -9,22 +9,21 @@
  */
  
  /*
-Check the data before asking the SQL to update a receipt_payer (= participation)
+Check the data before asking the SQL to update a rcpt_payer (= participation)
  */
 
 
-require_once __DIR__.'/../../config-app.php';
+require_once __DIR__.'/../../../../../config-app.php';
 
 include_once(LIBPATH.'/accounts/get_account_admin.php');
 
-include_once(LIBPATH.'/participants/get_participant_by_hashid.php');
-include_once(LIBPATH.'/participants/get_participant_by_id.php');
+include_once(LIBPATH.'/spreadsheets/get_spreadsheet_by_hashid.php');
 
-include_once(LIBPATH.'/receipts/get_receipt_by_id.php');
+include_once(LIBPATH.'/spreadsheets/receipts/get_rcpt_percents.php');
 
-include_once(LIBPATH.'/receipt_payers/get_receipt_payer_by_hashid.php');
-include_once(LIBPATH.'/receipt_payers/get_receipt_payers_by_receipt_id.php');
-include_once(LIBPATH.'/receipt_payers/update_receipt_payer.php');
+include_once(LIBPATH.'/spreadsheets/receipts/rcpt_payers/get_rcpt_payer_by_hashid.php');
+include_once(LIBPATH.'/spreadsheets/receipts/rcpt_payers/get_rcpt_payers_by_spreadsheet_id.php');
+include_once(LIBPATH.'/spreadsheets/receipts/rcpt_payers/update_rcpt_payer.php');
 
 include_once(LIBPATH.'/hashid/validate_hashid.php');
 
@@ -39,15 +38,15 @@ $redirect_link ="" ;
 
 $ErrorEmptyMessage = array(
 		'p_hashid_account' => 'Please provide an acount',
-		'p_hashid_receipt_payer' => 'Please provide a payer',
-		'p_participant' => 'Please provide a participant',
+		'p_hashid_spreadsheet' => 'Please provide a spreadsheet',
+		'p_hashid_rcpt_payer' => 'Please provide a payer',
 		'p_percent_of_payment' => 'Please provide a percentage'
    );
 	 
 $ErrorMessage = array(
 	'p_hashid_account' => 'Account is not valid',
-	'p_hashid_receipt_payer' => 'Payer is not valid',
-	'p_participant' => 'Participant is not valid',
+	'p_hashid_spreadsheet' => 'Spreadsheet is not valid',
+	'p_hashid_rcpt_payer' => 'Payer is not valid',
 	'p_percent_of_payment' => 'Percent is not valid',
 	'p_anchor' => 'Anchor not valid'
  );
@@ -93,10 +92,10 @@ else{
 	}
 }
 
-if(isset($_POST['submit_update_receipt_payer']))
+if(isset($_POST['submit_update_rcpt_payer']))
 {
-	// receipt_payer
-	$key = 'p_hashid_receipt_payer';
+	// spreadsheet
+	$key = 'p_hashid_spreadsheet';
 	if(empty($_POST[$key])) { //If empty
 		array_push($errArray, $ErrorEmptyMessage[$key]);
 	}
@@ -106,23 +105,54 @@ if(isset($_POST['submit_update_receipt_payer']))
 			array_push($errArray, $ErrorMessage[$key]);
 		}
 		else{
-			$hashid_receipt_payer = $_POST[$key];
+			$hashid_spreadsheet = $_POST[$key];
 			}
 	}
-	//Get the receipt_payer
+	//Get the spreadsheet
 	if(empty($errArray))
 	{		
-		$receipt_payer = get_receipt_payer_by_hashid($account['id'], $hashid_receipt_payer);
-		if(empty($receipt_payer))
+		$spreadsheet = get_spreadsheet_by_hashid($account['id'], $hashid_spreadsheet);
+		if(empty($spreadsheet))
+		{	array_push($errArray, $ErrorMessage[$key]); }
+	}
+	
+	//Check if the accounts match between spreadsheet and account
+	if(empty($errArray))
+	{
+		if($spreadsheet['account_id'] !== $account['id'])
+		{
+			array_push($errArray, 'This spreadsheet does not belong to this account.');
+		}
+	}
+	
+	// rcpt_payer
+	$key = 'p_hashid_rcpt_payer';
+	if(empty($_POST[$key])) { //If empty
+		array_push($errArray, $ErrorEmptyMessage[$key]);
+	}
+	else{
+		if(validate_hashid($_POST[$key])== false)
+		{
+			array_push($errArray, $ErrorMessage[$key]);
+		}
+		else{
+			$hashid_rcpt_payer = $_POST[$key];
+			}
+	}
+	//Get the rcpt_payer
+	if(empty($errArray))
+	{		
+		$rcpt_payer = get_rcpt_payer_by_hashid($account['id'], $hashid_rcpt_payer);
+		if(empty($rcpt_payer))
 		{	array_push($errArray, $ErrorMessage[$key]); }
 	}
 	
 	//Check if the accounts match between receipt and account
 	if(empty($errArray))
 	{
-		if($receipt_payer['account_id'] !== $account['id'])
+		if($rcpt_payer['account_id'] !== $account['id'])
 		{
-			array_push($errArray, 'This participation does not belong to this account.');
+			array_push($errArray, 'This payer does not belong to this account.');
 		}
 	}
 			
@@ -135,47 +165,30 @@ if(isset($_POST['submit_update_receipt_payer']))
 		$new_percent_of_payment = (float)$_POST[$key];
 		if($new_percent_of_payment < 0 ||$new_percent_of_payment > 100)
 		{
-			array_push($errArray, $ErrorMessage['p_percent_of_payment']);
+			array_push($errArray, $ErrorMessage[$key]);
 		}
 	}
 	
 	//Check if the sum of percentage of payment is still acceptable
 	if(empty($errArray))
 	{
-		$registred_receipt_part = get_receipt_payers_by_receipt_id($account['id'], $receipt['id']);
-		$current_percent = $new_percent_of_payment;
-		foreach ($registred_receipt_part as $receipt_part)
+		$current_percent = (float)get_rcpt_percents($account['id'], $spreadsheet['id']) - (float)$rcpt_payer['percent_of_payment'];
+		
+		if(($current_percent + $new_percent_of_payment) > 100)
 		{
-			if($receipt_part['participant_id'] == $participant['id'])
-			{
-				continue;
-			}
-			$current_percent += $receipt_part['percent_of_payment'];
+			array_push($errArray, 'Total percentage is higher than 100%');
 		}
 	}
-
-	if(empty($errArray))
-	{
-		if($current_percent > 100)
-		{
-			array_push($errArray, 'Percent of payment > 100% !');
-		}
-		if($current_percent <= 0)
-		{
-			array_push($errArray, 'Percent of payment <= 0% !');
-		}
-	}
-
 	
-	//Update the receipt_payer
+	//Update the rcpt_payer
 	if(empty($errArray))
 	{
-		$success = update_receipt_payer($account['id'], $receipt_payer['id'], $new_percent_of_payment);	
+		$success = update_rcpt_payer($account['id'], $spreadsheet['id'], $rcpt_payer['id'], $new_percent_of_payment);	
 		if($success !== true)
-		{array_push($errArray, 'Server error: Problem while attempting to update a participation'); 	}
+		{array_push($errArray, 'Server error: Problem while attempting to update a payer'); 	}
 	else
 		{
-			array_push($successArray, 'Participant has been successfully updated');
+			array_push($successArray, 'Payer has been successfully updated');
 		}
 	}
 }

@@ -105,7 +105,7 @@ if(!empty($this_rcpt_payers))
 				<div class="highlight"  id="<?php echo 'edit_tag_'.$edit_hashid?>"
 				style="background-color: rgba(<?php echo $cred.','.$cgreen.','.$cblue?>, 0.5);">
 					<h3>Edit payer <?php echo htmlspecialchars($rcpt_payer_tmp['name']);?></h3>
-					<form method="post" action="<?php echo ACTIONPATH.'/update_receipt_payer.php'?>">
+					<form method="post" action="<?php echo ACTIONPATH.'/spreadsheets/receipts/rcpt_payers/update_rcpt_payer.php'?>">
 
 						<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
 						<input type="hidden" name="p_hashid_spreadsheet" value="<?php echo $spreadsheet['hashid']?>">
@@ -120,13 +120,15 @@ if(!empty($this_rcpt_payers))
 							</div>
 							<div class="col-xs-6 col-sm-5 col-md-4">
 								<div class="input-group">
-									<input type="number" step="0.01" min="0" name="p_percent_of_payment"
-										class="form-control" value="<?php echo (float)$rcpt_payer_tmp['percent_of_payment']?>" required>
+									<input type="number" step="0.01" min="0" 
+										max="<?php echo (float)100-(float)$my_percents_of_payments[$spreadsheet['id']] + (float)$rcpt_payer_tmp['percent_of_payment']?>"
+										class="form-control" name="p_percent_of_payment"
+										value="<?php echo (float)$rcpt_payer_tmp['percent_of_payment']?>" required>
 									<span class="input-group-addon">%</span>
 								</div>
 							</div>
 						</div>
-						<button type="submit" name="submit_update_receipt_payer" 
+						<button type="submit" name="submit_update_rcpt_payer" 
 							value="Submit" class="btn btn-primary" title="Submit changes">
 							Submit changes
 						</button> 
