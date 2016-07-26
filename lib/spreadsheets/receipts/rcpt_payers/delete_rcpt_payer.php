@@ -24,7 +24,7 @@ function delete_rcpt_payer($account_id_arg, $rcpt_payer_id_arg)
 	$isgood= false;
 	try
 	{
-		$myquery = 'DELETE FROM '.TABLE_rcpt_payerS.'  
+		$myquery = 'DELETE FROM '.TABLE_RCPT_PAYERS.'  
 		 WHERE id=:payer_id AND account_id=:account_id';
 		$prepare_query = $db->prepare($myquery);
 		$prepare_query->bindValue(':payer_id', $payer_id, PDO::PARAM_INT);

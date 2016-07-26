@@ -9,23 +9,25 @@
  */
  
  /*
-Check the data before asking the SQL to assign a participant to a receipt
+Check the data before asking the SQL to assign a member to a spreadsheet
  */
  
-require_once __DIR__.'/../../config-app.php';
+require_once __DIR__.'/../../../../../config-app.php';
 
 include_once(LIBPATH.'/accounts/get_account_admin.php');
 
-include_once(LIBPATH.'/participants/get_participant_by_hashid.php');
+include_once(LIBPATH.'/members/get_member_by_hashid.php');
 
-include_once(LIBPATH.'/receipts/get_receipt_by_hashid.php');
+include_once(LIBPATH.'/spreadsheets/get_spreadsheet_by_hashid.php');
 
-include_once(LIBPATH.'/receipt_payers/get_receipt_payers_by_receipt_id.php');
-include_once(LIBPATH.'/receipt_payers/set_receipt_payer.php');
+include_once(LIBPATH.'/spreadsheets/receipts/get_rcpt_percents.php');
+
+include_once(LIBPATH.'/spreadsheets/receipts/rcpt_payers/get_rcpt_payers_by_spreadsheet_id.php');
+include_once(LIBPATH.'/spreadsheets/receipts/rcpt_payers/get_rcpt_payer_by_member_id.php');
+include_once(LIBPATH.'/spreadsheets/receipts/rcpt_payers/set_rcpt_payer.php');
 
 include_once(LIBPATH.'/hashid/validate_hashid.php');
 include_once(LIBPATH.'/hashid/create_hashid.php');
-
 
 //Session is used to send back errors to account.php (if any)
 session_start();
@@ -35,21 +37,21 @@ $warnArray = array(); //warning messages
 $successArray = array(); //success messages
 $redirect_link ="" ;
 
-if(isset($_POST['submit_new_receipt_payer']))
+if(isset($_POST['submit_new_rcpt_payer']))
 {
 	$ErrorEmptyMessage = array(
 		'p_hashid_account' => 'Please provide an acount',
-		'p_hashid_receipt' => 'Please provide a receipt',
-		'p_participant' => 'Please provide a participant',
-		'p_hashid_participant' => 'Please provide a participant',
+		'p_hashid_spreadsheet' => 'Please provide a spreadsheet',
+		'p_payer' => 'Please provide a payer',
+		'p_hashid_member' => 'Please provide a member',
 		'p_percent_of_payment' => 'Please provide a percentage'
    );
 	 
 	$ErrorMessage = array(
 		'p_hashid_account' => 'Account is not valid',
-		'p_hashid_receipt' => 'Receipt is not valid',
-		'p_participant' => 'Participant is not valid',
-		'p_hashid_participant' => 'Participant is not valid',
+		'p_hashid_spreadsheet' => 'Spreadsheet is not valid',
+		'p_payer' => 'Payer is not valid',
+		'p_hashid_member' => 'Member is not valid',
 		'p_percent_of_payment' => 'Percent is not valid',
 		'p_anchor' => 'Anchor not valid'
    );
@@ -76,8 +78,8 @@ if(isset($_POST['submit_new_receipt_payer']))
 		{	array_push($errArray, $ErrorMessage['p_hashid_account']); }
 	}
 
-	// Receipt
-	$key = 'p_hashid_receipt';
+	// spreadsheet
+	$key = 'p_hashid_spreadsheet';
 	if(empty($_POST[$key])) { //If empty
 		array_push($errArray, $ErrorEmptyMessage[$key]);
 	}
@@ -87,39 +89,39 @@ if(isset($_POST['submit_new_receipt_payer']))
 			array_push($errArray, $ErrorMessage[$key]);
 		}
 		else{
-			$hashid_receipt = $_POST[$key];
+			$hashid_spreadsheet = $_POST[$key];
 			}
 	}
-	//Get the receipt
+	//Get the spreadsheet
 	if(empty($errArray))
 	{		
-		$receipt = get_receipt_by_hashid($account['id'], $hashid_receipt);
-		if(empty($receipt))
-		{	array_push($errArray, $ErrorMessage['p_hashid_receipt']); }
+		$spreadsheet = get_spreadsheet_by_hashid($account['id'], $hashid_spreadsheet);
+		if(empty($spreadsheet))
+		{	array_push($errArray, $ErrorMessage[$key]); }
 	}
 	
-	//Check if the accounts match between receipt and account
+	//Check if the accounts match between spreadsheet and account
 	if(empty($errArray))
 	{
-		if($receipt['account_id'] !== $account['id'])
+		if($spreadsheet['account_id'] !== $account['id'])
 		{
-			array_push($errArray, 'This receipt does not belong to this account.');
+			array_push($errArray, 'This spreadsheet does not belong to this account.');
 		}
 	}
 	
-	// PARTICIPANT (possibly multiples !)
-	$key = 'p_participant';
+	// member (possibly multiples !)
+	$key = 'p_payer';
 	if(empty($_POST[$key])) { //If empty
 		array_push($errArray, $ErrorEmptyMessage[$key]);
 	}
 	
 	if(empty($errArray))
 	{
-//Loop now on every participants
-	 foreach ($_POST['p_participant'] as $particip)
+//Loop now on every members
+	 foreach ($_POST['p_payer'] as $particip)
 	 {
-		$errArray2 = array(); // Error array for each participant
-		$key = 'p_hashid_participant';
+		$errArray2 = array(); // Error array for each member
+		$key = 'p_hashid_member';
 		 if(empty($particip[$key])) { //If empty
 			continue;
 			//array_push($errArray2, $ErrorEmptyMessage[$key]);
@@ -130,15 +132,15 @@ if(isset($_POST['submit_new_receipt_payer']))
 				array_push($errArray2, $ErrorMessage[$key]);
 			}
 			else{
-				$hashid_participant = $particip[$key];
+				$hashid_member = $particip[$key];
 				}
 		}
-		//Get the participant
+		//Get the member
 		if(empty($errArray2))
 		{		
-			$participant = get_participant_by_hashid($account['id'], $hashid_participant);
-			if(empty($participant))
-			{	array_push($errArray2, $ErrorMessage['p_hashid_participant']); }
+			$member = get_member_by_hashid($account['id'], $hashid_member);
+			if(empty($member))
+			{	array_push($errArray2, $ErrorMessage[$key]); }
 		}
 		
 		// PERCENT OF PAYMENT
@@ -148,19 +150,20 @@ if(isset($_POST['submit_new_receipt_payer']))
 		}
 		else{
 			$percent_of_payment = (float)$particip[$key];
+			$spreadsheet_percent = (float)get_rcpt_percents($account['id'], $spreadsheet['id']);
 			if($percent_of_payment < 0 
-				|| $percent_of_payment > 100)
+				|| ($percent_of_payment + $spreadsheet_percent) > 100)
 			{
-				array_push($errArray2, $ErrorMessage[$key].': '.$percent_of_payment);
+				array_push($errArray2, $ErrorMessage[$key]);
 			}
 		}
 		
-		//Hash id for the new receipt_payer
-		$hashid_receipt_payer = "";
+		//Hash id for the new rcpt_payer
+		$hashid_rcpt_payer = "";
 		if(empty($errArray2))
 		{	
-			$hashid_receipt_payer = create_hashid();
-			if(is_null($hashid_receipt_payer))
+			$hashid_rcpt_payer = create_hashid();
+			if(is_null($hashid_rcpt_payer))
 				{ array_push($errArray2, "Server error: problem while creating hashid.");}
 		}
 
@@ -168,47 +171,30 @@ if(isset($_POST['submit_new_receipt_payer']))
 		//Check if the accounts match
 		if(empty($errArray2))
 		{
-			if($participant['account_id'] !== $account['id'])
+			if($member['account_id'] !== $account['id'])
 			{
-				array_push($errArray2, 'This participant does not belong to this account.');
+				array_push($errArray2, 'This member does not belong to this account.');
 			}
-			if($participant['account_id'] !== $receipt['account_id'])
+			if($member['account_id'] !== $spreadsheet['account_id'])
 			{
-				array_push($errArray2, 'Participant and receipt do not belong to the same account');
-			}
-		}
-		
-		//Check if the receipt_payer is not already affected to the receipt
-		if(empty($errArray2))
-		{
-			$registred_receipt_part = get_receipt_payers_by_receipt_id($account['id'], $receipt['id']);
-			$current_percent = $percent_of_payment;
-			foreach ($registred_receipt_part as $receipt_part)
-			{
-					if($receipt_part['participant_id'] == $participant['id'])
-					{
-						{array_push($errArray2, 'Payer already registred!'); 	}
-					}
-					$current_percent += $receipt_part['percent_of_payment'];
+				array_push($errArray2, 'member and spreadsheet do not belong to the same account');
 			}
 		}
 		
+		//Check if the rcpt_payer is not already affected to the spreadsheet
 		if(empty($errArray2))
 		{
-			if($current_percent > 100)
+			$registred_spreadsheet_part = get_rcpt_payer_by_member_id($account['id'], $spreadsheet['id'], $member['id']);
+			if(!empty($registred_spreadsheet_part))
 			{
-				array_push($errArray2, 'Percent of payment > 100% !');
-			}
-			if($current_percent <= 0)
-			{
-				array_push($errArray2, 'Percent of payment <= 0% !');
+				{array_push($errArray2, 'Payer already registred!'); 	}
 			}
 		}
 		
-		//Save the receipt_payer
+		//Save the rcpt_payer
 		if(empty($errArray2))
 		{
-			$success = set_receipt_payer($account['id'], $hashid_receipt_payer, $receipt['id'], $participant['id'], $percent_of_payment);	
+			$success = set_rcpt_payer($account['id'], $hashid_rcpt_payer, $spreadsheet['id'], $member['id'], $percent_of_payment);	
 			if($success !== true)
 			{array_push($errArray2, 'Server error: Problem while attempting to add a payer'); 	}
 			else
@@ -221,7 +207,7 @@ if(isset($_POST['submit_new_receipt_payer']))
 		{
 			$errArray = array_merge($errArray, $errArray2);
 		}
-	 }//Loop on participant
+	 }//Loop on member
  }//If statement
 }
 

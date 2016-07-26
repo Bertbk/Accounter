@@ -15,7 +15,7 @@ include_once(__DIR__.'/../../../get_db.php');
 
 include_once(LIBPATH.'/spreadsheets/get_spreadsheet_by_id.php');
 include_once(LIBPATH.'/members/get_member_by_id.php');
-include_once(LIBPATH.'/spreadsheets/spreadsheets/rcpt_payers/get_spreadsheet_payers_by_member_id.php');
+include_once(LIBPATH.'/spreadsheets/receipts/rcpt_payers/get_rcpt_payer_by_member_id.php');
 
 include_once(LIBPATH.'/hashid/validate_hashid.php');
 
@@ -43,8 +43,9 @@ function set_rcpt_payer($account_id_arg, $hashid_arg, $spreadsheet_id_arg, $memb
 	{return false;}
 
 	//check that the entry is not already existant
-	$spreadsheet_payers = get_spreadsheet_payers_by_member_id($account_id, $spreadsheet_id, $the_member['id']);
+	$spreadsheet_payers = get_rcpt_payer_by_member_id($account_id, $spreadsheet_id, $the_member['id']);
 	if(!empty($spreadsheet_payers))
+	{
 		return false;
 	}
 	
@@ -70,7 +71,7 @@ function set_rcpt_payer($account_id_arg, $hashid_arg, $spreadsheet_id_arg, $memb
 	}
 	catch (Exception $e)
 	{
-	 return 'Fail to connect: ' . $e->getMessage();
+		return 'Fail to connect: ' . $e->getMessage();
 	}
 	return $isgood;
 }

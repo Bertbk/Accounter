@@ -36,7 +36,7 @@ if(isset($my_possible_rcpt_payers[$spreadsheet['id']]))
 
 ?>
 <h3 id="<?php echo 'receipt_payers_'.$cpt_spreadsheet?>">
-	Payers
+	Payers (% of payment)
 </h3>
 <?php // Display the current payers of this receipt
 if(!empty($this_rcpt_payers))
@@ -79,12 +79,12 @@ if(!empty($this_rcpt_payers))
 			<div class="receipt_payer_button">
 				<form method="post" 
 				class="deleteicon"
-				action="<?php echo ACTIONPATH.'/delete_rcpt_payer.php'?>">		
+				action="<?php echo ACTIONPATH.'/spreadsheets/receipts/rcpt_payers/delete_rcpt_payer.php'?>">		
 					<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
 					<input type="hidden" name="p_hashid_rcpt_payer" value="<?php echo $rcpt_payer['hashid']?>">
 					<input type="hidden" name="p_anchor" value="<?php echo '#receipt-'.$cpt_spreadsheet?>">
 					<button type="submit" class="btn btn-default confirmation" 
-						name="submit_delete_receipt_payer" title="Delete participation">
+						name="submit_delete_rcpt_payer" title="Delete payer">
 						<span class="glyphicon glyphicon-trash"></span>
 					</button>
 				</form>
@@ -146,116 +146,126 @@ $rcpt_payer_tmp=null;
 
 	<?php
 if($admin_mode && !$edit_mode)
-{ //Display possibilities
-	//Assign a participant (if there are free guys)
-	if(!empty($this_possible_rcpt_payers))
+{ 
+	if((float)$my_percents_of_payments[$spreadsheet['id']] >= 100)
 	{
-	?>
-					<form method="post"	enctype="multipart/form-data"
-						action="<?php echo ACTIONPATH.'/spreadsheets/receipts/rcpt_payers/new_rcpt_payer.php'?>">
-						<fieldset>
-							<legend id="<?php echo 'show_hide_receipt_add_payer_'.$cpt_spreadsheet?>"
-								class="cursorpointer">
-								(+) Add a payer
-							</legend>
-							<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
-							<input type="hidden" name="p_hashid_receipt" value="<?php echo $spreadsheet['hashid']?>">
-							<input type="hidden" name="p_anchor" value="<?php echo '#receipt-'.$cpt_spreadsheet?>">
-							<div class="hidden_at_first"
-							id=<?php echo 'show_hide_receipt_add_payer_'.$cpt_spreadsheet.'_target'?>>
-
-<?php
-			$cpt = -1;
-			foreach($this_possible_rcpt_payers as $member)
-			{
-				$cpt++;
 		?>
-								<div class="row form-group assign_rcpt_payer">
-									<div class="col-xs-12 col-md-6 col-lg-4 ">
-										<div>
-											<input type="checkbox" name="p_payer['<?php echo $cpt?>'][p_hashid_member]" 
-												value="<?php echo $member['hashid']?>" title="Member"
-												id="<?php echo'assign_payer_'.$cpt_spreadsheet.'_'.$cpt?>" >
-											<div class="[ btn-group ] fullwidth" style="overflow:hidden">
-												<label for="<?php echo 'assign_payer_'.$cpt_spreadsheet.'_'.$cpt?>"
-													class="[ btn btn-default ] btn-assign_rcpt_payer">
-													<span class="[ glyphicon glyphicon-ok ]"></span>
-													<span> </span>
-												</label>
-												<span class="span-assign_rcpt_payer" >
-													<label for="<?php echo 'assign_payer_'.$cpt_spreadsheet.'_'.$cpt?>" 
-														class="[ btn btn-default active ] btn-assign_rcpt_payer2"
-														style="background-color:<?php echo '#'.$member['color']?>">
-															<?php echo htmlspecialchars($member['name'])?>
-													</label>
-												</span>
-											</div>
-										</div>
-									</div>
-									<div class="col-xs-12 col-md-6 col-lg-4">
-										<label for="<?php echo 'form_available_quantity_'.$cpt_spreadsheet.'_'.$member['id']?>" 
-											class="sr-only">
-											Percentage of payment
-										</label>
-										<div class="input-group">
-											<input name="p_payer['<?php echo $cpt?>'][p_percent_of_payment]" type="number"
-														class="form-control" step="0.01" min="0" max="100"	value="100" 
-														id="<?php echo 'form_available_quantity_'.$cpt_spreadsheet.'_'.(int)$member['id']?>"
-														title="Percentage of payment">
-											<span class="input-group-addon">%</span>
-										</div>
-									</div>
-								</div>
+		<p>No payer can be added since the 100% are fulfilled.</p>
 		<?php
-				}//for each possible member
+	}
+	else{
+		//Assign a participant (if there are free guys)
+		if(!empty($this_possible_rcpt_payers))
+		{
 		?>
-								<div class="row form-group assign_rcpt_payer">
-									<div class="col-xs-6 col-md-4 col-lg-3 ">
-										<div>
-											<input type="checkbox" name="" 
-												id="<?php echo'form_select_all_payers_'.$cpt_spreadsheet?>"
-												onchange="SelectAll(this, '<?php echo "assign_payer_".$cpt_spreadsheet."_"?>')">
-											<div class="[ btn-group ] fullwidth" style="overflow:hidden">
-												<label for="<?php echo 'form_select_all_payers_'.$cpt_spreadsheet?>"
-													class="[ btn btn-default ] btn-assign_rcpt_payer">
-													<span class="[ glyphicon glyphicon-ok ]"></span>
-													<span> </span>
-												</label>
-												<span class="span-assign_rcpt_payer" >
-													<label for="<?php echo 'form_select_all_payers_'.$cpt_spreadsheet?>" 
-														class="[ btn btn-default active ] btn-select_all_participation">
-															Select all
+						<form method="post"	enctype="multipart/form-data"
+							action="<?php echo ACTIONPATH.'/spreadsheets/receipts/rcpt_payers/new_rcpt_payer.php'?>">
+							<fieldset>
+								<legend id="<?php echo 'show_hide_receipt_add_payer_'.$cpt_spreadsheet?>"
+									class="cursorpointer">
+									(+) Add a payer
+								</legend>
+								<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
+								<input type="hidden" name="p_hashid_spreadsheet" value="<?php echo $spreadsheet['hashid']?>">
+								<input type="hidden" name="p_anchor" value="<?php echo '#receipt-'.$cpt_spreadsheet?>">
+								<div class="hidden_at_first"
+								id=<?php echo 'show_hide_receipt_add_payer_'.$cpt_spreadsheet.'_target'?>>
+
+	<?php
+				$cpt = -1;
+				foreach($this_possible_rcpt_payers as $member)
+				{
+					$cpt++;
+			?>
+									<div class="row form-group assign_rcpt_payer">
+										<div class="col-xs-12 col-md-6 col-lg-4 ">
+											<div>
+												<input type="checkbox" name="p_payer['<?php echo $cpt?>'][p_hashid_member]" 
+													value="<?php echo $member['hashid']?>" title="Member"
+													id="<?php echo'assign_payer_'.$cpt_spreadsheet.'_'.$cpt?>" >
+												<div class="[ btn-group ] fullwidth" style="overflow:hidden">
+													<label for="<?php echo 'assign_payer_'.$cpt_spreadsheet.'_'.$cpt?>"
+														class="[ btn btn-default ] btn-assign_rcpt_payer">
+														<span class="[ glyphicon glyphicon-ok ]"></span>
+														<span> </span>
 													</label>
-												</span>
+													<span class="span-assign_rcpt_payer" >
+														<label for="<?php echo 'assign_payer_'.$cpt_spreadsheet.'_'.$cpt?>" 
+															class="[ btn btn-default active ] btn-assign_rcpt_payer2"
+															style="background-color:<?php echo '#'.$member['color']?>">
+																<?php echo htmlspecialchars($member['name'])?>
+														</label>
+													</span>
+												</div>
+											</div>
+										</div>
+										<div class="col-xs-12 col-md-6 col-lg-4">
+											<label for="<?php echo 'form_available_quantity_'.$cpt_spreadsheet.'_'.$member['id']?>" 
+												class="sr-only">
+												Percentage of payment
+											</label>
+											<div class="input-group">
+												<input name="p_payer['<?php echo $cpt?>'][p_percent_of_payment]" type="number"
+															class="form-control" step="0.01" min="0" 
+															max="<?php echo (float)100-(float)$my_percents_of_payments[$spreadsheet['id']]?>"	
+															value="<?php echo (float)100-(float)$my_percents_of_payments[$spreadsheet['id']]?>" 
+															id="<?php echo 'form_available_quantity_'.$cpt_spreadsheet.'_'.(int)$member['id']?>"
+															title="Percentage of payment">
+												<span class="input-group-addon">%</span>
 											</div>
 										</div>
 									</div>
-									<div class="col-xs-12 col-md-6 col-lg-5 ">
-										<div class="input-group">
-											<span class="input-group-addon btn btn-default"
-											onclick="SetAllPercent('<?php echo 'form_set_all_percent_'.$cpt_spreadsheet?>', '<?php echo $cpt_spreadsheet?>')">Set to all</span>
-											<input name="" type="number"
-												class="form-control"
-												step="0.01" min="0" max="100"	value="100" 
-												title="Percentage of usage"
-												id="<?php echo 'form_set_all_percent_'.$cpt_spreadsheet?>">
-											<span class="input-group-addon">%</span>
+			<?php
+					}//for each possible member
+			?>
+									<div class="row form-group assign_rcpt_payer">
+										<div class="col-xs-6 col-md-4 col-lg-3 ">
+											<div>
+												<input type="checkbox" name="" 
+													id="<?php echo'form_select_all_payers_'.$cpt_spreadsheet?>"
+													onchange="SelectAll(this, '<?php echo "assign_payer_".$cpt_spreadsheet."_"?>')">
+												<div class="[ btn-group ] fullwidth" style="overflow:hidden">
+													<label for="<?php echo 'form_select_all_payers_'.$cpt_spreadsheet?>"
+														class="[ btn btn-default ] btn-assign_rcpt_payer">
+														<span class="[ glyphicon glyphicon-ok ]"></span>
+														<span> </span>
+													</label>
+													<span class="span-assign_rcpt_payer" >
+														<label for="<?php echo 'form_select_all_payers_'.$cpt_spreadsheet?>" 
+															class="[ btn btn-default active ] btn-select_all_participation">
+																Select all
+														</label>
+													</span>
+												</div>
+											</div>
+										</div>
+										<div class="col-xs-12 col-md-6 col-lg-5 ">
+											<div class="input-group">
+												<span class="input-group-addon btn btn-default"
+												onclick="SetAllPercent('<?php echo 'form_set_all_percent_'.$cpt_spreadsheet?>', '<?php echo $cpt_spreadsheet?>')">Set to all</span>
+												<input name="" type="number"
+													class="form-control"
+													step="0.01" min="0" max="100"	value="100" 
+													title="Percentage of usage"
+													id="<?php echo 'form_set_all_percent_'.$cpt_spreadsheet?>">
+												<span class="input-group-addon">%</span>
+											</div>
+										</div>
+									</div>
+									<div class="row form-group">
+										<div class="col-xs-12">
+											<button type="submit" name="submit_new_rcpt_payer" 
+												value="Submit" class="btn btn-primary" title="Submit new participation">
+												Submit
+											</button>
 										</div>
 									</div>
 								</div>
-								<div class="row form-group">
-									<div class="col-xs-12">
-										<button type="submit" name="submit_new_receipt_payer" 
-											value="Submit" class="btn btn-primary" title="Submit new participation">
-											Submit
-										</button>
-									</div>
-								</div>
-							</div>
-						</fieldset>
-					</form>
+							</fieldset>
+						</form>
 <?php
-		} //if empty free_participants
+			} //if empty free_participants
+		}//If percent <= 100%
 	}//if admin
 ?>
 

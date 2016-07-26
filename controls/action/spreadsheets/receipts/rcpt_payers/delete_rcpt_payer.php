@@ -9,16 +9,16 @@
  */
  
  /*
-Check the data before asking the SQL to delete a receipt_payer
+Check the data before asking the SQL to delete a rcpt_payer
 The SQL should be done so that every dependent payments are also deleted
  */
 
- require_once __DIR__.'/../../config-app.php';
+require_once __DIR__.'/../../../../../config-app.php';
 
 include_once(LIBPATH.'/accounts/get_account_admin.php');
 
-include_once(LIBPATH.'/receipt_payers/get_receipt_payer_by_hashid.php');
-include_once(LIBPATH.'/receipt_payers/delete_receipt_payer.php');
+include_once(LIBPATH.'/spreadsheets/receipts/rcpt_payers/get_rcpt_payer_by_hashid.php');
+include_once(LIBPATH.'/spreadsheets/receipts/rcpt_payers/delete_rcpt_payer.php');
 
 include_once(LIBPATH.'/hashid/validate_hashid.php');
 
@@ -31,16 +31,16 @@ $warnArray = array(); //warning messages
 $successArray = array(); //success messages
 $redirect_link ="" ;
 
-if(isset($_POST['submit_delete_receipt_payer']))
+if(isset($_POST['submit_delete_rcpt_payer']))
 {
 	$ErrorEmptyMessage = array(
 		'p_hashid_account' => 'No acount provided',
-		'p_hashid_receipt_payer' => 'No payer provided'
+		'p_hashid_rcpt_payer' => 'No payer provided'
    );
 	 
 	$ErrorMessage = array(
 		'p_hashid_account' => 'Account not valid',
-		'p_hashid_receipt_payer' => 'Payer not valid',
+		'p_hashid_rcpt_payer' => 'Payer not valid',
 		'p_anchor' => 'Anchor not valid'
    );
 
@@ -65,7 +65,7 @@ if(isset($_POST['submit_delete_receipt_payer']))
 	}
 
 	//RECEIPT PAYER
-	$key = 'p_hashid_receipt_payer';
+	$key = 'p_hashid_rcpt_payer';
 	if(empty($_POST[$key])) { //If empty
 		array_push($errArray, $ErrorEmptyMessage[$key]);
 	}
@@ -73,28 +73,28 @@ if(isset($_POST['submit_delete_receipt_payer']))
 		if(validate_hashid($_POST[$key]) == false)
 		{array_push($errArray, $ErrorMessage[$key]);}
 	else{
-		$hashid_receipt_payer = $_POST[$key];		
+		$hashid_rcpt_payer = $_POST[$key];		
 		}
 	}
 	//Get the receipt payer
 	if(empty($errArray))
 	{		
-		$receipt_payer = get_receipt_payer_by_hashid($account['id'], $hashid_receipt_payer);
-		if(empty($receipt_payer))
-		{	array_push($errArray, $ErrorMessage['p_hashid_receipt_payer']); }
+		$rcpt_payer = get_rcpt_payer_by_hashid($account['id'], $hashid_rcpt_payer);
+		if(empty($rcpt_payer))
+		{	array_push($errArray, $ErrorMessage['p_hashid_rcpt_payer']); }
 	}
 
 	//Check if accounts match
 	if(empty($errArray))
 	{		
-		if($receipt_payer['account_id'] !== $account['id'])
+		if($rcpt_payer['account_id'] !== $account['id'])
 		{	array_push($errArray, $ErrorMessage['Accounts mismatch']); }
 	}
 			
 	//Delete the bill participant
 	if(empty($errArray))
 	{
-		$success = delete_receipt_payer($account['id'], $receipt_payer['id']);	
+		$success = delete_rcpt_payer($account['id'], $rcpt_payer['id']);	
 		if($success !== true)
 		{array_push($errArray, 'Server error: Problem while attempting to delete a payer'); 	}
 		else
