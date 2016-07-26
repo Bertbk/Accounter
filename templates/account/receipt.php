@@ -360,13 +360,13 @@ foreach($these_articles as $article)
 					<div class="row">
 					<?php 
 					$this_rcpt_recipients = $my_rcpt_recipients[$spreadsheet['id']][$article['id']];
-					$spreadsheet_receiver_to_edit = false;
+					$rcpt_recipient_to_edit = false;
 					foreach($this_rcpt_recipients as $recipient)
 					{
 						if($admin_mode && $edit_mode === 'rcpt_recipient'
 							&& $recipient['hashid'] === $edit_hashid)
 						{ 
-							$spreadsheet_receiver_to_edit = $recipient;
+							$rcpt_recipient_to_edit = $recipient;
 							continue;
 						}
 
@@ -409,29 +409,31 @@ foreach($these_articles as $article)
 					
 					<?php
 //Display recipient to edit (if exists)
-if($spreadsheet_receiver_to_edit !== false)
+if($rcpt_recipient_to_edit !== false)
 {
 ?>
 					<div class="highlight" id="<?php echo 'edit_tag_'.$edit_hashid?>"
 						style="background-color: rgba(<?php echo $cred.','.$cgreen.','.$cblue?>, 0.5);">
-						<h3>Edit recipient <?php echo htmlspecialchars($spreadsheet_receiver_to_edit['name']);?></h3>
+						<h3>Edit recipient <?php echo htmlspecialchars($rcpt_recipient_to_edit['name']);?></h3>
 						<form method="post" id="form_edit_recipient_send"
-							action="<?php echo ACTIONPATH.'/update_rcpt_recipient.php'?>">
+							action="<?php echo ACTIONPATH.'/spreadsheets/receipts/rcpt_recipients/update_rcpt_recipient.php'?>">
 							<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
 							<input type="hidden" name="p_hashid_spreadsheet" value="<?php echo $spreadsheet['hashid']?>">
 							<input type="hidden" name="p_hashid_article" value="<?php echo $article['hashid']?>">
-							<input type="hidden" name="p_hashid_spreadsheet_receiver" value="<?php echo $spreadsheet_receiver_to_edit['hashid']?>">
+							<input type="hidden" name="p_hashid_recipient" value="<?php echo $rcpt_recipient_to_edit['hashid']?>">
 							<input type="hidden" name="p_anchor" value="<?php echo '#receipt-'.$cpt_spreadsheet?>">
 							<div class="row form-group row-no-padding">
 								<div class="col-xs-6 col-sm-5 col-md-4">
-									<div class="fullwidth padding_receipt_payer display_receipt_payer" style="background-color:<?php echo '#'.$spreadsheet_receiver_to_edit['color']?>">
-										<?php echo htmlspecialchars($spreadsheet_receiver_to_edit['name']);?>
+									<div class="fullwidth padding_receipt_payer display_receipt_payer" style="background-color:<?php echo '#'.$rcpt_recipient_to_edit['color']?>">
+										<?php echo htmlspecialchars($rcpt_recipient_to_edit['name']);?>
 									</div>
 								</div>
 								<div class="col-xs-6 col-sm-5 col-md-4">
 									<div class="input-group">
-										<input type="number" min="0" name="p_quantity"
-											class="form-control" value="<?php echo (float)$spreadsheet_receiver_to_edit['quantity']?>" required>
+										<input type="number" min="0" name="p_quantity" step="0.001"
+											max="<?php echo (float)$article['quantity'] - (float)$my_rcpt_quantities[$spreadsheet['id']][$article['id']] + (float)$rcpt_recipient_to_edit['quantity']?>"
+											class="form-control" 
+											value="<?php echo (float)$rcpt_recipient_to_edit['quantity']?>" required>
 										<span class="input-group-addon glyphicon glyphicon-scale"></span>
 									</div>
 								</div>
@@ -447,7 +449,7 @@ if($spreadsheet_receiver_to_edit !== false)
 						</form>
 					</div>
 	<?php
-$spreadsheet_receiver_to_edit= false;
+$rcpt_recipient_to_edit= false;
 } //edit this recipient
 ?>
 

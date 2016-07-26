@@ -15,7 +15,7 @@ return error message or false otherwise
  */
  
 include_once(__DIR__.'/../../../get_db.php');
-include_once(LIBPATH.'/rcpt_recipients/get_rcpt_recipient_by_id.php');
+include_once(LIBPATH.'/spreadsheets/receipts/rcpt_recipients/get_rcpt_recipient_by_id.php');
 
 
 function update_rcpt_recipient($account_id_arg, $rcpt_recipient_id_arg, $quantity_arg)

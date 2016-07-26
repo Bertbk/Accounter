@@ -9,23 +9,21 @@
  */
  
  /*
-Check the data before asking the SQL to update a receipt_receiver (= participation)
+Check the data before asking the SQL to update a rcpt_recipient (= participation)
  */
 
 
-require_once __DIR__.'/../../config-app.php';
+require_once __DIR__.'/../../../../../config-app.php';
 
 include_once(LIBPATH.'/accounts/get_account_admin.php');
 
-include_once(LIBPATH.'/participants/get_participant_by_hashid.php');
-include_once(LIBPATH.'/participants/get_participant_by_id.php');
+include_once(LIBPATH.'/spreadsheets/get_spreadsheet_by_hashid.php');
 
-include_once(LIBPATH.'/receipts/get_receipt_by_hashid.php');
+include_once(LIBPATH.'/spreadsheets/receipts/rcpt_articles/get_rcpt_article_by_hashid.php');
+include_once(LIBPATH.'/spreadsheets/receipts/rcpt_articles/get_rcpt_article_quantities_taken.php');
 
-include_once(LIBPATH.'/articles/get_article_by_hashid.php');
-
-include_once(LIBPATH.'/receipt_receivers/get_receipt_receiver_by_hashid.php');
-include_once(LIBPATH.'/receipt_receivers/update_receipt_receiver.php');
+include_once(LIBPATH.'/spreadsheets/receipts/rcpt_recipients/get_rcpt_recipient_by_hashid.php');
+include_once(LIBPATH.'/spreadsheets/receipts/rcpt_recipients/update_rcpt_recipient.php');
 
 include_once(LIBPATH.'/hashid/validate_hashid.php');
 
@@ -40,17 +38,17 @@ $redirect_link ="" ;
 
 $ErrorEmptyMessage = array(
 		'p_hashid_account' => 'Please provide an acount',
-		'p_hashid_receipt' => 'Please provide a receipt',
+		'p_hashid_spreadsheet' => 'Please provide a spreadsheet',
 		'p_hashid_article' => 'Please provide an article',
-		'p_hashid_receipt_receiver' => 'Please provide a receiver',
+		'p_hashid_recipient' => 'Please provide a recipient',
 		'p_quantity' => 'Please provide a percentage'
    );
 	 
 $ErrorMessage = array(
 	'p_hashid_account' => 'Account is not valid',
-	'p_hashid_receipt' => 'Receipt is not valid',
+	'p_hashid_spreadsheet' => 'spreadsheet is not valid',
 	'p_hashid_article' => 'Article is not valid',
-	'p_hashid_receipt_receiver' => 'Receiver is not valid',
+	'p_hashid_recipient' => 'Recipient is not valid',
 	'p_quantity' => 'Quantity is not valid',
 	'p_anchor' => 'Anchor not valid'
  );
@@ -96,10 +94,10 @@ else{
 	}
 }
 
-if(isset($_POST['submit_update_receipt_receiver']))
+if(isset($_POST['submit_update_rcpt_recipient']))
 {
-		// receipt
-	$key = 'p_hashid_receipt';
+		// spreadsheet
+	$key = 'p_hashid_spreadsheet';
 	if(empty($_POST[$key])) { //If empty
 		array_push($errArray, $ErrorEmptyMessage[$key]);
 	}
@@ -109,23 +107,23 @@ if(isset($_POST['submit_update_receipt_receiver']))
 			array_push($errArray, $ErrorMessage[$key]);
 		}
 		else{
-			$hashid_receipt = $_POST[$key];
+			$hashid_spreadsheet = $_POST[$key];
 			}
 	}
-	//Get the receipt
+	//Get the spreadsheet
 	if(empty($errArray))
 	{		
-		$receipt = get_receipt_by_hashid($account['id'], $hashid_receipt);
-		if(empty($receipt))
+		$spreadsheet = get_spreadsheet_by_hashid($account['id'], $hashid_spreadsheet);
+		if(empty($spreadsheet))
 		{	array_push($errArray, $ErrorMessage[$key]); }
 	}
 	
-	//Check if the accounts match between receipt and account
+	//Check if the accounts match between spreadsheet and account
 	if(empty($errArray))
 	{
-		if($receipt['account_id'] !== $account['id'])
+		if($spreadsheet['account_id'] !== $account['id'])
 		{
-			array_push($errArray, 'This receipt does not belong to this account.');
+			array_push($errArray, 'This spreadsheet does not belong to this account.');
 		}
 	}
 	
@@ -146,7 +144,7 @@ if(isset($_POST['submit_update_receipt_receiver']))
 	//Get the article
 	if(empty($errArray))
 	{		
-		$article = get_article_by_hashid($account['id'], $hashid_article);
+		$article = get_rcpt_article_by_hashid($account['id'], $hashid_article);
 		if(empty($article))
 		{	array_push($errArray, $ErrorMessage[$key]); }
 	}
@@ -158,14 +156,14 @@ if(isset($_POST['submit_update_receipt_receiver']))
 		{
 			array_push($errArray, 'This article does not belong to this account.');
 		}
-		if($article['receipt_id'] !== $receipt['id'])
+		if($article['spreadsheet_id'] !== $spreadsheet['id'])
 		{
-			array_push($errArray, 'This article does not belong to this receipt.');
+			array_push($errArray, 'This article does not belong to this spreadsheet.');
 		}
 	}
 	
-	// receipt_receiver
-	$key = 'p_hashid_receipt_receiver';
+	// rcpt_recipient
+	$key = 'p_hashid_recipient';
 	if(empty($_POST[$key])) { //If empty
 		array_push($errArray, $ErrorEmptyMessage[$key]);
 	}
@@ -175,29 +173,29 @@ if(isset($_POST['submit_update_receipt_receiver']))
 			array_push($errArray, $ErrorMessage[$key]);
 		}
 		else{
-			$hashid_receipt_receiver = $_POST[$key];
+			$hashid_rcpt_recipient = $_POST[$key];
 			}
 	}
-	//Get the receipt_receiver
+	//Get the rcpt_recipient
 	if(empty($errArray))
 	{		
-		$receipt_receiver = get_receipt_receiver_by_hashid($account['id'], $hashid_receipt_receiver);
-		if(empty($receipt_receiver))
+		$rcpt_recipient = get_rcpt_recipient_by_hashid($account['id'], $hashid_rcpt_recipient);
+		if(empty($rcpt_recipient))
 		{	array_push($errArray, $ErrorMessage[$key]); }
 	}
 	
-	//Check if the accounts match between receipt and account
+	//Check if the accounts match between spreadsheet and account
 	if(empty($errArray))
 	{
-		if($receipt_receiver['account_id'] !== $account['id'])
+		if($rcpt_recipient['account_id'] !== $account['id'])
 		{
 			array_push($errArray, 'This recipient does not belong to this account.');
 		}
-		if($receipt_receiver['receipt_id'] !== $receipt['id'])
+		if($rcpt_recipient['spreadsheet_id'] !== $spreadsheet['id'])
 		{
-			array_push($errArray, 'This recipient does not belong to this receipt.');
+			array_push($errArray, 'This recipient does not belong to this spreadsheet.');
 		}
-		if($receipt_receiver['article_id'] !== $article['id'])
+		if($rcpt_recipient['article_id'] !== $article['id'])
 		{
 			array_push($errArray, 'This recipient does not belong to this article.');
 		}
@@ -215,16 +213,26 @@ if(isset($_POST['submit_update_receipt_receiver']))
 			array_push($errArray, $ErrorMessage[$key]);
 		}
 	}
-	
-	//Update the receipt_receiver
+	//Check the total quantity
 	if(empty($errArray))
 	{
-		$success = update_receipt_receiver($account['id'], $receipt_receiver['id'], $new_quantity);	
+		$total_quantity = (float)get_rcpt_article_quantities_taken($account['id'], $spreadsheet['id'], $article['id']);
+		$total_quantity -= (float)$rcpt_recipient['quantity'];
+		if($total_quantity + $new_quantity > $article['quantity'])
+		{
+			array_push($errArray, $ErrorMessage[$key]);
+		}
+	}	
+	
+	//Update the rcpt_recipient
+	if(empty($errArray))
+	{
+		$success = update_rcpt_recipient($account['id'], $rcpt_recipient['id'], $new_quantity);	
 		if($success !== true)
-		{array_push($errArray, 'Server error: Problem while attempting to update a participation'); 	}
+		{array_push($errArray, 'Server error: Problem while attempting to update a recipient'); 	}
 	else
 		{
-			array_push($successArray, 'Participant has been successfully updated');
+			array_push($successArray, 'Recipient has been successfully updated');
 		}
 	}
 }
