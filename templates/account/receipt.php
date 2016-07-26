@@ -280,7 +280,7 @@ if($admin_mode && !$edit_mode)
 					<h3>Articles</h3>
 					<div class="row">
 					<div id="articles_<?php echo $cpt_spreadsheet?>"
-							class="list_articles overflowhidden">
+							class="list_articles overflowhidden col-xs-12">
 <?php // List of the articles
 	if(isset($my_articles[$spreadsheet['id']]) 
 		&& is_array($my_articles[$spreadsheet['id']])
