@@ -274,11 +274,11 @@ if($admin_mode && !$edit_mode)
 					<h3>Articles</h3>
 
 <?php // List of the articles
-	if(isset($my_articles_per_receipt[$spreadsheet['id']]) 
-		&& is_array($my_articles_per_receipt[$spreadsheet['id']])
-		&& count($my_articles_per_receipt[$spreadsheet['id']]) > 0)
+	if(isset($my_articles[$spreadsheet['id']]) 
+		&& is_array($my_articles[$spreadsheet['id']])
+		&& count($my_articles[$spreadsheet['id']]) > 0)
 	{
-		$these_articles = $my_articles_per_receipt[$spreadsheet['id']];
+		$these_articles = $my_articles[$spreadsheet['id']];
 		$cpt_article = -1;
 	?>
 	<?php
@@ -299,10 +299,10 @@ foreach($these_articles as $article)
 							<strong>Product</strong>
 						</div>
 						<div class="col-xs-4 col-md-2">
-							<strong>Price</strong>
+							<strong>Quantity/Parts</strong>
 						</div>
 						<div class="col-xs-4 col-md-2">
-							<strong>Quantity</strong>
+							<strong>Total price</strong>
 						</div>
 				<?php if($admin_mode && !$edit_mode){?>
 						<div class="hidden-xs hidden-sm col-xs-1">
@@ -318,10 +318,10 @@ foreach($these_articles as $article)
 							<?php echo htmlspecialchars($article['product'])?>
 						</div>
 						<div class="col-xs-4 col-md-2">
-							<?php echo (float)$article['price']?>
+							<?php echo (float)$article['quantity']?>
 						</div>
 						<div class="col-xs-4 col-md-2">
-							<?php echo (float)$article['quantity']?>
+							<?php echo (float)$article['price']?>
 						</div>
 		
 	<?php //EDIT BUTTON
@@ -356,6 +356,7 @@ foreach($these_articles as $article)
 			}//end if admin + non edit 
 			?>
 					</div>
+					
 					<div class="row">
 					<?php 
 					$this_receipt_receivers = $my_receipt_receivers[$spreadsheet['id']][$article['id']];

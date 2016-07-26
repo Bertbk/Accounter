@@ -17,7 +17,7 @@ $reply['spreadsheet_id'] = array of articles associated to the spreadsheet.
 include_once(__DIR__.'/../../../get_db.php');
 
 include_once(LIBPATH.'/spreadsheets/get_spreadsheets_by_type.php');
-include_once(LIBPATH.'/articles/get_articles_by_spreadsheet_id.php');
+include_once(LIBPATH.'/spreadsheets/receipts/rcpt_articles/get_rcpt_articles_by_spreadsheet_id.php');
 
 
 function get_rcpt_articles($account_id_arg)
@@ -34,7 +34,7 @@ function get_rcpt_articles($account_id_arg)
 	
 	foreach ($my_receipts as $receipt)
 	{
-		$reply[$receipt['id']] = get_articles_by_spreadsheet_id($account_id_arg, $receipt['id']);		
+		$reply[$receipt['id']] = get_rcpt_articles_by_spreadsheet_id($account_id_arg, $receipt['id']);		
 	}
 
 	return $reply;
