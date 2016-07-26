@@ -14,7 +14,7 @@ A participant is here a row in the articless SQL table
 */
 include_once(__DIR__.'/../../../get_db.php');
 
-include_once(LIBPATH.'/articles/get_article_by_id.php');
+include_once(LIBPATH.'/spreadsheets/receipts/rcpt_articles/get_rcpt_article_by_id.php');
 
 
 function update_rcpt_article($account_id_arg, $spreadsheet_id_arg, $article_id_arg, $price_arg, $product_arg, $quantity_arg)
@@ -29,7 +29,7 @@ function update_rcpt_article($account_id_arg, $spreadsheet_id_arg, $article_id_a
 	$new_quantity = (float)$quantity_arg;
 	
 	//Get current article
-	$article_to_edit = get_article_by_id($account_id, $article_id);
+	$article_to_edit = get_rcpt_article_by_id($account_id, $article_id);
 	
 	//Check if nothing to do
 	if($new_price == $article_to_edit['price']

@@ -13,15 +13,18 @@ Action launched when the form "Cancel" has been called (when editing).
 Redirect to the admin page of an account.
  */
  
-require_once __DIR__.'/../../config-app.php';
+require_once __DIR__.'/../../../../../config-app.php';
 
 include_once(LIBPATH.'/accounts/get_account_admin.php');
 
-include_once(LIBPATH.'/receipts/get_receipt_by_hashid.php');
+include_once(LIBPATH.'/spreadsheets/get_spreadsheet_by_hashid.php');
 
-include_once(LIBPATH.'/articles/get_article_by_hashid.php');
-include_once(LIBPATH.'/articles/update_article.php');
+include_once(LIBPATH.'/spreadsheets/receipts/rcpt_articles/get_rcpt_article_by_hashid.php');
+include_once(LIBPATH.'/spreadsheets/receipts/rcpt_articles/update_rcpt_article.php');
+include_once(LIBPATH.'/spreadsheets/receipts/rcpt_articles/get_rcpt_article_quantities_taken.php');
 
+include_once(LIBPATH.'/spreadsheets/receipts/rcpt_recipients/get_rcpt_recipients_by_article_id.php');
+include_once(LIBPATH.'/spreadsheets/receipts/rcpt_recipients/delete_rcpt_recipient.php');
 
 include_once(LIBPATH.'/hashid/validate_hashid.php');
 include_once(LIBPATH.'/hashid/create_hashid.php');
@@ -37,8 +40,8 @@ $redirect_link ="" ;
 
 $ErrorEmptyMessage = array(
 		'p_hashid_account' => 'Please provide an acount',
-		'p_hashid_receipt' => 'Please provide a receipt',
-		'p_article' => 'Please provide an article',
+		'p_hashid_spreadsheet' => 'Please provide a spreadsheet',
+		'p_hashid_article' => 'Please provide an article',
 		'p_price' => 'Please provide a price',
 		'p_product' => 'Please provide a product',
 		'p_quantity' => 'Please provide a quantity'
@@ -46,8 +49,8 @@ $ErrorEmptyMessage = array(
 	 
 $ErrorMessage = array(
 'p_hashid_account' => 'Account is not valid',
-'p_hashid_receipt' => 'receipt is not valid',
-'p_article' => 'Article is not valid',
+'p_hashid_spreadsheet' => 'spreadsheet is not valid',
+'p_hashid_article' => 'Article is not valid',
 'p_price' => 'Price is not valid',
 'p_product' => 'Product is not valid',
 'p_quantity' => 'Quantity is not valid',
@@ -100,10 +103,10 @@ if(isset($_POST['submit_cancel']))
 	header('location: '.$redirect_link);
 	exit;
 }
-else if(isset($_POST['submit_update_article']))
+else if(isset($_POST['submit_update_rcpt_article']))
 {
-	// receipt
-	$key = 'p_hashid_receipt';
+	// spreadsheet
+	$key = 'p_hashid_spreadsheet';
 	if(empty($_POST[$key])) { //If empty
 		array_push($errArray, $ErrorEmptyMessage[$key]);
 	}
@@ -113,23 +116,23 @@ else if(isset($_POST['submit_update_article']))
 			array_push($errArray, $ErrorMessage[$key]);
 		}
 		else{
-			$hashid_receipt = $_POST[$key];
+			$hashid_spreadsheet = $_POST[$key];
 			}
 	}
-	//Get the receipt
+	//Get the spreadsheet
 	if(empty($errArray))
 	{		
-		$receipt = get_receipt_by_hashid($account['id'], $hashid_receipt);
-		if(empty($receipt))
+		$spreadsheet = get_spreadsheet_by_hashid($account['id'], $hashid_spreadsheet);
+		if(empty($spreadsheet))
 		{	array_push($errArray, $ErrorMessage[$key]); }
 	}
 	
-	//Check if the accounts match between receipt and account
+	//Check if the accounts match between spreadsheet and account
 	if(empty($errArray))
 	{
-		if($receipt['account_id'] !== $account['id'])
+		if($spreadsheet['account_id'] !== $account['id'])
 		{
-			array_push($errArray, 'This receipt does not belong to this account.');
+			array_push($errArray, 'This spreadsheet does not belong to this account.');
 		}
 	}
 	
@@ -150,7 +153,7 @@ else if(isset($_POST['submit_update_article']))
 	//Get the article
 	if(empty($errArray))
 	{		
-		$article = get_article_by_hashid($account['id'], $hashid_article);
+		$article = get_rcpt_article_by_hashid($account['id'], $hashid_article);
 		if(empty($article))
 		{	array_push($errArray, $ErrorMessage[$key]); }
 	}
@@ -162,9 +165,9 @@ else if(isset($_POST['submit_update_article']))
 		{
 			array_push($errArray, 'This article does not belong to this account.');
 		}
-		if($article['receipt_id'] !== $receipt['id'])
+		if($article['spreadsheet_id'] !== $spreadsheet['id'])
 		{
-			array_push($errArray, 'This article does not belong to this receipt.');
+			array_push($errArray, 'This article does not belong to this spreadsheet.');
 		}
 	}	
 	
@@ -174,7 +177,7 @@ else if(isset($_POST['submit_update_article']))
 		array_push($errArray, $ErrorEmptyMessage[$key]);
 	}
 	else{
-		$product = $_POST[$key];
+		$new_product = $_POST[$key];
 	}
 	
 	// PRICE
@@ -183,30 +186,46 @@ else if(isset($_POST['submit_update_article']))
 		array_push($errArray, $ErrorEmptyMessage[$key]);
 	}
 	else{
-		$price = (float)$_POST[$key];
-		if($price <= 0)
+		$new_price = (float)$_POST[$key];
+		if($new_price <= 0)
 		{
 			array_push($errArray, $ErrorMessage[$key]);
 		}
 	}
 	
-	// PRICE
+	// QUANTITY
 	$key = 'p_quantity';
 	if(empty($_POST[$key])) { //If empty
 		array_push($errArray, $ErrorEmptyMessage[$key]);
 	}
 	else{
-		$quantity = (float)$_POST[$key];
-		if($quantity <= 0)
+		$new_quantity = (float)$_POST[$key];
+		if($new_quantity <= 0)
 		{
 			array_push($errArray, $ErrorMessage[$key]);
 		}
 	}
-
+	
+	//If the quantity is less than before, it's possible to have to delete some recipients
+	if(empty($errArray))
+	{
+		$total_quantity = (float)get_rcpt_article_quantities_taken($account['id'], $spreadsheet['id'], $article['id']);
+		if($new_quantity < $total_quantity)
+		{
+			//Remove every attached recipients (security)
+			$my_receipients = get_rcpt_recipients_by_article_id($account['id'], $spreadsheet['id'], $article['id']);
+			foreach($my_receipients as $recipient)
+			{
+				delete_rcpt_recipient($account['id'], $recipient['id']);
+			}
+			array_push($warnArray, 'Some recipients have been deleted due to the new quantity provided');
+		}
+	}
+	
 	//Update the article
 	if(empty($errArray))
 	{
-		$success = update_article($account['id'], $article['id'], $receipt['id'], $price, $product, $quantity);	
+		$success = update_rcpt_article($account['id'], $spreadsheet['id'], $article['id'], $new_price, $new_product, $new_quantity);	
 		if($success !== true)
 		{array_push($errArray, 'Server error: Problem while attempting to update a article'); 	}
 	else

@@ -287,8 +287,8 @@ $article_to_edit = false; // if editing, place the article after the other
 foreach($these_articles as $article)
 {
 	$cpt_article++;
-	if($admin_mode && $edit_mode === 'article' 
-	&& $article['hashid'] === $edit_hashid)
+	if($admin_mode && $edit_mode == 'rcpt_article' 
+	&& $article['hashid'] == $edit_hashid)
 	{ 
 		$article_to_edit = $article;
 		continue;
@@ -330,7 +330,7 @@ foreach($these_articles as $article)
 	?>							
 						<div class="col-xs-2 col-md-1">
 		<?php 
-		$link_tmp = $link_to_account_admin.'/edit/article/'.$article['hashid'].'#edit_tag_'.$article['hashid'];
+		$link_tmp = $link_to_account_admin.'/edit/rcpt_article/'.$article['hashid'].'#edit_tag_'.$article['hashid'];
 		?>
 							<form action="<?php echo $link_tmp ?>">
 								<button type="submit" class="btn btn-default" title="Edit article">
@@ -587,7 +587,7 @@ if($article_to_edit !== false)
 						style="background-color: rgba(<?php echo $cred.','.$cgreen.','.$cblue?>, 0.5);">
 						<h3>Edit article</h3>
 						<form method="post" id="form_edit_article_send"
-							action="<?php echo ACTIONPATH.'/update_article.php'?>">
+							action="<?php echo ACTIONPATH.'/spreadsheets/receipts/rcpt_articles/update_rcpt_article.php'?>">
 							<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
 							<input type="hidden" name="p_hashid_spreadsheet" value="<?php echo $spreadsheet['hashid']?>">
 							<input type="hidden" name="p_hashid_article" value="<?php echo $article_to_edit['hashid']?>">
@@ -629,7 +629,7 @@ if($article_to_edit !== false)
 									</div>
 								</div>
 							</div>										
-							<button type="submit" name="submit_update_article" value="Submit" 
+							<button type="submit" name="submit_update_rcpt_article" value="Submit" 
 								class="btn btn-primary" title="Update article">
 								Submit changes
 							</button>
