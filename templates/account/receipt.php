@@ -359,9 +359,9 @@ foreach($these_articles as $article)
 					
 					<div class="row">
 					<?php 
-					$this_receipt_receivers = $my_receipt_receivers[$spreadsheet['id']][$article['id']];
+					$this_rcpt_recipients = $my_rcpt_recipients[$spreadsheet['id']][$article['id']];
 					$spreadsheet_receiver_to_edit = false;
-					foreach($this_receipt_receivers as $recipient)
+					foreach($this_rcpt_recipients as $recipient)
 					{
 						if($admin_mode && $edit_mode === 'receipt_receiver'
 							&& $recipient['hashid'] === $edit_hashid)
@@ -458,8 +458,8 @@ $spreadsheet_receiver_to_edit= false;
 //Add a receipients
 if($admin_mode && !$edit_mode)
 	{
-				$this_free_receivers = $my_free_article_receivers[$spreadsheet['id']][$article['id']];
-				if(!empty($this_free_receivers))
+				$this_available_rcpt_recipients = $available_rcpt_recipients[$spreadsheet['id']][$article['id']];
+				if(!empty($this_available_rcpt_recipients))
 		{
 	?>
 					<form method="post"	enctype="multipart/form-data"
@@ -478,7 +478,7 @@ if($admin_mode && !$edit_mode)
 
 <?php
 						$cpt = -1;
-						foreach($this_free_receivers as $member)
+						foreach($this_available_rcpt_recipients as $member)
 						{
 							$cpt++;
 		?>

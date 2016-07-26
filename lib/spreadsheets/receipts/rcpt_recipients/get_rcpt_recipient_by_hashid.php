@@ -9,28 +9,28 @@
  */
  
 /*
-Return the receipt_receiver providing its hashid.
-A receipt_receiver is a rown in receipt_receivers SQL table
+Return the rcpt_recipient providing its hashid.
+A rcpt_recipient is a rown in rcpt_recipients SQL table
 */
-include_once(__DIR__.'/../get_db.php');
+include_once(__DIR__.'/../../../get_db.php');
 include_once(LIBPATH.'/hashid/validate_hashid.php');
 
-function get_receipt_receiver_by_hashid($account_id_arg, $receipt_receiver_hashid_arg)
+function get_rcpt_recipient_by_hashid($account_id_arg, $rcpt_recipient_hashid_arg)
 {
 	$db = get_db();
 
 	$account_id = (int)$account_id_arg;
-	$receipt_receiver_hashid = $receipt_receiver_hashid_arg;
-	if(validate_hashid($receipt_receiver_hashid)==false)
+	$rcpt_recipient_hashid = $rcpt_recipient_hashid_arg;
+	if(validate_hashid($rcpt_recipient_hashid)==false)
 	{return false;}
 	
 	try
 	{
-		$myquery = 'SELECT * FROM '.TABLE_RECEIPT_RECEIVERS.' 
-		 WHERE account_id=:account_id AND hashid=:receipt_receiver_hashid';
+		$myquery = 'SELECT * FROM '.TABLE_RCPT_RECIPIENTS.' 
+		 WHERE account_id=:account_id AND hashid=:rcpt_recipient_hashid';
 		$prepare_query = $db->prepare($myquery);
 		$prepare_query->bindValue(':account_id', $account_id, PDO::PARAM_INT);
-		$prepare_query->bindValue(':receipt_receiver_hashid', $receipt_receiver_hashid, PDO::PARAM_STR);
+		$prepare_query->bindValue(':rcpt_recipient_hashid', $rcpt_recipient_hashid, PDO::PARAM_STR);
 		$prepare_query->execute();
 	}
 	catch (Exception $e)

@@ -9,26 +9,26 @@
  */
  
 /*
-Return the receipt_receiver providing its id.
-A receipt_receiver is a rown in receipt_receivers SQL table
+Return the rcpt_recipient providing its id.
+A rcpt_recipient is a rown in rcpt_recipients SQL table
 */
 
-include_once(__DIR__.'/../get_db.php');
+include_once(__DIR__.'/../../../get_db.php');
 
-function get_receipt_receiver_by_id($account_id_arg, $receipt_receiver_id_arg)
+function get_rcpt_recipient_by_id($account_id_arg, $rcpt_recipient_id_arg)
 {
 	$db = get_db();
 
 	$account_id = (int)$account_id_arg;
-	$receipt_receiver_id = (int)$receipt_receiver_id_arg;
+	$rcpt_recipient_id = (int)$rcpt_recipient_id_arg;
 
 	try
 	{
-		$myquery = 'SELECT * FROM '.TABLE_RECEIPT_RECEIVERS.' 
-		 WHERE account_id=:account_id AND id=:receipt_receiver_id';
+		$myquery = 'SELECT * FROM '.TABLE_RCPT_RECIPIENTS.' 
+		 WHERE account_id=:account_id AND id=:rcpt_recipient_id';
 		$prepare_query = $db->prepare($myquery);
 		$prepare_query->bindValue(':account_id', $account_id, PDO::PARAM_INT);
-		$prepare_query->bindValue(':receipt_receiver_id', $receipt_receiver_id, PDO::PARAM_INT);
+		$prepare_query->bindValue(':rcpt_recipient_id', $rcpt_recipient_id, PDO::PARAM_INT);
 		$prepare_query->execute();
 	}
 	catch (Exception $e)
