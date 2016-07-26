@@ -44,16 +44,9 @@ include_once(LIBPATH.'/spreadsheets/receipts/get_available_rcpt_recipients.php')
 include_once(LIBPATH.'/spreadsheets/receipts/get_all_rcpt_quantities_taken.php');
 
 
-/*
-include_once(LIBPATH.'/articles/get_rcpt_articles.php');
-include_once(LIBPATH.'/receipt_payers/get_free_receipt_payers.php');
-include_once(LIBPATH.'/receipt_receivers/get_free_receipt_receivers.php');
-
-
-include_once(LIBPATH.'/solutions/compute_spreadsheet_solutions.php');
 include_once(LIBPATH.'/solutions/compute_solution.php');
 include_once(LIBPATH.'/solutions/compute_opt_solution.php');
-*/
+
 
 include_once(LIBPATH.'/hashid/validate_hashid.php');
 
@@ -196,18 +189,17 @@ $my_rcpt_recipients = get_rcpt_recipients($my_account_id); // Recipients per rec
 $available_rcpt_recipients = get_available_rcpt_recipients($my_account_id);
 $my_rcpt_quantities = get_all_rcpt_quantities_taken($my_account_id);
 // === SOLUTION === 
-/*
+
 $solution = compute_solution($my_account_id);
 $solution_opt = compute_opt_solution($my_account_id, $solution);
-*/
+
 //nb. of money transfert
-/*
 $n_transfer = 0;
 $n_transfer_opt = 0;
-foreach($my_participants as $payer)
+foreach($my_members as $payer)
 {
 	$uid = $payer['id'];
-	foreach($my_participants as $receiver)
+	foreach($my_members as $receiver)
 	{
 		$vid = $receiver['id'];
 		if(isset($solution[$uid][$vid])
@@ -218,7 +210,7 @@ foreach($my_participants as $payer)
 			{$n_transfer_opt++;}
 	}
 }
-*/
+
 
 
 if(empty($my_account['description'])

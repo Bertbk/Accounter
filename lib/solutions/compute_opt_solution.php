@@ -14,7 +14,7 @@ This function takes in argument the returned solution from compute_solution !
 - $Refunds[$uid][$vid] = money U must give to V
 - $uid (resp. $vid) is the id in Participant Table
  */
- include_once(__DIR__.'/compute_bill_solutions.php');
+include_once(LIBPATH.'/members/get_members.php');
 
 function compute_opt_solution($account_id_arg, $Refunds)
 {
@@ -24,9 +24,9 @@ function compute_opt_solution($account_id_arg, $Refunds)
 	$balance = Array();
 	
 	$account_id = (int)$account_id_arg;
-	$my_participants = get_participants($account_id);
+	$my_members = get_members($account_id);
 
-	foreach($my_participants as $particip)
+	foreach($my_members as $particip)
 	{
 		$uid = $particip['id'];
 		$balance[$uid] = 0;

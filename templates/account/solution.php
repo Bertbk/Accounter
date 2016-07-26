@@ -43,11 +43,11 @@ Template to display the solutions
 									...to...
 								</div>
 							</div>
-<?php	foreach($my_participants as $payer)
+<?php	foreach($my_members as $payer)
 				{
 					$uid = $payer['id'];
 					if(!isset($solution[$uid])){continue;}
-					foreach($my_participants as $receiver)
+					foreach($my_members as $receiver)
 					{
 						$vid = $receiver['id'];
 						if(!isset($solution[$uid][$vid])){continue;}
@@ -57,15 +57,15 @@ Template to display the solutions
 ?>
 							<div class="row list_solution">
 								<div class="col-xs-4 col-md-4 col-lg-4">
-									<div class="display_bill_participant padding_bill_participant fullwidth" style="background-color:<?php echo '#'.$payer['color']?>"><?php echo htmlspecialchars($payer['name'])?></div>
+									<div class="display_member padding_member fullwidth" style="background-color:<?php echo '#'.$payer['color']?>"><?php echo htmlspecialchars($payer['name'])?></div>
 								</div>
 								<div class="col-xs-4 col-md-4 col-lg-4">
-									<div class="padding_bill_participant fullwidth">
+									<div class="padding_member fullwidth">
 										<?php echo $refund?>&euro;
 									</div>
 								</div>
 								<div class="col-xs-4 col-md-4 col-lg-4">
-									<div class="display_bill_participant padding_bill_participant fullwidth" style="background-color:<?php echo '#'.$receiver['color']?>"><?php echo htmlspecialchars($receiver['name'])?></div>
+									<div class="display_member padding_member fullwidth" style="background-color:<?php echo '#'.$receiver['color']?>"><?php echo htmlspecialchars($receiver['name'])?></div>
 								</div>
 							</div>
 <?php					}
@@ -89,11 +89,11 @@ Template to display the solutions
 								</div>
 							</div>
 <?php
-	foreach($my_participants as $payer)
+	foreach($my_members as $payer)
 					{
 						$uid = $payer['id'];
 						if(!isset($solution[$uid])){continue;}
-						foreach($my_participants as $receiver)
+						foreach($my_members as $receiver)
 						{
 							$vid = $receiver['id'];
 							if(!isset($solution_opt[$uid][$vid])){continue;}
@@ -103,15 +103,15 @@ Template to display the solutions
 ?>
 							<div class="row list_solution">
 								<div class="col-xs-4 col-md-4 col-lg-4">
-									<div class="display_bill_participant padding_bill_participant fullwidth" style="background-color:<?php echo '#'.$payer['color']?>"><?php echo htmlspecialchars($payer['name'])?></div>
+									<div class="display_member padding_member fullwidth" style="background-color:<?php echo '#'.$payer['color']?>"><?php echo htmlspecialchars($payer['name'])?></div>
 								</div>
 								<div class="col-xs-4 col-md-4 col-lg-4">
-									<div class="padding_bill_participant fullwidth">
+									<div class="padding_member fullwidth">
 										<?php echo $refund?>&euro;
 									</div>
 								</div>
 								<div class="col-xs-4 col-md-4 col-lg-4">
-									<div class="display_bill_participant padding_bill_participant fullwidth" style="background-color:<?php echo '#'.$receiver['color']?>"><?php echo htmlspecialchars($receiver['name'])?></div>
+									<div class="display_member padding_member fullwidth" style="background-color:<?php echo '#'.$receiver['color']?>"><?php echo htmlspecialchars($receiver['name'])?></div>
 								</div>
 							</div>
 <?php

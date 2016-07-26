@@ -87,7 +87,7 @@ Template of a particular account page, that is :
 			<?php include(__DIR__.'/account/cancel_form.php');?>
 			<?php include(__DIR__.'/account/panel_description.php');?>
 			<div class="row">
-				<?php //include(__DIR__.'/account/solution.php');?>
+				<?php include(__DIR__.'/account/solution.php');?>
 			</div>
 			<div class="row">
 				<div class="col-md-3">

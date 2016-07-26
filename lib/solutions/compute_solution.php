@@ -14,26 +14,27 @@
 - $uid and $vid belong are the id in Participant Table
  */
 
- include_once(__DIR__.'/compute_bill_solutions.php');
+ include_once(__DIR__.'/compute_budget_solutions.php');
  include_once(__DIR__.'/compute_receipt_solutions.php');
+include_once(LIBPATH.'/members/get_members.php');
 
 function compute_solution($account_id_arg)
 {	
 	$account_id = (int)$account_id_arg;
 	$Refunds = array(array()); //who must give money to who ?
 
-	$bill_solutions = compute_bill_solutions($account_id);
+	$budget_solutions = compute_budget_solutions($account_id);
 	$receipt_solutions = compute_receipt_solutions($account_id);
-	if(empty($bill_solutions) && empty($receipt_solutions)){return $Refunds;}
+	if(empty($budget_solutions) && empty($receipt_solutions)){return $Refunds;}
 
-	$my_participants = get_participants($account_id);
-	if(empty($my_participants)){return $Refunds;}
+	$my_members = get_members($account_id);
+	if(empty($my_members)){return $Refunds;}
 	
 	//Init debt to zero
-	foreach($my_participants as $contrib)
+	foreach($my_members as $contrib)
 	{
 		$uid = $contrib['id'];
-		foreach($my_participants as $other)
+		foreach($my_members as $other)
 		{
 			$vid = $other['id'];
 			if($uid == $vid){continue;}
@@ -42,30 +43,30 @@ function compute_solution($account_id_arg)
 	}
 	
 	//Store debt computed previously
-	foreach ($bill_solutions as $key => $bill_sol)
+	foreach ($budget_solutions as $key => $budget_sol)
 	{
 		if($key < 1){continue;}
-		foreach($my_participants as $contrib)
+		foreach($my_members as $contrib)
 		{
 			$uid = $contrib['id'];
-			if(!isset($bill_sol[$uid])){continue;}
-			foreach($my_participants as $other)
+			if(!isset($budget_sol[$uid])){continue;}
+			foreach($my_members as $other)
 			{
 				$vid = $other['id'];
 				if($uid == $vid){continue;}
-				if(!isset($bill_sol[$uid][$vid])){continue;}
-				$Refunds[$uid][$vid] += $bill_sol[$uid][$vid];
+				if(!isset($budget_sol[$uid][$vid])){continue;}
+				$Refunds[$uid][$vid] += $budget_sol[$uid][$vid];
 			}
 		}
 	}
 	foreach ($receipt_solutions as $key => $receipt_sol)
 	{
 		if($key < 1){continue;}
-		foreach($my_participants as $contrib)
+		foreach($my_members as $contrib)
 		{
 			$uid = $contrib['id'];
 			if(!isset($receipt_sol[$uid])){continue;}
-			foreach($my_participants as $other)
+			foreach($my_members as $other)
 			{
 				$vid = $other['id'];
 				if($uid == $vid){continue;}
@@ -76,10 +77,10 @@ function compute_solution($account_id_arg)
 	}
 		
 	//Last loop to avoid 'two direction' refund (A must pay B and B must pay A)
-	foreach($my_participants as $contrib)
+	foreach($my_members as $contrib)
 	{
 		$uid = $contrib['id'];
-		foreach($my_participants as $other)
+		foreach($my_members as $other)
 		{
 			$vid = $other['id'];
 			if($uid == $vid){continue;}
@@ -101,7 +102,6 @@ function compute_solution($account_id_arg)
 		}
 	}
 	
-		
 	//send solution	
 	return $Refunds;
 }

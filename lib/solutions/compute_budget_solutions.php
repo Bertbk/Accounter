@@ -9,26 +9,26 @@
  */
  
 
-/* Launch and store compute_receipt_solution for every receipt
+/* Launch and store compute_budget_solution for every budget
  */
  
 include_once(__DIR__.'/../get_db.php');
-include_once(LIBPATH.'/solutions/compute_receipt_solution.php');
+include_once(LIBPATH.'/solutions/compute_budget_solution.php');
 include_once(LIBPATH.'/spreadsheets/get_spreadsheets_by_type.php');
 
-function compute_receipt_solutions($account_id_arg)
+function compute_budget_solutions($account_id_arg)
 {
 	$db = get_db();
 	
 	$account_id = (int)$account_id_arg;
 	
-	$the_receipts = get_spreadsheets_by_type($account_id, "receipt");
+	$the_budgets = get_spreadsheets_by_type($account_id, "budget");
 	
 	$Refunds = array(array(array()));
-	if(empty($the_receipts) || !isset($the_receipts)){return $Refunds;}
-	foreach($the_receipts as $receipt)
+	if(empty($the_budgets) || !isset($the_budgets)){return $Refunds;}
+	foreach($the_budgets as $budget)
 	{
-		$Refunds[$receipt['id']] = compute_receipt_solution($account_id, $receipt['id']);		
+		$Refunds[$budget['id']] = compute_budget_solution($account_id, $budget['id']);		
 	}
 	
 	return $Refunds;
