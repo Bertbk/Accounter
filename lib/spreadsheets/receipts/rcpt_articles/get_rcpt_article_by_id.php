@@ -9,32 +9,26 @@
  */
  
 /*
-Returns a article providing its hashid and the associated account id.
-A participant is here a row in the articless SQL table 
-
-Warning: a article points to a receipt_participant, not to a participant.
+Return a article providing its id and the account id.
+An article is here a row in the rcpt_articles SQL table 
 */
 
-include_once(__DIR__.'/../get_db.php');
-include_once(LIBPATH.'/hashid/validate_hashid.php');
+include_once(__DIR__.'/../../../get_db.php');
 
-function get_article_by_hashid($account_id_arg, $article_hashid_arg)
+function get_rcpt_article_by_id($account_id_arg, $article_id_arg)
 {
 	$db = get_db();
 
 	$account_id = (int)$account_id_arg;
-	$article_hashid = $article_hashid_arg;
-	
-	if(!validate_hashid($article_hashid))
-	{return false;}
+	$article_id = (int)$article_id_arg;
 	
 	try
 	{
-		$myquery = 'SELECT * FROM '.TABLE_RECEIPT_ARTICLES.'
-		WHERE account_id=:account_id AND hashid=:article_hashid';
+		$myquery = 'SELECT * FROM '.TABLE_RCPT_ARTICLES.'
+		WHERE account_id=:account_id AND id=:article_id';
 		$prepare_query = $db->prepare($myquery);
 		$prepare_query->bindValue(':account_id', $account_id, PDO::PARAM_INT);
-		$prepare_query->bindValue(':article_hashid', $article_hashid, PDO::PARAM_STR);
+		$prepare_query->bindValue(':article_id', $article_id, PDO::PARAM_STR);
 		$prepare_query->execute();
 	}
 	catch (Exception $e)

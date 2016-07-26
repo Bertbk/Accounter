@@ -9,20 +9,18 @@
  */
  
 /*
-Create a article, ie a row in the articless SQL table 
-
-Warning: a article points to a receipt_participant, not to a participant.
+Create a article for a receipt sheet, ie a row in the rcpt_articles SQL table 
 */
-include_once(__DIR__.'/../get_db.php');
+include_once(__DIR__.'/../../../get_db.php');
 
 include_once(LIBPATH.'/hashid/validate_hashid.php');
 
-function set_article($account_id_arg, $hashid_arg, $receipt_id_arg, $price_arg, $product_arg, $quantity_arg)
+function set_rcpt_article($account_id_arg, $hashid_arg, $spreadsheet_id_arg, $price_arg, $product_arg, $quantity_arg)
 {
 	$db = get_db();
 
 	$account_id = (int)$account_id_arg;
-	$receipt_id = (int)$receipt_id_arg;
+	$spreadsheet_id = (int)$spreadsheet_id_arg;
 	$hashid = $hashid_arg;
 	$price = (float)$price_arg;
 	$product = $product_arg;
@@ -38,12 +36,12 @@ function set_article($account_id_arg, $hashid_arg, $receipt_id_arg, $price_arg, 
 	$isgood = false;
 	try
 	{
-		$myquery = 'INSERT INTO '.TABLE_RECEIPT_ARTICLES.' (id, hashid, account_id, receipt_id, product, quantity, price) 
-		VALUES(NULL, :hashid, :account_id, :receipt_id, :product, :quantity, :price)';
+		$myquery = 'INSERT INTO '.TABLE_RCPT_ARTICLES.' (id, hashid, account_id, spreadsheet_id, product, quantity, price) 
+		VALUES(NULL, :hashid, :account_id, :spreadsheet_id, :product, :quantity, :price)';
 		$prepare_query = $db->prepare($myquery);
 		$prepare_query->bindValue(':hashid', $hashid, PDO::PARAM_STR);
 		$prepare_query->bindValue(':account_id', $account_id, PDO::PARAM_INT);
-		$prepare_query->bindValue(':receipt_id', $receipt_id, PDO::PARAM_INT);
+		$prepare_query->bindValue(':spreadsheet_id', $spreadsheet_id, PDO::PARAM_INT);
 		$prepare_query->bindValue(':price', $price, PDO::PARAM_STR);
 		$prepare_query->bindValue(':product', $product, PDO::PARAM_STR);
 		$prepare_query->bindValue(':quantity', $quantity, PDO::PARAM_STR);

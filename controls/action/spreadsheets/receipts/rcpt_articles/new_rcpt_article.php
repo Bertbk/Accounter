@@ -13,16 +13,13 @@ Check the data before asking the SQL to create a new article
  */
 
  
-require_once __DIR__.'/../../config-app.php';
+require_once __DIR__.'/../../../../../config-app.php';
 
 include_once(LIBPATH.'/accounts/get_account_admin.php');
 
-include_once(LIBPATH.'/receipts/get_receipt_by_hashid.php');
+include_once(LIBPATH.'/spreadsheets/get_spreadsheet_by_hashid.php');
 
-include_once(LIBPATH.'/receipt_payers/get_receipt_payer_by_hashid.php');
-
-include_once(LIBPATH.'/articles/set_article.php');
-
+include_once(LIBPATH.'/spreadsheets/receipts/rcpt_articles/set_rcpt_article.php');
 
 include_once(LIBPATH.'/hashid/validate_hashid.php');
 include_once(LIBPATH.'/hashid/create_hashid.php');
@@ -40,7 +37,7 @@ if(isset($_POST['submit_new_article']))
 {
 	$ErrorEmptyMessage = array(
 		'p_hashid_account' => 'Please provide an acount',
-		'p_hashid_receipt' => 'Please provide a receipt',
+		'p_hashid_spreadsheet' => 'Please provide a spreadsheet',
 		'p_article' => 'Please provide an article',
 		'p_price' => 'Please provide a price',
 		'p_product' => 'Please provide a product',
@@ -49,7 +46,7 @@ if(isset($_POST['submit_new_article']))
 	 
 	$ErrorMessage = array(
 		'p_hashid_account' => 'Account is not valid',
-		'p_hashid_receipt' => 'receipt is not valid',
+		'p_hashid_spreadsheet' => 'Spreadsheet is not valid',
 		'p_article' => 'Article is not valid',
 		'p_price' => 'Price is not valid',
 		'p_product' => 'Product is not valid',
@@ -79,8 +76,8 @@ if(isset($_POST['submit_new_article']))
 		{	array_push($errArray, $ErrorMessage[$key]); }
 	}
 
-	// receipt
-	$key = 'p_hashid_receipt';
+	// spreadsheet
+	$key = 'p_hashid_spreadsheet';
 	if(empty($_POST[$key])) { //If empty
 		array_push($errArray, $ErrorEmptyMessage[$key]);
 	}
@@ -90,23 +87,23 @@ if(isset($_POST['submit_new_article']))
 			array_push($errArray, $ErrorMessage[$key]);
 		}
 		else{
-			$hashid_receipt = $_POST[$key];
+			$hashid_spreadsheet = $_POST[$key];
 			}
 	}
-	//Get the receipt
+	//Get the spreadsheet
 	if(empty($errArray))
 	{		
-		$receipt = get_receipt_by_hashid($account['id'], $hashid_receipt);
-		if(empty($receipt))
+		$spreadsheet = get_spreadsheet_by_hashid($account['id'], $hashid_spreadsheet);
+		if(empty($spreadsheet))
 		{	array_push($errArray, $ErrorMessage[$key]); }
 	}
 	
-	//Check if the accounts match between receipt and account
+	//Check if the accounts match between spreadsheet and account
 	if(empty($errArray))
 	{
-		if($receipt['account_id'] !== $account['id'])
+		if($spreadsheet['account_id'] !== $account['id'])
 		{
-			array_push($errArray, 'This receipt does not belong to this account.');
+			array_push($errArray, 'This spreadsheet does not belong to this account.');
 		}
 	}
 	
@@ -169,7 +166,7 @@ if(isset($_POST['submit_new_article']))
 		//Save the article
 		if(empty($errArray2))
 		{
-			$success = set_article($account['id'], $hashid_article, $receipt['id'], $price, $product, $quantity);	
+			$success = set_rcpt_article($account['id'], $hashid_article, $spreadsheet['id'], $price, $product, $quantity);	
 			if($success !== true)
 			{array_push($errArray2, 'Server error: Problem while attempting to add an article: '.$success); 	}
 		else

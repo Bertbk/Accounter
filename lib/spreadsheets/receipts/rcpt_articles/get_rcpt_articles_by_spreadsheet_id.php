@@ -9,30 +9,27 @@
  */
  
 /*
-Returns every articles of a receipt with id $receipt_id_arg of the account of id $account_id_arg.
-A participant is here a row in the articless SQL table 
-JOINED WITH: payer name and color, and receiver name/color (participants SQL table).
-
-Warning: a article points to a receipt_participant, not to a participant.
+Returns every articles of a spreadsheet with id $spreadsheet_id_arg of the account of id $account_id_arg.
+An article is here a row in the rcpt_articles SQL table 
 */
 
-include_once(__DIR__.'/../get_db.php');
+include_once(__DIR__.'/../../../get_db.php');
 
-function get_articles_by_receipt_id($account_id_arg, $receipt_id_arg)
+function get_rcpt_articles_by_spreadsheet_id($account_id_arg, $spreadsheet_id_arg)
 {
 	$db = get_db();
 
 	$account_id = (int)$account_id_arg;
-	$receipt_id = (int)$receipt_id_arg;
+	$spreadsheet_id = (int)$spreadsheet_id_arg;
 
 	$reply = array();
 	try
 	{
-		$myquery = 'SELECT * FROM '.TABLE_RECEIPT_ARTICLES.' 
-		WHERE account_id=:account_id AND receipt_id=:receipt_id';
+		$myquery = 'SELECT * FROM '.TABLE_RCPT_ARTICLES.' 
+		WHERE account_id=:account_id AND spreadsheet_id=:spreadsheet_id';
 		$prepare_query = $db->prepare($myquery);
 		$prepare_query->bindValue(':account_id', $account_id, PDO::PARAM_INT);
-		$prepare_query->bindValue(':receipt_id', $receipt_id, PDO::PARAM_INT);
+		$prepare_query->bindValue(':spreadsheet_id', $spreadsheet_id, PDO::PARAM_INT);
 		$isgood = $prepare_query->execute();
 	}
 	catch (Exception $e)

@@ -144,7 +144,7 @@ $payer_to_edit=false;
 $rcpt_payer_tmp=null;
 	}
 	?>
-<?php }//if my_receipt_payers != empty ?>
+<?php }//if my_rcpt_payers != empty ?>
 
 	<?php
 if($admin_mode && !$edit_mode)
@@ -393,7 +393,7 @@ foreach($these_articles as $article)
 								class="deleteicon"
 								action="<?php echo ACTIONPATH.'/delete_receipt_receiver.php'?>">		
 									<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
-									<input type="hidden" name="p_hashid_receipt_receiver" value="<?php echo $recipient['hashid']?>">
+									<input type="hidden" name="p_hashid_spreadsheet_receiver" value="<?php echo $recipient['hashid']?>">
 									<input type="hidden" name="p_anchor" value="<?php echo '#receipt-'.$cpt_spreadsheet?>">
 									<button type="submit" class="btn btn-default confirmation" 
 										name="submit_delete_receipt_receiver" title="Delete recipient">
@@ -417,9 +417,9 @@ if($spreadsheet_receiver_to_edit !== false)
 						<form method="post" id="form_edit_recipient_send"
 							action="<?php echo ACTIONPATH.'/update_receipt_receiver.php'?>">
 							<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
-							<input type="hidden" name="p_hashid_receipt" value="<?php echo $spreadsheet['hashid']?>">
+							<input type="hidden" name="p_hashid_spreadsheet" value="<?php echo $spreadsheet['hashid']?>">
 							<input type="hidden" name="p_hashid_article" value="<?php echo $article['hashid']?>">
-							<input type="hidden" name="p_hashid_receipt_receiver" value="<?php echo $spreadsheet_receiver_to_edit['hashid']?>">
+							<input type="hidden" name="p_hashid_spreadsheet_receiver" value="<?php echo $spreadsheet_receiver_to_edit['hashid']?>">
 							<input type="hidden" name="p_anchor" value="<?php echo '#receipt-'.$cpt_spreadsheet?>">
 							<div class="row form-group row-no-padding">
 								<div class="col-xs-6 col-sm-5 col-md-4">
@@ -469,7 +469,7 @@ if($admin_mode && !$edit_mode)
 								(+) Add a recipient
 							</legend>
 							<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
-							<input type="hidden" name="p_hashid_receipt" value="<?php echo $spreadsheet['hashid']?>">
+							<input type="hidden" name="p_hashid_spreadsheet" value="<?php echo $spreadsheet['hashid']?>">
 							<input type="hidden" name="p_hashid_article" value="<?php echo $article['hashid']?>">
 							<input type="hidden" name="p_anchor" value="<?php echo '#receipt-'.$cpt_spreadsheet?>">
 							<div class="hidden_at_first"
@@ -582,7 +582,7 @@ if($article_to_edit !== false)
 						<form method="post" id="form_edit_article_send"
 							action="<?php echo ACTIONPATH.'/update_article.php'?>">
 							<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
-							<input type="hidden" name="p_hashid_receipt" value="<?php echo $spreadsheet['hashid']?>">
+							<input type="hidden" name="p_hashid_spreadsheet" value="<?php echo $spreadsheet['hashid']?>">
 							<input type="hidden" name="p_hashid_article" value="<?php echo $article_to_edit['hashid']?>">
 							<input type="hidden" name="p_anchor" value="<?php echo '#receipt-'.$cpt_spreadsheet?>">
 							
@@ -652,10 +652,11 @@ else
 	{?>
 	<!-- Add article -->
 	<?php
-		if(!empty($my_receipt_payers[$spreadsheet['id']]))
+		if(!empty($my_rcpt_payers[$spreadsheet['id']]))
 		{
 ?>
-					<form method="post" action="<?php echo ACTIONPATH.'/new_article.php'?>"
+					<form method="post" 
+						action="<?php echo ACTIONPATH.'/spreadsheets/receipts/rcpt_articles/new_rcpt_article.php'?>"
 						role="form">
 						<fieldset>								
 							<legend id="<?php echo 'show_hide_receipt_add_article_'.$cpt_spreadsheet?>"
@@ -666,7 +667,7 @@ else
 								<div id="<?php echo 'div_option_add_article_'.$cpt_spreadsheet?>">
 									<p><em>Fields with asterisk <span class="glyphicon glyphicon-asterisk red"></span> are required</em></p>
 									<input type="hidden" name="p_hashid_account" value ="<?php echo $my_account['hashid_admin']?>">
-									<input type="hidden" name="p_hashid_receipt" value ="<?php echo $spreadsheet['hashid']?>">
+									<input type="hidden" name="p_hashid_spreadsheet" value ="<?php echo $spreadsheet['hashid']?>">
 									<input type="hidden" name="p_anchor" value="<?php echo '#receipt-'.$cpt_spreadsheet?>">
 									<div id="div_set_article_<?php echo $cpt_spreadsheet?>">
 										<div class="row form-group">
@@ -679,9 +680,20 @@ else
 													<span class="input-group-addon glyphicon glyphicon-tag"></span>
 												</div>
 											</div>
+											
+											<div class="col-xs-12 col-lg-4">
+												<label for="<?php echo 'form_set_article_quantity_'.$cpt_spreadsheet?>_0">Quantity/Parts<span class="glyphicon glyphicon-asterisk red"></span></label>
+												<div class="input-group">
+													<input name="p_article[0][p_quantity]" 
+														id="form_set_article_quantity_<?php echo $cpt_spreadsheet?>_0" 
+														class="form-control" title="Product" type="number" 
+														min="0" value="1"> 
+													<span class="input-group-addon glyphicon glyphicon-scale"></span>
+												</div>
+											</div>
 
 											<div class="col-xs-12 col-lg-4">
-												<label for="<?php echo 'form_set_article_price_'.$cpt_spreadsheet?>_0">Price<span class="glyphicon glyphicon-asterisk red"></span></label>
+												<label for="<?php echo 'form_set_article_price_'.$cpt_spreadsheet?>_0">Total price<span class="glyphicon glyphicon-asterisk red"></span></label>
 												<div class="input-group">
 													<input name="p_article[0][p_price]" 
 														id="form_set_article_price_<?php echo $cpt_spreadsheet?>_0" 
@@ -690,15 +702,6 @@ else
 												</div>
 											</div>
 											
-											<div class="col-xs-12 col-lg-4">
-												<label for="<?php echo 'form_set_article_quantity_'.$cpt_spreadsheet?>_0">Quantity<span class="glyphicon glyphicon-asterisk red"></span></label>
-												<div class="input-group">
-													<input name="p_article[0][p_quantity]" 
-														id="form_set_article_quantity_<?php echo $cpt_spreadsheet?>_0" 
-														class="form-control" title="Product" type="number" min="0"> 
-													<span class="input-group-addon glyphicon glyphicon-scale"></span>
-												</div>
-											</div>
 										</div>										
 									</div>
 								</div>

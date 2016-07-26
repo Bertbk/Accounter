@@ -9,14 +9,12 @@
  */
  
 /*
-Deletes a article providing its id and the associated account id.
-A participant is here a row in the articless SQL table 
-
-Warning: a article points to a receipt_participant, not to a participant.
+Deletes a (spreadsheet) article providing its id and the associated account id.
+An article is here a row in the rcpt_articles SQL table 
 */
-include_once(__DIR__.'/../get_db.php');
+include_once(__DIR__.'/../../../get_db.php');
 
-function delete_article($account_id_arg, $article_id_arg)
+function delete_rcpt_article($account_id_arg, $article_id_arg)
 {
 	$db = get_db();
 
@@ -26,7 +24,7 @@ function delete_article($account_id_arg, $article_id_arg)
 	$isgood= false;
 	try
 	{
-		$myquery = 'DELETE FROM '.TABLE_RECEIPT_ARTICLES.' 
+		$myquery = 'DELETE FROM '.TABLE_RCPT_ARTICLES.' 
 		WHERE id=:article_id AND account_id=:account_id';
 		$prepare_query = $db->prepare($myquery);
 		$prepare_query->bindValue(':article_id', $article_id, PDO::PARAM_INT);
@@ -38,7 +36,5 @@ function delete_article($account_id_arg, $article_id_arg)
 	{
 		return 'Fail to connect: ' . $e->getMessage();
 	}
-	return $isgood;
-	
 	return $isgood;
 }
