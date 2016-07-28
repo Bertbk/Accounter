@@ -34,192 +34,70 @@ $(document).ready(function(){
 });
 
 
-/* Credit: from Bootsnipp.com*/
-$(document).ready(function(){
-$(document.body).on('click', '.spinner .btn:first-of-type', function(){
-      var btn = $(this);
-      var input = btn.closest('.spinner').find('input');
-			
-			if(input.attr('number_type') !== undefined
-				&& input.attr('number_type') === "float")
-			{ var typeOfNumb = "float";}
-			else{			
-				var typeOfNumb = "int";
-			}
-				
-			if(input.attr('step') != undefined  && input.attr('step') != ""){
-				if(typeOfNumb == "int")
-				{var step = parseInt(input.attr('step'), 10);}
-			else if(typeOfNumb=="float")
-				{var step = parseFloat(input.attr('step').replace(",", ".")).toFixed(2);}
-			}
-			else{
-				var step = parseInt(1, 10);
-			}
-
-			if(input.val() != undefined && input.val() != ""){
-				if(typeOfNumb == "int")
-				{var current_val = parseInt(input.val(), 10);}
-			else if(typeOfNumb=="float")
-				{var current_val = parseFloat(input.val().replace(",", ".")).toFixed(2);}
-			}
-			else{
-				var current_val = parseInt(0, 10);
-			}
-
-			if(input.attr('max')!=undefined  && input.attr('max') != ""){
-				if(typeOfNumb == "int")
-				{var max_val = parseInt(input.attr('max'), 10);}
-			else if(typeOfNumb=="float")
-				{var max_val = parseFloat(input.attr('max').replace(",", ".")).toFixed(2);}
-			}
-			else{
-				var max_val = parseInt(current_val) + parseInt(1, 10);
-			}
-			
-			if(typeOfNumb =="float")
-			{
-				var next_val = parseFloat(current_val) + parseFloat(step);
-				next_val = next_val.toFixed(2);
-				}
-			else{
-				var next_val = parseInt(current_val,10) + parseInt(step,10);
-			}
-			
-      if (parseFloat(current_val) < parseFloat(max_val)) {
-        input.val(next_val);
-      } else {
-        btn.next("disabled", true);
-      }
-})
-});
-$(document).ready(function(){
-$(document.body).on('click', '.spinner .btn:last-of-type' ,function(){
-	var btn = $(this);
-	var input = btn.closest('.spinner').find('input');
-	
-	if(input.attr('number_type') !== undefined
-		&& input.attr('number_type') === "float")
-	{ var typeOfNumb = "float";}
-	else{
-		var typeOfNumb = "int";
-	}
-				
-	if(input.attr('step') != undefined  && input.attr('step') != ""){
-		if(typeOfNumb == "int")
-		{var step = parseInt(input.attr('step'), 10);}
-	else if(typeOfNumb=="float")
-		{var step = parseFloat(input.attr('step').replace(",", ".")).toFixed(2);}
-	}
-	else{
-		var step = parseInt(1, 10);
-	}
-
-	if(input.val() != undefined && input.val() != ""){
-		if(typeOfNumb == "int")
-		{var current_val = parseInt(input.val(), 10);}
-	else if(typeOfNumb=="float")
-		{var current_val = parseFloat(input.val().replace(",", ".")).toFixed(2);}
-	}
-	else{
-		var current_val = parseInt(0, 10);
-	}
-
-	if(input.attr('min')!=undefined  && input.attr('min') != ""){
-		if(typeOfNumb == "int")
-		{var min_val = parseInt(input.attr('min'), 10);}
-	else if(typeOfNumb=="float")
-		{var min_val = parseFloat(input.attr('min').replace(",", ".")).toFixed(2);}
-	}
-	else{
-		var min_val = current_val - parseInt(1, 10);
-	}
-	
-	if(typeOfNumb=="float")
-	{var next_val = (parseFloat(current_val) - parseFloat(step)).toFixed(2);}
-	else{
-		var next_val = parseInt(current_val,10) - parseInt(step,10);
-	}
-
-if (parseFloat(current_val) > parseFloat(min_val)) {    
-		input.val(next_val);
-	} else {
-		btn.prev("disabled", true);
-	}
-})
-});
-
 
 /*
-$(document).ready(function () {
-		var checkList= $("[id=form_set_payment_recv_0_0]");;
-	//	var checkList_selected = $("[id=form_set_payment_recv_0_0] option:selected");
-		var previous;
-		//I didn't find a better way to know when the focus is on the menu
-		checkList.on('shown.bs.select', function () {
-			checkList = $("[id=form_set_payment_recv_0_0]");
-			previous = checkList.val() || [];
-	}).on('change', function(){
-			checkList = $("[id=form_set_payment_recv_0_0]");
-			var group_checked = false;
-			var participants_checked = false;
-		//	checkList_selected = $("[id=form_set_payment_recv_0_0] option:selected");
-			var newly = checkList.val() || [];
-			//Find the new selection
-			var size_new  = parseInt(newly.length, 10);
-			var size_prev = parseInt(previous.length, 10);
-			if(parseInt(size_new,10) >= parseInt(size_prev,10))
-			{
-				//A new element has been added
-				//We check if the table is still valid (Group OR participants)
-				var changed_value ="";
-				for (var i = 0; i < size_new; i++)
-				{
-					var isinarray = jQuery.inArray( newly[i], previous);
-					if(isinarray == "-1")
-					{
-						changed_value = newly[i];
-					}
-					if(newly[i] == "-1")
-					{
-						group_checked = true;
-					}
-					if(newly[i] !== "-1"
-					&& newly[i] !== ""
-					&& newly[i] !== "null")
-					{
-						participants_checked = true;
-					}
-				}
-
-				if(changed_value !== ""
-				&& group_checked == true
-				&& participants_checked == true)
-				{
-					//Conflict
-					if(changed_value == "-1")
-					{
-						//Group has now been choosen
-						newly = ['1'];
-						$("[id=form_set_payment_recv_0_0]").val("-1");
-					}
-					else{
-						//Participants, now.
-						var where_is_group = jQuery.inArray( "-1", newly);
-						if(where_is_group !== "-1")
-						{
-							newly.splice(where_is_group, 1); 
-						}
-						$("[id=form_set_payment_recv_0_0]").val(newly);
-					}
-				}
-			}
-		previous = newly;
-		$("[id=form_set_payment_recv_0_0]").selectpicker('refresh');
-	})
-	previous = newly;
-	$("[id=form_set_payment_recv_0_0]").selectpicker('refresh');
-});
+Keep panels collapsed or expanded.
+Courtersy of Stackoverflow
+http://stackoverflow.com/questions/33502419/saving-multiple-panels-collapsed-state-using-cookies-with-cookie
 */
+$(".panel .panel-collapse").on('shown.bs.collapse', function ()
+{
+    var active = $(this).attr('id');
+    var panelsIn= localStorage.panelsIn === undefined ? new Array() : JSON.parse(localStorage.panelsIn);
+    if ($.inArray(active,panelsIn)==-1) //check that the element is not in the array
+        panelsIn.push(active);
+    localStorage.panelsIn=JSON.stringify(panelsIn);
+});
 
+$(".panel .panel-collapse").on('hidden.bs.collapse', function ()
+{
+    var active = $(this).attr('id');
+    var panelsIn= localStorage.panelsIn === undefined ? new Array() : JSON.parse(localStorage.panelsIn);
+    var elementIndex=$.inArray(active,panelsIn);
+    if (elementIndex!==-1) //check the array
+    {        
+        panelsIn.splice(elementIndex,1); //remove item from array
+    }
+    localStorage.panelsIn=JSON.stringify(panelsIn); //save array on localStorage
+});
 
+$(".panel .panel-collapse.in").on('hidden.bs.collapse', function ()
+{
+    var active = $(this).attr('id');
+    var panelsOut= localStorage.panelsOut === undefined ? new Array() : JSON.parse(localStorage.panelsOut);
+    if ($.inArray(active,panelsOut)==-1) //check that the element is not in the array
+        panelsOut.push(active);
+    localStorage.panelsOut=JSON.stringify(panelsOut);
+});
+
+$(".panel .panel-collapse.in").on('shown.bs.collapse', function ()
+{
+    var active = $(this).attr('id');
+    var panelsOut= localStorage.panelsOut === undefined ? new Array() : JSON.parse(localStorage.panelsOut);
+    var elementIndex=$.inArray(active,panelsOut);
+    if (elementIndex!==-1) //check the array
+    {        
+        panelsOut.splice(elementIndex,1); //remove item from array
+    }
+    localStorage.panelsOut=JSON.stringify(panelsOut); //save array on localStorage
+});
+
+$(document).ready(function () {
+	var panelsIn=localStorage.panelsIn === undefined ? new Array() : JSON.parse(localStorage.panelsIn); //get all panels
+		for (var i in panelsIn){ //<-- panel is the name of the cookie
+			if ($("#"+panelsIn[i]).hasClass('panel-collapse')) // check if this is a panel
+			{
+					$("#"+panelsIn[i]).collapse("show");
+			}
+		}
+});
+	
+$(document).ready(function () {
+	var panelsOut=localStorage.panelsOut === undefined ? new Array() : JSON.parse(localStorage.panelsOut); //get all panels
+	for (var i in panelsOut){ //<-- panel is the name of the cookie
+		if ($("#"+panelsOut[i]).hasClass('panel-collapse')) // check if this is a panel
+		{
+				$("#"+panelsOut[i]).collapse("hide");
+		}
+	}
+});
