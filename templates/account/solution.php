@@ -32,7 +32,7 @@ Template to display the solutions
 							<h3>&ldquo;Standard&rdquo; solution</h3>
 		<?php if($n_transfer == 0)
 			{?>
-							<p>No transfer</p>
+							<p>No transfer needed: everything is fine!</p>
 <?php }
 	else{?>
 							<div class="row list_solution">
@@ -77,7 +77,7 @@ Template to display the solutions
 							<h3>&ldquo;Optimized&rdquo; solution</h3>
 			<?php if($n_transfer_opt == 0)
 			{?>
-							<p>No transfer</p>
+							<p>No transfer needed: everything is fine!</p>
 <?php }
 	else{?>
 							<div class="row list_solution">

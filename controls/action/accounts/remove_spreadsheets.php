@@ -9,8 +9,8 @@
  */
  
  /*
-Check the data before asking the SQL to delete every bills of an account
-The SQL should be done so that every dependent bill_participants and payments are also deleted
+Check the data before asking the SQL to delete every spreadsheets of an account
+The SQL should be done so that every dependent spreadsheet_participants and payments are also deleted
  */
 
  require_once __DIR__.'/../../../config-app.php';
@@ -18,8 +18,8 @@ The SQL should be done so that every dependent bill_participants and payments ar
 include_once(LIBPATH.'/accounts/get_account_admin.php');
 include_once(LIBPATH.'/accounts/delete_account.php');
 
-include_once(LIBPATH.'/bills/get_bills.php');
-include_once(LIBPATH.'/bills/delete_bill.php');
+include_once(LIBPATH.'/spreadsheets/get_spreadsheets.php');
+include_once(LIBPATH.'/spreadsheets/delete_spreadsheet.php');
 
 include_once(LIBPATH.'/hashid/validate_hashid.php');
 
@@ -32,7 +32,7 @@ $warnArray = array(); //warning messages
 $successArray = array(); //success messages
 $redirect_link ="" ;
 
-if(isset($_POST['submit_remove_all_bills']))
+if(isset($_POST['submit_remove_all_spreadsheets']))
 {
 	$ErrorEmptyMessage = array(
 		'p_hashid_account' => 'No acount provided'
@@ -64,15 +64,15 @@ if(isset($_POST['submit_remove_all_bills']))
 
 	if(empty($errArray))
 	{
-		$bills = get_bills($account['id']);
+		$spreadsheets = get_spreadsheets($account['id']);
 		//Delete the participants
-		foreach($bills as $bill)
+		foreach($spreadsheets as $spreadsheet)
 		{
-			$success = delete_bill($account['id'], $bill['id']);	
+			$success = delete_spreadsheet($account['id'], $spreadsheet['id']);	
 			if($success === true)
-				{	array_push($successArray, 'Bill has been successfully deleted');}
+				{	array_push($successArray, 'Spreadsheet has been successfully deleted');}
 			else
-				{array_push($errArray, 'Server error: Problem while attempting to delete a bill: '.$success); 	}
+				{array_push($errArray, 'Server error: Problem while attempting to delete a spreadsheet: '.$success); 	}
 		}
 	}
 }
@@ -95,7 +95,7 @@ if(!isset($account) || empty($account))
 	$redirect_link = BASEURL;
 }
 else{
-	$redirect_link = BASEURL.'/admin';
+	$redirect_link = BASEURL.'/account/'.$account['hashid_admin'].'/admin';
 }
 
 header('location: '.$redirect_link);

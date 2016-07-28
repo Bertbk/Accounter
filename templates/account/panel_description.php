@@ -73,27 +73,27 @@ else{
 							</button>
 							<ul class="dropdown-menu" role="menu">
 								<li>
-									<form method="post" action="<?php echo ACTIONPATH.'/remove_participants.php'?>">
+									<form method="post" action="<?php echo ACTIONPATH.'/accounts/remove_members.php'?>">
 										<input type="hidden" name="p_hashid_account" 
 											value="<?php echo $my_account['hashid_admin']?>">
 										<button type="submit" class="btn btn-link confirmation" 
-											name="submit_remove_all_participants" onclick="event.stopPropagation();">
-											Remove all participants
+											name="submit_remove_all_members" onclick="event.stopPropagation();">
+											Remove all members
 										</button>
 									</form>
 								</li>
 								<li>
-									<form method="post" action="<?php echo ACTIONPATH.'/remove_bills.php'?>">
+									<form method="post" action="<?php echo ACTIONPATH.'/accounts/remove_spreadsheets.php'?>">
 										<input type="hidden" name="p_hashid_account" 
 											value="<?php echo $my_account['hashid_admin']?>">
 										<button type="submit" class="btn btn-link confirmation" 
-											name="submit_remove_all_bills" onclick="event.stopPropagation();">
-											Remove all bills
+											name="submit_remove_all_spreadsheets" onclick="event.stopPropagation();">
+											Remove all spreadsheets
 										</button>
 									</form>
 								</li>
 								<li class="li_margin_top">
-									<form method="post" action="<?php echo ACTIONPATH.'/delete_account.php'?>">
+									<form method="post" action="<?php echo ACTIONPATH.'/accounts/delete_account.php'?>">
 										<input type="hidden" name="p_hashid_account" 
 											value="<?php echo $my_account['hashid_admin']?>">
 										<button type="submit" class="btn btn-link confirmation" 
@@ -223,7 +223,7 @@ else{
 						</form>
 		<?php }else{ ?>
 				<p>Welcome to the admin page of the account!</p>
-						<p>You should first add participants to the account and create one (or more) bill(s). Participants can then be added to the bills with a percentage of financial participation. For example, if the bill represents a car rental for 4 days and a participant only use it for 3 days, his/her percent should be set to 75% ( = 3/4). A zero percent participation is used when a person paid for something but didn't used it at all.</p>
+						<p>You should first add members to the account and create one (or more) spreadsheet(s). members can then be added to the spreadsheets with a percentage of financial participation. For example, if the spreadsheet represents a car rental for 4 days and a member only use it for 3 days, his/her percent should be set to 75% ( = 3/4). A zero percent participation is used when a person paid for something but didn't used it at all.</p>
 						<p>Each entry can be edited using the <span class="glyphicon glyphicon-pencil"></span> icon or deleted using the <span class="glyphicon glyphicon-trash"></span> icon.
 						</p>
 			<?php } ?>

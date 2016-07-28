@@ -9,8 +9,7 @@
  */
  
  /*
-Check the data before asking the SQL to delete every participants of an account
-The SQL should be done so that every dependent bill_participants and payments are also deleted
+Check the data before asking the SQL to delete every members of an account
  */
 
  require_once __DIR__.'/../../../config-app.php';
@@ -18,8 +17,8 @@ The SQL should be done so that every dependent bill_participants and payments ar
 include_once(LIBPATH.'/accounts/get_account_admin.php');
 include_once(LIBPATH.'/accounts/delete_account.php');
 
-include_once(LIBPATH.'/participants/get_participants.php');
-include_once(LIBPATH.'/participants/delete_participant.php');
+include_once(LIBPATH.'/members/get_members.php');
+include_once(LIBPATH.'/members/delete_member.php');
 
 include_once(LIBPATH.'/hashid/validate_hashid.php');
 
@@ -32,7 +31,7 @@ $warnArray = array(); //warning messages
 $successArray = array(); //success messages
 $redirect_link ="" ;
 
-if(isset($_POST['submit_remove_all_participants']))
+if(isset($_POST['submit_remove_all_members']))
 {
 	$ErrorEmptyMessage = array(
 		'p_hashid_account' => 'No acount provided'
@@ -64,15 +63,15 @@ if(isset($_POST['submit_remove_all_participants']))
 	
 	if(empty($errArray))
 	{
-		$participants = get_participants($account['id']);
-		//Delete the participants
-		foreach($participants as $parti)
+		$members = get_members($account['id']);
+		//Delete the members
+		foreach($members as $parti)
 		{
-			$success = delete_participant($account['id'], $parti['id']);	
+			$success = delete_member($account['id'], $parti['id']);	
 			if($success === true)
-				{	array_push($successArray, 'Participant has been successfully deleted');}
+				{	array_push($successArray, 'Member has been successfully deleted');}
 			else
-				{array_push($errArray, 'Server error: Problem while attempting to delete a participant: '.$success); 	}
+				{array_push($errArray, 'Server error: Problem while attempting to delete a member: '.$success); 	}
 		}
 	}
 }
