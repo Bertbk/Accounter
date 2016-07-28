@@ -12,14 +12,15 @@
 Check the data before asking the SQL to delete every payments of a spreadsheet
  */
 
- require_once __DIR__.'/../../config-app.php';
+ require_once __DIR__.'/../../../../config-app.php';
 
 include_once(LIBPATH.'/accounts/get_account_admin.php');
+include_once(LIBPATH.'/accounts/delete_account.php');
 
-include_once(LIBPATH.'/spreadsheets/get_spreadhseet_by_hashid.php');
+include_once(LIBPATH.'/spreadsheets/get_spreadsheet_by_hashid.php');
 
-include_once(LIBPATH.'/budgets/payments/get_bgt_payments_by_spreadsheet_id.php');
-include_once(LIBPATH.'/budgets/payments/delete_bgt_payment.php');
+include_once(LIBPATH.'/spreadsheets/receipts/rcpt_articles/get_rcpt_articles_by_spreadsheet_id.php');
+include_once(LIBPATH.'/spreadsheets/receipts/rcpt_articles/delete_rcpt_article.php');
 
 include_once(LIBPATH.'/hashid/validate_hashid.php');
 
@@ -32,7 +33,7 @@ $warnArray = array(); //warning messages
 $successArray = array(); //success messages
 $redirect_link ="" ;
 
-if(isset($_POST['submit_remove_all_bgt_payments']))
+if(isset($_POST['submit_remove_all_rcpt_articles']))
 {
 	$ErrorEmptyMessage = array(
 		'p_hashid_account' => 'No acount provided',
@@ -41,7 +42,8 @@ if(isset($_POST['submit_remove_all_bgt_payments']))
 	 
 	$ErrorMessage = array(
 		'p_hashid_account' => 'Account not valid',
-		'p_hashid_spreadsheet' => 'spreadsheet not valid'
+		'p_hashid_spreadsheet' => 'Spreadsheet not valid',
+		'p_anchor' => 'Anchor not valid'
    );
 
 	//ACCOUNT
@@ -92,18 +94,18 @@ if(isset($_POST['submit_remove_all_bgt_payments']))
 			array_push($errArray, "This spreadsheet does not belong to this account!");
 		}		
 	}
-	
+		
 	if(empty($errArray))
 	{
-		$payments = get_payments_by_spreadsheet_id($account['id'], $spreadsheet['id']);
+		$rcpt_articles = get_rcpt_articles_by_spreadsheet_id($account['id'], $spreadsheet['id']);
 		//Delete the participants
-		foreach($payments as $payment)
+		foreach($rcpt_articles as $rcpt_article)
 		{
-			$success = delete_payment($account['id'], $payment['id']);	
+			$success = delete_rcpt_article($account['id'], $rcpt_article['id']);	
 			if($success === true)
-				{	array_push($successArray, 'Payment has been successfully deleted');}
+				{	array_push($successArray, 'articles has been successfully deleted');}
 			else
-				{array_push($errArray, 'Server error: Problem while attempting to delete a payment: '.$success); 	}
+				{array_push($errArray, 'Server error: Problem while attempting to delete a participation: '.$success); 	}
 		}
 	}
 }
