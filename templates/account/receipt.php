@@ -434,7 +434,7 @@ foreach($these_articles as $article)
 								<input type="hidden" name="p_anchor" value="<?php echo '#spreadsheet-'.$cpt_spreadsheet?>">
 								<div class="row form-group row-no-padding">
 									<div class="col-xs-6 col-sm-5 col-md-4">
-										<div class="fullwidth padding_receipt_payer display_receipt_payer" style="background-color:<?php echo '#'.$rcpt_recipient_to_edit['color']?>">
+										<div class="fullwidth padding_member display_member" style="background-color:<?php echo '#'.$rcpt_recipient_to_edit['color']?>">
 											<?php echo htmlspecialchars($rcpt_recipient_to_edit['name']);?>
 										</div>
 									</div>
@@ -565,7 +565,7 @@ foreach($these_articles as $article)
 													onclick="SetAllValue('<?php echo 'form_set_all_quantity_'.$cpt_spreadsheet.'_'.$cpt_article.'_'.$cpt?>', '<?php echo 'form_available_quantity_'.$cpt_spreadsheet.'_'.$cpt_article.'_'?>')">Set to all</span>
 													<input name="" type="number"
 														class="form-control"
-														min="0" value="<?php echo (float)$this_available_quantity?>" 
+														min="0" step="0.001" value="<?php echo (float)$this_available_quantity?>" 
 														title="Quantity"
 														id="<?php echo 'form_set_all_quantity_'.$cpt_spreadsheet.'_'.$cpt_article.'_'.$cpt?>">
 													<span class="input-group-addon glyphicon glyphicon-scale"></span>
@@ -618,6 +618,18 @@ if($article_to_edit !== false)
 										</div>
 									</div>
 									<div class="col-xs-12 col-lg-4">
+										<label for="form_edit_article_quantity">
+											Quantity<span class="glyphicon glyphicon-asterisk red"></span>
+										</label>
+										<div class="input-group">
+											<input name="p_quantity" value="<?php echo (float)$article_to_edit['quantity']?>" 
+												id="form_edit_article_quantity" 
+												class="form-control" title="Product" 
+												type="number" min="0" step="0.001"> 
+											<span class="input-group-addon glyphicon glyphicon-scale"></span>
+										</div>
+									</div>
+									<div class="col-xs-12 col-lg-4">
 										<label for="form_edit_article_price">
 											Price<span class="glyphicon glyphicon-asterisk red"></span>
 										</label>
@@ -626,17 +638,6 @@ if($article_to_edit !== false)
 												id="form_edit_article_price" value="<?php echo (float)$article_to_edit['price']?>" 
 												class="form-control" title="Product" type="number" min="0" step="0.01"> 
 											<span class="input-group-addon glyphicon glyphicon-euro"></span>
-										</div>
-									</div>
-									<div class="col-xs-12 col-lg-4">
-										<label for="form_edit_article_quantity">
-											Quantity<span class="glyphicon glyphicon-asterisk red"></span>
-										</label>
-										<div class="input-group">
-											<input name="p_quantity" value="<?php echo (float)$article_to_edit['quantity']?>" 
-												id="form_edit_article_quantity" 
-												class="form-control" title="Product" type="number" min="0"> 
-											<span class="input-group-addon glyphicon glyphicon-scale"></span>
 										</div>
 									</div>
 								</div>										
