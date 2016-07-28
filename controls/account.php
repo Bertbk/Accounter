@@ -197,7 +197,7 @@ foreach($my_members as $payer)
 
 if(empty($my_account['description'])
 	||is_null($my_account['description']))
-	{ $description_account = "";
+	{ $description_account = "No description.";
 	}else{
 		$description_account = $my_account['description'];
 }

@@ -65,6 +65,18 @@ else{
 								class="form-control"	value="<?php echo htmlspecialchars($spreadsheet['title'])?>" required 
 								title="Title">
 							</h2>
+							<p><strong>
+							<?php
+								if( $this_type == "budget")
+								{
+									?>Budget spreadsheet (default)<?php
+								}
+								else if($this_type == "receipt")
+								{
+									?>Purchase receipt<?php
+								}
+								?>
+							</strong></p>
 						</form>
 					</div>
 <?php } 
@@ -73,7 +85,19 @@ else{
 					<div class="col-md-9 ">
 						<h2 class="spreadsheet_title">
 							<?php echo ($cpt_spreadsheet+1).'. '.htmlspecialchars($spreadsheet['title']) ?>
-						</h2>	
+						</h2>
+						<p><strong>
+						<?php
+							if( $this_type == "budget")
+							{
+								?>Budget spreadsheet (default)<?php
+							}
+							else if($this_type == "receipt")
+							{
+								?>Purchase receipt<?php
+							}
+							?>
+						</strong></p>
 					</div>
 					<div class="col-md-3">
 		<?php
@@ -110,6 +134,7 @@ $cblue = hexdec(substr($spreadsheet['color'], 4, 2));
 			<div id="<?php echo 'panel-body_spreadsheet'.$cpt_spreadsheet?>" class="panel-collapse collapse in">
 				<div  class="panel-body"
 					style="background-color: rgba(<?php echo $cred.','.$cgreen.','.$cblue?>, 0.5);">
+										
 <?php 
 //Edit the spreadsheet (name, description, ...)
 if($admin_mode 
@@ -135,15 +160,27 @@ if($admin_mode
 	}
 	else{
 		?>
-					<h3>Description</h3>
-<?php
-		//Display only
-		if(!empty($spreadsheet['description']) && !is_null($spreadsheet['description']))
-		{
-?>
-					<p><?php echo htmlspecialchars($spreadsheet['description'])?></p>
-<?php }
-	}
+			<h3>Description</h3>
+			<p>
+				<?php
+				if(isset($spreadsheet['description'])
+					&& !is_null($spreadsheet['description'])
+					&& !empty($spreadsheet['description']))
+					{
+						echo htmlspecialchars($spreadsheet['description']);
+					}
+				else{
+					?>
+					No description.
+					<?php
+				}
+				?>
+				</p>
+<?php 
+			}
+	?>
+	
+	<?php
 	if( $this_type == "budget")
 	{
 		include(__DIR__.'/budget.php');
