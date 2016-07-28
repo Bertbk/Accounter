@@ -444,6 +444,7 @@ function AddArticleLine(cpt_spreadsheet)
 	input_quantity.id = "form_set_article_quantity_"+ cpt_spreadsheet + "_" + AddArticleLine.counter;
 	input_quantity.type="number";
 	input_quantity.min="0";
+	input_quantity.step="0.001";
 	input_quantity.className = "form-control";
 	input_quantity.name = "p_article["+ AddArticleLine.counter +"][p_quantity]";
 	input_quantity.title = "Quantity";

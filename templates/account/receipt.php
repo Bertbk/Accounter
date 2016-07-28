@@ -524,12 +524,13 @@ foreach($these_articles as $article)
 													Quantity
 												</label>
 												<div class="input-group">
-													<input name="p_recipient['<?php echo $cpt?>'][p_quantity]" type="number"
-																class="form-control" min="0" step="0.001"
-																max="<?php echo (float)$this_available_quantity?>"
-																value="<?php echo (float)$this_available_quantity?>"
-																id="<?php echo 'form_available_quantity_'.$cpt_spreadsheet.'_'.$cpt_article.'_'.$member['id']?>"
-																title="Quantity">
+													<input name="p_recipient['<?php echo $cpt?>'][p_quantity]" 
+														type="number"
+														class="form-control" min="0" step="0.001"
+														max="<?php echo (float)$this_available_quantity?>"
+														value="<?php echo (float)$this_available_quantity?>"
+														id="<?php echo 'form_available_quantity_'.$cpt_spreadsheet.'_'.$cpt_article.'_'.$member['id']?>"
+														title="Quantity">
 													<span class="input-group-addon glyphicon glyphicon-scale"></span>
 												</div>
 											</div>
@@ -707,7 +708,7 @@ $article_to_edit = false;
 													<input name="p_article[0][p_quantity]" 
 														id="form_set_article_quantity_<?php echo $cpt_spreadsheet?>_0" 
 														class="form-control" title="Product" type="number" 
-														min="0" value="1"> 
+														min="0" step="0.001" value="1"> 
 													<span class="input-group-addon glyphicon glyphicon-scale"></span>
 												</div>
 											</div>
