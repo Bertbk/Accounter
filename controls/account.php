@@ -161,24 +161,6 @@ $my_budget_participants = get_bdgt_participants($my_account_id); // Participatio
 $my_available_bdgt_members = get_bdgt_available_members($my_account_id); // Possible participation for each budget spreadsheet
 
 $my_payments_per_budget = get_bdgt_payments($my_account_id); //All payments organized by budget sheets
-//For JS : create the list of payer to send to JS
-
-/*
-$list_of_possible_payers= Array(Array(Array()));
-foreach($my_spreadsheets as $spreadsheet)
-{
-	$cpt = -1;
-	foreach ($my_spreadsheet_participants[$spreadsheet['id']] as $spreadsheet_participant)
-	{
-		$cpt ++;
-		$list_of_possible_payers[$spreadsheet['hashid']][$cpt] = 
-		Array(
-			'part_name' => $spreadsheet_participant['name'],
-			'part_hashid' => $spreadsheet_participant['hashid']
-		);
-	}
-}
-*/
 
 //=== RECEIPTS ===
 $my_rcpt_payers = get_rcpt_payers($my_account_id); // Payers per receipt

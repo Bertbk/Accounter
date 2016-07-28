@@ -178,11 +178,13 @@ if($admin_mode
 <?php	
 	}
 	else{
+		?>
+					<h3>Description</h3>
+<?php
 		//Display only
 		if(!empty($spreadsheet['description']) && !is_null($spreadsheet['description']))
 		{
 ?>
-					<h3>Description</h3>
 					<p><?php echo htmlspecialchars($spreadsheet['description'])?></p>
 <?php }
 	}
