@@ -9,22 +9,22 @@
  */
  
  /*
-Check the data before asking the SQL to update a bill_participant (= participation)
+Check the data before asking the SQL to update a bdgt_participant
  */
 
 
-require_once __DIR__.'/../../config-app.php';
+require_once __DIR__.'/../../../../../config-app.php';
 
 include_once(LIBPATH.'/accounts/get_account_admin.php');
 
-include_once(LIBPATH.'/participants/get_participant_by_hashid.php');
-include_once(LIBPATH.'/participants/get_participant_by_id.php');
+include_once(LIBPATH.'/members/get_member_by_hashid.php');
+include_once(LIBPATH.'/members/get_member_by_id.php');
 
-include_once(LIBPATH.'/bills/get_bill_by_id.php');
+include_once(LIBPATH.'/spreadsheets/get_spreadsheet_by_id.php');
 
-include_once(LIBPATH.'/bill_participants/get_bill_participant_by_hashid.php');
-include_once(LIBPATH.'/bill_participants/get_bill_participants_by_bill_id.php');
-include_once(LIBPATH.'/bill_participants/update_bill_participant.php');
+include_once(LIBPATH.'/spreadsheets/budgets/bdgt_participants/get_bdgt_participant_by_hashid.php');
+include_once(LIBPATH.'/spreadsheets/budgets/bdgt_participants/get_bdgt_participants_by_spreadsheet_id.php');
+include_once(LIBPATH.'/spreadsheets/budgets/bdgt_participants/update_bdgt_participant.php');
 
 include_once(LIBPATH.'/hashid/validate_hashid.php');
 
@@ -39,16 +39,16 @@ $redirect_link ="" ;
 
 $ErrorEmptyMessage = array(
 		'p_hashid_account' => 'Please provide an acount',
-		'p_hashid_bill_participant' => 'Please provide a participation',
-		'p_participant' => 'Please provide a participant',
-		'p_percent_of_use' => 'Please provide a percentage'
+		'p_hashid_bdgt_participant' => 'Please provide a participation',
+		'p_member' => 'Please provide a member',
+		'p_percent_of_benefit' => 'Please provide a percentage'
    );
 	 
 $ErrorMessage = array(
 	'p_hashid_account' => 'Account is not valid',
-	'p_hashid_bill_participant' => 'Participation is not valid',
-	'p_participant' => 'Participant is not valid',
-	'p_percent_of_use' => 'Percent is not valid',
+	'p_hashid_bdgt_participant' => 'Participation is not valid',
+	'p_member' => 'Member is not valid',
+	'p_percent_of_benefit' => 'Percent is not valid',
 	'p_anchor' => 'Anchor not valid'
  );
 
@@ -93,10 +93,10 @@ else{
 	}
 }
 
-if(isset($_POST['submit_update_bill_participant']))
+if(isset($_POST['submit_update_bdgt_participant']))
 {
-	// BILL_PARTICIPANT
-	$key = 'p_hashid_bill_participant';
+	// bdgt_participant
+	$key = 'p_hashid_bdgt_participant';
 	if(empty($_POST[$key])) { //If empty
 		array_push($errArray, $ErrorEmptyMessage[$key]);
 	}
@@ -106,48 +106,48 @@ if(isset($_POST['submit_update_bill_participant']))
 			array_push($errArray, $ErrorMessage[$key]);
 		}
 		else{
-			$hashid_bill_participant = $_POST[$key];
+			$hashid_bdgt_participant = $_POST[$key];
 			}
 	}
-	//Get the bill_participant
+	//Get the bdgt_participant
 	if(empty($errArray))
 	{		
-		$bill_participant = get_bill_participant_by_hashid($account['id'], $hashid_bill_participant);
-		if(empty($bill_participant))
+		$bdgt_participant = get_bdgt_participant_by_hashid($account['id'], $hashid_bdgt_participant);
+		if(empty($bdgt_participant))
 		{	array_push($errArray, $ErrorMessage[$key]); }
 	}
 	
-	//Check if the accounts match between bill and account
+	//Check if the accounts match between spreadsheet and account
 	if(empty($errArray))
 	{
-		if($bill_participant['account_id'] !== $account['id'])
+		if($bdgt_participant['account_id'] !== $account['id'])
 		{
 			array_push($errArray, 'This participation does not belong to this account.');
 		}
 	}
 			
 	// NEW PERCENT OF USE
-	$key = 'p_percent_of_use';
+	$key = 'p_percent_of_benefit';
 	if(empty($_POST[$key])) { //If empty
 		array_push($errArray, $ErrorEmptyMessage[$key]);
 	}
 	else{
-		$new_percent_of_use = (float)$_POST[$key];
-		if($new_percent_of_use < 0 ||$new_percent_of_use > 100)
+		$new_percent_of_benefit = (float)$_POST[$key];
+		if($new_percent_of_benefit < 0 ||$new_percent_of_benefit > 100)
 		{
-			array_push($errArray, $ErrorMessage['p_percent_of_use']);
+			array_push($errArray, $ErrorMessage['p_percent_of_benefit']);
 		}
 	}
 	
-	//Update the bill_participant
+	//Update the bdgt_participant
 	if(empty($errArray))
 	{
-		$success = update_bill_participant($account['id'], $bill_participant['id'], $new_percent_of_use);	
+		$success = update_bdgt_participant($account['id'], $bdgt_participant['id'], $new_percent_of_benefit);	
 		if($success !== true)
-		{array_push($errArray, 'Server error: Problem while attempting to update a participation'); 	}
+		{array_push($errArray, 'Server error: Problem while attempting to update a participant'); 	}
 	else
 		{
-			array_push($successArray, 'Participant has been successfully updated');
+			array_push($successArray, 'Member has been successfully updated');
 		}
 	}
 }

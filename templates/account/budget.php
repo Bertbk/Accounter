@@ -105,7 +105,7 @@ if(!empty($this_bdgt_participants))
 							</div>
 							<div class="col-xs-6 col-sm-5 col-md-4">
 								<div class="input-group">
-									<input type="number" step="0.01" min="0" max="100" name="p_percent_of_use"
+									<input type="number" step="0.01" min="0" max="100" name="p_percent_of_benefit"
 										class="form-control" value="<?php echo (float)$bdgt_participant_tmp['percent_of_benefit']?>" required>
 									<span class="input-group-addon">%</span>
 								</div>
