@@ -69,7 +69,7 @@ else{
 							<?php
 								if( $this_type == "budget")
 								{
-									?>Budget spreadsheet (default)<?php
+									?>Budget spreadsheet<?php
 								}
 								else if($this_type == "receipt")
 								{

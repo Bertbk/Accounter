@@ -41,19 +41,20 @@ Template of the home page
 				<div class="col-xs-12 col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
 					<div class="panel panel-primary">
 						<div class="panel-heading">
-							<h2>Welcome to accounter: your best friend to share the bills!</h2>
+							<h2>Welcome to accounter: your best friend to make the accounts!</h2>
 						</div>
 						<div class="panel-body">
 							<h3>Why?</h3>
 								<p>You just had a wonderful and relaxing week-end with your friends or your family. But it's time to do the account.</p>
 								You remember that the house rental was advanced by a couple of friends while two other dudes have advanced money for the nice restaurant you had on saturday. And of course, there is Uncle Bob that borrow money from everyone with the hidden hope they will forget it&hellip; Holly cows, right?</p>
 							<h3>Solution?</h3>
-								<p>There is a solution: Accounter! It's a simple and web-responsive (= mobile friendly!) application to manage the bills! It's time for Uncle Bob to pay his duty! </p>
+								<p>There is a solution: Accounter! It's a simple and web-responsive (= mobile friendly!) application to manage the accounts! It's time for Uncle Bob to pay his duty! </p>
 							<h3>Cool features</h3>
 								<ul>
 									<li>Free and Open-Source.</li>
 									<li>Two access: public (read only) and adminitrator (modification possible).</li>
-									<li>Multiple bills per account (eg: restaurant, car rental, activity...)</li>
+									<li>Multiple spreadsheets per account (eg: restaurant, car rental, activity...)</li>
+									<li>Different types of spreadsheet: budgets and purchase receipts. They can obviously be used together.</li>
 									<li>Adjustable participation : Alice staid 7 nights but Bob only 2? No problem, Accounter will manage it</li>
 									<li>Optimized solution: limit the number of money transfer</li>
 									<li>Payment beween participants: Charly advanced 50$ to Bob ? No problem.</li>
