@@ -299,7 +299,7 @@ function AddPaymentLine(name_of_people, hashid_of_people, cpt_spreadsheet)
 
 
 
-//Add a row to add a participant (multiple submit) 
+//Add a row to add a Member (multiple submit) 
 function AddMemberLine()
 {
 	if(typeof AddMemberLine.counter == 'undefined')
@@ -356,6 +356,9 @@ function AddMemberLine()
 	var form_to_add = document.getElementById('inner_member_form');
 	form_to_add.appendChild(div_row);
 	
+	//Set the focus
+	document.getElementById(input_name.id).focus();
+	//Increase counter
 	AddMemberLine.counter ++;
 	return false;
 }
