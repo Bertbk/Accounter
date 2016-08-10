@@ -8,17 +8,21 @@
  *
 */
 
+//Accounter version
+const VERSION = '0.9';
+
 if ( !defined('ABSPATH') )
-		define('ABSPATH', dirname(__FILE__));
-if ( !defined('LIBPATH') )
+		define('ABSPATH', dirname(__FILE__).'/../..');
+	if ( !defined('LIBPATH') )
 		define('LIBPATH', ABSPATH . '/lib');
 if ( !defined('ACCOUNTPATH') )
 		define('ACCOUNTPATH', ABSPATH . '/account');
 if ( !defined('SITEPATH') )
 		define('SITEPATH', ABSPATH . '/site');
 
+
 //Config file
-$config_exists = file_exists(__DIR__.'/site/config.php');
+$config_exists = file_exists(SITEPATH.'/config.php');
 if(!$config_exists)
 {
 	header('location: error.php');
@@ -27,6 +31,11 @@ if(!$config_exists)
 else
 {
 	$config_array = include(__DIR__.'/site/config.php');
+	if ( !defined('BASEURL') )
+			define('BASEURL',$config_array['baseurl']);
+	if ( !defined('ACTIONPATH') )
+			define('ACTIONPATH', BASEURL.'/controls/action');
+	//TABLES
 	if ( !defined('PREFIX') )
 			define('PREFIX',$config_array['prefix_table']);
 	if ( !defined('TABLE_ACCOUNTS') )
@@ -35,22 +44,18 @@ else
 		define('TABLE_MEMBERS', PREFIX.'members');
 	if ( !defined('TABLE_SPREADSHEETS') )
 		define('TABLE_SPREADSHEETS', PREFIX.'spreadsheets');
-	//BUDGET
+	//- BUDGET
 	if ( !defined('TABLE_BDGT_PARTICIPANTS') )
 		define('TABLE_BDGT_PARTICIPANTS', PREFIX.'bdgt_participants');
 	if ( !defined('TABLE_BDGT_PAYMENTS') )
 		define('TABLE_BDGT_PAYMENTS', PREFIX.'bdgt_payments');
-	//RECEIPT
+	//- RECEIPT
 	if ( !defined('TABLE_RCPT_PAYERS') )
 		define('TABLE_RCPT_PAYERS', PREFIX.'rcpt_payers');
 	if ( !defined('TABLE_RCPT_RECIPIENTS') )
 		define('TABLE_RCPT_RECIPIENTS', PREFIX.'rcpt_recipients');
 	if ( !defined('TABLE_RCPT_ARTICLES') )
 		define('TABLE_RCPT_ARTICLES', PREFIX.'rcpt_articles');
-	if ( !defined('BASEURL') )
-			define('BASEURL',$config_array['baseurl']);
-	if ( !defined('ACTIONPATH') )
-			define('ACTIONPATH', BASEURL.'/controls/action');
 
 	unset($config_array);
 }

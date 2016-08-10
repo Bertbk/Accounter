@@ -20,7 +20,7 @@ This page checks if... :
 - Something is being edited (ie: admin mode + edit argument)
  */
 
-require_once __DIR__.'/../config-app.php';
+require_once __DIR__.'/init.php';
 
 include_once(LIBPATH.'/accounts/get_account.php');
 include_once(LIBPATH.'/accounts/get_account_admin.php');

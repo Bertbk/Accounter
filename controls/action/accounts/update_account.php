@@ -14,56 +14,13 @@ Check the data before asking the SQL to update an account
  */
 
  
-require_once __DIR__.'/../../../config-app.php';
+require_once __DIR__.'/../../inc/init.php';
 
-include_once(LIBPATH.'/accounts/update_account.php');
-include_once(LIBPATH.'/accounts/get_account_admin.php');
+require_once(LIBPATH.'/accounts/update_account.php');
+require_once(LIBPATH.'/accounts/get_account_admin.php');
 
-//Session is used to send back errors to account.php (if any)
-session_start();
+require_once __DIR__.'/../init_action.php';
 
-$errArray = array(); //error messages
-$warnArray = array(); //warning messages
-$successArray = array(); //success messages
-$redirect_link ="" ;
-
-//ACCOUNT
-$key = 'p_hashid_account';
-if(empty($_POST[$key]))
-{ //If empty
-	array_push($errArray, $ErrorEmptyMessage[$key]);
-}
-else{
-	if(validate_hashid_admin($_POST[$key]) == false)
-	{
-		array_push($errArray, $ErrorMessage[$key]);
-	}
-	else{
-		$hashid_admin = $_POST[$key];
-	}
-}
-//Get the account
-if(empty($errArray))
-{		
-	$account = get_account_admin($hashid_admin);
-	if(empty($account))
-	{	array_push($errArray, $ErrorMessage['p_hashid_account']); }
-}
-
-//REDIRECTION LINK
-if(empty($account))
-{
-	$redirect_link = BASEURL;
-}
-else{
-	$redirect_link = BASEURL.'/account/'.$account['hashid_admin'].'/admin';
-}
-
-if(isset($_POST['submit_cancel']))
-{
-	header('location:'.$redirect_link);
-	exit;
-}
 if(isset($_POST['submit_update_account']))
 {
 	$ErrorMessage = array(
@@ -153,18 +110,4 @@ if(isset($_POST['submit_update_account']))
 	}
 }
 
-if(!(empty($errArray)))
-{
-	$_SESSION['errors'] = $errArray;
-}
-if(!(empty($warnArray)))
-{
-	$_SESSION['warnings'] = $warnArray;
-}
-if(!(empty($successArray)))
-{
-	$_SESSION['success'] = $successArray;
-}
-
-header('location: '.$redirect_link);
-exit;
+require_once(__DIR__.'/../end_action.php');

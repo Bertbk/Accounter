@@ -12,14 +12,12 @@
 Check the data before asking the SQL to create a new account */
 
  
-require_once __DIR__.'/../../../config-app.php';
+require_once __DIR__.'/../../inc/init.php';
 
-include_once(LIBPATH.'/accounts/create_new_account.php');
-include_once(LIBPATH.'/email/send_email_new_account.php');
-include_once(LIBPATH.'/hashid/create_hashid.php');
+require_once(LIBPATH.'/accounts/create_new_account.php');
+require_once(LIBPATH.'/email/send_email_new_account.php');
+require_once(LIBPATH.'/hashid/create_hashid.php');
 
-//Session is used to send back errors to account.php (if any)
-session_start();
 
 //Check token (avoid CSRF)
 $token = $_SESSION['token'];
@@ -131,19 +129,6 @@ if(isset($_POST['submit_new_account']))
 	}
 }
 
-if(!(empty($errArray)))
-{
-	$_SESSION['errors'] = $errArray;
-}
-if(!(empty($warnArray)))
-{
-	$_SESSION['warnings'] = $warnArray;
-}
-if(!(empty($successArray)))
-{
-	$_SESSION['success'] = $successArray;
-}
-
 if(empty($errArray))
 {
 	$redirect_link = BASEURL.'/account_created.php?hash='.$hashid.'&hash_admin='.$hashid_admin;
@@ -152,5 +137,4 @@ else{
 	$redirect_link = BASEURL.'/create.php';
 }
 
-header('location: '.$redirect_link);
-exit;
+require_once __DIR__.'/../end_action.php';

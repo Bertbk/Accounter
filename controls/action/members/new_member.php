@@ -15,13 +15,13 @@ Check the data before asking the SQL to create a new member
  
 require_once __DIR__.'/../../../config-app.php';
 
-include_once(LIBPATH.'/accounts/get_account_admin.php');
+require_once(LIBPATH.'/accounts/get_account_admin.php');
 
-include_once(LIBPATH.'/members/get_member_by_name.php');
-include_once(LIBPATH.'/members/set_member.php');
+require_once(LIBPATH.'/members/get_member_by_name.php');
+require_once(LIBPATH.'/members/set_member.php');
 
-include_once(LIBPATH.'/hashid/validate_hashid.php');
-include_once(LIBPATH.'/hashid/create_hashid.php');
+require_once(LIBPATH.'/hashid/validate_hashid.php');
+require_once(LIBPATH.'/hashid/create_hashid.php');
 
 
 //Session is used to send back errors to account.php (if any)
