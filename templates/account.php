@@ -63,9 +63,7 @@ Template of a particular account page, that is :
 			<?php include(__DIR__.'/messages/messages.php');?>
 			<?php include(__DIR__.'/account/cancel_form.php');?>
 			<?php include(__DIR__.'/account/panel_description.php');?>
-			<div class="row">
-				<?php include(__DIR__.'/account/solution.php');?>
-			</div>
+			<?php include(__DIR__.'/account/solution.php');?>
 			<div class="row">
 				<div class="col-md-3">
 					<?php include(__DIR__.'/account/panel_members.php');?>

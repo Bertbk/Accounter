@@ -25,11 +25,11 @@ div#solutions div.panel-body h3
 div#solutions div.panel-body div.list_solution
 {
 	margin-bottom: 10px;
-	vertical-align: text-top;;
+	vertical-align: text-top;
 }
 
-div#solutions div#basic_solution{
-	padding-right: 30px;
-	border-right: 2px solid black;
+@media (min-width: 992px) {
+.solidcolumn{
+	border-left: 2px solid black;
 }
-
+}

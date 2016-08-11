@@ -177,7 +177,7 @@ $solution_opt = compute_opt_solution($my_account_id, $solution);
 
 $tranfers = Array(Array());
 //nb. of money transfert
-$n_transfer_opt = 0;
+$n_transfer_opt = (int)0;
 foreach($my_members as $payer)
 {
 	$uid = $payer['id'];
@@ -196,7 +196,8 @@ foreach($my_members as $payer)
 			}
 	}
 }
-
+//how many columns for the display ?
+$n_sol_col = ($n_transfer_opt >= 10)?(int)2:(int)1;
 
 
 if(empty($my_account['description'])
