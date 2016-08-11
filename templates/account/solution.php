@@ -19,7 +19,7 @@ Template to display the solutions
 		<div class="panel panel-primary">
 			<div class="panel-heading cursor_pointer" 
 				data-toggle="collapse" data-target="#panel-body_solution">
-				<h2>Solutions</h2>
+				<h2>Solution</h2>
 				<button class="btn btn-default floatright" title="Collapse/Expand"
 					data-toggle="collapse" data-target="#panel-body_solution">
 					<span class="glyphicon glyphicon-plus"></span>
@@ -28,53 +28,7 @@ Template to display the solutions
 			<div id="panel-body_solution" class="panel-collapse collapse in">
 				<div class="panel-body">
 					<div class="row">
-						<div id="basic_solution" class="solution col-md-6">
-							<h3>&ldquo;Standard&rdquo; solution</h3>
-		<?php if($n_transfer == 0)
-			{?>
-							<p>No transfer needed: everything is fine!</p>
-<?php }
-	else{?>
-							<div class="row list_solution">
-								<div class="col-xs-offset-1 col-xs-5 col-md-offset-2 col-md-4 text-center">
-									...must pay...
-								</div>
-								<div class="col-xs-5 col-md-4 text-center">
-									...to...
-								</div>
-							</div>
-<?php	foreach($my_members as $payer)
-				{
-					$uid = $payer['id'];
-					if(!isset($solution[$uid])){continue;}
-					foreach($my_members as $receiver)
-					{
-						$vid = $receiver['id'];
-						if(!isset($solution[$uid][$vid])){continue;}
-						$refund = number_format((float)$solution[$uid][$vid], 2, '.', '');
-						if($refund > 0)
-						{
-?>
-							<div class="row list_solution">
-								<div class="col-xs-4 col-md-4 col-lg-4">
-									<div class="display_member padding_member fullwidth" style="background-color:<?php echo '#'.$payer['color']?>"><?php echo htmlspecialchars($payer['name'])?></div>
-								</div>
-								<div class="col-xs-4 col-md-4 col-lg-4">
-									<div class="padding_member fullwidth">
-										<?php echo $refund?>&euro;
-									</div>
-								</div>
-								<div class="col-xs-4 col-md-4 col-lg-4">
-									<div class="display_member padding_member fullwidth" style="background-color:<?php echo '#'.$receiver['color']?>"><?php echo htmlspecialchars($receiver['name'])?></div>
-								</div>
-							</div>
-<?php					}
-						}
-					} ?>
-	<?php }?>
-						</div>
-						<div id="opt_solution" class="solution col-md-6">
-							<h3>&ldquo;Optimized&rdquo; solution</h3>
+						<div id="opt_solution" class="solution col-md-12">
 			<?php if($n_transfer_opt == 0)
 			{?>
 							<p>No transfer needed: everything is fine!</p>
@@ -89,34 +43,23 @@ Template to display the solutions
 								</div>
 							</div>
 <?php
-	foreach($my_members as $payer)
+	foreach($tranfers as $transfer)
 					{
-						$uid = $payer['id'];
-						if(!isset($solution[$uid])){continue;}
-						foreach($my_members as $receiver)
-						{
-							$vid = $receiver['id'];
-							if(!isset($solution_opt[$uid][$vid])){continue;}
-											$refund = number_format((float)$solution_opt[$uid][$vid], 2, '.', '');
-							if($refund > 0)
-							{
-?>
+			?>
 							<div class="row list_solution">
 								<div class="col-xs-4 col-md-4 col-lg-4">
-									<div class="display_member padding_member fullwidth" style="background-color:<?php echo '#'.$payer['color']?>"><?php echo htmlspecialchars($payer['name'])?></div>
+									<div class="display_member padding_member fullwidth" style="background-color:<?php echo '#'.$transfer['payer_color']?>"><?php echo htmlspecialchars($transfer['payer_name'])?></div>
 								</div>
 								<div class="col-xs-4 col-md-4 col-lg-4">
 									<div class="padding_member fullwidth">
-										<?php echo $refund?>&euro;
+										<?php echo $transfer['amount']?>&euro;
 									</div>
 								</div>
 								<div class="col-xs-4 col-md-4 col-lg-4">
-									<div class="display_member padding_member fullwidth" style="background-color:<?php echo '#'.$receiver['color']?>"><?php echo htmlspecialchars($receiver['name'])?></div>
+									<div class="display_member padding_member fullwidth" style="background-color:<?php echo '#'.$transfer['receiver_color']?>"><?php echo htmlspecialchars($transfer['receiver_name'])?></div>
 								</div>
 							</div>
 <?php
-							}
-						}
 					}
 				}
 ?>

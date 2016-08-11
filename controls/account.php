@@ -175,8 +175,8 @@ $my_rcpt_quantities = get_all_rcpt_quantities_taken($my_account_id);
 $solution = compute_solution($my_account_id);
 $solution_opt = compute_opt_solution($my_account_id, $solution);
 
+$tranfers = Array(Array());
 //nb. of money transfert
-$n_transfer = 0;
 $n_transfer_opt = 0;
 foreach($my_members as $payer)
 {
@@ -184,12 +184,16 @@ foreach($my_members as $payer)
 	foreach($my_members as $receiver)
 	{
 		$vid = $receiver['id'];
-		if(isset($solution[$uid][$vid])
-			&& $solution[$uid][$vid] !== 0)
-			{$n_transfer++;}
 		if(isset($solution_opt[$uid][$vid])
 			&& $solution_opt[$uid][$vid] !== 0)
-			{$n_transfer_opt++;}
+			{
+				$tranfers[$n_transfer_opt]['payer_name'] = htmlspecialchars($payer['name']);
+				$tranfers[$n_transfer_opt]['payer_color'] = $payer['color'];
+				$tranfers[$n_transfer_opt]['receiver_name'] = htmlspecialchars($receiver['name']);
+				$tranfers[$n_transfer_opt]['receiver_color'] = $receiver['color'];
+				$tranfers[$n_transfer_opt]['amount'] = number_format((float)$solution_opt[$uid][$vid], 2, '.', '');
+				$n_transfer_opt++;
+			}
 	}
 }
 
