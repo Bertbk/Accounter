@@ -34,13 +34,14 @@ Template to display the solutions
 <?php }
 	else{?>
 					<?php
-					//Two column showing
+					//This counter is here to show transfer regrouped by payer
+					$cpt_sol = 0;
 					for ($icol = 0; $icol < $n_sol_col; $icol ++)
 					{
 					?>
 						<div class="col-md-6 
 							<?php if($n_sol_col == 1){echo 'col-md-offset-3';}?>
-							<?php if($icol==1){echo 'solidcolumn';}?>
+							<?php if($icol==0 && $n_sol_col > 1){echo 'solidcolumn';}?>
 							">
 							<div class="row list_solution  <?php if($icol==1){echo 'visible-md visible-lg ';}?>">
 								<div class="col-xs-offset-1 col-xs-5 col-md-offset-2 col-md-4 text-center">
@@ -53,7 +54,8 @@ Template to display the solutions
 <?php
 						for ($i = $icol; $i < $n_transfer_opt; $i += $n_sol_col) 
 						{
-							$transfer = $tranfers[$i];
+							$transfer = $tranfers[$cpt_sol];
+							$cpt_sol++;
 	?>
 							<div class="row list_solution">
 								<div class="col-xs-4 col-md-4 col-lg-4">
