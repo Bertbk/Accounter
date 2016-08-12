@@ -22,7 +22,7 @@ Template to display the solutions
 				<h2>Solution</h2>
 				<button class="btn btn-default floatright" title="Collapse/Expand"
 					data-toggle="collapse" data-target="#panel-body_solution">
-					<span class="glyphicon glyphicon-plus"></span>
+					<span class="glyphicon glyphicon-minus"></span>
 				</button>
 			</div>
 			<div id="panel-body_solution" class="panel-collapse collapse in">

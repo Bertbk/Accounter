@@ -29,7 +29,7 @@ else{
 		data-toggle="collapse" data-target="#panel-body_members">
 		<button class="btn btn-default floatright" title="Collapse/Expand"
 			data-toggle="collapse" data-target="#panel-body_members">
-			<span class="glyphicon glyphicon-plus"></span>
+			<span class="glyphicon glyphicon-minus"></span>
 		</button>
 		<h2>Members: <?php echo (int)$n_members ?> (<?php echo (int)$n_people ?>)</h2>
 	</div>

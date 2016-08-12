@@ -120,7 +120,7 @@ else{
 						<?php if($overlay==""){ ?>
 							<button class="btn btn-default floatright" title="Collapse/Expand"
 								data-toggle="collapse" data-target="#account_description_panel">
-								<span class="glyphicon glyphicon-plus"></span>
+								<span class="glyphicon glyphicon-minus"></span>
 							</button>
 						<?php } ?>
 						</div>

@@ -30,7 +30,7 @@ if($admin_mode && $edit_mode == false)
 		<div class="panel-heading cursorpointer overflowhidden" data-toggle="collapse" data-target="#form_add_spreadsheet_panel_body">
 			<button class="btn btn-default floatright" title="Collapse/Expand"
 				data-toggle="collapse" data-target="#form_add_spreadsheet_panel_body">
-				<span class="glyphicon glyphicon-plus"></span>
+				<span class="glyphicon glyphicon-minus"></span>
 			</button>
 			<h2>Add a spreadsheet</h2>
 		</div>

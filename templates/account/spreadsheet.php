@@ -117,7 +117,7 @@ else{
 						<div class="button_spreadsheet_title">
 							<button type="submit" value="" class="btn btn-default" title="Collapse/Expand"
 							data-toggle="collapse" data-target="#<?php echo 'panel-body_spreadsheet'.$cpt_spreadsheet?>">
-								<span class="glyphicon glyphicon-plus"></span>
+								<span class="glyphicon glyphicon-minus"></span>
 							</button>							
 						</div>
 					</div>
