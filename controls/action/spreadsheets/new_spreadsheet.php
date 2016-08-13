@@ -18,6 +18,7 @@ require_once __DIR__.'/../../../config-app.php';
 include_once(LIBPATH.'/accounts/get_account_admin.php');
 
 include_once(LIBPATH.'/spreadsheets/set_spreadsheet.php');
+include_once(LIBPATH.'/spreadsheets/get_spreadsheets.php');
 include_once(LIBPATH.'/spreadsheets/get_spreadsheet_by_title.php');
 
 include_once(LIBPATH.'/hashid/validate_hashid.php');
@@ -152,10 +153,11 @@ if(!isset($account) ||empty($account))
 else{
 	$redirect_link = BASEURL.'/account/'.$account['hashid_admin'].'/admin';
 	//Anchor
-	$key = 'p_anchor';
-	if(isset($_POST[$key])) {
-		$anchor = htmlspecialchars($_POST[$key]);
-		$redirect_link = $redirect_link.$anchor ;
+	if(empty($errArray))
+	{
+		$n_spreadsheets = count(get_spreadsheets($account['id'])) - 1;
+		$anchor = '#spreadsheet-'.$n_spreadsheets;
+		$redirect_link = $redirect_link.$anchor;
 	}
 }
 
