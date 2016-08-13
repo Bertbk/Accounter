@@ -441,16 +441,17 @@ function AddArticleLine(cpt_spreadsheet)
 	input_price.step="0.01";
 	input_price.className = "form-control";
 	input_price.name = "p_article["+ AddArticleLine.counter +"][p_price]";
-	input_price.title = "Price";
-	input_price.placeholder = "Price";
+	input_price.title = "Total Price";
+	input_price.placeholder = "Total Price";
 	var input_quantity = document.createElement("input");
 	input_quantity.id = "form_set_article_quantity_"+ cpt_spreadsheet + "_" + AddArticleLine.counter;
 	input_quantity.type="number";
+	input_quantity.value="1";
 	input_quantity.min="0";
 	input_quantity.step="0.001";
 	input_quantity.className = "form-control";
 	input_quantity.name = "p_article["+ AddArticleLine.counter +"][p_quantity]";
-	input_quantity.title = "Quantity";
+	input_quantity.title = "Quantity/Parts";
 	input_quantity.placeholder = "Quantity";
 
 
@@ -460,10 +461,10 @@ function AddArticleLine(cpt_spreadsheet)
 	label_product.innerHTML = "Product<span class='glyphicon glyphicon-asterisk red'></span>";
 	var label_price = document.createElement("Label");
 	label_price.setAttribute("for", input_price.id);
-	label_price.innerHTML = "Price<span class='glyphicon glyphicon-asterisk red'></span>";
+	label_price.innerHTML = "Total Price<span class='glyphicon glyphicon-asterisk red'></span>";
 	var label_quantity = document.createElement("Label");
 	label_quantity.setAttribute("for", input_quantity.id);
-	label_quantity.innerHTML="Quantity<span class='glyphicon glyphicon-asterisk red'></span>";
+	label_quantity.innerHTML="Quantity/Parts<span class='glyphicon glyphicon-asterisk red'></span>";
 	
 	//Bootstrap add-on
 	var div_input_group_product = document.createElement("div");
@@ -515,18 +516,18 @@ function AddArticleLine(cpt_spreadsheet)
 	div_input_group_product.appendChild(span_glyph_product);
 	div_product.appendChild(div_input_group_product);
 	div_row1.appendChild(div_product);
-	//Price
-	div_price.appendChild(label_price);
-	div_input_group_price.appendChild(input_price);
-	div_input_group_price.appendChild(span_glyph_price);
-	div_price.appendChild(div_input_group_price);
-	div_row1.appendChild(div_price);
 	//Quantity
 	div_quantity.appendChild(label_quantity);
 	div_input_group_quantity.appendChild(input_quantity);
 	div_input_group_quantity.appendChild(span_glyph_quantity);
 	div_quantity.appendChild(div_input_group_quantity);
 	div_row1.appendChild(div_quantity);
+	//Price
+	div_price.appendChild(label_price);
+	div_input_group_price.appendChild(input_price);
+	div_input_group_price.appendChild(span_glyph_price);
+	div_price.appendChild(div_input_group_price);
+	div_row1.appendChild(div_price);
 	//container
 //	var hr = document.createElement("hr");
 //	hr.className="separator_payments";

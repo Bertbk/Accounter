@@ -443,7 +443,9 @@ foreach($these_articles as $article)
 											<input type="number" min="0" name="p_quantity" step="0.001"
 												max="<?php echo (float)$article['quantity'] - (float)$my_rcpt_quantities[$spreadsheet['id']][$article['id']] + (float)$rcpt_recipient_to_edit['quantity']?>"
 												class="form-control" 
-												value="<?php echo (float)$rcpt_recipient_to_edit['quantity']?>" required>
+												value="<?php echo (float)$rcpt_recipient_to_edit['quantity']?>" 
+												placeholder="Quantity/Parts"
+												required>
 											<span class="input-group-addon glyphicon glyphicon-scale"></span>
 										</div>
 									</div>
@@ -521,7 +523,7 @@ foreach($these_articles as $article)
 											<div class="col-xs-12 col-md-6 col-lg-4">
 												<label for="<?php echo 'form_available_quantity_'.$cpt_spreadsheet.'_'.$cpt_article.'_'.$member['id']?>" 
 													class="sr-only">
-													Quantity
+													Quantity/Parts
 												</label>
 												<div class="input-group">
 													<input name="p_recipient['<?php echo $cpt?>'][p_quantity]" 
@@ -530,7 +532,7 @@ foreach($these_articles as $article)
 														max="<?php echo (float)$this_available_quantity?>"
 														value="<?php echo (float)$this_available_quantity?>"
 														id="<?php echo 'form_available_quantity_'.$cpt_spreadsheet.'_'.$cpt_article.'_'.$member['id']?>"
-														title="Quantity">
+														title="Quantity/Parts">
 													<span class="input-group-addon glyphicon glyphicon-scale"></span>
 												</div>
 											</div>
@@ -619,7 +621,7 @@ if($article_to_edit !== false)
 									</div>
 									<div class="col-xs-12 col-lg-4">
 										<label for="form_edit_article_quantity">
-											Quantity<span class="glyphicon glyphicon-asterisk red"></span>
+											Quantity/Parts<span class="glyphicon glyphicon-asterisk red"></span>
 										</label>
 										<div class="input-group">
 											<input name="p_quantity" value="<?php echo (float)$article_to_edit['quantity']?>" 
@@ -631,7 +633,7 @@ if($article_to_edit !== false)
 									</div>
 									<div class="col-xs-12 col-lg-4">
 										<label for="form_edit_article_price">
-											Price<span class="glyphicon glyphicon-asterisk red"></span>
+											Total Price<span class="glyphicon glyphicon-asterisk red"></span>
 										</label>
 										<div class="input-group">
 											<input name="p_price" 
@@ -698,7 +700,7 @@ $article_to_edit = false;
 												<div class="input-group">
 													<input name="p_article[0][p_product]" 
 														id="form_set_article_product_<?php echo $cpt_spreadsheet?>_0" 
-														class="form-control" title="Product" type="text"> 
+														class="form-control" title="Product" type="text" placeholder="Product"> 
 													<span class="input-group-addon glyphicon glyphicon-tag"></span>
 												</div>
 											</div>
@@ -708,8 +710,8 @@ $article_to_edit = false;
 												<div class="input-group">
 													<input name="p_article[0][p_quantity]" 
 														id="form_set_article_quantity_<?php echo $cpt_spreadsheet?>_0" 
-														class="form-control" title="Product" type="number" 
-														min="0" step="0.001" value="1"> 
+														class="form-control" title="Quantity/Parts" type="number" 
+														min="0" step="0.001" value="1" placeholder="Quantity/Parts"> 
 													<span class="input-group-addon glyphicon glyphicon-scale"></span>
 												</div>
 											</div>
@@ -719,7 +721,9 @@ $article_to_edit = false;
 												<div class="input-group">
 													<input name="p_article[0][p_price]" 
 														id="form_set_article_price_<?php echo $cpt_spreadsheet?>_0" 
-														class="form-control" title="Product" type="number" min="0" step="0.01"> 
+														class="form-control" title="Total price"
+														placeholder="Total price"
+														type="number" min="0" step="0.01"> 
 													<span class="input-group-addon glyphicon glyphicon-euro"></span>
 												</div>
 											</div>
