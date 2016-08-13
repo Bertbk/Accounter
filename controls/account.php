@@ -185,7 +185,7 @@ foreach($my_members as $payer)
 	{
 		$vid = $receiver['id'];
 		if(isset($solution_opt[$uid][$vid])
-			&& $solution_opt[$uid][$vid] !== 0)
+			&& $solution_opt[$uid][$vid] >= 0.01)
 			{
 				$tranfers[$n_transfer_opt]['payer_name'] = htmlspecialchars($payer['name']);
 				$tranfers[$n_transfer_opt]['payer_color'] = $payer['color'];
