@@ -30,7 +30,7 @@ if(!$config_exists)
 }
 else
 {
-	$config_array = include(__DIR__.'/site/config.php');
+	$config_array = include(SITEPATH. '/config.php');
 	if ( !defined('BASEURL') )
 			define('BASEURL',$config_array['baseurl']);
 	if ( !defined('ACTIONPATH') )
