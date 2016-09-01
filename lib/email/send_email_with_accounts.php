@@ -24,14 +24,15 @@ function send_email_with_accounts($email_arg, $arrayOfAccounts_arg)
 	$dest_email = filter_var($dest_email, FILTER_VALIDATE_EMAIL);
 	
 	//Check is email is "valid"
-	if($dest_email === false)
+	if($dest_email == false)
 	{
-		return false;
+		return "email not valid";
 	}
 
 	
 	if(is_null($arrayOfAccounts_arg) || empty($arrayOfAccounts_arg))
-	{return false;}
+	{return "empty";}
+
 	$html_array = array(array());
 	$txt_array = array(array());
 	
@@ -44,13 +45,13 @@ function send_email_with_accounts($email_arg, $arrayOfAccounts_arg)
 		if(!isset($account['hashid_admin']))
 			{return false;}
 		
-		$hashid = $hashid_arg;
+		$hashid = $account['hashid'];
 		if(validate_hashid($hashid)== false)
-		{	return array();	}
+		{	return false;	}
 
-		$hashid_admin = $hashid_admin_arg;
+		$hashid_admin = $account['hashid_admin'];
 		if(validate_hashid_admin($hashid_admin)== false)
-		{	return array();	}
+		{	return false;	}
 
 		$html_array[$key]['title'] = htmlspecialchars($account['title']);
 		$html_array[$key]['hashid'] = $hashid;

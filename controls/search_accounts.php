@@ -12,6 +12,9 @@
 Control page: search for accounts in the SQL providing an email address
  */
 
+if (session_status() == PHP_SESSION_NONE) {
+  session_start();
+}
 
 require_once __DIR__.'/../config-app.php';
 require_once LIBPATH.'/accounts/get_accounts_by_email.php';
@@ -28,9 +31,6 @@ unset($_SESSION['token']);
 unset($_SESSION['token_time']);
 
 
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
 
 $errorMessage = array(
 'no_account' => 'Sorry, no account associated with the following email address has been found: ',
@@ -62,7 +62,7 @@ if(isset($_POST['submit_email']))
 	if(!empty($ArrayOfAccounts))
 	{
 		$is_sent = send_email_with_accounts($p_email, $ArrayOfAccounts);
-		if($is_sent)
+		if($is_sent === true)
 		{
 			array_push($successArray, 'Accounts have been sent!');
 			header('location: '.BASEURL.'/accounts_sent.php');
@@ -70,7 +70,7 @@ if(isset($_POST['submit_email']))
 		}
 		else
 		{
-			array_push($errArray, $errorMessage['email_not_sent']);
+			array_push($errArray, $errorMessage['email_not_sent'].' '.$is_sent);
 		}
 	}
 	else
@@ -97,5 +97,5 @@ if(!(empty($successArray)))
 	$_SESSION['success'] = $successArray;
 }
 
-header('location: retrieve_accounts.php');
+header('location: '.BASEURL.'/retrieve_accounts.php');
 exit;
