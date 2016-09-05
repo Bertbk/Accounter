@@ -4,25 +4,25 @@ INSTALLEUR
 ==========
 1. Config file et password...
 
+MINOR
+=====
+
+1. Spreadsheet must have an "order" which can be modified
+2. Display number of participants in every sheet
+
+QUESTION
+========
+1. Is the "id" still of interest for entity with hashid ?
+2. Can a creditor be a member but not a participant to a sheet ?
+3. How to deal with unexpected access to eg. /controls/account.php or lib/ ?
+4. Framework ?
+
 MAJOR
 ======
 1. Comments
 2. Date of expiration : must be used! CRON ?!
-3. How to deal with unexpected access to eg. /controls/account.php or lib/ ?
-4. Internationalisation : Framework...
-5. Email optionnel lors de la creation d'un accompte
-
-
-
-NEW VERSION
-===========
-
-A. Links
-
-Remove every payments/etc. must changed if budget or receipt
-
-B. FRAMEWORK SYMPHONY or SMARTY
-A priori smarty a l'air plus facile à utiliser :)
+3. Internationalisation
+4. Recreate a receipt from scanning a real receipt :-)
 
 
 DUNNO
@@ -32,23 +32,10 @@ DUNNO
 BUGS
 =====
 
-MINOR
-=====
-
 
 ----
-NOTES d'INSTALL
+INSTALL NOTES
 A. Foreign Keys et Contraintes de suppression !
 B. Case insensitive SQL ? A priori j'ai checké, je ne cherche que rarement sur le nom (et alors j'ai mis UPPER)
 C. Redirection .htaccess
-
-
-RECEIPT
-=======
-
-- Table RECEIPT
-- Table Receipt_payer
-- Table Receipt_article
-- Table Receipt_receiver
-- Table Receipt_payment (between participant of the receipe)
 
