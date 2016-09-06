@@ -9,36 +9,37 @@
  */
  
 /*
-Return an array of every spreadsheets associated to the account of provided account id.
+Return a spreadsheet providing its rank and its associated account id.
 A spreadsheet is a row in the spreadsheets SQL table.
 */
-
 include_once(__DIR__.'/../get_db.php');
 
-function get_spreadsheets($account_id_arg)
+function get_spreadsheet_by_rank($account_id_arg, $spreadsheet_rank_arg)
 {
 	$db = get_db();
 
 	$account_id = (int)$account_id_arg;
+	$spreadsheet_rank = (int)$spreadsheet_rank_arg;
 
 	try
 	{
 		$myquery = 'SELECT * FROM  '.TABLE_SPREADSHEETS.'
-		 WHERE account_id=:account_id 
-		 ORDER BY rank ASC';
+   		WHERE account_id=:account_id AND rank=:spreadsheet_rank';
 		$prepare_query = $db->prepare($myquery);
 		$prepare_query->bindValue(':account_id', $account_id, PDO::PARAM_INT);
-		$isgood = $prepare_query->execute();
+		$prepare_query->bindValue(':spreadsheet_rank', $spreadsheet_rank, PDO::PARAM_INT);
+		$prepare_query->execute();
 	}
 	catch (Exception $e)
 	{
-	 return 'Fail to connect: ' . $e->getMessage();
+		return array();
+//		echo 'Fail to connect: ' . $e->getMessage();
 	}
 	$reply = $prepare_query->fetchAll();
 	$prepare_query->closeCursor();
 	if(!empty($reply))
 	{
-		return $reply;
+		return $reply[0];
 	}
 	else
 	{

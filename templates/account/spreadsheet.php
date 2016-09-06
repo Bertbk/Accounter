@@ -82,7 +82,7 @@ else{
 <?php } 
 		else{
 ?>
-					<div class="col-md-9 ">
+					<div class="col-md-9 col-lg-8">
 						<h2 class="spreadsheet_title">
 							<?php echo ($cpt_spreadsheet+1).'. '.htmlspecialchars($spreadsheet['title']) ?>
 						</h2>
@@ -99,7 +99,7 @@ else{
 							?>
 						</strong></p>
 					</div>
-					<div class="col-md-3">
+					<div class="col-md-3 col-lg-4">
 		<?php
 					if($admin_mode && $edit_mode === false)
 					{
@@ -120,6 +120,34 @@ else{
 								<span class="glyphicon glyphicon-minus"></span>
 							</button>							
 						</div>
+						<?php if($spreadsheet['rank'] > 0){?>
+						<div class="button_spreadsheet_title">
+							<form action="<?php echo ACTIONPATH.'/spreadsheets/move_spreadsheet.php'?>"
+								method="post">
+								<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
+								<input type="hidden" name="p_hashid_spreadsheet" value="<?php echo $spreadsheet['hashid']?>">
+								<input type="hidden" name="p_move" value="up">
+								<button type="submit" value="" name="submit_move" class="btn btn-default" 
+										title="Move up" onclick="event.stopPropagation();">
+											<span class="glyphicon glyphicon-arrow-up"></span>
+								</button>
+							</form>
+						</div>
+						<?php }?>
+						<?php if($spreadsheet['rank'] < (int)$n_spreadsheets-1){?>
+						<div class="button_spreadsheet_title">
+							<form action="<?php echo ACTIONPATH.'/spreadsheets/move_spreadsheet.php'?>"
+								method="post">
+								<input type="hidden" name="p_hashid_account" value="<?php echo $my_account['hashid_admin']?>">
+								<input type="hidden" name="p_hashid_spreadsheet" value="<?php echo $spreadsheet['hashid']?>">
+								<input type="hidden" name="p_move" value="down">
+								<button type="submit" value="" name="submit_move" class="btn btn-default" 
+										title="Move down" onclick="event.stopPropagation();">
+											<span class="glyphicon glyphicon-arrow-down"></span>
+								</button>
+							</form>
+						</div>
+						<?php } ?>
 					</div>
 	<?php
 				}
