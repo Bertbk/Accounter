@@ -42,10 +42,22 @@ if(isset($_POST['submit_new_account']))
 		'p_title_of_account' => 'Title is not valid',
 		'p_author' => 'Author is not valid',
 		'p_contact_email' => 'Email address is not valid',
-		'p_description' => 'Description is not valid'
+		'p_description' => 'Description is not valid',
+		'p_captcha' => 'Captcha not valid'
    );
 	 
 	//Manual treatments of arguments
+	//CAPTCHA
+	$key = 'p_captcha';
+	if(empty($_POST[$key])) { //If empty
+	  array_push($errArray, $ErrorEmptyMessage[$key]);
+	}
+	else{
+	  if((int)$_POST[$key] != 12)
+	    {
+	      array_push($errArray, $ErrorMessage[$key]);
+	    }
+	}
 	
 	//TITLE
 	$key = 'p_title_of_account';

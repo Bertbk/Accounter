@@ -115,7 +115,7 @@ $accounts = get_accounts();
 							title="Link to the account"><span class="glyphicon glyphicon-link"></span></a>	
 						</div>
 						<div class="col-xs-2 col-md-1">
-							<form method="post" action="<?php echo ACTIONPATH.'/delete_account.php'?>">
+							<form method="post" action="<?php echo ACTIONPATH.'/accounts/delete_account.php'?>">
 								<input type="hidden" name="p_hashid_account" 
 									value="<?php echo $account['hashid_admin']?>">
 								<input type="hidden" name="p_redirect" 
