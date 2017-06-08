@@ -18,7 +18,7 @@ if ( !defined('SITEPATH') )
 		define('SITEPATH', ABSPATH . '/site');
 
 //Config file
-$config_exists = file_exists(__DIR__.'/site/config.php');
+$config_exists = file_exists(SITEPATH.'/site/config.php');
 if(!$config_exists)
 {
 	header('location: error.php');
@@ -26,7 +26,7 @@ if(!$config_exists)
 }
 else
 {
-	$config_array = include(__DIR__.'/site/config.php');
+	$config_array = include(SITEPATH.'/site/config.php');
 	if ( !defined('PREFIX') )
 			define('PREFIX',$config_array['prefix_table']);
 	if ( !defined('TABLE_ACCOUNTS') )
