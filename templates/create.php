@@ -90,8 +90,8 @@
    <div class="form-group">
    <label for="form_captcha">How makes two plus 12 minus 2?</label>
    <div class="input-group">
-   <input type="number" name="captcha" value="0"
-   class="form-control" title="Captcha id="form_captcha">
+   <input type="number" name="p_captcha" value="0"
+   class="form-control" title="Captcha" id="form_captcha">
    </div>
    </div>
    </div>
